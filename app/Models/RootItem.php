@@ -7,7 +7,7 @@ class RootItem extends Model
     //
     protected $table = "root_items";
     protected $fillable = [
-        'category', 'type', 'sort', 'form', 'active', 'order', 'user_id', 'item_id', 'p_id', 'version',
+        'category', 'type', 'sort', 'form', 'active', 'order', 'org_id', 'admin_id', 'user_id', 'item_id', 'p_id', 'version',
         'title', 'subtitle', 'description', 'content', 'custom', 'link_url', 'cover_pic',
         'time_point', 'time_type', 'start_time', 'end_time', 'order', 'rank',
         'is_shared', 'visit_num', 'share_num'
@@ -80,6 +80,18 @@ class RootItem extends Model
 
 
 
+
+    // 机构信息
+    function org()
+    {
+        return $this->belongsTo('App\Models\Org\OrgOrganization','org_id','id');
+    }
+
+    // 管理员信息
+    function admin()
+    {
+        return $this->belongsTo('App\Models\Org\OrgAdministrator','admin_id','id');
+    }
 
     // 用户信息
     function user()

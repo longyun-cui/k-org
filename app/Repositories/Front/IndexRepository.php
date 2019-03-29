@@ -2,6 +2,8 @@
 namespace App\Repositories\Front;
 
 use App\User;
+use App\Models\Org\OrgOrganization;
+use App\Models\Org\OrgAdministrator;
 use App\Models\RootItem;
 use App\Models\Content;
 use App\Models\Communication;
@@ -28,14 +30,6 @@ class IndexRepository {
     // 平台主页
     public function view_root($post_data)
     {
-//        $item = RootItem::first();
-//        dd($item->created_at);
-
-//        $headers = apache_request_headers();
-//        $headers = getallheaders();
-//        dd($headers);
-//        $header = request()->header();
-//        dd($header);
 
         if(Auth::check())
         {
@@ -54,7 +48,17 @@ class IndexRepository {
             ->where('item_id',0)
             ->orderBy('id','desc')->paginate(20);
         view()->share('items_type','paginate');
-//        dd($items->toArray());
+        $return['items'] = $items;
+
+
+        $activity_items = RootItem::with(['org'])->where('is_shared','>=',99)->where(['category'=>'11'])
+            ->orderByDesc('id')->limit(10)->get();
+        $return['activity_items'] = $activity_items;
+
+
+        $article_items = RootItem::with(['org'])->where('is_shared','>=',99)->where(['category'=>'1'])
+            ->orderByDesc('id')->limit(10)->get();
+        $return['article_items'] = $article_items;
 
         foreach ($items as $item)
         {
@@ -63,10 +67,208 @@ class IndexRepository {
             $item->img_tags = get_html_img($item->content);
         }
 
+        $org_list = OrgOrganization::where('status',1)->limit(8)->get();
+        $return['org_list'] = $org_list;
+        $return['root_active'] = 'active';
+
         $path = request()->path();
-        if($path == "root-1") return view('frontend.entrance.root-1')->with(['items'=>$items]);
-        else return view('frontend.entrance.root')->with(['items'=>$items]);
+        if($path == "root-1") return view('frontend.entrance.root-1')->with($return);
+        else return view('frontend.entrance.root')->with($return);
     }
+
+
+
+
+    // 【内容列表】
+    public function view_item_list($post_data)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $items = RootItem::with(['org'])->where('is_shared','>=',99);
+
+        $category = isset($post_data["category"]) ? $post_data["category"] : '';
+        if($category == 'article')
+        {
+            $items = $items->where('category','1');
+            $return['root_article_active'] = 'active';
+        }
+        else if($category == 'activity')
+        {
+            $items = $items->where('category','11');
+            $return['root_activity_active'] = 'active';
+        }
+        else if($category == 'sponsor')
+        {
+            $items = $items->where('category','88');
+            $return['root_sponsor_active'] = 'active';
+        }
+        else $return['root_all_active'] = 'active';
+
+        $items = $items->orderby('id','desc')->paginate(20);
+        $return['items'] = $items;
+
+        return view('frontend.entrance.item-list')->with($return);
+    }
+
+    // 【内容详情】
+    public function view_item($post_data,$id=0)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $item = RootItem::with(['org'])->find($id);
+        if($item)
+        {
+            $item->timestamps = false;
+            $item->increment('visit_num');
+
+            $item->custom_decode = json_decode($item->custom);
+        }
+        else return view('frontend.errors.404');
+
+        return view('frontend.entrance.item')->with(['item'=>$item]);
+    }
+
+
+
+
+    // 【内容列表】
+    public function view_org_list($post_data)
+    {
+        dd('view_org_list');
+        return false;
+    }
+
+    // 【机构首页】
+    public function view_org($post_data,$id=0)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $org = OrgOrganization::with([])->find($id);
+        if($org)
+        {
+            $org->timestamps = false;
+            $org->increment('visit_num');
+
+            $org->custom_decode = json_decode($org->custom);
+        }
+        else return view('frontend.errors.404');
+
+        $return['data'] = $org;
+        $return['org_root_active'] = "active";
+
+        $article_items = RootItem::with(['org'])
+            ->where(['org_id'=>$id,'category'=>'1'])->where('is_shared','>=',99)
+            ->orderby('id','desc')->limit(8)->get();
+        $return['article_items'] = $article_items;
+
+        $activity_items = RootItem::with(['org'])
+            ->where(['org_id'=>$id,'category'=>'11'])->where('is_shared','>=',99)
+            ->orderby('id','desc')->limit(8)->get();
+        $return['activity_items'] = $activity_items;
+
+        $sponsor_items = RootItem::with(['org'])
+            ->where(['org_id'=>$id,'category'=>'88'])->where('is_shared','>=',99)
+            ->orderby('id','desc')->limit(8)->get();
+        $return['sponsor_items'] = $sponsor_items;
+
+        return view('frontend.entrance.org')->with($return);
+    }
+
+    // 【机构介绍页】
+    public function view_org_introduce($post_data,$id=0)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $org = OrgOrganization::with([])->find($id);
+        if($org)
+        {
+            $org->timestamps = false;
+            $org->increment('visit_num');
+
+            $org->custom_decode = json_decode($org->custom);
+        }
+        else return view('frontend.errors.404');
+
+        $return['data'] = $org;
+        $return['org_introduce_active'] = "active";
+
+        return view('frontend.entrance.org-introduce')->with($return);
+    }
+
+    // 【机构内容列表】
+    public function view_org_item_list($post_data,$id=0)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $org = OrgOrganization::with([])->find($id);
+        if($org)
+        {
+            $org->timestamps = false;
+            $org->increment('visit_num');
+
+            $org->custom_decode = json_decode($org->custom);
+            $return['data'] = $org;
+        }
+        else return view('frontend.errors.404');
+
+        $items = RootItem::with(['org'])->where('org_id',$id)->where('is_shared','>=',99);
+
+        $category = isset($post_data["category"]) ? $post_data["category"] : '';
+        if($category == 'article')
+        {
+            $items = $items->where('category','1');
+            $return['org_article_active'] = 'active';
+        }
+        else if($category == 'activity')
+        {
+            $items = $items->where('category','11');
+            $return['org_activity_active'] = 'active';
+        }
+        else if($category == 'sponsor')
+        {
+            $items = $items->where('category','88');
+            $return['org_sponsor_active'] = 'active';
+        }
+
+        $items = $items->orderby('id','desc')->paginate(10);
+        $return['items'] = $items;
+
+        return view('frontend.entrance.org-item-list')->with($return);
+    }
+
+
+
+
+
+
+
+
+
 
 
     // 【我的原创】
@@ -817,99 +1019,6 @@ class IndexRepository {
 
 
 
-
-    // 【内容详情】
-    public function view_item($post_data,$id=0)
-    {
-        if(Auth::check())
-        {
-            $user = Auth::user();
-            $user_id = $user->id;
-        }
-        else $user_id = 0;
-
-        $item = RootItem::with([
-            'user',
-            'pivot_item_relation'=>function($query) use($user_id) { $query->where('user_id',$user_id); }
-        ])->find($id);
-        if($item)
-        {
-            $item->timestamps = false;
-            $item->increment('visit_num');
-
-            if($item->category == 11)
-            {
-                if($item->item_id == 0)
-                {
-                    $parent_item = $item;
-                    $parent_item->load([
-                        'contents'=>function($query) { $query->where('active',1)->orderBy('rank','asc'); }
-                    ]);
-                }
-                else $parent_item = RootItem::with([
-                    'contents'=>function($query) { $query->where('active',1)->orderBy('rank','asc'); }
-                ])->find($item->item_id);
-
-                $contents_recursion = $this->get_recursion($parent_item->contents,0);
-                foreach ($contents_recursion as $v)
-                {
-                    $v->content_show = strip_tags($v->content);
-                    $v->img_tags = get_html_img($v->content);
-                }
-                view()->share(['contents_recursion'=>$contents_recursion]);
-
-                $parent_item->visit_total = $parent_item->visit_num + $parent_item->contents->sum('visit_num');
-                $parent_item->comments_total = $parent_item->comment_num + $parent_item->contents->sum('comment_num');
-                view()->share(['parent_item'=>$parent_item]);
-            }
-            else if($item->category == 18)
-            {
-                if($item->item_id == 0)
-                {
-                    $parent_item = $item;
-                    $parent_item->load([
-                        'contents'=>function($query) {
-                            $query->where('active',1);
-                            $query->orderByRaw(DB::raw('cast(replace(trim(time_point)," ","") as SIGNED) asc'));
-                            $query->orderByRaw(DB::raw('cast(replace(trim(time_point)," ","") as DECIMAL) asc'));
-                            $query->orderByRaw(DB::raw('replace(trim(time_point)," ","") asc'));
-                            $query->orderBy('time_point','asc');
-                        }
-                    ]);
-                }
-                else
-                {
-                    $parent_item = RootItem::with([
-                        'contents'=>function($query) {
-                            $query->where('active',1);
-                            $query->orderByRaw(DB::raw('cast(replace(trim(time_point)," ","") as SIGNED) asc'));
-                            $query->orderByRaw(DB::raw('cast(replace(trim(time_point)," ","") as DECIMAL) asc'));
-                            $query->orderByRaw(DB::raw('replace(trim(time_point)," ","") asc'));
-                            $query->orderBy('time_point','asc');
-                        }
-                    ])->find($item->item_id);
-                }
-
-                $time_points = $parent_item->contents;
-                foreach ($time_points as $v)
-                {
-                    $v->content_show = strip_tags($v->content);
-                    $v->img_tags = get_html_img($v->content);
-                }
-                view()->share(['time_points'=>$time_points]);
-
-                $parent_item->visit_total = $parent_item->visit_num + $parent_item->contents->sum('visit_num');
-                $parent_item->comments_total = $parent_item->comment_num + $parent_item->contents->sum('comment_num');
-                view()->share(['parent_item'=>$parent_item]);
-            }
-
-            $item->custom_decode = json_decode($item->custom);
-
-        }
-        else return view('frontend.errors.404');
-
-        return view('frontend.entrance.item')->with(['item'=>$item]);
-    }
 
 
 

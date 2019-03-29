@@ -2,7 +2,7 @@
 
     return [
 
-        'website_name' => '如未',
+        'website_name' => '',
 
 
 

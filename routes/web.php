@@ -87,6 +87,18 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/', $controller.'@view_root');
         Route::get('/root-1', $controller.'@view_root');
 
+        Route::get('/item-list', $controller.'@view_item_list');
+        Route::get('/item/{id?}', $controller.'@view_item');
+
+        Route::get('/org-list', $controller.'@view_org_list');
+        Route::get('/org/{id?}', $controller.'@view_org');
+        Route::get('/org/{id?}/introduce', $controller.'@view_org_introduce');
+        Route::get('/org/{id?}/item-list', $controller.'@view_org_item_list');
+
+        Route::get('/org/{id?}/article', $controller.'@view_org_article');
+        Route::get('/org/{id?}/activity', $controller.'@view_org_activity');
+        Route::get('/org/{id?}/sponsor', $controller.'@view_org_sponsor');
+
 
         Route::group(['middleware' => 'login.turn'], function () {
 
@@ -124,7 +136,6 @@ Route::group(['namespace' => 'Front'], function () {
 
         });
 
-        Route::get('item/{id?}', $controller.'@view_item');
 
         Route::get('user/{id?}', $controller.'@view_user');
         Route::get('user/{id?}/original', $controller.'@view_user_original');
@@ -305,6 +316,112 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
             Route::get('select2_menus', $controller.'@select2_menus');
 
         });
+
+
+
+        // 收藏
+        Route::group(['prefix' => 'collect'], function () {
+
+            $controller = 'OtherController';
+
+            Route::match(['get','post'], 'course/list', $controller.'@collect_course_viewList');
+            Route::match(['get','post'], 'chapter/list', $controller.'@collect_chapter_viewList');
+            Route::post('course/delete', $controller.'@collect_course_deleteAction');
+            Route::post('chapter/delete', $controller.'@collect_chapter_deleteAction');
+
+        });
+
+        // 点赞
+        Route::group(['prefix' => 'favor'], function () {
+
+            $controller = 'OtherController';
+
+            Route::match(['get','post'], 'course/list', $controller.'@favor_course_viewList');
+            Route::match(['get','post'], 'chapter/list', $controller.'@favor_chapter_viewList');
+            Route::post('course/delete', $controller.'@favor_course_deleteAction');
+            Route::post('chapter/delete', $controller.'@favor_chapter_deleteAction');
+
+        });
+
+        // 消息
+        Route::group(['prefix' => 'notification'], function () {
+
+            $controller = 'NotificationController';
+
+            Route::get('comment', $controller.'@comment');
+            Route::get('favor', $controller.'@favor');
+
+        });
+
+
+    });
+
+});
+
+
+
+
+
+/*
+ * Org-Admin Backend
+ */
+Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
+
+
+    /*
+     * auth
+     */
+    $authController = 'AuthController';
+    Route::match(['get','post'], 'login', $authController.'@org_admin_login');
+    Route::match(['get','post'], 'logout', $authController.'@org_admin_logout');
+    Route::match(['get','post'], 'register', $authController.'@org_admin_register');
+    Route::match(['get','post'], 'activation', $authController.'@org_admin_activation');
+
+
+    /*
+     * 需要登录
+     */
+    Route::group(['middleware' => ['org-admin']], function () {
+
+        $controller = 'HomeController';
+
+        Route::get('/', $controller.'@root');
+        Route::get('/404', $controller.'@view_404');
+
+
+        // 【info】
+        Route::group(['prefix' => 'info'], function () {
+
+            $controller = 'HomeController';
+
+            Route::get('index', $controller.'@info_index');
+            Route::match(['get','post'], 'edit', $controller.'@infoEditAction');
+
+            Route::match(['get','post'], 'password/reset', $controller.'@passwordResetAction');
+
+        });
+
+
+        // 内容
+        Route::group(['prefix' => 'item'], function () {
+
+            $controller = 'ItemController';
+
+            Route::get('/', $controller.'@index');
+            Route::get('create', $controller.'@createAction');
+            Route::match(['get','post'], 'edit', $controller.'@editAction');
+            Route::match(['get','post'], 'list', $controller.'@viewList');
+            Route::post('delete', $controller.'@deleteAction');
+            Route::post('share', $controller.'@shareAction');
+            Route::post('enable', $controller.'@enableAction');
+            Route::post('disable', $controller.'@disableAction');
+
+
+            Route::get('select2_menus', $controller.'@select2_menus');
+
+        });
+
+
 
 
 

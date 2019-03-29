@@ -31,16 +31,6 @@
 @endsection
 
 
-{{--custom-content-main--}}
-{{--@section('custom-body-main')--}}
-    {{--@include('frontend.'.env('TEMPLATE').'.module.module-body-content')--}}
-{{--@endsection--}}
-{{--custom-content-side--}}
-{{--@section('custom-body-side')--}}
-    {{--@include('frontend.'.env('TEMPLATE').'.module.body-side.side-user')--}}
-{{--@endsection--}}
-
-
 {{--custom-content--}}
 @section('custom-body')
 

@@ -1,4 +1,4 @@
-@extends('frontend.'.env('TEMPLATE').'.layout.layout')
+@extends('frontend.layout.layout')
 
 
 {{--html.head--}}
@@ -20,24 +20,14 @@
 
 {{--header--}}
 @section('component-header')
-    @include('frontend.'.env('TEMPLATE').'.component.header-root')
+    @include('frontend.component.header-root')
 @endsection
 
 
 {{--footer--}}
 @section('component-footer')
-    @include('frontend.'.env('TEMPLATE').'.component.footer')
+    @include('frontend.component.footer')
 @endsection
-
-
-{{--custom-content-main--}}
-{{--@section('custom-body-main')--}}
-    {{--@include('frontend.'.env('TEMPLATE').'.module.module-body-content')--}}
-{{--@endsection--}}
-{{--custom-content-side--}}
-{{--@section('custom-body-side')--}}
-    {{--@include('frontend.'.env('TEMPLATE').'.module.body-side.side-root')--}}
-{{--@endsection--}}
 
 
 {{--custom-content--}}
@@ -45,22 +35,44 @@
 
     <main class="main-body">
 
-        <section class="main-container-xs">
-            <section class="module-container">
+        <section class="module-container" style="padding:32px 0;">
+            <section class="main-container">
                 <div class="row">
 
-                    <header class="module-row module-header-container text-center _none">
-                        <div class="wow slideInLeft module-title-row title-with-double-line color-1 border-light title-h2"><b>原创内容</b></div>
+                    <header class="module-row module-header-container text-center">
+                        <div class="wow slideInLeft module-title-row title-with-double-line color-1 border-light title-h3"><b>活动</b></div>
                         {{--<div class="wow slideInRight module-subtitle-row color-5 title-h4"><b>description-1</b></div>--}}
                     </header>
 
                     <div class="module-row module-body-container bg-light-">
-                        @include('frontend.'.env('TEMPLATE').'.component.item-list-1', ['items'=>$items])
+                        @include('frontend.component.item-list-2', ['items'=>$activity_items])
                     </div>
 
                     <footer class="module-row module-footer-container text-center">
-                        {{{ $items->links() }}}
-                        {{--<a href="{{ url('/item/list') }}" class="view-more style-dark">查看更多 <i class="fa fa-hand-o-right"></i></a>--}}
+                        {{--{{{ $items->links() }}}--}}
+                        <a href="{{ url('/item-list?category=activity') }}" class="view-more style-dark">查看更多 <i class="fa fa-hand-o-right"></i></a>
+                    </footer>
+
+                </div>
+            </section>
+        </section>
+
+        <section class="module-container bg-blue-1" style="padding:32px 0;">
+            <section class="main-container">
+                <div class="row">
+
+                    <header class="module-row module-header-container text-center">
+                        <div class="wow slideInLeft module-title-row title-with-double-line color-e border-light title-h3"><b>组织</b></div>
+                        {{--<div class="wow slideInRight module-subtitle-row color-5 title-h4"><b>description-1</b></div>--}}
+                    </header>
+
+                    <div class="module-row module-body-container bg-light-">
+                        @include('frontend.component.org-list-2', ['items'=>$org_list])
+                    </div>
+
+                    <footer class="module-row module-footer-container text-center">
+                        {{--{{{ $org_list->links() }}}--}}
+                        <a href="{{ url('/org-list') }}" class="view-more style-light">查看更多 <i class="fa fa-hand-o-right"></i></a>
                     </footer>
 
                 </div>
@@ -68,14 +80,35 @@
             {{--@include('frontend.'.env('TEMPLATE').'.module.root-item-list', ['items'=>$items])--}}
         </section>
 
+        <section class="module-container" style="padding:32px 0;">
+            <section class="main-container">
+                <div class="row">
+
+                    <header class="module-row module-header-container text-center">
+                        <div class="wow slideInLeft module-title-row title-with-double-line color-1 border-light title-h3"><b>文章</b></div>
+                        {{--<div class="wow slideInRight module-subtitle-row color-5 title-h4"><b>description-1</b></div>--}}
+                    </header>
+
+                    <div class="module-row module-body-container bg-light-">
+                        @include('frontend.component.item-list-2', ['items'=>$article_items])
+                    </div>
+
+                    <footer class="module-row module-footer-container text-center">
+                        {{--{{{ $items->links() }}}--}}
+                        <a href="{{ url('/item-list?category=article') }}" class="view-more style-dark">查看更多 <i class="fa fa-hand-o-right"></i></a>
+                    </footer>
+
+                </div>
+            </section>
+        </section>
+
     </main>
 
     <main class="main-sidebar-fixed">
-        @include('frontend.'.env('TEMPLATE').'.module.sidebar-root')
+        @include('frontend.module.sidebar-root')
     </main>
 
-    {{--@include('frontend.'.env('TEMPLATE').'.component.body')--}}
-    @include('frontend.'.env('TEMPLATE').'.component.modal-forward')
+    @include('frontend.component.modal-forward')
 
 @endsection
 

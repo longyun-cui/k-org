@@ -26,6 +26,60 @@ class IndexController extends Controller
     }
 
 
+
+
+    // 【内容列表】
+    public function view_item_list()
+    {
+        return $this->repo->view_item_list(request()->all());
+    }
+
+    // 【内容详情】
+    public function view_item($id=0)
+    {
+        return $this->repo->view_item(request()->all(),$id);
+    }
+
+
+
+
+    // 【机构列表】
+    public function view_org_list()
+    {
+        return $this->repo->view_org_list(request()->all());
+    }
+
+    // 【机构首页】
+    public function view_org($id=0)
+    {
+        return $this->repo->view_org(request()->all(),$id);
+    }
+
+    // 【机构介绍页】
+    public function view_org_introduce($id=0)
+    {
+        return $this->repo->view_org_introduce(request()->all(),$id);
+    }
+
+    // 【机构内容列表】
+    public function view_org_item_list($id=0)
+    {
+        return $this->repo->view_org_item_list(request()->all(),$id);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // 【我的原创】
     public function view_home_mine_original()
     {
@@ -78,13 +132,6 @@ class IndexController extends Controller
     }
 
 
-
-
-    // 【内容详情】
-    public function view_item($id=0)
-    {
-        return $this->repo->view_item(request()->all(),$id);
-    }
 
 
 

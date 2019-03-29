@@ -182,8 +182,8 @@ html,body {
     background: #fff;
 }
 
-.module-header-container { margin-top: 0; margin-bottom: 32px; }
-.module-footer-container { margin-top: 32px; margin-bottom: 0; }
+.module-header-container { margin-top:0; margin-bottom:32px; }
+.module-footer-container { margin-top:32px; margin-bottom:0; }
 .menu-title {
     font-size: 28px;
     line-height: 28px;
