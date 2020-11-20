@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
+/*@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);*/
+@import url('/lib/css/fonts.googleapis.com.css');
 /*!
  *   AdminLTE v2.3.8
  *   Author: Almsaeed Studio
@@ -3285,7 +3286,7 @@ table.text-center th {
 }
 .error-page > .headline {
   float: left;
-  font-size: 100px;
+  font-size: 72px;
   font-weight: 300;
 }
 @media (max-width: 991px) {
@@ -3295,7 +3296,7 @@ table.text-center th {
   }
 }
 .error-page > .error-content {
-  margin-left: 190px;
+  margin-left: 120px;
   display: block;
 }
 @media (max-width: 991px) {

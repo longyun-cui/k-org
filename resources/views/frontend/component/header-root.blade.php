@@ -5,7 +5,7 @@
         <a href="{{ url('/') }}" class="header-logo">
             <img src="{{ url('/favicon.png') }}" alt="朝鲜族">
         </a>
-        <a href="{{ url('/') }}"> 朝鲜族组织活动网 </a>
+        <a href="{{ url('/') }}"> 朝鲜族组织活动平台 </a>
 
         <a href="javascript:void(0);" class="header-burger-menu visible-xs visible-sm"><i>Menu</i></a>
 

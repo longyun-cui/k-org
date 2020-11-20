@@ -3,7 +3,10 @@ namespace App\Repositories\Admin;
 
 use App\User;
 use App\Administrator;
-use App\Models\Verification;
+
+use App\Models\K\KUser;
+use App\Models\K\KItem;
+use App\Models\K\KVerification;
 
 use App\Repositories\Common\CommonRepository;
 

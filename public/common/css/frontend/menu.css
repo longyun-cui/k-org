@@ -4,7 +4,7 @@
 .container-body-right {}
 .container-body-right.pull-right {}
 
-.container-body-right {margin-bottom:16px;color:#444;}
+.container-body-right {color:#444;}
 .container-body-right .hover-box:hover {background:#eee;}
 .container-body-right .active {background:#eee;}
 

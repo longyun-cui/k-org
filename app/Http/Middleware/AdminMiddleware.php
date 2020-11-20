@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use App\Administrator;
+
+use App\Models\K\KUser;
+
 use Auth, Response;
 
 class AdminMiddleware
@@ -29,7 +31,7 @@ class AdminMiddleware
         else
         {
             $admin = Auth::guard('admin')->user();
-            view()->share('admin', $admin);
+            view()->share('admin_data', $admin);
         }
         return $next($request);
 

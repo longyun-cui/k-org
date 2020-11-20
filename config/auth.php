@@ -38,12 +38,22 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'web',
         ],
 
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+        ],
+
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'org' => [
+            'driver' => 'session',
+            'provider' => 'org',
         ],
 
         'org_admin' => [
@@ -75,14 +85,24 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'web' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
 
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Administrator::class,
+            'model' => App\Models\K\K_User::class,
+        ],
+
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\K\K_User::class,
+        ],
+
+        'org' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\K\K_User::class,
         ],
 
         'org_admins' => [

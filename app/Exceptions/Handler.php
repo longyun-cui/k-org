@@ -64,6 +64,14 @@ class Handler extends ExceptionHandler
                 {
                     return redirect('/home/404');
                 }
+                else if(strpos($request_str, "admin/") === 0)
+                {
+                    return redirect('/admin/404');
+                }
+                else if(strpos($request_str, "org/") === 0)
+                {
+                    return redirect('/org/404');
+                }
                 else return response()->view('frontend.errors.404');
             }
         }

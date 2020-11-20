@@ -419,6 +419,8 @@ if(!function_exists('get_html_img')){
 }
 
 
+
+
 /**
  * 上传文件
  */
@@ -426,7 +428,10 @@ if (!function_exists('upload')) {
 	function upload($file, $saveFolder, $patch = 'research')
 	{
 		$allowedExtensions = [
-			'jpg', 'jpeg', 'png', 'csv',
+            'txt', 'pdf', 'csv',
+            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF",
+            'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx',
+            'wps', 'dps', 'et',
 		];
 		$extension = $file->getClientOriginalExtension();
 
@@ -463,14 +468,15 @@ EOF;
 		return $returnData;
 	}
 }
-/**
- * 上传文件
- */
+
 if (!function_exists('upload_storage')) {
     function upload_storage($file, $filename = '', $saveFolder = 'research/common')
     {
         $allowedExtensions = [
-            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF", 'csv', 'xls', 'pdf'
+            'txt', 'pdf', 'csv',
+            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF",
+            'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx',
+            'wps', 'dps', 'et',
         ];
         $extension = $file->getClientOriginalExtension();
 
@@ -509,9 +515,56 @@ EOF;
         return $returnData;
     }
 }
-/**
- * 上传文件
- */
+
+if (!function_exists('upload_file_storage')) {
+    function upload_file_storage($file, $saveFolder = 'common', $patch = 'research', $filename = '')
+    {
+        $allowedExtensions = [
+            'txt', 'pdf', 'csv',
+            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF",
+            'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx',
+            'wps', 'dps', 'et',
+        ];
+        $extension = $file->getClientOriginalExtension();
+
+        /*判断后缀是否合法*/
+        if (in_array(strtolower($extension), $allowedExtensions)) {
+            /*保存文件*/
+            $date = date('Y-m-d');
+            $upload_path = <<<EOF
+resource/$patch/$saveFolder/$date/
+EOF;
+
+            $mysql_save_path = <<<EOF
+$patch/$saveFolder/$date/
+EOF;
+            $path = storage_path($upload_path);
+            if (!is_dir($path)) {
+                mkdir($path, 0766, true);
+            }
+            if($filename == '') $filename = uniqid() . time() . '.' . $extension;
+            else $filename = $filename . '.' . $extension;
+
+            $clientName = $file -> getClientOriginalName();
+
+            $file->move($path, $filename);
+            $returnData = [
+                'result' => true,
+                'msg' => '上传成功',
+                'local' => $mysql_save_path . $filename,
+                'name' => $clientName,
+                'extension' => $extension,
+            ];
+        } else {
+            $returnData = [
+                'result' => false,
+                'msg' => '上传文件格式不正确',
+            ];
+        }
+        return $returnData;
+    }
+}
+
 if (!function_exists('upload_s')) {
     function upload_s($file, $saveFolder, $patch = 'research')
     {
@@ -600,6 +653,9 @@ if (! function_exists('storage_path')) {
         return app('path.storage').($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }
+
+
+
 
 /*检查是否是手机号码*/
 if(! function_exists('isMobile'))

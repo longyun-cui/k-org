@@ -29,15 +29,17 @@
 
 .item-entity-container { width:100%; height:auto; float:right; }
 .item-entity-container.with-portrait {
-    width:-webkit-calc(100% - 60px);
-    width:-moz-calc(100% - 60px);
-    width:calc(100% - 60px);
+    width:-webkit-calc(100% - 54px);
+    width:-moz-calc(100% - 54px);
+    width:calc(100% - 54px);
 }
-.item-row { position:relative; width:100%; min-height:24px; line-height:20px; float:left; }
+.item-row { position:relative; width:100%; min-height:24px; float:left; }
 .item-row a { line-height:20px; }
 
-.item-user-portrait { width:20px; height:20px; margin-top:-2px; margin-right:8px; border-radius:50%; overflow:hidden; float:left;}
-.item-user-portrait img { width:100%; height:100%; border-radius:50%;}
+.item-user-portrait { position:relative; width:20px; height:20px; margin-right:4px; border-radius:100%;; overflow:hidden; float:left; }
+.item-user-portrait img { width:100%; height:100%; border-radius:100%;; overflow:hidden; }
+.item-user-portrait:hover { border-radius:2px;}
+.item-user-portrait img:hover { border-radius:2px;}
 
 .user-link { color:#eb7350; }
 .item-piece a.user-link { color:#eb7350; }
@@ -47,8 +49,8 @@
 .item-info-row a:hover { color:#ff7676; }
 
 .item-title-row { color:#666; }
-.item-title-row a { color:#555; }
-.item-description-row { background:#eee; padding:8px; margin-bottom:8px; }
+.item-title-row a { color:#155faa; }
+.item-description-row { padding:4px; margin-top:4px; margin-bottom:4px; line-height:20px; background:#eee; }
 
 .item-content-row { min-height:0; color:#666; font-size:14px; }
 
