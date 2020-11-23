@@ -5,8 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Models\K\KUser;
-use App\Models\K\KAdministrator;
+use App\Models\K\K_User;
+use App\Models\K\K_Administrator;
 
 use Response, Auth, Validator, DB, Exception;
 
@@ -40,7 +40,7 @@ class AuthController extends Controller
 
             // 手机验证
             $mobile = request()->get('mobile');
-            $admin = KUser::where(['user_category'=>0,'mobile'=>$mobile])->first();
+            $admin = K_User::where(['user_category'=>0,'mobile'=>$mobile])->first();
 
             if($admin)
             {

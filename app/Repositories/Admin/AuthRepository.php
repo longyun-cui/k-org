@@ -4,9 +4,9 @@ namespace App\Repositories\Admin;
 use App\User;
 use App\Administrator;
 
-use App\Models\K\KUser;
-use App\Models\K\KItem;
-use App\Models\K\KVerification;
+use App\Models\K\K_User;
+use App\Models\K\K_Item;
+use App\Models\K\K_Verification;
 
 use App\Repositories\Common\CommonRepository;
 
