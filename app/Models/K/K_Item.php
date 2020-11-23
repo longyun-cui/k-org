@@ -43,6 +43,38 @@ class K_Item extends Model
     }
 
 
+
+
+    // 其他人的
+    function pivot_item_relation()
+    {
+        return $this->hasMany('App\Models\K\K_Pivot_User_Item','item_id','id');
+    }
+
+    // 其他人的
+    function others()
+    {
+        return $this->hasMany('App\Models\K\K_Pivot_User_Item','item_id','id');
+    }
+
+    // 收藏
+    function collections()
+    {
+        return $this->hasMany('App\Models\K\K_Pivot_User_Collection','item_id','id');
+    }
+
+
+
+
+    // 与我相关的话题
+    function pivot_collection_item_users()
+    {
+        return $this->belongsToMany('App\Models\K\K_User','pivot_user_item','item_id','user_id');
+    }
+
+
+
+
     // 一对多 关联的目录
     function menu()
     {

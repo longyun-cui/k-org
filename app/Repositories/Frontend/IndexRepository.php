@@ -62,10 +62,24 @@ class IndexRepository {
         $return['article_items'] = $article_items;
 
 
-        $items = K_Item::with('owner')
-            ->orderByDesc('id')
-            ->paginate(20);
-        $return['items'] = $items;
+
+        if(Auth::check())
+        {
+            $items = K_Item::with([
+                    'owner',
+                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+                ])
+                ->orderByDesc('id')
+                ->paginate(20);
+            $return['items'] = $items;
+        }
+        else
+        {
+            $items = K_Item::with(['owner'])
+                ->orderByDesc('id')
+                ->paginate(20);
+            $return['items'] = $items;
+        }
 
         foreach ($items as $item)
         {

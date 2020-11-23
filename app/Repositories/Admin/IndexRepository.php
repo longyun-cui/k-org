@@ -415,15 +415,7 @@ class IndexRepository {
     {
         $me = Auth::guard("admin")->user();
         $query = K_User::select('*')
-            ->where(['user_category'=>1,'user_type'=>88,])
-//            ->whereHas('fund', function ($query1) { $query1->where('totalfunds', '>=', 1000); } )
-            ->with('ep','parent','fund')
-            ->withCount([
-                'agents'=>function ($query) { $query->where('usergroup','Agent2'); },
-                'clients'=>function ($query) { $query->where('usergroup','Service'); }
-            ])
-            ->where(['userstatus'=>'正常','status'=>1])
-            ->whereIn('usergroup',['Agent','Agent2']);
+            ->where(['user_category'=>1,'user_type'=>1]);
 
         if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 

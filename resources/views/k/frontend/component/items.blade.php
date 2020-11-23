@@ -56,38 +56,19 @@
         {{--tools--}}
         <div class="box-body item-row item-tools-row item-tools-container">
 
-            {{--点赞--}}
-            <a class="tool-button favor-btn" data-num="{{$item->favor_num}}" role="button">
+            {{--点赞&$收藏--}}
+            <a class="tool-button collect-btn " data-num="{{ $item->collect_num }}" role="button">
                 @if(Auth::check())
-                    @if($item->others->contains('type', 1))
-                        <span class="favor-this-cancel"><i class="fa fa-thumbs-up text-red"></i>
+                    @if($item->pivot_item_relation->contains('type', 1))
+                        <span class="collect-this-cancel"><i class="fa fa-heart text-red"></i></span>
                     @else
-                        <span class="favor-this"><i class="fa fa-thumbs-o-up"></i>
+                        <span class="collect-this"><i class="fa fa-heart-o"></i></span>
                     @endif
                 @else
-                    <span class="favor-this"><i class="fa fa-thumbs-o-up"></i>
+                    <span class="collect-this"><i class="fa fa-heart-o"></i></span>
                 @endif
 
-                @if($item->favor_num) {{$item->favor_num}} @endif </span>
-            </a>
-
-            {{--收藏--}}
-            <a class="tool-button collect-btn" data-num="{{$item->collect_num}}" role="button">
-                @if(Auth::check())
-                    @if($item->owner_id != Auth::user()->id)
-                        @if(count($item->collections))
-                            <span class="collect-this-cancel"><i class="fa fa-heart text-red"></i>
-                        @else
-                            <span class="collect-this"><i class="fa fa-heart-o"></i>
-                        @endif
-                    @else
-                        <span class="collect-mine"><i class="fa fa-heart-o"></i>
-                    @endif
-                @else
-                    <span class="collect-this"><i class="fa fa-heart-o"></i>
-                @endif
-
-                @if($item->collect_num) {{$item->collect_num}} @endif </span>
+                @if($item->collect_num) <span>{{ $item->collect_num }}</span> @endif
             </a>
 
             {{--分享--}}

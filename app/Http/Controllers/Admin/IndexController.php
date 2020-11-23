@@ -36,12 +36,11 @@ class IndexController extends Controller
      * 用户基本信息
      */
 
-    // 返回【主页】视图
+    // 【基本信息】返回-视图
     public function view_info_index()
     {
         return $this->repo->view_info_index();
     }
-
 
     // 【基本信息】编辑
     public function operate_info_edit()
@@ -99,6 +98,16 @@ class IndexController extends Controller
     {
         if(request()->isMethod('get')) return $this->repo->view_user_individual_list(request()->all());
         else if(request()->isMethod('post')) return $this->repo->get_user_individual_list_datatable(request()->all());
+    }
+
+
+    // 【用户】登录-组织
+    public function operate_user_user_login()
+    {
+        $user_id = request()->get('id');
+        $user = K_User::where('id',$user_id)->first();
+        Auth::login($user,true);
+        return response_success();
     }
 
 
