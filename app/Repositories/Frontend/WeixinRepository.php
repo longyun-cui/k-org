@@ -1,7 +1,9 @@
 <?php
 namespace App\Repositories\Frontend;
 
-use App\User;
+use App\Models\K\K_User;
+use App\Models\K\K_Item;
+use App\Models\K\K_Pivot_User_Relation;
 
 use Response, Auth, Validator, DB, Exception, Cache, Log;
 use QrCode;
@@ -105,8 +107,8 @@ class WeixinRepository {
     // 微信扫码登录
     public function weixin_login($post_data)
     {
-        $app_id = env('WECHAT_WEBSITE_DOC_APPID');
-        $app_secret = env('WECHAT_WEBSITE_DOC_SECRET');
+        $app_id = env('WECHAT_WEBSITE_K_APPID');
+        $app_secret = env('WECHAT_WEBSITE_K_SECRET');
         $code = $post_data["code"];
         $state = $post_data["state"];
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={$app_id}&secret={$app_secret}&code={$code}&grant_type=authorization_code";
@@ -182,7 +184,7 @@ class WeixinRepository {
 
                             if (file_put_contents($file, base64_decode(str_replace($result[1], '', $img_content))))
                             {
-                                $user1->name = $response2["nickname"];
+                                $user1->username = $response2["nickname"];
                                 $user1->portrait_img = $sql_text;
                                 $user1->save();
                             }
@@ -234,7 +236,7 @@ class WeixinRepository {
 
             $headimgurl = $response2["headimgurl"];
 
-            $user = User::where('wx_unionid',$unionid)->first();
+            $user = K_User::where('wx_unionid',$unionid)->first();
             if($user)
             {
                 Auth::login($user,true);
@@ -246,7 +248,7 @@ class WeixinRepository {
                 $return =$this->register_wx_user($unionid);
                 if($return["success"])
                 {
-                    $user1 = User::where('wx_unionid',$unionid)->first();
+                    $user1 = K_User::where('wx_unionid',$unionid)->first();
                     Auth::login($user1,true);
 
                     $curl = curl_init();
@@ -268,20 +270,19 @@ class WeixinRepository {
 
                             $type = $result[2]; // 得到图片类型png?jpg?jpeg?gif?
                             $filename = uniqid().time().'.'.$type;
-                            $storage_path = "resource/user".$user1->id."/unique/";
-                            $sql_path = "user".$user1->id."/unique/";
-                            $sql_text = $sql_path.$filename;
+                            $storage_path = "resource/common/".date('Y-m-d')."/";
+                            $sql_text = $storage_path.$filename;
 
                             $file = storage_path($storage_path.$filename);
 
-                            $path = storage_path("resource/user".$user1->id."/unique/");
+                            $path = storage_path("resource/common/".date('Y-m-d')."/");
                             if (!is_dir($path)) {
                                 mkdir($path, 0777, true);
                             }
 
                             if (file_put_contents($file, base64_decode(str_replace($result[1], '', $img_content))))
                             {
-                                $user1->name = $response2["nickname"];
+                                $user1->username = $response2["nickname"];
                                 $user1->portrait_img = $sql_text;
                                 $user1->save();
                             }
@@ -478,10 +479,10 @@ class WeixinRepository {
         DB::beginTransaction();
         try
         {
-            $user = new User;
+            $user = new K_User;
             $user_create['wx_unionid'] = $unionid;
             $bool = $user->fill($user_create)->save();
-            if(!$bool) throw new Exception("insert-user-failed");
+            if(!$bool) throw new Exception("insert--user--failed");
 
             DB::commit();
             return ['success' => true];
