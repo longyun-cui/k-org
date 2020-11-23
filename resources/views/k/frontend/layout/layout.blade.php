@@ -71,7 +71,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{--<link rel="stylesheet" href="{{ asset('/lib/css/layer-style-3.1.1.min.css') }}">--}}
 
 
-
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css">--}}
     <link rel="stylesheet" href="{{ asset('/lib/css/bootstrap-switch-3.3.4.min.css') }}">
 

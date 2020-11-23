@@ -479,6 +479,8 @@ class WeixinRepository {
         try
         {
             $user = new K_User;
+            $user_create['user_category'] = 1;
+            $user_create['user_type'] = 1;
             $user_create['wx_unionid'] = $unionid;
             $bool = $user->fill($user_create)->save();
             if(!$bool) throw new Exception("insert--user--failed");

@@ -87,7 +87,7 @@ return [
     'providers' => [
         'web' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\K\K_User::class,
         ],
 
         'admins' => [
