@@ -137,7 +137,7 @@ class WeixinRepository {
 
             $headimgurl = $response2["headimgurl"];
 
-            $user = User::where('wx_unionid',$unionid)->first();
+            $user = K_User::where('wx_unionid',$unionid)->first();
             if($user)
             {
                 Auth::login($user,true);
@@ -149,7 +149,7 @@ class WeixinRepository {
                 $return =$this->register_wx_user($unionid);
                 if($return["success"])
                 {
-                    $user1 = User::where('wx_unionid',$unionid)->first();
+                    $user1 = K_User::where('wx_unionid',$unionid)->first();
                     Auth::login($user1,true);
 
                     $curl = curl_init();
@@ -171,13 +171,12 @@ class WeixinRepository {
 
                             $type = $result[2]; // 得到图片类型png?jpg?jpeg?gif?
                             $filename = uniqid().time().'.'.$type;
-                            $storage_path = "resource/user".$user1->id."/unique/";
-                            $sql_path = "user".$user1->id."/unique/";
-                            $sql_text = $sql_path.$filename;
+                            $storage_path = "resource/common/".date('Y-m-d')."/";
+                            $sql_text = $storage_path.$filename;
 
                             $file = storage_path($storage_path.$filename);
 
-                            $path = storage_path("resource/user".$user1->id."/unique/");
+                            $path = storage_path("resource/common/".date('Y-m-d')."/");
                             if (!is_dir($path)) {
                                 mkdir($path, 0777, true);
                             }
