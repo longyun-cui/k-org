@@ -197,14 +197,18 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
-            $items = K_Item::with([
+            $item_query = K_Item::with([
                 'owner',
-                'forward_item'=>function($query) { $query->with('user'); },
+//                'forward_item'=>function($query) { $query->with('user'); },
                 'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
-            ])
-                ->where('user_id',$user_id)
-                ->whereIn('item_type',[1,11])
-                ->orderBy('id','desc')->get();
+            ]);
+//                ->where('user_id',$user_id)
+
+            if($type == 'root') $item_query->whereIn('item_type',[1,11]);
+            else if($type == 'article') $item_query->whereIn('item_type',[1]);
+            else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+
+            $items = $item_query->orderBy('updated_at','desc')->paginate(20);
 
             if($user_id != $me_id)
             {
