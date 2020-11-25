@@ -63,6 +63,12 @@ class K_Item extends Model
         return $this->hasMany('App\Models\K\K_Pivot_User_Collection','item_id','id');
     }
 
+    // 转发内容
+    function forward_item()
+    {
+        return $this->belongsTo('App\Models\K\K_Item','item_id','id');
+    }
+
 
 
 

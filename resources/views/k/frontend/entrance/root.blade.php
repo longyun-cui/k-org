@@ -27,19 +27,19 @@
         <div class="box-body bg-white margin-bottom-8px right-menu">
 
             <a href="{{url('/')}}">
-                <div class="box-body {{ $sidebar_menu_root or '' }}">
+                <div class="box-body {{ $sidebar_menu_root_active or '' }}">
                     <i class="fa fa-list text-orange"></i> <span>&nbsp; 首页</span>
                 </div>
             </a>
 
-            <a href="{{url('/activities')}}">
-                <div class="box-body {{ $sidebar_menu_activity or '' }}">
+            <a href="{{url('/?type=activity')}}">
+                <div class="box-body {{ $sidebar_menu_activity_active or '' }}">
                     <i class="fa fa-list text-orange"></i> <span>&nbsp; 活动</span>
                 </div>
             </a>
 
-            <a href="{{url('/organization/')}}">
-                <div class="box-body {{ $sidebar_menu_organization or '' }}">
+            <a href="{{url('/organization-list')}}">
+                <div class="box-body {{ $sidebar_menu_organization_active or '' }}">
                     <i class="fa fa-list text-orange"></i> <span>&nbsp; 机构</span>
                 </div>
             </a>
@@ -60,6 +60,9 @@
                 {{--</div>--}}
             {{--</a>--}}
             @else
+                <div class="box-body">
+                    <i class="fa fa-home text-blue"></i> <span>&nbsp; {{ Auth::user()->username }}</span>
+                </div>
             <a href="{{url('/home')}}">
                 <div class="box-body">
                     <i class="fa fa-home text-blue"></i> <span>&nbsp; 返回我的后台</span>

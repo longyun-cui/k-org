@@ -41,45 +41,28 @@ class IndexRepository {
         }
         else $me_id = 0;
 
-        $items = RootItem::with([
-            'user',
-            'forward_item'=>function($query) { $query->with('user'); },
-            'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
-        ])->where('is_shared','>=',99)
-            ->where('item_id',0)
-            ->orderBy('id','desc')->paginate(20);
-        view()->share('items_type','paginate');
-        $return['items'] = $items;
-
-
-        $activity_items = RootItem::with(['org'])->where('is_shared','>=',99)->where(['category'=>'11'])
-            ->orderByDesc('id')->limit(10)->get();
-        $return['activity_items'] = $activity_items;
-
-
-        $article_items = RootItem::with(['org'])->where('is_shared','>=',99)->where(['category'=>'1'])
-            ->orderByDesc('id')->limit(10)->get();
-        $return['article_items'] = $article_items;
-
-
 
         if(Auth::check())
         {
-            $items = K_Item::with([
+            $item_query = K_Item::with([
                     'owner',
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
-                ])
-                ->orderByDesc('id')
-                ->paginate(20);
-            $return['items'] = $items;
+                ]);
         }
         else
         {
-            $items = K_Item::with(['owner'])
-                ->orderByDesc('id')
-                ->paginate(20);
-            $return['items'] = $items;
+            $item_query = K_Item::with(['owner']);
         }
+
+
+        $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
+        if($type == 'root') $item_query->whereIn('item_type',[1,11]);
+        else if($type == 'article') $item_query->whereIn('item_type',[1]);
+        else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+
+
+        $items = $item_query->orderByDesc('id')->paginate(20);
+        $return['items'] = $items;
 
         foreach ($items as $item)
         {
@@ -88,9 +71,14 @@ class IndexRepository {
             $item->img_tags = get_html_img($item->content);
         }
 
-        $org_list = OrgOrganization::where('status',1)->limit(8)->get();
-        $return['org_list'] = $org_list;
-        $return['sidebar_menu_root_active'] = 'active';
+
+        $sidebar_active = '';
+        if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
+        else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
+        else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
+
+
+        $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
 
         $path = request()->path();
@@ -245,6 +233,7 @@ class IndexRepository {
 //        dd($lines->toArray());
 
 
+        $sidebar_active = '';
         if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
         else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
         else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
@@ -254,7 +243,7 @@ class IndexRepository {
             ->with([
                 'data'=>$user,
                 'items'=>$items,
-                $sidebar_active=>'active'
+                $sidebar_active => 'active'
             ]);
     }
     // 用户首页
