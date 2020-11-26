@@ -471,7 +471,7 @@ desired effect
 <script src="{{ asset('/lib/js/bootstrap-datepicker-1.9.0.min.js') }}"></script>
 
 
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script>
 
     var wechat_config = {!! $wechat_config or '' !!};
