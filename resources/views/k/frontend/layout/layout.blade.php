@@ -474,7 +474,6 @@ desired effect
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
 
-    console.log("@yield('wx_share_imgUrl')");
     var wechat_config = {!! $wechat_config or '' !!};
     //    console.log(wechat_config);
 
@@ -505,7 +504,7 @@ desired effect
             }) ;
 
             wx.ready(function(){
-                wx.onMenuShareAppMessage({
+                wx.updateAppMessageShareData({
                     title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
                     link: link,
@@ -531,7 +530,7 @@ desired effect
                         // 用户取消分享后执行的回调函数
                     }
                 });
-                wx.onMenuShareTimeline({
+                wx.updateTimelineShareData({
                     title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
                     link: link,
@@ -546,56 +545,6 @@ desired effect
                         {{--'sort': 1,--}}
                         {{--'module': 0,--}}
                         {{--'share': 2--}}
-                        {{--},--}}
-                        {{--function(data) {--}}
-                        {{--if(!data.success) layer.msg(data.msg);--}}
-                        {{--}, --}}
-                        {{--'json');--}}
-                    },
-                    cancel: function () {
-                        // 用户取消分享后执行的回调函数
-                    }
-                });
-                wx.onMenuShareQQ({
-                    title: "@yield('wx_share_title')",
-                    desc: "@yield('wx_share_desc')",
-                    link: link,
-                    imgUrl: $.trim("@yield('wx_share_imgUrl')"),
-                    success: function () {
-                        // 用户确认分享后执行的回调函数
-                        {{--$.get(--}}
-                        {{--"/share",--}}
-                        {{--{--}}
-                        {{--'_token': $('meta[name="_token"]').attr('content'),--}}
-                        {{--'website': "{{$org->website_name or '0'}}",--}}
-                        {{--'sort': 1,--}}
-                        {{--'module': 0,--}}
-                        {{--'share': 3--}}
-                        {{--},--}}
-                        {{--function(data) {--}}
-                        {{--if(!data.success) layer.msg(data.msg);--}}
-                        {{--}, --}}
-                        {{--'json');--}}
-                    },
-                    cancel: function () {
-                        // 用户取消分享后执行的回调函数
-                    }
-                });
-                wx.onMenuShareQZone({
-                    title: "@yield('wx_share_title')",
-                    desc: "@yield('wx_share_desc')",
-                    link: link,
-                    imgUrl: $.trim("@yield('wx_share_imgUrl')"),
-                    success: function () {
-                        // 用户确认分享后执行的回调函数
-                        {{--$.get(--}}
-                        {{--"/share",--}}
-                        {{--{--}}
-                        {{--'_token': $('meta[name="_token"]').attr('content'),--}}
-                        {{--'website': "{{$org->website_name or '0'}}",--}}
-                        {{--'sort': 1,--}}
-                        {{--'module': 0,--}}
-                        {{--'share': 4--}}
                         {{--},--}}
                         {{--function(data) {--}}
                         {{--if(!data.success) layer.msg(data.msg);--}}
