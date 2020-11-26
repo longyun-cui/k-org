@@ -93,8 +93,8 @@ class TokenManager
     public static function init()
     {
         if (empty(self::$app_id) or empty(self::$secret) or empty(self::$token)) {
-            self::$app_id = env('WECHAT_WEBSITE_K_APPID');
-            self::$secret = env('WECHAT_WEBSITE_K_SECRET');
+            self::$app_id = env('WECHAT_K_ORG_APPID');
+            self::$secret = env('WECHAT_K_ORG_SECRET');
         }
     }
 
