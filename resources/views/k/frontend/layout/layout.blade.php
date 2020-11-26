@@ -166,7 +166,7 @@ desired effect
             </a>
 
             <div class="navbar-custom-menu" style="height:50px;float:left;">
-                    <span class="logo-big"><a href="{{url('/')}}"><img src="/k-org.cn.png" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b></a></span>
+                    <span class="logo-big"><a href="{{url('/')}}"><img src="/favicon_transparent.jpeg" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b></a></span>
             </div>
 
             <div class="navbar-custom-menu visible-sm" style="display:none;float:left;">
@@ -195,9 +195,9 @@ desired effect
                         <li class="visible-sm" style="display:none;">
                             <a href="{{url('/login')}}"><i class="fa fa-circle-o"></i> <span> 登录</span></a>
                         </li>
-                        <li class="visible-sm" style="display:none;">
-                            <a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>
-                        </li>
+                        {{--<li class="visible-sm" style="display:none;">--}}
+                            {{--<a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>--}}
+                        {{--</li>--}}
                     @else
                         <li class="visible-sm visible-xs" style="display:none;">
                             <a href="{{url('/home')}}"><i class="fa fa-home text-default"></i> <span> {{Auth::user()->name}}</span></a>
