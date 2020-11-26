@@ -495,10 +495,8 @@ desired effect
                 signature: wechat_config.signature, // 必填，签名，见附录1
                 jsApiList: [
                     'checkJsApi',
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage',
-                    'onMenuShareQQ',
-                    'onMenuShareQZone',
+                    'updateAppMessageShareData',
+                    'updateTimelineShareData',
                     'onMenuShareWeibo'
                 ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             }) ;
