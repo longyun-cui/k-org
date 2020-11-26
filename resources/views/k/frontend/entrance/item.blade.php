@@ -1,8 +1,20 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
 @section('head_title') {{ $item->title or '' }} @endsection
+@section('meta_title')@endsection
+@section('meta_author')@endsection
+@section('meta_description')@endsection
+@section('meta_keywords')@endsection
+
+
 @section('header') {{ $item->title or '' }} @endsection
 @section('description','')
+
+
+@section('wx_share_title'){{ $item->title or '朝鲜族组织活动网' }}@endsection
+@section('wx_share_desc'){{ $item->owner->username or '朝鲜族组织活动网' }}@endsection
+@section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}@endsection
+
 
 @section('content')
 

@@ -1,10 +1,14 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
 @section('head_title') {{ $data->username or '' }}的主页 @endsection
+@section('meta_title')@endsection
+@section('meta_author')@endsection
+@section('meta_description')@endsection
+@section('meta_keywords')@endsection
+
+
 @section('header','')
 @section('description','')
-
-@section('header_title')  @endsection
 
 
 @section('wx_share_title'){{ $data->username or '朝鲜族组织活动网' }}@endsection
