@@ -467,7 +467,7 @@ desired effect
 {{--<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>--}}
 {{--<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>--}}
 <script src="{{ asset('/lib/js/bootstrap-datetimepicker-4.17.47.min.js') }}"></script>
-<script src="{{ asset('/lib/js/bootstrap-datepicker-1.9.0.zh-CN.min.js') }}"></script>
+{{--<script src="{{ asset('/lib/js/bootstrap-datepicker-1.9.0.zh-CN.min.js') }}"></script>--}}
 <script src="{{ asset('/lib/js/bootstrap-datepicker-1.9.0.min.js') }}"></script>
 
 

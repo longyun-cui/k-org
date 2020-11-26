@@ -36,6 +36,10 @@ Route::group([], function () {
             return "eTPw6Fu85pGY5kiV";
         });
 
+        Route::match(['get', 'post'],'auth/MP_verify_enRXVHgfnjolnsIN.txt', function () {
+            return "enRXVHgfnjolnsIN";
+        });
+
         Route::match(['get', 'post'],'auth', $wxController."@weixin_auth");
         Route::match(['get', 'post'],'login', $wxController."@weixin_login");
 

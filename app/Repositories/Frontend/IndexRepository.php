@@ -198,11 +198,11 @@ class IndexRepository {
             $me = Auth::user();
             $me_id = $me->id;
             $item_query = K_Item::with([
-                'owner',
-//                'forward_item'=>function($query) { $query->with('user'); },
-                'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
-            ]);
-//                ->where('user_id',$user_id)
+                    'owner',
+    //                'forward_item'=>function($query) { $query->with('user'); },
+                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+                ])
+                ->where('owner_id',$user_id);
 
             if($type == 'root') $item_query->whereIn('item_type',[1,11]);
             else if($type == 'article') $item_query->whereIn('item_type',[1]);

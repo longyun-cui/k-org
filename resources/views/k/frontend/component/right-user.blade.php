@@ -28,7 +28,7 @@
             <div class="margin-8px">
                 <i class="fa fa-user text-orange"></i>
                 &nbsp;
-                <span class="text-muted">{{ $data->linkman or $data->username }}</span>
+                <span class="text-muted">{{ $data->linkman or '暂无' }}</span>
             </div>
             <div class="margin-8px">
                 <i class="fa fa-phone text-success"></i>

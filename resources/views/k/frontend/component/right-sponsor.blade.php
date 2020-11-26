@@ -18,6 +18,33 @@
                                 <a target="_self" href="{{ url('/user/'.$v->id) }}" class="text-hover-red font-sm">{{ $v->username or '' }}</a>
                             </span>
             </div>
+
+            @if(!empty($v->linkman) or !empty($v->contact_phone) or !empty($v->contact_address))
+            <div class="item-row item-info-row">
+                @if(!empty($v->linkman))
+                <div class="margin-8px">
+                    <i class="fa fa-user text-orange"></i>
+                    &nbsp;
+                    <span class="text-muted">{{ $v->linkman or '暂无' }}</span>
+                </div>
+                @endif
+                @if(!empty($v->contact_phone))
+                <div class="margin-8px">
+                    <i class="fa fa-phone text-success"></i>
+                    &nbsp;
+                    <span class="text-muted">{{ $v->contact_phone or '暂无' }}</span>
+                </div>
+                @endif
+                @if(!empty($v->contact_address))
+                <div class="margin-8px">
+                    <i class="fa fa-map-marker text-primary"></i>
+                    &nbsp;
+                    <span class="text-muted">{{ $v->contact_address or '暂无' }}</span>
+                </div>
+                @endif
+            </div>
+            @endif
+
             <div class="item-row item-info-row text-muted">
                 <span class="info-tags text-primary">该组织·赞助商</span>
             </div>
