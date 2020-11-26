@@ -501,7 +501,7 @@ desired effect
                 ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             }) ;
 
-            wx.ready(function(){
+            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                 wx.updateAppMessageShareData({
                     title: "@yield('wx_share_title')", // 分享标题
                     desc: "@yield('wx_share_desc')", // 分享描述
@@ -524,6 +524,9 @@ desired effect
                         {{--'json');--}}
                     }
                 });
+            });
+
+            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                 wx.updateTimelineShareData({
                     title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
@@ -533,6 +536,9 @@ desired effect
                         // 用户点击了分享后执行的回调函数
                     }
                 });
+            });
+
+            wx.ready(function(){
                 wx.onMenuShareWeibo({
                     title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
@@ -545,7 +551,7 @@ desired effect
                         // 用户取消分享后执行的回调函数
                     }
                 });
-            })   ;
+            });
         }
     });
 </script>
