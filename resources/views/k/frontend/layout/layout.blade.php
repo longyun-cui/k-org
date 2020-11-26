@@ -497,6 +497,10 @@ desired effect
                     'checkJsApi',
                     'updateAppMessageShareData',
                     'updateTimelineShareData',
+                    'onMenuShareAppMessage',
+                    'onMenuShareTimeline',
+                    'onMenuShareQQ',
+                    'onMenuShareQZone',
                     'onMenuShareWeibo'
                 ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             });
@@ -505,6 +509,10 @@ desired effect
                 jsApiList: [
                     'updateAppMessageShareData',
                     'updateTimelineShareData',
+                    'onMenuShareAppMessage',
+                    'onMenuShareTimeline',
+                    'onMenuShareQQ',
+                    'onMenuShareQZone',
                     'onMenuShareWeibo'
                 ], // 需要检测的JS接口列表，所有JS接口列表见附录2,
                 success: function(res) {
@@ -520,20 +528,7 @@ desired effect
                     link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"), // 分享图标
                     success: function () {
-                        // 用户确认分享后执行的回调函数
-                        {{--$.get(--}}
-                        {{--"/share",--}}
-                        {{--{--}}
-                        {{--'_token': $('meta[name="_token"]').attr('content'),--}}
-                        {{--'website': "{{$org->website_name or '0'}}",--}}
-                        {{--'sort': 1,--}}
-                        {{--'module': 0,--}}
-                        {{--'share': 1--}}
-                        {{--},--}}
-                        {{--function(data) {--}}
-                        {{--if(!data.success) layer.msg(data.msg);--}}
-                        {{--}, --}}
-                        {{--'json');--}}
+                        // 用户点击了分享后执行的回调函数
                     }
                 });
             });
@@ -551,6 +546,67 @@ desired effect
             });
 
             wx.ready(function(){
+                wx.onMenuShareAppMessage({
+                    title: "@yield('wx_share_title')",
+                    desc: "@yield('wx_share_desc')",
+                    link: link,
+                    imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        {{--$.get(--}}
+                        {{--"/share",--}}
+                        {{--{--}}
+                        {{--'_token': $('meta[name="_token"]').attr('content'),--}}
+                        {{--'website': "{{$org->website_name or '0'}}",--}}
+                        {{--'sort': 1,--}}
+                        {{--'module': 0,--}}
+                        {{--'share': 1--}}
+                        {{--},--}}
+                        {{--function(data) {--}}
+                        {{--if(!data.success) layer.msg(data.msg);--}}
+                        {{--}, --}}
+                        {{--'json');--}}
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                wx.onMenuShareTimeline({
+                    title: "@yield('wx_share_title')",
+                    desc: "@yield('wx_share_desc')",
+                    link: link,
+                    imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                wx.onMenuShareQQ({
+                    title: "@yield('wx_share_title')",
+                    desc: "@yield('wx_share_desc')",
+                    link: link,
+                    imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                wx.onMenuShareQZone({
+                    title: "@yield('wx_share_title')",
+                    desc: "@yield('wx_share_desc')",
+                    link: link,
+                    imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
                 wx.onMenuShareWeibo({
                     title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
