@@ -10,12 +10,12 @@
         <div class="panel-default- box-default item-entity-container with-portrait">
 
             <div class="item-row item-title-row text-muted">
-                            <span class="item-user-portrait _none">
-                                <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" alt="">
-                            </span>
+                <span class="item-user-portrait _none">
+                    <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" alt="">
+                </span>
                 <span class="item-user-name">
-                                <b><a href="{{ url('/user/'.$data->id) }}" class="text-hover-red font-sm">{{ $data->username or '' }}</a></b>
-                            </span>
+                    <b><a href="{{ url('/user/'.$data->id) }}" class="text-hover-red font-sm">{{ $data->username or '' }}</a></b>
+                </span>
             </div>
             <div class="item-row item-info-row text-muted">
                 <span class="">{{ $data->visit_num or 0 }}次访问</span>
@@ -26,18 +26,15 @@
 
         <div class="item-row item-info-row">
             <div class="margin-8px">
-                <i class="fa fa-user text-orange"></i>
-                &nbsp;
+                <i class="fa fa-user text-orange" style="width:16px;"></i>
                 <span class="text-muted">{{ $data->linkman or '暂无' }}</span>
             </div>
             <div class="margin-8px">
-                <i class="fa fa-phone text-success"></i>
-                &nbsp;
+                <i class="fa fa-phone text-success" style="width:16px;"></i>
                 <span class="text-muted">{{ $data->contact_phone or '暂无' }}</span>
             </div>
             <div class="margin-8px">
-                <i class="fa fa-map-marker text-primary"></i>
-                &nbsp;
+                <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
                 <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
             </div>
         </div>
