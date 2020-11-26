@@ -166,17 +166,17 @@ desired effect
             </a>
 
             <div class="navbar-custom-menu" style="height:50px;float:left;">
-                    <span class="logo-big"><a href="{{url('/')}}"><img src="/favicon_transparent.png" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b></a></span>
+                    <span class="logo-big"><a href="{{url('/')}}"><img src="/k-org.cn.png" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b></a></span>
             </div>
 
             <div class="navbar-custom-menu visible-sm" style="display:none;float:left;">
                 <ul class="nav navbar-nav">
 
-                    <li><a href="{{url('/')}}"> 首页</a></li>
+                    <li><a href="{{url('/')}}"> 平台首页</a></li>
 
-                    <li><a href="{{url('/debates')}}"> 辩题</a></li>
+                    <li><a href="{{url('/?type=activity')}}"> 活动</a></li>
 
-                    <li><a href="{{url('/anonymous')}}"> 匿名话题</a></li>
+                    <li><a href="{{url('/organization')}}"> 组织</a></li>
 
                 </ul>
             </div>
