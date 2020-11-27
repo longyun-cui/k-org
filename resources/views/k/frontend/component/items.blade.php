@@ -1,5 +1,5 @@
 @foreach($items as $num => $item)
-<div class="item-piece item-option topic-option {{ $getType or 'items' }}"
+<div class="item-piece item-option{{ $getType or 'items' }}"
      data-id="{{ $item->id or 0}}"
      data-getType="{{ $getType or 'items' }}"
 >

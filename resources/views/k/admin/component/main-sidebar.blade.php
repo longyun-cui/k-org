@@ -35,11 +35,16 @@
             {{--用户管理--}}
             <li class="header">机构管理</li>
 
-            <li class="treeview {{ $sidebar_user_all_list_active or '' }}">
-                <a href="{{ url('/admin/user/all-list') }}">
-                    <i class="fa fa-user"></i><span>全部机构</span>
-                </a>
-            </li>
+            {{--<li class="treeview {{ $sidebar_user_all_list_active or '' }}">--}}
+                {{--<a href="{{ url('/admin/user/all-list') }}">--}}
+                    {{--<i class="fa fa-user"></i><span>全部用户</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+            {{--<li class="treeview {{ $sidebar_user_org_list_active or '' }}">--}}
+                {{--<a href="{{ url('/admin/user/individual-list') }}">--}}
+                    {{--<i class="fa fa-user"></i><span>个人用户</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
             <li class="treeview {{ $sidebar_user_org_list_active or '' }}">
                 <a href="{{ url('/admin/user/org-list') }}">
                     <i class="fa fa-user"></i><span>组织列表</span>
@@ -223,16 +228,31 @@
 
 
 
-            <li class="header">平台首页</li>
-            <li class="treeview">
-                <a href="{{ url('/') }}" target="_blank">
-                    <i class="fa fa-cube text-default"></i> <span>平台首页</span>
+            {{--<li class="header">平台</li>--}}
+
+            <li class="treeview active">
+                <a href=""><i class="fa fa-th text-aqua"></i> <span>平台</span>
+                    <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                 </a>
-            </li>
-            <li class="treeview">
-                <a href="{{ url('/org') }}" target="_blank">
-                    <i class="fa fa-cube text-default"></i> <span>组织后台</span>
-                </a>
+                <ul class="treeview-menu">
+                    <li class="treeview">
+                        <a href="{{ url('/') }}" target="_blank">
+                            <i class="fa fa-cube text-default"></i> <span>平台首页</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="{{ url('/org') }}" target="_blank">
+                            <i class="fa fa-cube text-default"></i> <span>组织后台</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="{{ url('/sponsor') }}" target="_blank">
+                            <i class="fa fa-cube text-default"></i> <span>赞助商后台</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
 

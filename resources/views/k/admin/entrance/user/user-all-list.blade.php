@@ -68,6 +68,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -269,30 +270,43 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
-                        'width':"48px",
+                        "width": "48px",
                         "title": "ID",
                         "data": "id",
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
                         'className':"text-left",
-                        'width':"",
-                        "title": "组织名称",
+                        "width": "",
+                        "title": "名称",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return '<a target="_blank" href="/user/'+data+'">'+row.username+'</a>';
                         }
                     },
                     {
+                        "width": "72px",
+                        "title": "用户类型",
+                        'data': 'user_type',
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            if(data == 0) return 'item';
+                            else if(data == 1) return '<small class="btn-xs bg-primary">个人用户</small>';
+                            else if(data == 11) return '<small class="btn-xs bg-olive">组织</small>';
+                            else if(data == 88) return '<small class="btn-xs bg-purple">赞助商</small>';
+                            else return "有误";
+                        }
+                    },
+                    {
                         'className':"text-left",
-                        'width':"128px",
+                        "width": "128px",
                         "title": "负责人",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.principal) {
                                 return '<a target="_blank" href="/user/'+data+'">'+row.principal.username+'</a>';
@@ -301,10 +315,10 @@
                         }
                     },
                     {
-                        'width':"72px",
+                        "width": "72px",
                         "title": "成员数",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.members_count && row.members_count > 0)
                             {
@@ -314,10 +328,10 @@
                         }
                     },
                     {
-                        'width':"72px",
+                        "width": "72px",
                         "title": "粉丝数",
                         "data": "fund_total",
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             if(row.fans_count && row.fans_count > 0)
                             {
@@ -327,19 +341,8 @@
                         }
                     },
 //                    {
-//                        'data': 'menu_id',
-//                        'orderable': false,
-//                        render: function(data, type, row, meta) {
-////                            return row.menu == null ? '未分类' : row.menu.title;
-//                            if(row.menu == null) return '<small class="label btn-info">未分类</small>';
-//                            else {
-//                                return '<a href="/org-admin/item/menu?id='+row.menu.encode_id+'">'+row.menu.title+'</a>';
-//                            }
-//                        }
-//                    },
-//                    {
 //                        'data': 'id',
-//                        'orderable': false,
+//                        "orderable": false,
 //                        render: function(data, type, row, meta) {
 //                            return row.menu == null ? '未分类' : row.menu.title;
 ////                            var html = '';
@@ -350,10 +353,10 @@
 //                        }
 //                    },
                     {
-                        'width':"128px",
+                        "width": "128px",
                         "title": "创建时间",
                         'data': 'created_at',
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
                             var $date = new Date(data*1000);
@@ -370,7 +373,7 @@
                     },
 //                    {
 //                        'data': 'created_at',
-//                        'orderable': true,
+//                        "orderable": true,
 //                        render: function(data) {
 //                            newDate = new Date();
 //                            newDate.setTime(data * 1000);
@@ -380,7 +383,7 @@
 //                    },
                     {
                         'data': 'id',
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
 
                             // 二级代理权限
@@ -746,14 +749,20 @@
         $("#item-main-body").on('click', ".item-login-submit", function() {
             var that = $(this);
             $.post(
-                "{{ url('/admin/user/org-login') }}",
+                "{{ url('/admin/user/user-login') }}",
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     id:that.attr('data-id')
                 },
                 function(data){
                     if(!data.success) layer.msg(data.msg);
-                    else window.open('/org/');
+                    else
+                    {
+                        if(data.data.user_type == 1) window.open('/');
+                        else if(data.data.user_type == 11) window.open('/org');
+                        else if(data.data.user_type == 88) window.open('/sponsor');
+
+                    }
                 },
                 'json'
             );

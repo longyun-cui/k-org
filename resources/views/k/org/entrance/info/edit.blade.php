@@ -50,12 +50,12 @@
                 </div>
 
                 {{--手机号--}}
-                <div class="form-group">
-                    <label class="control-label col-md-2">手机号</label>
-                    <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="mobile" placeholder="请输入手机号" value="{{ $data->mobile or '' }}">
-                    </div>
-                </div>
+                {{--<div class="form-group">--}}
+                    {{--<label class="control-label col-md-2">手机号</label>--}}
+                    {{--<div class="col-md-8 ">--}}
+                        {{--<input type="text" class="form-control" name="mobile" placeholder="请输入手机号" value="{{ $data->mobile or '' }}">--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
                 {{--邮箱--}}
                 <div class="form-group">

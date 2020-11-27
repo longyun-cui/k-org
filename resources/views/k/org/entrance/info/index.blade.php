@@ -49,9 +49,9 @@
                 </div>
                 {{--手机号--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">手机号：</label>
+                    <label class="control-label col-md-2">登录手机号：</label>
                     <div class="col-md-8 ">
-                        <div><label class="control-label">{{ $data->mobileno or '' }}</label></div>
+                        <div><label class="control-label">{{ $data->mobile or '' }}</label></div>
                     </div>
                 </div>
                 {{--邮箱--}}

@@ -16,6 +16,47 @@
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 
+
+
+@section('sidebar')
+    <ul class="sidebar-menu">
+
+        <li class="header">目录</li>
+
+        <li class="treeview {{ $sidebar_menu_root_active or '' }}">
+            <a href="{{url('/')}}"><i class="fa fa-list text-orange"></i> <span>平台首页</span></a>
+        </li>
+
+        <li class="treeview {{ $sidebar_menu_activity_active or '' }}">
+            <a href="{{url('/?type=activity')}}"><i class="fa fa-list text-orange"></i> <span>活动</span></a>
+        </li>
+
+        <li class="treeview {{ $sidebar_menu_organization_active or '' }}">
+            <a href="{{url('/organization-list')}}"><i class="fa fa-list text-orange"></i> <span>组织</span></a>
+        </li>
+
+        <li class="header">Home</li>
+
+        @if(!Auth::check())
+
+            <li class="treeview">
+                <a href="{{url('/login')}}"><i class="fa fa-circle-o"></i> <span>登录</span></a>
+            </li>
+            <li class="treeview">
+                <a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span>注册</span></a>
+            </li>
+        @else
+            <li class="treeview">
+                <a href="{{url('/home')}}"><i class="fa fa-home text-orange"></i> <span>{{ Auth::user()->username }}</span></a>
+            </li>
+        @endif
+
+    </ul>
+@endsection
+
+
+
+
 @section('content')
 <div style="display:none;">
     <input type="hidden" id="" value="{{ $encode or '' }}" readonly>
@@ -40,19 +81,19 @@
 
             <a href="{{url('/')}}">
                 <div class="box-body {{ $sidebar_menu_root_active or '' }}">
-                    <i class="fa fa-list text-orange"></i> <span>&nbsp; 首页</span>
+                    <i class="fa fa-list text-orange" style="width:24px;"></i><span>首页</span>
                 </div>
             </a>
 
             <a href="{{url('/?type=activity')}}">
                 <div class="box-body {{ $sidebar_menu_activity_active or '' }}">
-                    <i class="fa fa-list text-orange"></i> <span>&nbsp; 活动</span>
+                    <i class="fa fa-list text-orange" style="width:24px;"></i><span>活动</span>
                 </div>
             </a>
 
             <a href="{{url('/organization-list')}}">
                 <div class="box-body {{ $sidebar_menu_organization_active or '' }}">
-                    <i class="fa fa-list text-orange"></i> <span>&nbsp; 机构</span>
+                    <i class="fa fa-list text-orange" style="width:24px;"></i><span>机构</span>
                 </div>
             </a>
 
@@ -63,7 +104,7 @@
             @if(!Auth::check())
             <a href="{{ url('https://open.weixin.qq.com/connect/qrconnect?appid=wxc08005678d8d8736&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect') }}">
                 <div class="box-body">
-                    <i class="fa fa-sign-in text-blue"></i> <span>&nbsp; 登录</span>
+                    <i class="fa fa-sign-in text-blue" style="width:24px;"></i><span>登录</span>
                 </div>
             </a>
             {{--<a href="{{url('/register')}}">--}}
@@ -72,12 +113,14 @@
                 {{--</div>--}}
             {{--</a>--}}
             @else
+            {{--<a href="{{url('/home')}}">--}}
                 <div class="box-body">
-                    <i class="fa fa-home text-blue"></i> <span>&nbsp; {{ Auth::user()->username }}</span>
+                    <i class="fa fa-home text-blue" style="width:24px;"></i><span>{{ Auth::user()->username }}</span>
                 </div>
+            {{--</a>--}}
             <a href="{{url('/home')}}">
                 <div class="box-body">
-                    <i class="fa fa-home text-blue"></i> <span>&nbsp; 返回我的后台</span>
+                    <i class="fa fa-heart text-blue" style="width:24px;"></i><span>我的收藏</span>
                 </div>
             </a>
             @endif

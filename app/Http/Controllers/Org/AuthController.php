@@ -68,7 +68,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::guard('org')->logout();
-//        return redirect('/admin/login');
         return redirect('/org/login');
     }
 

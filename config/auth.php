@@ -56,6 +56,11 @@ return [
             'provider' => 'org',
         ],
 
+        'sponsor' => [
+            'driver' => 'session',
+            'provider' => 'sponsor',
+        ],
+
         'org_admin' => [
             'driver' => 'session',
             'provider' => 'org_admins',
@@ -101,6 +106,11 @@ return [
         ],
 
         'org' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\K\K_User::class,
+        ],
+
+        'sponsor' => [
             'driver' => 'eloquent',
             'model' => App\Models\K\K_User::class,
         ],

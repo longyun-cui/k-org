@@ -101,13 +101,31 @@ class IndexController extends Controller
     }
 
 
-    // 【用户】登录-组织
+    // 【用户】登录
     public function operate_user_user_login()
     {
         $user_id = request()->get('id');
         $user = K_User::where('id',$user_id)->first();
-        Auth::login($user,true);
-        return response_success();
+
+        $return['user_type'] = 'user';
+        if($user->user_type == 1)
+        {
+            Auth::login($user,true);
+            $return['user_type'] = 'individual';
+        }
+        else if($user->user_type == 11)
+        {
+            Auth::guard('org')->login($user,true);
+            $return['user_type'] = 'org';
+        }
+        else if($user->user_type == 88)
+        {
+            Auth::guard('sponsor')->login($user,true);
+            $return['user_type'] = 'sponsor';
+        }
+
+
+        return response_success($return);
     }
 
 
@@ -117,6 +135,16 @@ class IndexController extends Controller
         $org_id = request()->get('id');
         $org = K_User::where('id',$org_id)->first();
         Auth::guard('org')->login($org,true);
+        return response_success();
+    }
+
+
+    // 【用户】登录-赞助商
+    public function operate_user_sponsor_login()
+    {
+        $sponsor_id = request()->get('id');
+        $sponsor = K_User::where('id',$sponsor_id)->first();
+        Auth::guard('sponsor')->login($sponsor,true);
         return response_success();
     }
 

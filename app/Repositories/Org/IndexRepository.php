@@ -111,8 +111,8 @@ class IndexRepository {
     // 【基本信息】【密码】返回-修改-视图
     public function view_info_password_reset()
     {
-        $me = Auth::guard('admin')->user();
-        return view(env('TEMPLATE_ADMIN').'admin.entrance.info.password-reset')->with(['data'=>$me]);
+        $me = Auth::guard('org')->user();
+        return view(env('TEMPLATE_ADMIN').'org.entrance.info.password-reset')->with(['data'=>$me]);
     }
     // 【基本信息】【密码】保存-数据
     public function operate_info_password_reset_save($post_data)
@@ -139,7 +139,7 @@ class IndexRepository {
 
         if($password_new == $password_confirm)
         {
-            $me = Auth::guard('admin')->user();
+            $me = Auth::guard('org')->user();
             if(password_check($password_pre,$me->password))
             {
                 $me->password = password_encode($password_new);

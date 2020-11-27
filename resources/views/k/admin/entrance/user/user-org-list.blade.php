@@ -68,6 +68,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -285,6 +286,19 @@
                         'orderable': false,
                         render: function(data, type, row, meta) {
                             return '<a target="_blank" href="/user/'+data+'">'+row.username+'</a>';
+                        }
+                    },
+                    {
+                        "width": "72px",
+                        "title": "用户类型",
+                        'data': 'user_type',
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            if(data == 0) return 'item';
+                            else if(data == 1) return '<small class="btn-xs bg-primary">个人用户</small>';
+                            else if(data == 11) return '<small class="btn-xs bg-olive">组织</small>';
+                            else if(data == 88) return '<small class="btn-xs bg-purple">赞助商</small>';
+                            else return "有误";
                         }
                     },
                     {

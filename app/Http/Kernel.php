@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'wechat.share' => \App\Http\Middleware\WechatShareMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'org' => \App\Http\Middleware\OrgMiddleware::class,
+        'sponsor' => \App\Http\Middleware\SponsorMiddleware::class,
         'home' => \App\Http\Middleware\HomeMiddleware::class,
         'notification' => \App\Http\Middleware\NotificationMiddleware::class,
         'login' => \App\Http\Middleware\LoginMiddleware::class,

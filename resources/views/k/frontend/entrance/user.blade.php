@@ -16,6 +16,47 @@
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}@endsection
 
 
+
+
+@section('sidebar')
+<ul class="sidebar-menu">
+
+    <li class="header">目录</li>
+
+    <li class="treeview {{ $menu_all or '' }}">
+        <a href="{{url('/')}}"><i class="fa fa-list text-orange"></i> <span>平台首页</span></a>
+    </li>
+
+    <li class="treeview {{ $menu_debates or '' }}">
+        <a href="{{url('/?type=activity')}}"><i class="fa fa-list text-orange"></i> <span>活动</span></a>
+    </li>
+
+    <li class="treeview {{ $menu_anonymous or '' }}">
+        <a href="{{url('/anonymous')}}"><i class="fa fa-list text-orange"></i> <span>匿名话题</span></a>
+    </li>
+
+    <li class="header">Home</li>
+
+    @if(!Auth::check())
+
+        <li class="treeview">
+            <a href="{{url('/login')}}"><i class="fa fa-circle-o"></i> <span>登录</span></a>
+        </li>
+        <li class="treeview">
+            <a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span>注册</span></a>
+        </li>
+    @else
+        <li class="treeview">
+            <a href="{{url('/home')}}"><i class="fa fa-home text-default"></i> <span>返回我的后台</span></a>
+        </li>
+    @endif
+
+</ul>
+@endsection
+
+
+
+
 @section('content')
 
     <div style="display:none;">

@@ -62,6 +62,14 @@ Route::group(['prefix' => 'org', 'namespace' => 'Org'], function () {
 
 
 /*
+ * 赞助商
+ */
+Route::group(['prefix' => 'sponsor', 'namespace' => 'Sponsor'], function () {
+    require(__DIR__ . '/Sponsor/route.php');
+});
+
+
+/*
  * 组织
  */
 Route::group(['namespace' => 'Frontend'], function () {

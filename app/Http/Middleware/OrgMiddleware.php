@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-use App\Models\K\KUser;
+use App\Models\K\K_User;
 
 use Auth, Response;
 
@@ -30,8 +30,8 @@ class OrgMiddleware
         }
         else
         {
-            $org = Auth::guard('org')->user();
-            view()->share('org_data', $org);
+            $user = Auth::guard('org')->user();
+            view()->share('org_data', $user);
         }
         return $next($request);
 

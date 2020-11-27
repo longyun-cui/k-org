@@ -59,6 +59,8 @@ Route::group([], function () {
 
         Route::match(['get','post'], '/user/user-login', $controller.'@operate_user_user_login');
         Route::match(['get','post'], '/user/org-login', $controller.'@operate_user_org_login');
+        Route::match(['get','post'], '/user/sponsor-login', $controller.'@operate_user_sponsor_login');
+
         Route::match(['get','post'], '/user/org-delete', $controller.'@operate_user_org_delete');
 
 

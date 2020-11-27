@@ -68,6 +68,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -280,11 +281,24 @@
                     {
                         'className':"text-left",
                         'width':"",
-                        "title": "组织名称",
+                        "title": "赞助商名称",
                         "data": "id",
                         'orderable': false,
                         render: function(data, type, row, meta) {
                             return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.username+'</a>';
+                        }
+                    },
+                    {
+                        "width": "72px",
+                        "title": "用户类型",
+                        'data': 'user_type',
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            if(data == 0) return 'item';
+                            else if(data == 1) return '<small class="btn-xs bg-primary">个人用户</small>';
+                            else if(data == 11) return '<small class="btn-xs bg-olive">组织</small>';
+                            else if(data == 88) return '<small class="btn-xs bg-purple">赞助商</small>';
+                            else return "有误";
                         }
                     },
                     {
@@ -746,14 +760,14 @@
         $("#item-main-body").on('click', ".item-login-submit", function() {
             var that = $(this);
             $.post(
-                "{{ url('/admin/user/agent-login') }}",
+                "{{ url('/admin/user/sponsor-login') }}",
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     id:that.attr('data-id')
                 },
                 function(data){
                     if(!data.success) layer.msg(data.msg);
-                    else window.open('/agent/');
+                    else window.open('/sponsor/');
                 },
                 'json'
             );
