@@ -112,9 +112,17 @@
                 {{--<div class="margin">活动：{{ $data->activity_count or 0 }}</div>--}}
             {{--</div>--}}
 
-            @include(env('TEMPLATE_DEFAULT').'frontend.component.items')
+            @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list')
 
             {{ $items->links() }}
+
+            @if($data->user_type == 88)
+                <div class="item-piece item-option topic-option">
+                    <div class="box-body item-row item-content-row">
+                        <article class="colo-md-12"> {!! $data->introduction->content or '' !!} </article>
+                    </div>
+                </div>
+            @endif
 
         </div>
 

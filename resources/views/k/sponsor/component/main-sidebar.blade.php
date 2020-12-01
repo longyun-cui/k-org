@@ -39,8 +39,8 @@
             <li class="header">我的介绍</li>
 
             <li class="treeview {{ $sidebar_user_member_list_active or '' }}">
-                <a href="{{ url('/sponsor/user/introduction') }}">
-                    <i class="fa fa-user"></i><span>介绍简介</span>
+                <a href="{{ url('/sponsor/introduction') }}">
+                    <i class="fa fa-user"></i><span>图文介绍</span>
                 </a>
             </li>
 
@@ -82,13 +82,8 @@
 
 
             {{--工单管理--}}
-            <li class="header">赞助商&广告</li>
+            <li class="header">广告</li>
 
-            <li class="treeview {{ $sidebar_user_sponsor_list_active or '' }}">
-                <a href="{{ url('/sponsor/user/my-sponsor-list') }}">
-                    <i class="fa fa-cny text-red"></i> <span>我的赞助商</span>
-                </a>
-            </li>
             <li class="treeview {{ $sidebar_item_advertising_list_active or '' }}">
                 <a href="{{ url('/sponsor/item/item-advertising-list') }}">
                     <i class="fa fa-cny text-red"></i> <span>广告列表</span>

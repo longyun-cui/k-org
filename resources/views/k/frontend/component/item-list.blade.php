@@ -1,6 +1,7 @@
 @foreach($items as $num => $item)
-<div class="item-piece item-option{{ $getType or 'items' }}"
+<div class="item-piece item-option {{ $getType or 'items' }}"
      data-id="{{ $item->id or 0}}"
+     data-item-id="{{ $item->id or 0}}"
      data-getType="{{ $getType or 'items' }}"
 >
     <!-- BEGIN PORTLET-->
@@ -57,18 +58,18 @@
         <div class="box-body item-row item-tools-row item-tools-container">
 
             {{--点赞&$收藏--}}
-            <a class="tool-button collect-btn " data-num="{{ $item->collect_num }}" role="button">
+            <a class="tool-button operate-btn favor-btn" data-num="{{ $item->favor_num or 0 }}" role="button">
                 @if(Auth::check())
-                    @if($item->pivot_item_relation->contains('type', 1))
-                        <span class="collect-this-cancel"><i class="fa fa-heart text-red"></i></span>
+                    @if($item->pivot_item_relation->contains('relation_type', 1))
+                        <span class="remove-this-favor"><i class="fa fa-heart text-red"></i></span>
                     @else
-                        <span class="collect-this"><i class="fa fa-heart-o"></i></span>
+                        <span class="add-this-favor"><i class="fa fa-heart-o"></i></span>
                     @endif
                 @else
-                    <span class="collect-this"><i class="fa fa-heart-o"></i></span>
+                    <span class="add-this-favor"><i class="fa fa-heart-o"></i></span>
                 @endif
 
-                @if($item->collect_num) <span>{{ $item->collect_num }}</span> @endif
+                @if($item->favor_num) <span class="num">{{ $item->favor_num }}</span> @endif
             </a>
 
             {{--分享--}}

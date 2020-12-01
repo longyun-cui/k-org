@@ -7,8 +7,9 @@ class K_Notification extends Model
     //
     protected $table = "notification";
     protected $fillable = [
-        'category', 'type', 'sort', 'is_read',
-        'owner_id', 'user_id', 'source_id', 'item_id', 'communication_id', 'reply_id', 'content', 'ps'
+        'active', 'notification_category', 'notification_type', 'sort', 'is_read',
+        'owner_id', 'user_id', 'source_id', 'item_id', 'communication_id', 'reply_id',
+        'title', 'description', 'ps', 'content'
     ];
     protected $dateFormat = 'U';
 
@@ -24,17 +25,17 @@ class K_Notification extends Model
 
     function item()
     {
-        return $this->belongsTo('App\Models\RootItem','item_id','id');
+        return $this->belongsTo('App\Models\K\K_Item','item_id','id');
     }
 
     function communication()
     {
-        return $this->belongsTo('App\Models\Communication','communication_id','id');
+        return $this->belongsTo('App\Models\K\K_Communication','communication_id','id');
     }
 
     function reply()
     {
-        return $this->belongsTo('App\Models\Communication','reply_id','id');
+        return $this->belongsTo('App\Models\K\K_Communication','reply_id','id');
     }
 
 

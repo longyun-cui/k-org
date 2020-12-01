@@ -46,8 +46,6 @@ Route::group([], function () {
         Route::match(['get','post'], '/info/password-reset', $controller.'@operate_info_password_reset');
 
 
-
-
         /*
          * introduction
          */

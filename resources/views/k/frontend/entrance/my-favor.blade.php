@@ -33,8 +33,8 @@
         {{--@foreach($datas as $num => $item)--}}
             {{--@include('frontend.component.topic')--}}
         {{--@endforeach--}}
-        @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list')
-        {{ $items->links() }}
+        @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list-for-relation',['item_list'=>$item_list])
+        {{ $item_list->links() }}
 
     </div>
 

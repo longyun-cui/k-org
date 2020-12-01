@@ -41,6 +41,26 @@ class IndexController extends Controller
 
 
 
+    // 【我的关注】
+    public function view_my_follow()
+    {
+        return $this->repo->view_my_follow(request()->all());
+    }
+    // 【我的粉丝】
+    public function view_my_fans()
+    {
+        return $this->repo->view_my_fans(request()->all());
+    }
+
+
+    // 【我的粉丝】
+    public function view_my_favor()
+    {
+        return $this->repo->view_my_favor(request()->all());
+    }
+
+
+
 
 
 
@@ -65,9 +85,9 @@ class IndexController extends Controller
 
 
     // 【机构列表】
-    public function view_org_list()
+    public function view_organization_list()
     {
-        return $this->repo->view_org_list(request()->all());
+        return $this->repo->view_organization_list(request()->all());
     }
 
     // 【机构首页】
@@ -77,9 +97,9 @@ class IndexController extends Controller
     }
 
     // 【机构介绍页】
-    public function view_org_introduce($id=0)
+    public function view_organization_introduction($id=0)
     {
-        return $this->repo->view_org_introduce(request()->all(),$id);
+        return $this->repo->view_organization_introduction(request()->all(),$id);
     }
 
     // 【机构内容列表】
@@ -238,6 +258,16 @@ class IndexController extends Controller
         return $this->repo->item_delete(request()->all());
     }
 
+    // 【点赞】
+    public function item_add_favor()
+    {
+        return $this->repo->item_add_this(request()->all(),1);
+    }
+    public function item_remove_favor()
+    {
+        return $this->repo->item_remove_this(request()->all(),1);
+    }
+
     // 【收藏】
     public function item_add_collection()
     {
@@ -246,16 +276,6 @@ class IndexController extends Controller
     public function item_remove_collection()
     {
         return $this->repo->item_remove_this(request()->all(),21);
-    }
-
-    // 【点赞】
-    public function item_add_favor()
-    {
-        return $this->repo->item_add_this(request()->all(),11);
-    }
-    public function item_remove_favor()
-    {
-        return $this->repo->item_remove_this(request()->all(),11);
     }
 
     // 【待办事】

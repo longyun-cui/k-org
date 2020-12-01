@@ -7,7 +7,7 @@
 @section('meta_keywords')@endsection
 
 
-@section('wx_share_title')朝鲜族组织活动网@endsection
+@section('wx_share_title')组织列表@endsection
 @section('wx_share_desc')朝鲜族组织活动分享平台@endsection
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
@@ -33,8 +33,8 @@
         {{--@foreach($datas as $num => $item)--}}
             {{--@include('frontend.component.topic')--}}
         {{--@endforeach--}}
-        @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list')
-        {{ $items->links() }}
+        @include(env('TEMPLATE_DEFAULT').'frontend.component.user-list',['user_list'=>$user_list])
+        {{ $user_list->links() }}
 
     </div>
 

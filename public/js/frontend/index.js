@@ -45,6 +45,7 @@ jQuery( function ($) {
                 {
                     var html = '<i class="fa fa-minus"></i> 取消关注';
                     $that.removeClass('follow-add-it').addClass('follow-remove-it');
+                    $that.removeClass('follow-add').addClass('follow-remove');
                     $that.find('a').html(html);
                 }
             },
@@ -74,6 +75,7 @@ jQuery( function ($) {
                         {
                             var html = '<i class="fa fa-plus"></i> 添加关注';
                             $that.removeClass('follow-remove-it').addClass('follow-add-it');
+                            $that.removeClass('follow-remove').addClass('follow-add');
                             $that.find('a').html(html);
                             layer.msg("已取消关注");
                         }
@@ -117,11 +119,12 @@ jQuery( function ($) {
                     var html = '';
                     console.log(data.data.relation_type);
                     if(data.data.relation_type == 21) html = '<i class="fa fa-exchange"></i> 相互关注';
-                    else if(data.data.relation_type == 41) html = '<i class="fa fa-check"></i> 已关注';
+                    else if(data.data.relation_type == 41) html = '<i class="fa fa-check"></i> 取消关注';
                     else html = '';
-                    $user_option.find('.tool-inn.tool-info').removeClass('follow-add-it').html(html);
+                    $user_option.find('.tool-inn.tool-info').removeClass('follow-add follow-add-it').addClass('follow-remove follow-remove-it');
+                    $user_option.find('.tool-inn.tool-info').html(html);
 
-                    var li_html = '<li class="follow-remove-it">取消关注</li>';
+                    var li_html = '<li class="follow-remove follow-remove-it">取消关注</li>';
                     $user_option.find('.tool-menu-list ul').prepend(li_html);
                 }
             },
@@ -141,31 +144,32 @@ jQuery( function ($) {
         var $user_id = $user_option.attr('data-user');
         var $relation_type = $user_option.data('type');
 
-        layer.msg('确认"取消"？', {
-            time: 0
-            ,btn: ['确定', '取消']
-            ,yes: function(index){
-                $.post(
-                    "/user/relation/remove",
-                    {
-                        _token: $('meta[name="_token"]').attr('content'),
-                        user_id: $user_id,
-                        type: 1
-                    },
-                    function(data){
-                        if(!data.success) layer.msg(data.msg);
-                        else
-                        {
-                            layer.closeAll();
-                            var html = '<i class="fa fa-plus text-yellow"></i> 关注';
-                            $user_option.find('.tool-inn.tool-info').addClass('follow-add-it').html(html);
-                            $that.remove();
-                        }
-                    },
-                    'json'
-                );
-            }
-        });
+        $.post(
+            "/user/relation/remove",
+            {
+                _token: $('meta[name="_token"]').attr('content'),
+                user_id: $user_id,
+                type: 1
+            },
+            function(data){
+                if(!data.success) layer.msg(data.msg);
+                else
+                {
+                    // layer.closeAll();
+                    var html = '<i class="fa fa-plus"></i> 关注';
+                    $user_option.find('.tool-inn.tool-info').removeClass('follow-remove follow-remove-it').addClass('follow-add follow-add-it');
+                    $user_option.find('.tool-inn.tool-info').html(html);
+                }
+            },
+            'json'
+        );
+
+        // layer.msg('确认"取消"？', {
+        //     time: 0
+        //     ,btn: ['确定', '取消']
+        //     ,yes: function(index){
+        //     }
+        // });
     });
 
 
@@ -220,7 +224,10 @@ jQuery( function ($) {
 
     });
 
-    // 点赞
+
+
+
+    // 【点赞&收藏】
     $(".main-body").off("click",".add-this-favor").on('click', ".add-this-favor", function() {
         var that = $(this);
         var item_option = $(this).parents('.item-option');
@@ -229,22 +236,23 @@ jQuery( function ($) {
             "/item/add/favor",
             {
                 _token: $('meta[name="_token"]').attr('content'),
-                item_id: item_option.attr('data-item'),
-                type: 9
+                item_id: item_option.attr('data-item-id'),
+                type: 1
             },
             function(data){
                 if(!data.success) layer.msg(data.msg);
                 else
                 {
-                    layer.msg("点赞成功");
+                    // layer.msg("点赞成功");
                     that.addClass('remove-this-favor').removeClass('add-this-favor');
-                    that.find('i').addClass('fa-thumbs-up text-red').removeClass('fa-thumbs-o-up');
+                    // that.find('i').addClass('fa-thumbs-up text-red').removeClass('fa-thumbs-o-up');
+                    that.find('i').addClass('fa-heart text-red').removeClass('fa-heart-o');
 
                     var btn = that.parents('.operate-btn');
                     var num = parseInt(btn.attr('data-num'));
                     num = num + 1;
                     btn.attr('data-num',num);
-                    btn.find('num').html(num);
+                    btn.find('.num').html(num);
 
                     // var btn = that.parents('.favor-btn');
                     // var num = parseInt(btn.attr('data-num'));
@@ -260,7 +268,7 @@ jQuery( function ($) {
         );
 
     });
-    // 取消点赞
+    // 【点赞&收藏】取消
     $(".main-body").off("click",".remove-this-favor").on('click', ".remove-this-favor", function() {
         var that = $(this);
         var item_option = $(this).parents('.item-option');
@@ -269,8 +277,8 @@ jQuery( function ($) {
             "/item/remove/favor",
             {
                 _token: $('meta[name="_token"]').attr('content'),
-                item_id: item_option.attr('data-item'),
-                type: 9
+                item_id: item_option.attr('data-item-id'),
+                type: 1
             },
             function(data){
                 if(!data.success) layer.msg(data.msg);
@@ -281,13 +289,14 @@ jQuery( function ($) {
                     // parent.layer.close(index);
 
                     that.addClass('add-this-favor').removeClass('remove-this-favor');
-                    that.find('i').addClass('fa-thumbs-o-up').removeClass('fa-thumbs-up text-red');
+                    // that.find('i').addClass('fa-thumbs-o-up').removeClass('fa-thumbs-up text-red');
+                    that.find('i').addClass('fa-heart-o').removeClass('fa-heart text-red');
 
                     var btn = that.parents('.operate-btn');
                     var num = parseInt(btn.attr('data-num'));
                     num = num - 1;
                     btn.attr('data-num',num);
-                    btn.find('num').html(num);
+                    btn.find('.num').html(num);
                     // if(num == 0) num = '';
                     // var html = '<span class="favor-this"><i class="fa fa-thumbs-o-up"></i> '+num+'</span>';
 
@@ -299,6 +308,8 @@ jQuery( function ($) {
         );
 
     });
+
+
 
 
     // 收藏自己
@@ -391,6 +402,8 @@ jQuery( function ($) {
         });
 
     });
+
+
 
 
     // 添加待办事

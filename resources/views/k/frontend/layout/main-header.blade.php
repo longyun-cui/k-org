@@ -20,7 +20,7 @@
             <span class="logo-big"><a href="{{url('/')}}"><img src="/favicon_transparent.png" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b></a></span>
         </div>
 
-        <div class="navbar-custom-menu visible-sm" style="display:none;float:left;">
+        <div class="navbar-custom-menu visible-sm-" style="display:none;float:left;">
             <ul class="nav navbar-nav">
 
                 <li><a href="{{url('/')}}"> 平台首页</a></li>
@@ -43,21 +43,23 @@
             <ul class="nav navbar-nav">
 
                 @if(!Auth::check())
-                    <li class="visible-sm" style="display:none;">
-                        <a href="{{url('/login')}}"><i class="fa fa-circle-o"></i> <span> 登录</span></a>
+                    <li class="visible-sm-">
+                        <a href="{{url('/login')}}"><i class="fa fa-circle-o"></i><span>登录</span></a>
                     </li>
                     {{--<li class="visible-sm" style="display:none;">--}}
                     {{--<a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>--}}
                     {{--</li>--}}
                 @else
-                    <li class="visible-sm visible-xs" style="display:none;">
-                        <a href="{{url('/home')}}"><i class="fa fa-home text-default"></i> <span> {{Auth::user()->name}}</span></a>
+                    <li class="visible-sm- visible-xs-">
+                        <a href="{{url('/home')}}">
+                            <i class="fa fa-user text-default" style="width:20px;"></i><span>{{ Auth::user()->username }}</span>
+                        </a>
                     </li>
                 @endif
 
-                <li class="dropdown notifications-menu" style="display:none;">
+                <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-home"></i>
+                        <i class="fa fa-list" style="width:20px;"></i><span>{{ Auth::user()->username }}</span>
                         {{--<span class="label label-warning">10</span>--}}
                     </a>
                     <ul class="dropdown-menu">
@@ -66,10 +68,17 @@
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 @if(!Auth::check())
-                                    <li><a href="{{url('/login')}}"><i class="fa fa-circle-o"></i> <span> 登录</span></a></li>
-                                    <li><a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a></li>
+                                    <li>
+                                        <a href="{{url('/login')}}">
+                                            <i class="fa fa-circle-o"></i> <span>登录</span>
+                                        </a>
+                                    </li>
                                 @else
-                                    <li><a href="{{url('/home')}}"><i class="fa fa-home text-default"></i> <span> {{Auth::user()->name}}</span></a></li>
+                                    <li>
+                                        <a href="{{url('/home')}}">
+                                            <i class="fa fa-home text-default" style="width:20px;"></i><span>{{ Auth::user()->username }}</span>
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                         </li>

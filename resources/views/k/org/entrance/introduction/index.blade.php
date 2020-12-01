@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_ADMIN').'sponsor.layout.layout')
+@extends(env('TEMPLATE_ADMIN').'org.layout.layout')
 
 
 @section('head_title','图文详情 - 赞助商后台管理系统 - 如未科技')
@@ -11,7 +11,7 @@
 @section('header','')
 @section('description','朝鲜族组织活动平台 - 赞助商后台管理系统 - 如未科技')
 @section('breadcrumb')
-    <li><a href="{{ url('/sponsor') }}"><i class="fa fa-home"></i>首页</a></li>
+    <li><a href="{{ url('/org') }}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
 @endsection
 
@@ -25,7 +25,7 @@
             <div class="box-header with-border" style="margin: 15px 0;">
                 <h3 class="box-title">图文详情</h3>
                 <div class="pull-right">
-                    <a href="{{url('/sponsor/introduction/edit')}}">
+                    <a href="{{url('/org/introduction/edit')}}">
                         <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa "></i>编辑图文</button>
                     </a>
                 </div>

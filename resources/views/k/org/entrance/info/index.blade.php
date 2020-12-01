@@ -103,6 +103,13 @@
                         <div><label class="control-label">{{ $data->contact_address or '' }}</label></div>
                     </div>
                 </div>
+                {{--描述•简介--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">简介：</label>
+                    <div class="col-md-8 ">
+                        <div><label class="control-label">{{ $data->description or '' }}</label></div>
+                    </div>
+                </div>
                 {{--portrait--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">头像：</label>

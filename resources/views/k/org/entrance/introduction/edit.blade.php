@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_ADMIN').'sponsor.layout.layout')
+@extends(env('TEMPLATE_ADMIN').'org.layout.layout')
 
 
 @section('head_title','编辑图文详情 - 赞助商后台管理系统 - 如未科技')
@@ -11,8 +11,8 @@
 @section('header','')
 @section('description','朝鲜族组织活动平台 - 赞助商后台管理系统 - 如未科技')
 @section('breadcrumb')
-    <li><a href="{{ url('/sponsor') }}"><i class="fa fa-home"></i>首页</a></li>
-    <li><a href="{{ url('/sponsor/introduction/index') }}"><i class="fa fa-info-circle"></i>图文详情</a></li>
+    <li><a href="{{ url('/org') }}"><i class="fa fa-home"></i>首页</a></li>
+    <li><a href="{{ url('/org/introduction/index') }}"><i class="fa fa-info-circle"></i>图文详情</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
 @endsection
 
@@ -105,7 +105,7 @@
         // 添加or修改产品信息
         $("#edit-info-submit").on('click', function() {
             var options = {
-                url: "{{url('/sponsor/introduction/edit')}}",
+                url: "{{url('/org/introduction/edit')}}",
                 type: "post",
                 dataType: "json",
                 // target: "#div2",
@@ -114,7 +114,7 @@
                     else
                     {
                         layer.msg(data.msg);
-                        location.href = "{{url('/sponsor/introduction/index')}}";
+                        location.href = "{{url('/org/introduction/index')}}";
                     }
                 }
             };

@@ -60,6 +60,12 @@ class K_User extends Authenticatable
         return $this->hasMany('App\Models\K\K_User','parent_id','id');
     }
 
+    // 与我相关的内容
+    function fans_list()
+    {
+        return $this->hasMany('App\Models\K\K_Pivot_User_Relation','relation_user_id','id');
+    }
+
 
 
 
@@ -69,10 +75,23 @@ class K_User extends Authenticatable
         return $this->hasMany('App\Models\K\K_Item','owner_id','id');
     }
 
-    // 内容
+    // 广告
     function ad()
     {
         return $this->hasOne('App\Models\K\K_Item','id','advertising_id');
+    }
+
+    // 介绍
+    function introduction()
+    {
+        return $this->hasOne('App\Models\K\K_Item','id','introduction_id');
+    }
+
+    // 与我相关的内容
+    function pivot_item()
+    {
+        return $this->belongsToMany('App\Models\K\K_Item','pivot_user_item','user_id','item_id')
+            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
     }
 
 
@@ -82,7 +101,7 @@ class K_User extends Authenticatable
     function pivot_user()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_user','user_1_id','user_2_id')
-            ->withPivot(['type','relation_type'])->withTimestamps();
+            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
     }
 
     // 与我相关的内容
@@ -96,6 +115,13 @@ class K_User extends Authenticatable
     function pivot_sponsor_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','mine_user_id','relation_user_id')
+            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
+    }
+
+    // 与我相关的内容
+    function pivot_follow_list()
+    {
+        return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')
             ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
     }
 

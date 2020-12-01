@@ -62,9 +62,9 @@ Route::group([], function () {
         Route::get('/item-list', $controller.'@view_item_list');
         Route::get('/item/{id?}', $controller.'@view_item');
 
-        Route::get('/org-list', $controller.'@view_org_list');
-        Route::get('/org/{id?}', $controller.'@view_org');
-        Route::get('/org/{id?}/introduce', $controller.'@view_org_introduce');
+        Route::get('/organization-list', $controller.'@view_organization_list');
+        Route::get('/organization/{id?}', $controller.'@view_organization');
+        Route::get('/organization/{id?}/introduction', $controller.'@view_organization_introduction');
 //        Route::get('/org/{id?}/item-list', $controller.'@view_org_item_list');
 
 //        Route::get('/org/{id?}/article', $controller.'@view_org_article');
@@ -110,6 +110,10 @@ Route::group([], function () {
 
                 Route::get('/home/relation/follow', $controller.'@view_relation_follow');
                 Route::get('/home/relation/fans', $controller.'@view_relation_fans');
+
+
+                Route::get('/my-follow', $controller.'@view_my_follow');
+                Route::get('/my-favor', $controller.'@view_my_favor');
 
             });
 

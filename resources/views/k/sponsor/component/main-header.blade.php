@@ -216,7 +216,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ url('/sponsor/info/index') }}" class="btn btn-default btn-flat">个人资料</a>
+                                    <a href="{{ url('/sponsor/info/index') }}" class="btn btn-default btn-flat">基本资料</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{ url('/sponsor/logout') }}" class="btn btn-default btn-flat">退出</a>

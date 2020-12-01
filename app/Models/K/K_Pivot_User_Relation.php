@@ -19,6 +19,12 @@ class K_Pivot_User_Relation extends Model
     }
 
     // 用户
+    function mine_user()
+    {
+        return $this->belongsTo('App\Models\K\K_User','mine_user_id','id');
+    }
+
+    // 用户
     function relation_user()
     {
         return $this->belongsTo('App\Models\K\K_User','relation_user_id','id');

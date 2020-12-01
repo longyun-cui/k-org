@@ -13,6 +13,10 @@ use App\Models\Pivot_User_Relation;
 
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
+use App\Models\K\K_Communication;
+use App\Models\K\K_Pivot_User_Relation;
+use App\Models\K\K_Pivot_User_Item;
+use App\Models\K\K_Notification;
 
 use App\Repositories\Common\CommonRepository;
 
@@ -29,7 +33,8 @@ class IndexRepository {
         Blade::setEchoFormat('nl2br(e(%s))');
     }
 
-    // 平台主页
+
+    // 【平台首页】
     public function view_root($post_data)
     {
         if(Auth::check())
@@ -86,8 +91,6 @@ class IndexRepository {
 //        else return view('frontend.entrance.root')->with($return);
         else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root')->with($return);
     }
-
-
 
 
     // 【内容列表】
@@ -167,7 +170,7 @@ class IndexRepository {
 
 
 
-    // 用户首页
+    // 【用户】【主页】
     public function view_user($post_data,$id=0)
     {
 //        $user_encode = $id;
@@ -181,6 +184,7 @@ class IndexRepository {
         $user = K_User::with([
             'items'=>function($query) { $query->with('owner')->orderBy('updated_at','desc'); },
             'ad',
+            'introduction',
             'pivot_relation'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
         ])->withCount([
             'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
@@ -250,7 +254,7 @@ class IndexRepository {
                 $sidebar_active => 'active'
             ]);
     }
-    // 用户首页
+    // 【用户】【原创】
     public function view_user_original($post_data,$id=0)
     {
 //        $user_encode = $id;
@@ -400,12 +404,51 @@ class IndexRepository {
 
 
 
-    // 【内容列表】
-    public function view_org_list($post_data)
+    // 【组织列表】
+    public function view_organization_list($post_data)
     {
-        dd('view_org_list');
-        return false;
+
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $user_list = K_User::with([
+                    'ad',
+                    'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
+                ])->withCount([
+                    'fans_list as fans_count' => function($query) { $query->where([]); },
+                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+                ])
+                ->where('user_type',11)
+                ->paginate(20);
+        }
+        else
+        {
+
+            $user_list = K_User::with([
+                    'ad',
+                ])->withCount([
+                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+                ])
+                ->where('user_type',11)
+                ->paginate(20);
+        }
+
+
+//dd($user_list->toArray());
+
+
+        return view(env('TEMPLATE_DEFAULT').'frontend.entrance.organization-list')
+            ->with([
+                'user_list'=>$user_list,
+                'sidebar_menu_organization_list_active' => 'active'
+            ]);
     }
+
+
 
     // 【机构首页】
     public function view_org($post_data,$id=0)
@@ -449,7 +492,7 @@ class IndexRepository {
     }
 
     // 【机构介绍页】
-    public function view_org_introduce($post_data,$id=0)
+    public function view_user_introduction($post_data,$id=0)
     {
         if(Auth::check())
         {
@@ -522,9 +565,251 @@ class IndexRepository {
 
 
 
+    // 【添加关注】
+    public function user_relation_add($post_data)
+    {
+        $messages = [
+            'user_id.required' => '参数有误',
+            'user_id.numeric' => '参数有误',
+            'user_id.exists' => '参数有误',
+        ];
+        $v = Validator::make($post_data, [
+            'user_id' => 'required|numeric|exists:root_users,id'
+        ], $messages);
+        if ($v->fails())
+        {
+            $errors = $v->errors();
+            return response_error([],$errors->first());
+        }
+
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $user_id = $post_data['user_id'];
+            $user = User::find($user_id);
+
+            DB::beginTransaction();
+            try
+            {
+                $me_relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                if($me_relation)
+                {
+                    if($me_relation->relation_type == 71) $me_relation->relation_type = 21;
+                    else $me_relation->relation_type = 41;
+                    $me_relation->save();
+                }
+                else
+                {
+                    $me_relation = new Pivot_User_Relation;
+                    $me_relation->mine_user_id = $me_id;
+                    $me_relation->relation_user_id = $user_id;
+                    $me_relation->relation_type = 41;
+                    $me_relation->save();
+                }
+                $me->timestamps = false;
+                $me->increment('follow_num');
+
+                $it_relation = Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                if($it_relation)
+                {
+                    if($it_relation->relation_type == 41) $it_relation->relation_type = 21;
+                    else $it_relation->relation_type = 71;
+                    $it_relation->save();
+                }
+                else
+                {
+                    $it_relation = new Pivot_User_Relation;
+                    $it_relation->mine_user_id = $user_id;
+                    $it_relation->relation_user_id = $me_id;
+                    $it_relation->relation_type = 71;
+                    $it_relation->save();
+                }
+                $user->timestamps = false;
+                $user->increment('fans_num');
+
+                DB::commit();
+                return response_success(['relation_type'=>$me_relation->relation_type]);
+            }
+            catch (Exception $e)
+            {
+                DB::rollback();
+                $msg = '添加关注失败，请重试！';
+//                $msg = $e->getMessage();
+//                exit($e->getMessage());
+                return response_fail([], $msg);
+            }
+        }
+        else return response_error([],"请先登录！");
+    }
+    // 【取消关注】
+    public function user_relation_remove($post_data)
+    {
+        $messages = [
+            'user_id.required' => '参数有误',
+            'user_id.numeric' => '参数有误',
+            'user_id.exists' => '参数有误',
+        ];
+        $v = Validator::make($post_data, [
+            'user_id' => 'required|numeric|exists:root_users,id'
+        ], $messages);
+        if ($v->fails())
+        {
+            $errors = $v->errors();
+            return response_error([],$errors->first());
+        }
+
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $user_id = $post_data['user_id'];
+            $user = User::find($user_id);
+
+            DB::beginTransaction();
+            try
+            {
+                $me_relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                if($me_relation)
+                {
+                    if($me_relation->relation_type == 21) $me_relation->relation_type = 71;
+                    else if($me_relation->relation_type == 41) $me_relation->relation_type = 91;
+                    else $me_relation->relation_type = 91;
+                    $me_relation->save();
+                }
+                $me->timestamps = false;
+                $me->decrement('follow_num');
+
+                $it_relation = Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                if($it_relation)
+                {
+                    if($it_relation->relation_type == 21) $it_relation->relation_type = 41;
+                    else if($it_relation->relation_type == 71) $it_relation->relation_type = 92;
+                    else $it_relation->relation_type = 92;
+                    $it_relation->save();
+                }
+                $user->timestamps = false;
+                $user->decrement('fans_num');
+
+                DB::commit();
+                return response_success(['relation_type'=>$me_relation->relation_type]);
+            }
+            catch (Exception $e)
+            {
+                DB::rollback();
+                $msg = '取消关注失败，请重试！';
+//                $msg = $e->getMessage();
+//                exit($e->getMessage());、
+                return response_fail([], $msg);
+            }
+        }
+        else return response_error([],"请先登录！");
+    }
 
 
 
+    // 【我的】【关注】
+    public function view_my_follow($post_data)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $user_list = K_Pivot_User_Relation::with([
+                    'relation_user'=>function($query) {
+                        $query->withCount([
+                            'fans_list as fans_count' => function($query) { $query->where(['relation_type'=>41]); },
+                            'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                            'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+                        ]);
+                    },
+                ])
+                ->where(['mine_user_id'=>$me_id])
+                ->whereIn('relation_type',[21,41])
+                ->orderby('id','desc')
+                ->paginate(20);
+
+            foreach ($user_list as $user)
+            {
+                $user->relation_with_me = $user->relation_type;
+            }
+
+        }
+        else return response_error([],"请先登录！");
+
+        return view(env('TEMPLATE_DEFAULT').'frontend.entrance.my-follow')
+            ->with([
+                'user_list'=>$user_list,
+                'sidebar_menu_my_follow_active'=>'active'
+            ]);
+    }
+    // 【我的】【粉丝】
+    public function view_my_fans($post_data)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $users = Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$me_id])->whereIn('relation_type',[21,71])->get();
+            foreach ($users as $user)
+            {
+                $user->relation_with_me = $user->relation_type;
+            }
+        }
+        else return response_error([],"请先登录！");
+
+        return view('frontend.entrance.relation-fans')->with(['users'=>$users,'root_relation_fans_active'=>'active']);
+    }
+
+    // 【我的】【收藏】
+    public function view_my_favor($post_data)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            // Method 1
+//            $query = K_User::with([
+//                'pivot_item'=>function($query) use($me_id) { $query->with([
+//                    'user',
+//                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+//                ])->wherePivot('type',1)->orderby('pivot_user_item.id','desc'); }
+//            ])->find($me_id);
+//            $items = $query->pivot_item;
+
+            $item_list = K_Pivot_User_Item::with([
+                'item'=>function($query) use($me_id) {
+                    $query->with([
+                        'owner',
+                        'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+                    ]);
+                }
+            ])
+                ->where('user_id',$me_id)
+                ->orderby('id','desc')
+                ->paginate(20);
+        }
+        else return response_error([],"请先登录！");
+//        dd($item_list->toArray());
+
+        foreach ($item_list as $item)
+        {
+            $item->custom_decode = json_decode($item->custom);
+            $item->content_show = strip_tags($item->content);
+            $item->img_tags = get_html_img($item->content);
+        }
+
+        return view(env('TEMPLATE_DEFAULT').'frontend.entrance.my-favor')
+            ->with([
+                'item_list'=>$item_list,
+                'sidebar_menu_my_favor_active'=>'active'
+            ]);
+    }
 
 
 
@@ -819,189 +1104,6 @@ class IndexRepository {
 
 
 
-    // 【添加关注】
-    public function user_relation_add($post_data)
-    {
-        $messages = [
-            'user_id.required' => '参数有误',
-            'user_id.numeric' => '参数有误',
-            'user_id.exists' => '参数有误',
-        ];
-        $v = Validator::make($post_data, [
-            'user_id' => 'required|numeric|exists:root_users,id'
-        ], $messages);
-        if ($v->fails())
-        {
-            $errors = $v->errors();
-            return response_error([],$errors->first());
-        }
-
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-
-            $user_id = $post_data['user_id'];
-            $user = User::find($user_id);
-
-            DB::beginTransaction();
-            try
-            {
-                $me_relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
-                if($me_relation)
-                {
-                    if($me_relation->relation_type == 71) $me_relation->relation_type = 21;
-                    else $me_relation->relation_type = 41;
-                    $me_relation->save();
-                }
-                else
-                {
-                    $me_relation = new Pivot_User_Relation;
-                    $me_relation->mine_user_id = $me_id;
-                    $me_relation->relation_user_id = $user_id;
-                    $me_relation->relation_type = 41;
-                    $me_relation->save();
-                }
-                $me->timestamps = false;
-                $me->increment('follow_num');
-
-                $it_relation = Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
-                if($it_relation)
-                {
-                    if($it_relation->relation_type == 41) $it_relation->relation_type = 21;
-                    else $it_relation->relation_type = 71;
-                    $it_relation->save();
-                }
-                else
-                {
-                    $it_relation = new Pivot_User_Relation;
-                    $it_relation->mine_user_id = $user_id;
-                    $it_relation->relation_user_id = $me_id;
-                    $it_relation->relation_type = 71;
-                    $it_relation->save();
-                }
-                $user->timestamps = false;
-                $user->increment('fans_num');
-
-                DB::commit();
-                return response_success(['relation_type'=>$me_relation->relation_type]);
-            }
-            catch (Exception $e)
-            {
-                DB::rollback();
-                $msg = '添加关注失败，请重试！';
-//                $msg = $e->getMessage();
-//                exit($e->getMessage());
-                return response_fail([], $msg);
-            }
-        }
-        else return response_error([],"请先登录！");
-    }
-    // 【取消关注】
-    public function user_relation_remove($post_data)
-    {
-        $messages = [
-            'user_id.required' => '参数有误',
-            'user_id.numeric' => '参数有误',
-            'user_id.exists' => '参数有误',
-        ];
-        $v = Validator::make($post_data, [
-            'user_id' => 'required|numeric|exists:root_users,id'
-        ], $messages);
-        if ($v->fails())
-        {
-            $errors = $v->errors();
-            return response_error([],$errors->first());
-        }
-
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-
-            $user_id = $post_data['user_id'];
-            $user = User::find($user_id);
-
-            DB::beginTransaction();
-            try
-            {
-                $me_relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
-                if($me_relation)
-                {
-                    if($me_relation->relation_type == 21) $me_relation->relation_type = 71;
-                    else if($me_relation->relation_type == 41) $me_relation->relation_type = 91;
-                    else $me_relation->relation_type = 91;
-                    $me_relation->save();
-                }
-                $me->timestamps = false;
-                $me->decrement('follow_num');
-
-                $it_relation = Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
-                if($it_relation)
-                {
-                    if($it_relation->relation_type == 21) $it_relation->relation_type = 41;
-                    else if($it_relation->relation_type == 71) $it_relation->relation_type = 92;
-                    else $it_relation->relation_type = 92;
-                    $it_relation->save();
-                }
-                $user->timestamps = false;
-                $user->decrement('fans_num');
-
-                DB::commit();
-                return response_success(['relation_type'=>$me_relation->relation_type]);
-            }
-            catch (Exception $e)
-            {
-                DB::rollback();
-                $msg = '取消关注失败，请重试！';
-//                $msg = $e->getMessage();
-//                exit($e->getMessage());、
-                return response_fail([], $msg);
-            }
-        }
-        else return response_error([],"请先登录！");
-    }
-
-
-
-
-    // 【我关注的人】
-    public function view_relation_follow($post_data)
-    {
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-
-            $users = Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$me_id])->whereIn('relation_type',[21,41])->get();
-            foreach ($users as $user)
-            {
-                $user->relation_with_me = $user->relation_type;
-            }
-//            dd($users->toArray());
-        }
-        else return response_error([],"请先登录！");
-
-        return view('frontend.entrance.relation-follow')->with(['users'=>$users,'root_relation_follow_active'=>'active']);
-    }
-    // 【关注我的人】
-    public function view_relation_fans($post_data)
-    {
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-
-            $users = Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$me_id])->whereIn('relation_type',[21,71])->get();
-            foreach ($users as $user)
-            {
-                $user->relation_with_me = $user->relation_type;
-            }
-        }
-        else return response_error([],"请先登录！");
-
-        return view('frontend.entrance.relation-fans')->with(['users'=>$users,'root_relation_fans_active'=>'active']);
-    }
 
 
 
@@ -1619,59 +1721,67 @@ class IndexRepository {
             }
 
             $item_id = $post_data['item_id'];
-            $item = RootItem::find($item_id);
+            $item = K_Item::find($item_id);
             if($item)
             {
                 $me = Auth::user();
-                $pivot = Pivot_User_Item::where(['type'=>$type,'user_id'=>$me->id,'item_id'=>$item_id])->first();
+                $pivot = K_Pivot_User_Item::where(['type'=>1,'relation_type'=>$type,'user_id'=>$me->id,'item_id'=>$item_id])->first();
                 if(!$pivot)
                 {
                     DB::beginTransaction();
                     try
                     {
                         $time = time();
-                        $me->pivot_item()->attach($item_id,['type'=>$type,'created_at'=>$time,'updated_at'=>$time]);
+                        $me->pivot_item()->attach($item_id,['type'=>1,'relation_type'=>$type,'created_at'=>$time,'updated_at'=>$time]);
 //
 
                         // 记录机制 Communication
-                        if($type == 11)
+                        if($type == 1)
                         {
                             // 点赞
                             $item->timestamps = false;
                             $item->increment('favor_num');
-                            $communication_insert['type'] = 11;
-                            $communication_insert['sort'] = 1;
+                            $communication_insert['communication_category'] = 1;
+                            $communication_insert['communication_type'] = 11;
+                        }
+                        else if($type == 11)
+                        {
+                            // 点赞
+                            $item->timestamps = false;
+                            $item->increment('favor_num');
+                            $communication_insert['communication_category'] = 1;
+                            $communication_insert['communication_type'] = 11;
                         }
                         else if($type == 21)
                         {
                             // 添加收藏
                             $item->timestamps = false;
                             $item->increment('collection_num');
-                            $communication_insert['type'] = 21;
-                            $communication_insert['sort'] = 1;
+                            $communication_insert['communication_category'] = 1;
+                            $communication_insert['communication_type'] = 21;
                         }
                         else if($type == 31)
                         {
                             // 添加待办
                             $item->timestamps = false;
                             $item->increment('working_num');
-                            $communication_insert['type'] = 31;
-                            $communication_insert['sort'] = 1;
+                            $communication_insert['communication_category'] = 1;
+                            $communication_insert['communication_type'] = 31;
                         }
                         else if($type == 32)
                         {
                             // 添加日程
                             $item->timestamps = false;
                             $item->increment('agenda_num');
-                            $communication_insert['type'] = 32;
-                            $communication_insert['sort'] = 1;
+                            $communication_insert['communication_category'] = 1;
+                            $communication_insert['communication_type'] = 32;
                         }
 
-                        $communication_insert['user_id'] = $item->user_id;
                         $communication_insert['source_id'] = $me->id;
+                        $communication_insert['user_id'] = $item->user_id;
                         $communication_insert['item_id'] = $item_id;
 
-                        $communication = new Communication;
+                        $communication = new K_Communication;
                         $bool = $communication->fill($communication_insert)->save();
                         if(!$bool) throw new Exception("insert--communication--fail");
 
@@ -1682,16 +1792,16 @@ class IndexRepository {
                             // 点赞
                             if($item->user_id != $me->id)
                             {
-                                $notification_insert['type'] = 11;
-                                $notification_insert['sort'] = 11;
+                                $notification_insert['notification_category'] = 11;
+                                $notification_insert['notification_type'] = 11;
                                 $notification_insert['user_id'] = $item->user_id;
                                 $notification_insert['source_id'] = $me->id;
                                 $notification_insert['item_id'] = $item_id;
 
-                                $notification_once = Notification::where($notification_insert)->first();
+                                $notification_once = K_Notification::where($notification_insert)->first();
                                 if(!$notification_once)
                                 {
-                                    $notification = new Notification;
+                                    $notification = new K_Notification;
                                     $bool = $notification->fill($notification_insert)->save();
                                     if(!$bool) throw new Exception("insert--notification--fail");
                                 }
@@ -1714,7 +1824,8 @@ class IndexRepository {
                 }
                 else
                 {
-                    if($type == 11) $msg = '成功点赞';
+                    if($type == 1) $msg = '已经点赞';
+                    else if($type == 11) $msg = '已经点赞';
                     else if($type == 21) $msg = '已经收藏过了';
                     else if($type == 31) $msg = '已经在待办事列表';
                     else if($type == 32) $msg = '已经在日程列表';
@@ -1747,43 +1858,51 @@ class IndexRepository {
             }
 
             $item_id = $post_data['item_id'];
-            $item = RootItem::find($item_id);
+            $item = K_Item::find($item_id);
             if($item)
             {
                 $me = Auth::user();
-                $pivots = Pivot_User_Item::where(['type'=>$type,'user_id'=>$me->id,'item_id'=>$item_id])->get();
+                $pivots = K_Pivot_User_Item::where(['type'=>1,'relation_type'=>$type,'user_id'=>$me->id,'item_id'=>$item_id])->get();
                 if(count($pivots) > 0)
                 {
                     DB::beginTransaction();
                     try
                     {
-                        $num = Pivot_User_Item::where(['type'=>$type,'user_id'=>$me->id,'item_id'=>$item_id])->delete();
+                        $num = K_Pivot_User_Item::where(['type'=>1,'relation_type'=>$type,'user_id'=>$me->id,'item_id'=>$item_id])->delete();
                         if($num != count($pivots)) throw new Exception("delete--pivots--fail");
 
                         // 记录机制 Communication
-                        if($type == 11)
+                        if($type == 1)
                         {
                             // 移除点赞
                             $item->timestamps = false;
                             $item->decrement('favor_num');
-                            $communication_insert['type'] = 11;
-                            $communication_insert['sort'] = 9;
+                            $communication_insert['relation_category'] = 1;
+                            $communication_insert['relation_type'] = 12;
+                        }
+                        else if($type == 11)
+                        {
+                            // 移除点赞
+                            $item->timestamps = false;
+                            $item->decrement('favor_num');
+                            $communication_insert['relation_category'] = 1;
+                            $communication_insert['relation_type'] = 12;
                         }
                         else if($type == 21)
                         {
                             // 移除收藏
                             $item->timestamps = false;
                             $item->decrement('collection_num');
-                            $communication_insert['type'] = 21;
-                            $communication_insert['sort'] = 9;
+                            $communication_insert['relation_category'] = 1;
+                            $communication_insert['relation_type'] = 22;
                         }
                         else if($type == 31)
                         {
                             // 移除待办
                             $item->timestamps = false;
                             $item->decrement('working_num');
-                            $communication_insert['type'] = 31;
-                            $communication_insert['sort'] = 9;
+                            $communication_insert['relation_category'] = 1;
+                            $communication_insert['relation_type'] = 32;
                         }
                         else if($type == 32)
                         {
@@ -1798,7 +1917,7 @@ class IndexRepository {
                         $communication_insert['source_id'] = $me->id;
                         $communication_insert['item_id'] = $item_id;
 
-                        $communication = new Communication;
+                        $communication = new K_Communication;
                         $bool = $communication->fill($communication_insert)->save();
                         if(!$bool) throw new Exception("insert--communication--fail");
 
@@ -1819,7 +1938,8 @@ class IndexRepository {
                 }
                 else
                 {
-                    if($type == 11) $msg = '';
+                    if($type == 1) $msg = '取消点赞';
+                    else if($type == 11) $msg = '取消点赞';
                     else if($type == 21) $msg = '移除收藏成功';
                     else if($type == 31) $msg = '移除待办事成功';
                     else if($type == 32) $msg = '移除日程成功';

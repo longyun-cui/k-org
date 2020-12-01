@@ -5,10 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 class K_Communication extends Model
 {
     //
-    protected $table = "root_communications";
+    protected $table = "communication";
     protected $fillable = [
-        'sort', 'type', 'active', 'support', 'user_id', 'item_id', 'is_anonymous', 'reply_id', 'dialog_id', 'order',
-        'title', 'content',
+        'active', 'communication_category', 'communication_type',
+        'source_id', 'user_id', 'item_id', 'is_anonymous', 'reply_id', 'dialog_id', 'order',
+        'support',
+        'title', 'description', 'content',
         'is_shared', 'favor_num', 'comment_num'
     ];
     protected $dateFormat = 'U';
@@ -53,7 +55,7 @@ class K_Communication extends Model
     // 点赞
     function favors()
     {
-        return $this->hasMany('App\Models\CK\K_ommunication','reply_id','id');
+        return $this->hasMany('App\Models\K\K_Communication','reply_id','id');
     }
 
     /**

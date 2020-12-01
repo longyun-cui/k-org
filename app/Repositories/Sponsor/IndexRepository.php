@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Sponsor;
 
+use App\Models\K\K_Pivot_User_Item;
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
 use App\Models\K\K_Pivot_User_Relation;
@@ -163,6 +164,7 @@ class IndexRepository {
     {
         $me = Auth::guard('sponsor')->user();
         $data = K_Item::find($me->introduction_id);
+        if(!$data) $data = [];
         return view(env('TEMPLATE_ADMIN').'sponsor.entrance.introduction.index')->with(['data'=>$data]);
     }
 
@@ -171,6 +173,7 @@ class IndexRepository {
     {
         $me = Auth::guard('sponsor')->user();
         $data = K_Item::find($me->introduction_id);
+        if(!$data) $data = [];
         return view(env('TEMPLATE_ADMIN').'sponsor.entrance.introduction.edit')->with(['data'=>$data]);
     }
     // 【基本信息】保存-数据
@@ -190,14 +193,34 @@ class IndexRepository {
             $mine_data = $post_data;
             unset($mine_data['operate']);
             unset($mine_data['operate_id']);
-            $bool = $me->fill($mine_data)->save();
+
+            if($me->introduction_id == 0)
+            {
+                $item = new K_Item;
+                $mine_data['owner_id'] = $me->id;
+                $mine_data['item_category'] = 1;
+                $mine_data['item_type'] = 9;
+            }
+            else
+            {
+                $item = K_Item::find($me->introduction_id);
+            }
+
+            $bool = $item->fill($mine_data)->save();
             if($bool)
             {
+
+                if($me->introduction_id == 0)
+                {
+                    $me->introduction_id = $item->id;
+                    $me->save();
+                }
+
                 // 头像
-                if(!empty($post_data["portrait"]))
+                if(!empty($post_data["cover"]))
                 {
                     // 删除原文件
-                    $mine_original_file = $me->portrait_img;
+                    $mine_original_file = $me->cover_pic;
                     if(!empty($mine_original_file) && file_exists(storage_path('resource/'.$mine_original_file)))
                     {
                         unlink(storage_path('resource/'.$mine_original_file));
@@ -206,10 +229,10 @@ class IndexRepository {
                     $result = upload_file_storage($post_data["portrait"]);
                     if($result["result"])
                     {
-                        $me->portrait_img = $result["local"];
-                        $me->save();
+                        $item->cover_pic = $result["local"];
+                        $item->save();
                     }
-                    else throw new Exception("upload-portrait-img-file-fail");
+                    else throw new Exception("upload-cover-pic-file-fail");
                 }
 
             }
