@@ -64,41 +64,9 @@
                     <tr role='row' class='heading'>
                         <th>ID</th>
                         <th>用户名</th>
-                        <th>代理类型</th>
-                        <th>子代理数/上级代理</th>
-                        <th>客户数</th>
-                        <th>总资产</th>
-                        <th>资金余额</th>
-                        <th>创建时间</th>
+                        <th>关注时间</th>
                         <th>状态</th>
                         <th>操作</th>
-                    </tr>
-                    <tr class="_none">
-                        <td></td>
-                        <td><input type="text" class="form-control form-filter item-search-keyup" name="username-" /></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <a href="javascript:void(0);" class="btn btn-xs filter-submit" id="filter-submit-">搜索</a>
-                            <a href="javascript:void(0);" class="btn btn-xs filter-cancel">重置</a>
-                            {{--<div class="btn-group">--}}
-                                {{--<button type="button" class="btn btn-sm btn-success">搜索</button>--}}
-                                {{--<button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">--}}
-                                    {{--<span class="caret"></span>--}}
-                                    {{--<span class="sr-only">Toggle Dropdown</span>--}}
-                                {{--</button>--}}
-                                {{--<ul class="dropdown-menu" role="menu">--}}
-                                    {{--<li><a href="#">重置</a></li>--}}
-                                    {{--<li class="divider"></li>--}}
-                                    {{--<li><a href="#">Separated link</a></li>--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
-                        </td>
                     </tr>
                     </thead>
                     <tbody>
@@ -299,138 +267,46 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
-                        'width':"48px",
+                        "width": "48px",
                         "title": "ID",
                         "data": "id",
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        'className':"text-left",
-//                        'width':"192px",
-                        "title": "代理商",
+                        "className":"text-left",
+//                        "width":"192px",
+                        "title": "用户",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.username+'</a>';
+                            return '<a target="_blank" href="/user/'+data+'">'+row.mine_user.username+'</a>';
                         }
                     },
                     {
-                        'width':"72px",
-                        "title": "代理<br>类型",
-                        "data": "usergroup",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            if(row.usergroup == "Agent") return '1级';
-                            else if(row.usergroup == "Agent2") return '二级代理';
-                            else return '参数有误';
-                        }
-                    },
-                    {
-                        'width':"72px",
-                        "title": "子代理数 /<br>上级代理",
-                        "data": "id",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            if(row.usergroup == "Agent")
-                            {
-                                if(row.isopen_subagent == 1) {
-
-                                    if(row.agents_count && row.agents_count > 0)
-                                    {
-                                        return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.agents_count+'</a>';
-                                    }
-                                    else return '-';
-                                }
-                                else return '-';
-                            }
-                            else if(row.usergroup == "Agent2")
-                            {
-                                if(row.parent) {
-                                    return '<a target="_blank" href="/admin/user/agent?id='+row.parent.id+'">'+row.parent.username+'</a>';
-                                }
-                                else return '上级代理参数有误';
-                            }
-                            else return '参数有误';
-
-                        }
-                    },
-                    {
-                        'width':"48px",
-                        "title": "客户<br>数量",
-                        "data": "id",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            if(row.clients_count && row.clients_count > 0)
-                            {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.clients_count+'</a>';
-                            }
-                            else return '-';
-
-                        }
-                    },
-                    {
-                        'width':"72px",
-                        "title": "资金<br>总额",
-                        "data": "fund_total",
-                        'orderable': true,
-                        render: function(data, type, row, meta) {
-//                            return row.fund == null ? '-' : row.fund.totalfunds;
-                            return parseInt(data).toLocaleString();
-                        }
-                    },
-                    {
-                        'width':"72px",
-                        "title": "资金<br>余额",
-                        "data": "fund_balance",
-                        'orderable': true,
-                        render: function(data, type, row, meta) {
-//                            return row.fund == null ? '-' : row.fund.balancefunds;
-                            return '<b class="">'+parseInt(data).toLocaleString()+'</b>';
-                        }
-                    },
-//                    {
-//                        'data': 'menu_id',
-//                        'orderable': false,
-//                        render: function(data, type, row, meta) {
-////                            return row.menu == null ? '未分类' : row.menu.title;
-//                            if(row.menu == null) return '<small class="label btn-info">未分类</small>';
-//                            else {
-//                                return '<a href="/org-admin/item/menu?id='+row.menu.encode_id+'">'+row.menu.title+'</a>';
-//                            }
-//                        }
-//                    },
-//                    {
-//                        'data': 'id',
-//                        'orderable': false,
-//                        render: function(data, type, row, meta) {
-//                            return row.menu == null ? '未分类' : row.menu.title;
-////                            var html = '';
-////                            $.each(data,function( key, val ) {
-////                                html += '<a href="/org-admin/item/menu?id='+this.id+'">'+this.title+'</a><br>';
-////                            });
-////                            return html;
-//                        }
-//                    },
-                    {
-                        'width':"80px",
-                        "title": "创建<br>时间",
-                        'data': 'createtime',
-                        'orderable': true,
+                        "width": "128px",
+                        "title": "关注时间",
+                        "data": 'created_at',
+                        "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
-                            var $date = new Date(data);
+                            var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
                             var $day = ('00'+($date.getDate())).slice(-2);
-                            return $year+'-'+$month+'-'+$day;
+                            var $hour = ('00'+$date.getHours()).slice(-2);
+                            var $minute = ('00'+$date.getMinutes()).slice(-2);
+                            var $second = ('00'+$date.getSeconds()).slice(-2);
+//                            return $year+'-'+$month+'-'+$day;
+                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
                         }
                     },
 //                    {
-//                        'data': 'created_at',
-//                        'orderable': true,
+//                        "data": 'created_at',
+//                        "orderable": true,
 //                        render: function(data) {
 //                            newDate = new Date();
 //                            newDate.setTime(data * 1000);
@@ -439,9 +315,9 @@
 //                        }
 //                    },
                     {
-                        'data': 'userstatus',
-                        'orderable': false,
-                        'width':"64px",
+                        "width": "64px",
+                        "data": 'active',
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return data;
 //                            if(data == 0) return '<small class="btn btn-xs">未启用</small>';
@@ -450,8 +326,9 @@
                         }
                     },
                     {
-                        'data': 'id',
-                        'orderable': false,
+                        "width": "480px",
+                        "data": "id",
+                        "orderable": false,
                         render: function(data, type, row, meta) {
 
                             // 二级代理权限

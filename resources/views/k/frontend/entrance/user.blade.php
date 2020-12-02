@@ -119,7 +119,7 @@
             @if($data->user_type == 88)
                 <div class="item-piece item-option topic-option">
                     <div class="box-body item-row item-content-row">
-                        <article class="colo-md-12"> {!! $data->introduction->content or '' !!} </article>
+                        <div class="colo-md-12"> {!! $data->introduction->content or '' !!} </div>
                     </div>
                 </div>
             @endif

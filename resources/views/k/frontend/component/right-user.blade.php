@@ -46,7 +46,8 @@
 <div class="box-body bg-white margin-bottom-8px _none">
 
     <div class="margin">
-        <i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->username or '' }}</b>
+        <i class="fa fa-user text-orange" style="width:16px;"></i>
+        <b>{{ $data->username or '' }}</b>
     </div>
 
 </div>
