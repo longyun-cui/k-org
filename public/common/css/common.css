@@ -10,7 +10,7 @@ body {
 
 img { max-width:100%; }
 
-._none { display:none; }
+._none { display:none !important; }
 ._none_always { display:none !important; }
 
 ._pointer { cursor:pointer !important; }
