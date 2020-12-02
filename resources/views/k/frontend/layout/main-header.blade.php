@@ -44,7 +44,10 @@
 
                 @if(!Auth::check())
                     <li class="visible-sm-">
-                        <a href="{{url('/login')}}"><i class="fa fa-circle-o"></i><span>登录</span></a>
+                        <a href="{{url('/login')}}">
+                            <i class="fa fa-circle-o"></i>
+                            <span>登录</span>
+                        </a>
                     </li>
                     {{--<li class="visible-sm" style="display:none;">--}}
                     {{--<a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>--}}
@@ -52,7 +55,14 @@
                 @else
                     <li class="visible-sm- visible-xs-">
                         <a href="{{url('/home')}}">
-                            <i class="fa fa-user text-default" style="width:20px;"></i><span>{{ Auth::user()->username }}</span>
+                            <i class="fa fa-user text-default" style="width:20px;"></i>
+                            <span>{{ Auth::user()->username }}</span>
+                        </a>
+                    </li>
+                    <li class="visible-sm- visible-xs-">
+                        <a href="{{url('/user/logout')}}">
+                            <i class="fa fa-sign-out text-default" style="width:20px;"></i>
+                            <span>退出</span>
                         </a>
                     </li>
                 @endif
@@ -69,14 +79,22 @@
                             <ul class="menu">
                                 @if(!Auth::check())
                                     <li>
-                                        <a href="{{url('/login')}}">
-                                            <i class="fa fa-circle-o"></i> <span>登录</span>
+                                        <a href="{{ url('/login') }}">
+                                            <i class="fa fa-sign-in"></i>
+                                            <span>登录</span>
                                         </a>
                                     </li>
                                 @else
                                     <li>
-                                        <a href="{{url('/home')}}">
-                                            <i class="fa fa-home text-default" style="width:20px;"></i><span>{{ Auth::user()->username }}</span>
+                                        <a href="{{ url('/home') }}">
+                                            <i class="fa fa-home text-default" style="width:20px;"></i>
+                                            <span>{{ Auth::user()->username }}</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/user/logout') }}">
+                                            <i class="fa fa-sign-out text-default" style="width:20px;"></i>
+                                            <span>退出</span>
                                         </a>
                                     </li>
                                 @endif
