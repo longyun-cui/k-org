@@ -1536,6 +1536,16 @@ class IndexRepository {
                     else throw new Exception("upload-attachment-fail");
                 }
 
+                // 生成二维码
+                $qr_code_path = "resource/unique/qr_code/";  // 保存目录
+                if(!file_exists(storage_path($qr_code_path)))
+                    mkdir(storage_path($qr_code_path), 0777, true);
+                // qr_code 图片文件
+                $url = 'http://www.k-org.cn/item/'.$mine->id;  // 目标 URL
+                $filename = 'qr_code_item_'.$mine->id.'.png';  // 目标 file
+                $qr_code = $qr_code_path.$filename;
+                QrCode::errorCorrection('H')->format('png')->size(640)->margin(0)->encoding('UTF-8')->generate($url,storage_path($qr_code));
+
             }
             else throw new Exception("insert--item--fail");
 

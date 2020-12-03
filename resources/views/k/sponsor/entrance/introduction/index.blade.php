@@ -45,7 +45,9 @@
                     <label class="control-label col-md-2">封面图片：</label>
                     <div class="col-md-8 ">
                         <div class="info-img-block" style="width:120px;height:120px;overflow:hidden;">
+                            @if(!empty($data->cover_pic))
                             <img src="{{ url(env('DOMAIN_CDN').'/'.$data->cover_pic) }}" alt="">
+                            @endif
                         </div>
                     </div>
                 </div>

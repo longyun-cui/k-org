@@ -46,12 +46,19 @@
         <div class="navbar-custom-menu">
 
             <div class="navbar-custom-menu" style="height:50px;float:left;">
+                @if(!Auth::check())
                 <a href="{{url('/')}}">
-                <span class="logo-big">
-                    <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-icon" alt="Image">
-                    <b>{{ Auth::user()->username }}</b>
-                </span>
+                    <span class="logo-big">
+                        <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-icon" alt="Image">
+                        <b>{{ Auth::user()->username }}</b>
+                    </span>
                 </a>
+                @else
+                    <a href="{{ url('https://open.weixin.qq.com/connect/qrconnect?appid=wxc08005678d8d8736&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect') }}">
+                        <i class="fa fa-sign-in" style="width:20px;"></i>
+                        <span>登录</span>
+                    </a>
+                @endif
             </div>
 
             <ul class="nav navbar-nav hidden-xs hidden-sm">

@@ -43,6 +43,14 @@ Route::group(['prefix' => 'common'], function () {
 });
 
 
+/*
+ * 主页
+ */
+Route::group(['namespace' => 'Common'], function () {
+    require(__DIR__ . '/Common/route.php');
+});
+
+
 
 
 /*
@@ -70,7 +78,7 @@ Route::group(['prefix' => 'sponsor', 'namespace' => 'Sponsor'], function () {
 
 
 /*
- * 组织
+ * 主页
  */
 Route::group(['namespace' => 'Frontend'], function () {
     require(__DIR__ . '/Frontend/route.php');

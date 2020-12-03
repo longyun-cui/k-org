@@ -343,7 +343,7 @@
 //                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">删除</a>'+
                                     '';
                                 $html_2 =
-                                    '<a class="btn btn-xs bg-olive item-download-qrcode-submit" data-id="'+data+'">下载二维码</a>'+
+                                    '<a class="btn btn-xs bg-olive item-download-qr-code-submit" data-id="'+data+'">下载二维码</a>'+
                                     '';
                             }
                             var html =
