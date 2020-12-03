@@ -226,7 +226,7 @@ class IndexRepository {
                         unlink(storage_path('resource/'.$mine_original_file));
                     }
 
-                    $result = upload_file_storage($post_data["portrait"]);
+                    $result = upload_file_storage($post_data["cover"]);
                     if($result["result"])
                     {
                         $item->cover_pic = $result["local"];
@@ -720,60 +720,6 @@ class IndexRepository {
         }
     }
 
-    // 【赞助商】关闭
-    public function operate_user_sponsor_close($post_data)
-    {
-        $messages = [
-            'operate.required' => '参数有误',
-            'id.required' => '请输入用户名',
-        ];
-        $v = Validator::make($post_data, [
-            'operate' => 'required',
-            'id' => 'required',
-        ], $messages);
-        if ($v->fails())
-        {
-            $messages = $v->errors();
-            return response_error([],$messages->first());
-        }
-
-        $operate = $post_data["operate"];
-        if($operate != 'sponsor-close') return response_error([],"参数有误！");
-        $id = $post_data["id"];
-        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
-
-        $me = Auth::guard('sponsor')->user();
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
-
-        $pivot_relation = K_Pivot_User_Relation::find($id);
-        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
-        if($pivot_relation->mine_user_id != $me->id) return response_error([],"该关联有误！");
-        if($pivot_relation->relation_type != 88) return response_error([],"非赞助商关联，不能执行该操作！");
-
-        // 启动数据库事务
-        DB::beginTransaction();
-        try
-        {
-            $update["relation_active"] = 9;
-            $bool = $pivot_relation->fill($update)->save();
-            if($bool)
-            {
-            }
-            else throw new Exception("update--pivot_relation--fail");
-
-            DB::commit();
-            return response_success([]);
-        }
-        catch (Exception $e)
-        {
-            DB::rollback();
-            $msg = '操作失败，请重试！';
-            $msg = $e->getMessage();
-//            exit($e->getMessage());
-            return response_fail([],$msg);
-        }
-
-    }
     // 【赞助商】开启
     public function operate_user_sponsor_open($post_data)
     {
@@ -797,7 +743,7 @@ class IndexRepository {
         if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
 
         $me = Auth::guard('sponsor')->user();
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+        if(!in_array($me->user_type,[88])) return response_error([],"你没有操作权限！");
 
         $pivot_relation = K_Pivot_User_Relation::find($id);
         if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
@@ -812,6 +758,60 @@ class IndexRepository {
         try
         {
             $update["relation_active"] = 1;
+            $bool = $pivot_relation->fill($update)->save();
+            if($bool)
+            {
+            }
+            else throw new Exception("update--pivot_relation--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【赞助商】关闭
+    public function operate_user_sponsor_close($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入用户名',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'sponsor-close') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $me = Auth::guard('sponsor')->user();
+        if(!in_array($me->user_type,[88])) return response_error([],"你没有操作权限！");
+
+        $pivot_relation = K_Pivot_User_Relation::find($id);
+        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
+        if($pivot_relation->mine_user_id != $me->id) return response_error([],"该关联有误！");
+        if($pivot_relation->relation_type != 88) return response_error([],"非赞助商关联，不能执行该操作！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $update["relation_active"] = 9;
             $bool = $pivot_relation->fill($update)->save();
             if($bool)
             {
@@ -1026,7 +1026,7 @@ class IndexRepository {
         }
 
         $me = Auth::guard('sponsor')->user();
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+        if(!in_array($me->user_type,[88])) return response_error([],"你没有操作权限！");
 
 
         $operate = $post_data["operate"];
@@ -1547,11 +1547,10 @@ class IndexRepository {
 //            exit($e->getMessage());
             return response_fail([],$msg);
         }
-
     }
 
 
-    // 【ITEM】推送
+    // 【ITEM】设为贴片广告
     public function operate_item_ad_set($post_data)
     {
         $messages = [
@@ -1602,7 +1601,7 @@ class IndexRepository {
             return response_fail([],$msg);
         }
     }
-    // 【ITEM】推送
+    // 【ITEM】取消贴片广告
     public function operate_item_ad_cancel($post_data)
     {
         $messages = [
@@ -1639,6 +1638,106 @@ class IndexRepository {
             $me->advertising_id = 0;
             $bool = $me->save();
             if(!$bool) throw new Exception("update--user--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+    // 【ITEM】开启
+    public function operate_item_ad_open($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'ad-open') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('sponsor')->user();
+        if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
+
+        $me_ad_count = K_Item::where(['active'=>1,'status'=>1,'owner_id'=>$me->id])->count();
+        if($me_ad_count >= 3) return response_error([],"启用的广告不能超过3个！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $item->status = 1;
+            $bool = $item->save();
+            if(!$bool) throw new Exception("update--item--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+    // 【ITEM】关闭
+    public function operate_item_ad_close($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'ad-close') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('sponsor')->user();
+        if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $item->status = 9;
+            $bool = $item->save();
+            if(!$bool) throw new Exception("update--item--fail");
 
             DB::commit();
             return response_success([]);

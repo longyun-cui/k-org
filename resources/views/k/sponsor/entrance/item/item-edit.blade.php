@@ -373,7 +373,7 @@
 
         $('#menus').select2({
             ajax: {
-                url: "{{url('/orsponsorg/item/select2_menus')}}",
+                url: "{{url('/sponsor/item/select2_menus')}}",
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {

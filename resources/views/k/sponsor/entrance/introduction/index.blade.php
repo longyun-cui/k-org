@@ -40,15 +40,15 @@
                         <div>{!! $data->content or '' !!}</div>
                     </div>
                 </div>
-                {{--portrait--}}
-                {{--<div class="form-group">--}}
-                    {{--<label class="control-label col-md-2">头像：</label>--}}
-                    {{--<div class="col-md-8 ">--}}
-                        {{--<div class="info-img-block" style="width:120px;height:120px;overflow:hidden;">--}}
-                            {{--<img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" alt="">--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                {{--cover--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">封面图片：</label>
+                    <div class="col-md-8 ">
+                        <div class="info-img-block" style="width:120px;height:120px;overflow:hidden;">
+                            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->cover_pic) }}" alt="">
+                        </div>
+                    </div>
+                </div>
             </div>
             </form>
 

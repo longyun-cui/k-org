@@ -28,46 +28,39 @@
                         <ul class="dropdown-menu">
 
                             <li class="header _none">
-                                <a href="{{url('/org/module-create')}}">
+                                <a href="{{url('/sponsor/module-create')}}">
                                     <i class="fa fa-plus text-green"></i> 添加模块
                                 </a>
                             </li>
 
                             <li class="header">内容</li>
                             <li class="header">
-                                <a href="{{url('/org/item/article-create')}}">
+                                <a href="{{url('/sponsor/item/article-create')}}">
                                     <i class="fa fa-plus text-blue"></i> 添加文章
                                 </a>
                             </li>
                             <li class="header">
-                                <a href="{{url('/org/item/activity-create')}}">
+                                <a href="{{url('/sponsor/item/activity-create')}}">
                                     <i class="fa fa-plus text-blue"></i> 添加活动
                                 </a>
                             </li>
 
                             <li class="header _none">添加内容</li>
                             <li class="header _none">
-                                <a href="{{url('/org/item/create?category=about')}}">
+                                <a href="{{url('/sponsor/item/create?category=about')}}">
                                     <i class="fa fa-plus text-green"></i> 添加关于企业
                                 </a>
                             </li>
                             <li class="header _none">
-                                <a href="{{url('/org/item/create?category=advantage')}}">
+                                <a href="{{url('/sponsor/item/create?category=advantage')}}">
                                     <i class="fa fa-plus text-green"></i> 添加选择我们
                                 </a>
                             </li>
 
                             <li class="header">广告</li>
                             <li class="header">
-                                <a href="{{url('/org/item/advertising-create')}}">
+                                <a href="{{url('/sponsor/item/advertising-create')}}">
                                     <i class="fa fa-plus text-green"></i> 添加广告
-                                </a>
-                            </li>
-
-                            <li class="header">赞助商</li>
-                            <li class="header">
-                                <a href="{{url('/org/user/sponsor-create')}}">
-                                    <i class="fa fa-plus text-green"></i> 添加赞助商
                                 </a>
                             </li>
 

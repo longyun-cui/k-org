@@ -74,6 +74,11 @@ class K_User extends Authenticatable
     {
         return $this->hasMany('App\Models\K\K_Item','owner_id','id');
     }
+    // 内容
+    function ad_list()
+    {
+        return $this->hasMany('App\Models\K\K_Item','owner_id','id');
+    }
 
     // 广告
     function ad()

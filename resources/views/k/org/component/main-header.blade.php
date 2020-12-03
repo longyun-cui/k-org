@@ -64,8 +64,8 @@
                                 </a>
                             </li>
 
-                            <li class="header">赞助商</li>
-                            <li class="header">
+                            <li class="header _none">赞助商</li>
+                            <li class="header _none">
                                 <a href="{{url('/org/user/sponsor-create')}}">
                                     <i class="fa fa-plus text-green"></i> 添加赞助商
                                 </a>

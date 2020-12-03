@@ -9,7 +9,7 @@
 
         <div class="box-body item-row item-title-row">
             <span>
-                <a href="{{ url('/item/'.$item->id) }}" ><b>{{ $item->title or '' }}</b></a>
+                <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a>
             </span>
         </div>
 
@@ -196,7 +196,7 @@
                 </div>
 
                 <div class="col-md-12" style="margin-top:16px;padding:0;">
-                    <a href="{{ url('/item/'.$item->id) }}" target="_blank">
+                    <a href="{{ url('/item/'.$item->id) }}">
                         <button type="button" class="btn btn-block btn-flat btn-more" data-getType="all">更多</button>
                     </a>
                 </div>

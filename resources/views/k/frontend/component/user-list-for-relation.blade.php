@@ -5,7 +5,7 @@
             <div class="item-table-box">
 
                 <div class="item-left-box">
-                    <a href="{{ url('/user/'.$u->relation_user->id) }}" target="_blank">
+                    <a href="{{ url('/user/'.$u->relation_user->id) }}">
                         <img class="media-object" src="{{ url(env('DOMAIN_CDN').'/'.$u->relation_user->portrait_img) }}">
                     </a>
                 </div>
@@ -14,7 +14,7 @@
 
                     <div class="item-row item-title-row">
 
-                        <a href="{{ url('/user/'.$u->relation_user->id) }}" target="_blank">
+                        <a href="{{ url('/user/'.$u->relation_user->id) }}">
                             <b>{{ $u->relation_user->username or '' }}</b>
                         </a>
 

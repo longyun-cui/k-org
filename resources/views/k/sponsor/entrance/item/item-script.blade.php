@@ -195,6 +195,62 @@
                 }
             });
         });
+        // 【赞助商-广告-停用】
+        $("#item-main-body").on('click', ".item-ad-close-submit", function() {
+            var that = $(this);
+            layer.msg('确定"关闭"么?', {
+                time: 0
+                ,btn: ['确定', '取消']
+                ,yes: function(index){
+                    $.post(
+                        "{{ url('/sponsor/item/item-ad-close') }}",
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            operate:"ad-close",
+                            id:that.attr('data-id')
+                        },
+                        function(data){
+                            layer.close(index);
+                            if(!data.success) layer.msg(data.msg);
+                            else
+                            {
+//                                layer.msg("操作完成");
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
+                        },
+                        'json'
+                    );
+                }
+            });
+        });
+        // 【赞助商-广告-启用】
+        $("#item-main-body").on('click', ".item-ad-open-submit", function() {
+            var that = $(this);
+            layer.msg('确定"开启"么?', {
+                time: 0
+                ,btn: ['确定', '取消']
+                ,yes: function(index){
+                    $.post(
+                        "{{ url('/sponsor/item/item-ad-open') }}",
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            operate:"ad-open",
+                            id:that.attr('data-id')
+                        },
+                        function(data){
+                            layer.close(index);
+                            if(!data.success) layer.msg(data.msg);
+                            else
+                            {
+//                                layer.msg("操作完成");
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
+                        },
+                        'json'
+                    );
+                }
+            });
+        });
 
 
 

@@ -140,17 +140,17 @@ class IndexController extends Controller
 
 
 
-    // 【代理商】删除
+    // 【赞助商】删除
     public function operate_user_sponsor_delete()
     {
         return $this->repo->operate_user_sponsor_delete(request()->all());
     }
-    // 【代理商】关闭-二级代理商
+    // 【赞助商】关闭-二级代理商
     public function operate_user_sponsor_close()
     {
         return $this->repo->operate_user_sponsor_close(request()->all());
     }
-    // 【代理商】开启-二级代理商
+    // 【赞助商】开启-二级代理商
     public function operate_user_sponsor_open()
     {
         return $this->repo->operate_user_sponsor_open(request()->all());
@@ -370,6 +370,18 @@ class IndexController extends Controller
     public function operate_item_ad_cancel()
     {
         return $this->repo->operate_item_ad_cancel(request()->all());
+    }
+
+
+    // 【赞助商】关闭-二级代理商
+    public function operate_item_ad_close()
+    {
+        return $this->repo->operate_item_ad_close(request()->all());
+    }
+    // 【赞助商】开启-二级代理商
+    public function operate_item_ad_open()
+    {
+        return $this->repo->operate_item_ad_open(request()->all());
     }
 
 

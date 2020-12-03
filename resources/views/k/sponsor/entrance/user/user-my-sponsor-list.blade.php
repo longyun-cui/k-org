@@ -392,15 +392,15 @@
                         'orderable': false,
                         render: function(data, type, row, meta) {
 
-                            // 二级代理权限
+                            // 是否启用
                             var $is_active = "";
                             if(row.relation_active == 1)
                             {
-                                $is_active = '<a class="btn btn-xs btn-danger item-sponsor-close-submit" data-id="'+data+'" >关闭</a>';
+                                $is_active = '<a class="btn btn-xs btn-danger item-sponsor-close-submit" data-id="'+data+'" >停用</a>';
                             }
                             else
                             {
-                                $is_active = '<a class="btn btn-xs btn-success item-sponsor-open-submit" data-id="'+data+'" >开启</a>';
+                                $is_active = '<a class="btn btn-xs btn-success item-sponsor-open-submit" data-id="'+data+'" >启用</a>';
                             }
 
                             var html =

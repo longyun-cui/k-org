@@ -129,6 +129,8 @@ Route::group([], function () {
         Route::match(['get','post'], '/item/item-publish', $controller.'@operate_item_item_publish');
         Route::match(['get','post'], '/item/item-ad-set', $controller.'@operate_item_ad_set');
         Route::match(['get','post'], '/item/item-ad-cancel', $controller.'@operate_item_ad_cancel');
+        Route::match(['get','post'], '/item/item-ad-open', $controller.'@operate_item_ad_open');
+        Route::match(['get','post'], '/item/item-ad-close', $controller.'@operate_item_ad_close');
 
 
 

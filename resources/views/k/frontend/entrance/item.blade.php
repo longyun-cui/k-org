@@ -38,7 +38,7 @@
 
         <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right">
 
-            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-paste-ad', ['item'=>$user->ad])
+            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$user->ad])
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-sponsor', ['sponsor_list'=>$user->pivot_relation])
 

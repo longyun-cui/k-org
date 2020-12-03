@@ -304,14 +304,19 @@
                             }
                             else if(data == 1)
                             {
-                                if(row.adevertising_is_me == 1)
+                                if(row.status == 0)
                                 {
-                                    return '<a class="btn-xs btn-danger">贴片广告</a>';
+                                    return '<a class="btn-xs btn-info">待启用</a>';
                                 }
-                                else
+                                else if(row.status == 1)
                                 {
-                                    return '<small class="btn-xs btn-success">已发布</small>';
+                                    return '<small class="btn-xs btn-success">已启用</small>';
                                 }
+                                else if(row.status == 9)
+                                {
+                                    return '<small class="btn-xs btn-danger">已停用</small>';
+                                }
+                                else return "有误";
                             }
                             else return "有误";
                         }
@@ -331,6 +336,9 @@
                                 $html_2 =
                                     '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">下载二维码</a>'+
                                     '';
+                                $html_3 =
+                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">启用</a>'+
+                                    '';
                             }
                             else
                             {
@@ -342,16 +350,30 @@
                                 $html_2 =
                                     '<a class="btn btn-xs bg-olive item-download-qrcode-submit" data-id="'+data+'">下载二维码</a>'+
                                     '';
+
+                                // 是否启用
+                                var $html_3 = "";
+                                if(row.status == 1)
+                                {
+                                    $html_3 = '<a class="btn btn-xs btn-danger item-ad-close-submit" data-id="'+data+'" >停用</a>';
+                                }
+                                else
+                                {
+                                    $html_3 = '<a class="btn btn-xs btn-success item-ad-open-submit" data-id="'+data+'" >启用</a>';
+                                }
                             }
 
-                            if(row.adevertising_is_me == 1)
-                            {
-                                $html_3 = '<a class="btn btn-xs btn-danger item-ad-cancel-submit" data-id="'+data+'">取消贴片广告</a>';
-                            }
-                            else
-                            {
-                                $html_3 = '<a class="btn btn-xs btn-primary item-ad-set-submit" data-id="'+data+'">设为贴片广告</a>';
-                            }
+//                            if(row.adevertising_is_me == 1)
+//                            {
+//                                $html_3 = '<a class="btn btn-xs btn-danger item-ad-cancel-submit" data-id="'+data+'">取消贴片广告</a>';
+//                            }
+//                            else
+//                            {
+//                                $html_3 = '<a class="btn btn-xs btn-primary item-ad-set-submit" data-id="'+data+'">设为贴片广告</a>';
+//                            }
+
+
+
                             var html =
 //                                    '<a class="btn btn-xs item-enable-submit" data-id="'+value+'">启用</a>'+
 //                                    '<a class="btn btn-xs item-disable-submit" data-id="'+value+'">禁用</a>'+

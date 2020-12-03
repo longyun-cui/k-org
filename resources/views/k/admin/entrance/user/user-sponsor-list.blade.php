@@ -281,11 +281,11 @@
                     {
                         'className':"text-left",
                         'width':"",
-                        "title": "赞助商名称",
+                        "title": "赞助商",
                         "data": "id",
                         'orderable': false,
                         render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.username+'</a>';
+                            return '<a target="_blank" href="/user/'+data+'">'+row.username+'</a>';
                         }
                     },
                     {

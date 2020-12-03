@@ -17,7 +17,11 @@
         </a>
 
         <div class="navbar-custom-menu" style="height:50px;float:left;">
-            <span class="logo-big"><a href="{{url('/')}}"><img src="/favicon_transparent.png" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b></a></span>
+            <a href="{{url('/')}}">
+                <span class="logo-big">
+                    <img src="/favicon_transparent.png" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b>
+                </span>
+            </a>
         </div>
 
         <div class="navbar-custom-menu visible-sm-" style="display:none;float:left;">
@@ -40,7 +44,17 @@
 
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
+
+            <div class="navbar-custom-menu" style="height:50px;float:left;">
+                <a href="{{url('/')}}">
+                <span class="logo-big">
+                    <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-icon" alt="Image">
+                    <b>{{ Auth::user()->username }}</b>
+                </span>
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav hidden-xs hidden-sm">
 
                 @if(!Auth::check())
                     <li class="visible-sm-">
@@ -53,21 +67,22 @@
                     {{--<a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>--}}
                     {{--</li>--}}
                 @else
-                    <li class="visible-sm- visible-xs-">
-                        <a href="{{url('/home')}}">
-                            <i class="fa fa-user text-default" style="width:20px;"></i>
+                    <li class="visible-sm- visible-xs- _none">
+                        <a href="{{url('/')}}">
+                            {{--<i class="fa fa-user text-default" style="width:20px;"></i>--}}
+                            <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-icon" alt="Image">
                             <span>{{ Auth::user()->username }}</span>
                         </a>
                     </li>
                     <li class="visible-sm- visible-xs-">
                         <a href="{{url('/logout')}}">
-                            <i class="fa fa-sign-out text-default" style="width:20px;"></i>
+                            <i class="fa fa-sign-out text-default" style="width:16px;"></i>
                             <span>退出</span>
                         </a>
                     </li>
                 @endif
 
-                <li class="dropdown notifications-menu _none">
+                <li class="dropdown notifications-menu _none-">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-list" style="width:20px;"></i>
                         {{--<span class="label label-warning">10</span>--}}
@@ -87,13 +102,13 @@
                                 @else
                                     <li>
                                         <a href="{{ url('/home') }}">
-                                            <i class="fa fa-home text-default" style="width:20px;"></i>
+                                            <i class="fa fa-home text-default" style="width:16px;"></i>
                                             <span>{{ Auth::user()->username }}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ url('/logout') }}">
-                                            <i class="fa fa-sign-out text-default" style="width:20px;"></i>
+                                            <i class="fa fa-sign-out text-default" style="width:16px;"></i>
                                             <span>退出</span>
                                         </a>
                                     </li>

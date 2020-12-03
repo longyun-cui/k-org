@@ -182,10 +182,11 @@ class IndexRepository {
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
 
         $user = K_User::with([
+            'introduction',
             'items'=>function($query) { $query->with('owner')->orderBy('updated_at','desc'); },
             'ad',
-            'introduction',
-            'pivot_relation'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
+            'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
+            'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
         ])->withCount([
             'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
             'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
