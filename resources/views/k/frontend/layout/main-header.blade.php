@@ -46,7 +46,7 @@
         <div class="navbar-custom-menu">
 
             <div class="navbar-custom-menu" style="height:50px;float:left;">
-                @if(!Auth::check())
+                @if(Auth::check())
                 <a href="{{url('/')}}">
                     <span class="logo-big">
                         <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-icon" alt="Image">
@@ -63,17 +63,7 @@
 
             <ul class="nav navbar-nav hidden-xs hidden-sm">
 
-                @if(!Auth::check())
-                    <li class="visible-sm-">
-                        <a href="{{ url('https://open.weixin.qq.com/connect/qrconnect?appid=wxc08005678d8d8736&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect') }}">
-                            <i class="fa fa-sign-in" style="width:20px;"></i>
-                            <span>登录</span>
-                        </a>
-                    </li>
-                    {{--<li class="visible-sm" style="display:none;">--}}
-                    {{--<a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>--}}
-                    {{--</li>--}}
-                @else
+                @if(Auth::check())
                     <li class="visible-sm- visible-xs- _none">
                         <a href="{{url('/')}}">
                             {{--<i class="fa fa-user text-default" style="width:20px;"></i>--}}
@@ -87,6 +77,16 @@
                             <span>退出</span>
                         </a>
                     </li>
+                @else
+                    <li class="visible-sm-">
+                        <a href="{{ url('https://open.weixin.qq.com/connect/qrconnect?appid=wxc08005678d8d8736&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect') }}">
+                            <i class="fa fa-sign-in" style="width:20px;"></i>
+                            <span>登录</span>
+                        </a>
+                    </li>
+                    {{--<li class="visible-sm" style="display:none;">--}}
+                    {{--<a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>--}}
+                    {{--</li>--}}
                 @endif
 
                 <li class="dropdown notifications-menu _none-">
@@ -99,14 +99,7 @@
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
-                                @if(!Auth::check())
-                                    <li>
-                                        <a href="{{ url('/login') }}">
-                                            <i class="fa fa-sign-in"></i>
-                                            <span>登录</span>
-                                        </a>
-                                    </li>
-                                @else
+                                @if(Auth::check())
                                     <li>
                                         <a href="{{ url('/home') }}">
                                             <i class="fa fa-home text-default" style="width:16px;"></i>
@@ -117,6 +110,13 @@
                                         <a href="{{ url('/logout') }}">
                                             <i class="fa fa-sign-out text-default" style="width:16px;"></i>
                                             <span>退出</span>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ url('/login') }}">
+                                            <i class="fa fa-sign-in"></i>
+                                            <span>登录</span>
                                         </a>
                                     </li>
                                 @endif
