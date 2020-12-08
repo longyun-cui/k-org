@@ -21,6 +21,9 @@ Route::group([], function () {
 
     $controller = "IndexController";
 
+    Route::match(['get', 'post'],'login-link', $controller."@login_link");
+
+
     /*
      * weixin
      */

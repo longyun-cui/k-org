@@ -28,6 +28,28 @@ class IndexController extends Controller
 
 
 
+    public function login_link()
+    {
+        if(is_weixin())
+        {
+            $app_id = env('WECHAT_SOFT_ORG_APPID');
+            $app_secret = env('WECHAT_SOFT_ORG_SECRET');
+            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            return redirect($url);
+
+        }
+        else
+        {
+            $app_id = env('WECHAT_WEBSITE_K_APPID');
+            $app_secret = env('WECHAT_WEBSITE_K_SECRET');
+            $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
+            return redirect($url);
+        }
+    }
+
+
+
+
     // 【内容列表】
     public function view_item_list()
     {

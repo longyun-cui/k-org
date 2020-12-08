@@ -403,6 +403,32 @@ class IndexRepository {
         return view('frontend.entrance.user-fans')->with(['data'=>$Ta,'users'=>$pivot_users,'user_relation_fans_active'=>'active']);
     }
 
+    // 【机构介绍页】
+    public function view_user_introduction($post_data,$id=0)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $org = OrgOrganization::with([])->find($id);
+        if($org)
+        {
+            $org->timestamps = false;
+            $org->increment('visit_num');
+
+            $org->custom_decode = json_decode($org->custom);
+        }
+        else return view('frontend.errors.404');
+
+        $return['data'] = $org;
+        $return['org_introduce_active'] = "active";
+
+        return view('frontend.entrance.org-introduce')->with($return);
+    }
+
 
 
 
@@ -491,32 +517,6 @@ class IndexRepository {
         $return['sponsor_items'] = $sponsor_items;
 
         return view('frontend.entrance.org')->with($return);
-    }
-
-    // 【机构介绍页】
-    public function view_user_introduction($post_data,$id=0)
-    {
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-        }
-        else $me_id = 0;
-
-        $org = OrgOrganization::with([])->find($id);
-        if($org)
-        {
-            $org->timestamps = false;
-            $org->increment('visit_num');
-
-            $org->custom_decode = json_decode($org->custom);
-        }
-        else return view('frontend.errors.404');
-
-        $return['data'] = $org;
-        $return['org_introduce_active'] = "active";
-
-        return view('frontend.entrance.org-introduce')->with($return);
     }
 
     // 【机构内容列表】
