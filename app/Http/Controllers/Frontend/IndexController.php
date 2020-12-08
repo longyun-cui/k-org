@@ -31,7 +31,6 @@ class IndexController extends Controller
     public function login_link()
     {
         $state  = url()->previous();
-        dd($state);
         if(is_weixin())
         {
             $app_id = env('WECHAT_SOFT_ORG_APPID');
