@@ -190,7 +190,11 @@ class WeixinRepository {
                         }
                     }
                     //echo $img_content;exit;
-                    if($state == '' || $state == "STATE") return redirect('/');
+                    if($state == '' || $state == "STATE")
+                    {
+//                        return redirect('/');
+                        return redirect(url()->previous());
+                    }
                     else return redirect($state);
 
                 }
@@ -288,7 +292,11 @@ class WeixinRepository {
                         }
                     }
                     //echo $img_content;exit;
-                    if($state == '' || $state == "STATE") return redirect('/');
+                    if($state == '' || $state == "STATE")
+                    {
+//                        return redirect('/');
+                        return redirect(url()->previous());
+                    }
                     else return redirect($state);
 
                 }
