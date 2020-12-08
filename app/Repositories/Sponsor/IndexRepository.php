@@ -413,7 +413,7 @@ class IndexRepository {
     // 【用户】【粉丝】返回-列表-数据
     public function get_user_my_fans_list_datatable($post_data)
     {
-        $admin_id = Auth::guard("admin")->user()->id;
+        $me = Auth::guard("sponsor")->user();
         $query = User::select('*')
 //            ->whereHas('fund', function ($query1) { $query1->where('totalfunds', '>=', 1000); } )
             ->with('ep','parent','fund')
@@ -456,16 +456,16 @@ class IndexRepository {
     }
 
     // 【用户】【粉丝】返回-列表-视图
-    public function view_user_my_sponsor_list($post_data)
+    public function view_user_my_org_list($post_data)
     {
-        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.user.user-my-sponsor-list')
-            ->with(['sidebar_user_sponsor_list_active'=>'active menu-open']);
+        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.user.user-my-org-list')
+            ->with(['sidebar_user_my_org_list_active'=>'active menu-open']);
     }
     // 【用户】【粉丝】返回-列表-数据
-    public function get_user_my_sponsor_list_datatable($post_data)
+    public function get_user_my_org_list_datatable($post_data)
     {
         $me = Auth::guard("sponsor")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('relation_user')->where(['mine_user_id'=>$me->id,'relation_type'=>88]);
+        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_user_id'=>$me->id,'relation_type'=>88]);
 
 //        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
@@ -1485,6 +1485,12 @@ class IndexRepository {
             if(!empty($mine_attachment_src) && file_exists(storage_path("resource/" . $mine_attachment_src)))
             {
                 unlink(storage_path("resource/" . $mine_attachment_src));
+            }
+
+            // 删除二维码
+            if(file_exists(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png')))
+            {
+                unlink(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png'));
             }
 
             // 删除UEditor图片

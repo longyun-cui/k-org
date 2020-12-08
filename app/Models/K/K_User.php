@@ -124,6 +124,13 @@ class K_User extends Authenticatable
     }
 
     // 与我相关的内容
+    function pivot_org_list()
+    {
+        return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')
+            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
+    }
+
+    // 与我相关的内容
     function pivot_follow_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')

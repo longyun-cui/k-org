@@ -64,7 +64,7 @@ Route::group([], function () {
 
         Route::match(['get','post'], '/user/my-member-list', $controller.'@view_user_my_member_list');
         Route::match(['get','post'], '/user/my-fans-list', $controller.'@view_user_my_fans_list');
-        Route::match(['get','post'], '/user/my-sponsor-list', $controller.'@view_user_my_sponsor_list');
+        Route::match(['get','post'], '/user/my-org-list', $controller.'@view_user_my_org_list');
 
         Route::match(['get','post'], '/user/sponsor-delete', $controller.'@operate_user_sponsor_delete');
         Route::match(['get','post'], '/user/sponsor-close', $controller.'@operate_user_sponsor_close');

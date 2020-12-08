@@ -63,7 +63,28 @@
                     <span> • 活动 {{ $u->activity_count }}</span>
                 </div>
 
-                <div class="item-row">
+                @if(!empty($u->linkman))
+                <div class="item-row item-info-row">
+                    <i class="fa fa-user text-orange" style="width:16px;"></i>
+                    <span class="text-muted">{{ $u->linkman or '暂无' }}</span>
+                </div>
+                @endif
+
+                @if(!empty($u->contact_phone))
+                <div class="item-row item-info-row">
+                    <i class="fa fa-phone text-success" style="width:16px;"></i>
+                    <span class="text-muted">{{ $u->contact_phone or '暂无' }}</span>
+                </div>
+                @endif
+
+                @if(!empty($u->contact_address))
+                <div class="item-row item-info-row">
+                    <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
+                    <span class="text-muted">{{ $u->contact_address or '暂无' }}</span>
+                </div>
+                @endif
+
+                <div class="item-row item-info-row">
                     {{ $u->description or '暂无简介' }}
                 </div>
 

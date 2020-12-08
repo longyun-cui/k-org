@@ -1,4 +1,4 @@
-<div class="box-body bg-white margin-bottom-8px right-home">
+<div class="box-body bg-white margin-bottom-4px right-home">
 
     @if(!Auth::check())
         <a href="{{ url('https://open.weixin.qq.com/connect/qrconnect?appid=wxc08005678d8d8736&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect') }}">

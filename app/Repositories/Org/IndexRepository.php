@@ -1895,6 +1895,12 @@ class IndexRepository {
                 unlink(storage_path("resource/" . $mine_attachment_src));
             }
 
+            // 删除二维码
+            if(file_exists(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png')))
+            {
+                unlink(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png'));
+            }
+
             // 删除UEditor图片
             $img_tags = get_html_img($mine_content);
             foreach ($img_tags[2] as $img)

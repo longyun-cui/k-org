@@ -6,8 +6,8 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 
 .main-header {color:#fff;}
 .container {width:1010px;padding-left:0;padding-right:0;}
-.container-body-left {padding:8px;}
-.container-body-right {padding:8px;}
+.container-body-left {padding:0 8px;}
+.container-body-right {padding:0;}
 .container-body-right.pull-right {}
 
 .container-body-right {color:#444;}

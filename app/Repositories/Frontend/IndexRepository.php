@@ -187,6 +187,7 @@ class IndexRepository {
             'ad',
             'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
             'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
+            'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
         ])->withCount([
             'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
             'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
@@ -239,7 +240,7 @@ class IndexRepository {
             $item->content_show = strip_tags($item->content);
             $item->img_tags = get_html_img($item->content);
         }
-//        dd($lines->toArray());
+//        dd($item->toArray());
 
 
         $sidebar_active = '';

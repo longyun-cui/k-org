@@ -1,4 +1,4 @@
-@foreach($sponsor_list as $v)
+@foreach($org_list as $v)
 <div class="box-body bg-white margin-bottom-4px">
 
     <div class="item-container">
@@ -46,7 +46,7 @@
             @endif
 
             <div class="item-row item-info-row text-muted">
-                <span class="info-tags text-primary">该组织·赞助商</span>
+                <span class="info-tags text-primary">赞助的组织</span>
             </div>
 
         </div>

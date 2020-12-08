@@ -3,7 +3,7 @@
     width:100%;
     min-height:32px;
     padding:20px;
-    margin-bottom:8px;
+    margin-bottom:4px;
     color:#444;
     background:#fff;
     float:left;
@@ -123,10 +123,11 @@
 }
 
 
-.tool-inn { min-height:16px; padding:4px 8px; margin-left:8px; border:1px solid #ddd; border-radius:2px; font-size:12px; line-height:18px; cursor:pointer; float:right; }
-.tool-inn.follow-add {  border:1px solid #dd0a20;color:#fff;background:#dd0a20; }
-.tool-inn.follow-remove {  border:1px solid #aaa;color:#fff;background:#aaa; }
+.tool-inn { min-height:16px; padding:4px 16px; margin-left:8px; border:1px solid #ddd; border-radius:2px; font-size:12px; line-height:18px; cursor:pointer; float:right; }
+.tool-inn.follow-add { border:1px solid #dd0a20;color:#fff;background:#dd0a20; }
+.tool-inn.follow-remove { border:1px solid #999;color:#fff;background:#a9a9a9; }
 .tool-inn i { font-size:13px; margin-top:-2px; }
+.tool-inn:hover { color:#ff7676; background:#fff; }
 .tool-inn:hover i { color:#ff7676; background:#fff; }
 
 .tool-menu-list { position:absolute; top:32px; right:0; width:80px; padding:8px; border-bottom:1px solid #bbb; box-shadow:0 0 1px 1px #aaa; background:#f8f8f8; }

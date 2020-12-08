@@ -1,5 +1,5 @@
 @foreach($ad_list as $item)
-<div class="box-body bg-white margin-bottom-8px">
+<div class="box-body bg-white margin-bottom-4px">
     <div class="item-container bg-white">
 
         @if(!empty($item->cover_pic))
@@ -24,7 +24,7 @@
                     <a href="{{ url('/item/'.$item->id) }}"><c>{{ $item->title or '' }}</c></a> &nbsp;
                 </div>
                 <div class="text-title-row multi-ellipsis-1">
-                    <span class="info-tags text-danger">该组织•贴片广告</span>
+                    <span class="info-tags text-danger">{{ $ad_tag or '该组织•贴片广告' }}</span>
                 </div>
 
                 @if($item->time_type == 1)

@@ -1,4 +1,4 @@
-<div class="box-body bg-white margin-bottom-8px right-menu">
+<div class="box-body bg-white margin-bottom-4px right-menu">
 
     <a href="{{url('/')}}">
         <div class="box-body {{ $sidebar_menu_root_active or '' }}">

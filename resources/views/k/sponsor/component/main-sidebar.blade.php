@@ -50,7 +50,7 @@
             {{--用户管理--}}
             <li class="header">我的赞助</li>
 
-            <li class="treeview {{ $sidebar_user_member_list_active or '' }}">
+            <li class="treeview {{ $sidebar_user_my_org_list_active or '' }}">
                 <a href="{{ url('/sponsor/user/my-org-list') }}">
                     <i class="fa fa-user"></i><span>赞助组织</span>
                 </a>
@@ -59,20 +59,20 @@
 
 
 
-            {{--业务管理--}}
-            <li class="header">内容管理</li>
+            {{--全部内容--}}
+            <li class="header _none">内容管理</li>
 
-            <li class="treeview {{ $sidebar_item_all_list_active or '' }} ">
+            <li class="treeview {{ $sidebar_item_all_list_active or '' }} _none">
                 <a href="{{ url('/sponsor/item/item-all-list') }}">
                     <i class="fa fa-file-text"></i><span>全部内容</span>
                 </a>
             </li>
-            <li class="treeview {{ $sidebar_item_article_list_active or '' }}">
+            <li class="treeview {{ $sidebar_item_article_list_active or '' }} _none">
                 <a href="{{ url('/sponsor/item/item-list?type=article') }}">
                     <i class="fa fa-file-text"></i><span>文章列表</span>
                 </a>
             </li>
-            <li class="treeview {{ $sidebar_item_activity_list_active or '' }}">
+            <li class="treeview {{ $sidebar_item_activity_list_active or '' }} _none">
                 <a href="{{ url('/sponsor/item/item-activity-list') }}">
                     <i class="fa fa-file-text"></i><span>活动列表</span>
                 </a>
@@ -81,7 +81,7 @@
 
 
 
-            {{--工单管理--}}
+            {{--广告--}}
             <li class="header">广告</li>
 
             <li class="treeview {{ $sidebar_item_advertising_list_active or '' }}">

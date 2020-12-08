@@ -1,5 +1,5 @@
 @if(isset($item->owner->ad))
-    <div class="box-body bg-white margin-bottom-8px">
+    <div class="box-body bg-white margin-bottom-4px">
         <div class="item-container bg-white">
 
             <figure class="image-container padding-top-1-2">

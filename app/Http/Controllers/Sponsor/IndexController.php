@@ -109,10 +109,10 @@ class IndexController extends Controller
         else if(request()->isMethod('post')) return $this->repo->get_user_my_fans_list_datatable(request()->all());
     }
     // 【用户】【赞助商】返回-列表
-    public function view_user_my_sponsor_list()
+    public function view_user_my_org_list()
     {
-        if(request()->isMethod('get')) return $this->repo->view_user_my_sponsor_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_user_my_sponsor_list_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_user_my_org_list(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_user_my_org_list_datatable(request()->all());
     }
 
 
