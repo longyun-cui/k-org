@@ -267,14 +267,14 @@ class WeixinRepository {
                         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $img_content, $result))
                         {
 
-                            $type = $result[2]; // 得到图片类型png?jpg?jpeg?gif?
+                            $type = $result[2]; // 得到图片类型 png?jpg?jpeg?gif?
                             $filename = uniqid().time().'.'.$type;
-                            $storage_path = "resource/common/".date('Y-m-d')."/";
-                            $sql_text = $storage_path.$filename;
+                            $storage_path = "resource/research/common/".date('Y-m-d')."/";
+                            $sql_path = "research/common/".date('Y-m-d')."/";
+                            $sql_text = $sql_path.$filename;
 
                             $file = storage_path($storage_path.$filename);
-
-                            $path = storage_path("resource/common/".date('Y-m-d')."/");
+                            $path = storage_path($storage_path);
                             if (!is_dir($path)) {
                                 mkdir($path, 0777, true);
                             }
