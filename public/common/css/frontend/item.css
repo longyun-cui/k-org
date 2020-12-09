@@ -10,7 +10,7 @@
 }
 .item-piece-2 { padding:20px; }
 
-.item-piece a { color:#888; }
+.item-piece a { color:#888;cursor:pointer; }
 .item-piece a:hover { color:#ff7676; }
 .item-piece .pull-left { margin-right:8px; }
 .item-piece .pull-right { margin-left:8px; }

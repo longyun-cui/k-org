@@ -69,7 +69,7 @@
                     <span class="add-this-favor"><i class="fa fa-heart-o"></i></span>
                 @endif
 
-                @if($item->favor_num) <span class="num">{{ $item->favor_num }}</span> @endif
+                <span class="num">@if($item->favor_num){{ $item->favor_num }}@endif</span>
             </a>
 
             {{--分享--}}
