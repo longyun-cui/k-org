@@ -132,12 +132,6 @@ class IndexRepository {
     // 【内容详情】
     public function view_item($post_data,$id=0)
     {
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-        }
-        else $me_id = 0;
 
         $item = K_Item::with([
             'owner'
@@ -159,11 +153,28 @@ class IndexRepository {
         }
         else return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
 
+
+        $is_follow = 0;
+
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $relation_with_me = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$item->owner_id])->first();
+            if($relation_with_me &&  in_array($relation_with_me->relation_type,[21,41]))
+            {
+                $is_follow = 1;
+            }
+        }
+        else $me_id = 0;
+
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.item')
             ->with([
                 'getType'=>'item',
                 'item'=>$item,
-                'user'=>$user
+                'user'=>$user,
+                'is_follow'=>$is_follow,
             ]);
     }
 
