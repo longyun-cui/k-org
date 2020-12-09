@@ -9,6 +9,7 @@ body {
 }
 
 img { max-width:100%; }
+a { cursor:pointer; }
 
 ._none { display:none !important; }
 ._none_always { display:none !important; }
