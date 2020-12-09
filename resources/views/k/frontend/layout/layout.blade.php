@@ -251,7 +251,7 @@ desired effect
 
 //        var link = window.location.href;
         var link = location.href.split('#')[0];
-//        console.log(link);
+        console.log(link);
 
         if(typeof wx != "undefined") wxFn();
 

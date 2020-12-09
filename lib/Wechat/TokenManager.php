@@ -24,16 +24,16 @@ class TokenManager
         $url = 'http://'.$_SERVER["HTTP_HOST"].request()->getRequestUri();
 
 
-        if(Cache::has(self::cache_key))
-        {
-            $cache = Cache::get(self::cache_key);
-
-            $appID = $cache['app_id'];
-            $ticket = $cache['ticket'];
-            $nonce_str = $cache['nonce_str'];
-            $timestamp = $cache['timestamp'];
-        }
-        else
+//        if(Cache::has(self::cache_key))
+//        {
+//            $cache = Cache::get(self::cache_key);
+//
+//            $appID = $cache['app_id'];
+//            $ticket = $cache['ticket'];
+//            $nonce_str = $cache['nonce_str'];
+//            $timestamp = $cache['timestamp'];
+//        }
+//        else
         {
             $ticket = self::getTicket();
             $nonce_str = self::getNonceStr();
@@ -93,8 +93,8 @@ class TokenManager
     public static function init()
     {
         if (empty(self::$app_id) or empty(self::$secret) or empty(self::$token)) {
-            self::$app_id = env('WECHAT_K_ORG_APPID');
-            self::$secret = env('WECHAT_K_ORG_SECRET');
+            self::$app_id = env('WECHAT_SOFT_ORG_APPID');
+            self::$secret = env('WECHAT_SOFT_ORG_SECRET');
         }
     }
 

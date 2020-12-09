@@ -77,7 +77,6 @@
                         <span class="num">@if($i->item->favor_num){{ $i->item->favor_num }}@endif</span>
                     </a>
                 @endif
-
             </span>
 
             {{--分享--}}
