@@ -1,4 +1,5 @@
 <div class="item-piece item-option topic-option {{ $getType or 'item' }}"
+     data-item="{{ $item->id or 0}}"
      data-id="{{ $item->id or 0}}"
      data-getType="{{ $getType or 'item' }}"
 >
@@ -21,7 +22,7 @@
             <span><a href="{{ url('/user/'.$item->owner->id) }}">{{ $item->owner->username or '' }}</a></span>
             <span class="pull-right"><a class="show-menu" role="button"></a></span>
             <span class=" text-muted disabled"> • {{ time_show($item->updated_at->timestamp) }}</span>
-{{--            <span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
+            {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
             <span class=" text-muted disabled"> • 浏览 <span class="text-blue">{{ $item->visit_num }}</span> 次</span>
         </div>
 
@@ -55,39 +56,27 @@
         {{--tools--}}
         <div class="box-body item-row item-tools-row item-tools-container">
 
-            {{--点赞--}}
-            <a class="tool-button favor-btn" data-num="{{$item->favor_num}}" role="button">
+            {{--点赞&$收藏--}}
+            <span class="tool-button operate-btn favor-btn" data-num="{{ $item->favor_num or 0 }}" role="button">
                 @if(Auth::check())
-                    @if($item->others->contains('type', 1))
-                        <span class="favor-this-cancel"><i class="fa fa-thumbs-up text-red"></i>
+                    @if($item->pivot_item_relation->contains('relation_type', 1))
+                        <a class="remove-this-favor">
+                            <i class="fa fa-heart text-red"></i>
+                            <span class="num">@if($item->favor_num){{ $item->favor_num }}@endif</span>
+                        </a>
                     @else
-                        <span class="favor-this"><i class="fa fa-thumbs-o-up"></i>
+                        <a class="add-this-favor">
+                            <i class="fa fa-heart-o"></i>
+                            <span class="num">@if($item->favor_num){{ $item->favor_num }}@endif</span>
+                        </a>
                     @endif
                 @else
-                    <span class="favor-this"><i class="fa fa-thumbs-o-up"></i>
+                    <a class="add-this-favor">
+                        <i class="fa fa-heart-o"></i>
+                        <span class="num">@if($item->favor_num){{ $item->favor_num }}@endif</span>
+                    </a>
                 @endif
-
-                @if($item->favor_num) {{$item->favor_num}} @endif </span>
-            </a>
-
-            {{--收藏--}}
-            <a class="tool-button collect-btn" data-num="{{$item->collect_num}}" role="button">
-                @if(Auth::check())
-                    @if($item->user_id != Auth::id())
-                        @if(count($item->collections))
-                            <span class="collect-this-cancel"><i class="fa fa-heart text-red"></i>
-                        @else
-                            <span class="collect-this"><i class="fa fa-heart-o"></i>
-                        @endif
-                    @else
-                        <span class="collect-mine"><i class="fa fa-heart-o"></i>
-                    @endif
-                @else
-                    <span class="collect-this"><i class="fa fa-heart-o"></i>
-                @endif
-
-                @if($item->collect_num) {{$item->collect_num}} @endif </span>
-            </a>
+            </span>
 
             {{--分享--}}
             <a class="tool-button _none" role="button"><i class="fa fa-share"></i> @if($item->share_num) {{$item->share_num}} @endif</a>
@@ -107,7 +96,7 @@
             <form action="" method="post" class="form-horizontal form-bordered topic-comment-form">
 
                 {{csrf_field()}}
-                <input type="hidden" name="topic_id" value="{{encode($item->id)}}" readonly>
+                <input type="hidden" name="item_id" value="{{ $item->id }}" readonly>
                 <input type="hidden" name="type" value="1" readonly>
 
                 <div class="form-group">

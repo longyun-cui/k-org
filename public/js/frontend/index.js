@@ -43,21 +43,21 @@ jQuery( function ($) {
                 if(!data.success) layer.msg(data.msg);
                 else
                 {
-                    var html = '<i class="fa fa-minus"></i> 取消关注';
+                    var html = '<i class="fa fa-check"></i> 已关注';
                     $that.removeClass('follow-add follow-add-it').addClass('follow-remove follow-remove-it');
                     $that.html(html);
+                    layer.msg("关注成功！");
                 }
             },
             'json'
         );
     });
-
     // user.page 用户页面 取消关注
     $('.section-user').on('click', '.follow-remove-it', function () {
         var $that = $(this);
         var $user_id = $that.attr('data-user-id');
 
-        layer.msg('确认"取消"？', {
+        layer.msg('确认"取消关注"？', {
             time: 0
             ,btn: ['确定', '取消']
             ,yes: function(index){
@@ -72,11 +72,10 @@ jQuery( function ($) {
                         if(!data.success) layer.msg(data.msg);
                         else
                         {
-                            var html = '<i class="fa fa-plus"></i> 添加关注';
-                            $that.removeClass('follow-remove-it').addClass('follow-add-it');
-                            $that.removeClass('follow-remove').addClass('follow-add');
-                            $that.find('a').html(html);
-                            layer.msg("已取消关注");
+                            var html = '<i class="fa fa-plus"></i> 关注';
+                            $that.removeClass('follow-remove follow-remove-it').addClass('follow-add follow-add-it');
+                            $that.html(html);
+                            layer.msg("已取消关注！");
                         }
                     },
                     'json'
@@ -118,32 +117,29 @@ jQuery( function ($) {
                     var html = '';
                     console.log(data.data.relation_type);
                     if(data.data.relation_type == 21) html = '<i class="fa fa-exchange"></i> 相互关注';
-                    else if(data.data.relation_type == 41) html = '<i class="fa fa-check"></i> 取消关注';
+                    else if(data.data.relation_type == 41) html = '<i class="fa fa-check"></i> 已关注';
                     else html = '';
                     $user_option.find('.tool-inn.tool-info').removeClass('follow-add follow-add-it').addClass('follow-remove follow-remove-it');
                     $user_option.find('.tool-inn.tool-info').html(html);
 
-                    var li_html = '<li class="follow-remove follow-remove-it">取消关注</li>';
+                    var li_html = '<li class="follow-remove follow-remove-it">已关注</li>';
                     $user_option.find('.tool-menu-list ul').prepend(li_html);
                 }
             },
             'json'
         );
     });
-
     // user.option 取消关注
     $('.user-option').on('click', '.follow-remove-it', function (e) {
 
         e.stopPropagation();
-
-        console.log(9);
 
         var $that = $(this);
         var $user_option = $that.parents('.user-option');
         var $user_id = $user_option.attr('data-user');
         var $relation_type = $user_option.data('type');
 
-        layer.msg('确认"取消"？', {
+        layer.msg('确认"取消关注"？', {
             time: 0
             ,btn: ['确定', '取消']
             ,yes: function(index){

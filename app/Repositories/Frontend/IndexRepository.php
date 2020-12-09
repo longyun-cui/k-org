@@ -199,6 +199,8 @@ class IndexRepository {
         $user->timestamps = false;
         $user->increment('visit_num');
 
+        $is_follow = 0;
+
         if(Auth::check())
         {
             $me = Auth::user();
@@ -220,6 +222,12 @@ class IndexRepository {
             {
                 $relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 view()->share(['relation'=>$relation]);
+            }
+
+            $relation_with_me = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            if($relation_with_me &&  in_array($relation_with_me->relation_type,[21,41]))
+            {
+                $is_follow = 1;
             }
         }
         else
@@ -243,6 +251,7 @@ class IndexRepository {
 //        dd($item->toArray());
 
 
+
         $sidebar_active = '';
         if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
         else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
@@ -253,6 +262,7 @@ class IndexRepository {
             ->with([
                 'data'=>$user,
                 'items'=>$items,
+                'is_follow'=>$is_follow,
                 $sidebar_active => 'active'
             ]);
     }
@@ -576,7 +586,7 @@ class IndexRepository {
             'user_id.exists' => '参数有误',
         ];
         $v = Validator::make($post_data, [
-            'user_id' => 'required|numeric|exists:root_users,id'
+            'user_id' => 'required|numeric|exists:user,id'
         ], $messages);
         if ($v->fails())
         {
@@ -590,12 +600,12 @@ class IndexRepository {
             $me_id = $me->id;
 
             $user_id = $post_data['user_id'];
-            $user = User::find($user_id);
+            $user = K_User::find($user_id);
 
             DB::beginTransaction();
             try
             {
-                $me_relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                $me_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 if($me_relation)
                 {
                     if($me_relation->relation_type == 71) $me_relation->relation_type = 21;
@@ -613,7 +623,7 @@ class IndexRepository {
                 $me->timestamps = false;
                 $me->increment('follow_num');
 
-                $it_relation = Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                $it_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
                 if($it_relation)
                 {
                     if($it_relation->relation_type == 41) $it_relation->relation_type = 21;
@@ -622,7 +632,7 @@ class IndexRepository {
                 }
                 else
                 {
-                    $it_relation = new Pivot_User_Relation;
+                    $it_relation = new K_Pivot_User_Relation;
                     $it_relation->mine_user_id = $user_id;
                     $it_relation->relation_user_id = $me_id;
                     $it_relation->relation_type = 71;
@@ -638,7 +648,7 @@ class IndexRepository {
             {
                 DB::rollback();
                 $msg = '添加关注失败，请重试！';
-//                $msg = $e->getMessage();
+                $msg = $e->getMessage();
 //                exit($e->getMessage());
                 return response_fail([], $msg);
             }
@@ -654,7 +664,7 @@ class IndexRepository {
             'user_id.exists' => '参数有误',
         ];
         $v = Validator::make($post_data, [
-            'user_id' => 'required|numeric|exists:root_users,id'
+            'user_id' => 'required|numeric|exists:user,id'
         ], $messages);
         if ($v->fails())
         {
@@ -668,12 +678,12 @@ class IndexRepository {
             $me_id = $me->id;
 
             $user_id = $post_data['user_id'];
-            $user = User::find($user_id);
+            $user = K_User::find($user_id);
 
             DB::beginTransaction();
             try
             {
-                $me_relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                $me_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 if($me_relation)
                 {
                     if($me_relation->relation_type == 21) $me_relation->relation_type = 71;
@@ -684,7 +694,7 @@ class IndexRepository {
                 $me->timestamps = false;
                 $me->decrement('follow_num');
 
-                $it_relation = Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                $it_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
                 if($it_relation)
                 {
                     if($it_relation->relation_type == 21) $it_relation->relation_type = 41;

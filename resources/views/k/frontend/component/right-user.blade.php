@@ -38,10 +38,26 @@
         </div>
 
         <div class="item-row">
+            @if(!Auth::check())
             <div class="tool-inn tool-info follow-add follow-add-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
                 <i class="fa fa-plus"></i>
                 <span class="">关注</span>
             </div>
+            @else
+                @if(Auth::user()->id != $data->id)
+                    @if($is_follow)
+                    <div class="tool-inn tool-info follow-remove follow-remove-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
+                        <i class="fa fa-check"></i>
+                        <span class="">已关注</span>
+                    </div>
+                    @else
+                    <div class="tool-inn tool-info follow-add follow-add-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
+                        <i class="fa fa-plus"></i>
+                        <span class="">关注</span>
+                    </div>
+                    @endif
+                @endif
+            @endif
         </div>
 
     </div>
