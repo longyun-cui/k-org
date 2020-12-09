@@ -363,7 +363,11 @@ class IndexRepository {
         $me = Auth::guard("org")->user();
         $query = K_Pivot_User_Relation::select('*')->with('relation_user')->where(['mine_user_id'=>$me->id,'relation_type'=>88]);
 
-//        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
+        if(!empty($post_data['username']))
+        {
+            $username = $post_data['username'];
+            $query->whereHas('relation_user', function ($query1) use($username) { $query1->where('user.username', 'like', "%{$username}%"); } );
+        }
 
         $total = $query->count();
 
@@ -410,7 +414,14 @@ class IndexRepository {
         $me = Auth::guard("org")->user();
         $query = K_User::select('*')->where(['user_category'=>1,'user_type'=>88]);
 
-        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
+        if(!empty($post_data['username']))
+        {
+            $query->where('username', 'like', "%{$post_data['username']}%");
+        }
+        else
+        {
+            $query->where('username', '不可能存在的赞助商！');
+        }
 
         $total = $query->count();
 

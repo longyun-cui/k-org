@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_ADMIN').'admin.layout.layout')
+@extends(env('TEMPLATE_ADMIN').'org.layout.layout')
 
 
 @section('head_title','赞助商列表 - 管理员后台 - 如未科技')
@@ -25,7 +25,7 @@
                 <div class="caption pull-right _none">
                     <i class="icon-pin font-blue"></i>
                     <span class="caption-subject font-blue sbold uppercase"></span>
-                    <a href="{{ url('/admin/user/user-create') }}">
+                    <a href="{{ url('/org/user/user-create') }}">
                         <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa fa-plus"></i> 添加组织/赞助商</button>
                     </a>
                 </div>
@@ -253,7 +253,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/user/sponsor-list') }}",
+                    'url': "{{ url('/org/user/relation-sponsor-list') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {

@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="box-body datatable-body" id="item-main-body">
+            <div class="box-body datatable-body item-main-body" id="item-main-body">
 
 
                 <div class="row col-md-12 datatable-search-row">

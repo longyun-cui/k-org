@@ -1,14 +1,6 @@
 {{--<!-- Main Header -->--}}
 <header class="main-header">
 
-    <!-- Logo -->
-    <a href="{{url('/')}}" class="logo" style="display:none;background-color:#222d32;">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>K-ORG</b></span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>朝鲜族组织活动网</b></span>
-    </a>
-
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation" style="margin-left:0;background-color:#1a2226;">
         <!-- Sidebar toggle button-->
@@ -16,82 +8,40 @@
             <span class="sr-only">Toggle navigation</span>
         </a>
 
-        <div class="navbar-custom-menu" style="height:50px;float:left;">
+        <div class="navbar-custom-menu" style="height:50px;line-height:50px;float:left;">
             <a href="{{url('/')}}">
                 <span class="logo-big">
-                    <img src="/favicon_transparent.png" class="img-icon" alt="Image"> <b>朝鲜族组织活动网</b>
+                    <img src="/favicon_transparent.png" class="img-icon" alt="Image">
+                    <b class="hidden-xs">朝鲜族组织活动网</b>
                 </span>
             </a>
         </div>
 
-        <div class="navbar-custom-menu visible-sm-" style="display:none;float:left;">
-            <ul class="nav navbar-nav">
-
-                <li><a href="{{url('/')}}"> 平台首页</a></li>
-
-                <li><a href="{{url('/?type=activity')}}"> 活动</a></li>
-
-                <li><a href="{{url('/organization-list')}}"> 组织</a></li>
-
-            </ul>
-        </div>
 
 
+        {{--<div class="header-logo" >--}}
+            {{--<span class="logo-lg"><b>@yield('header_title')</b></span>--}}
+        {{--</div>--}}
 
-        <div class="header-logo" >
-            <span class="logo-lg"><b>@yield('header_title')</b></span>
-        </div>
 
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
 
-            <div class="navbar-custom-menu" style="height:50px;float:left;">
-                @if(Auth::check())
-                <a href="{{url('/')}}">
-                    <span class="logo-big">
-                        <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-icon" alt="Image">
-                        <b>{{ Auth::user()->username }}</b>
-                    </span>
+            @if(!Auth::check())
+            <div class="navbar-custom-menu" style="height:50px;line-height:50px;float:left;">
+                <a href="{{ url('/login-link') }}">
+                    <i class="fa fa-sign-in"></i>
+                    <span>登录</span>
                 </a>
-                @else
-                    <a href="{{ url('/login-link') }}">
-                        <i class="fa fa-sign-in" style="width:20px;"></i>
-                        <span>登录</span>
-                    </a>
-                @endif
             </div>
+            @endif
 
-            <ul class="nav navbar-nav hidden-xs hidden-sm">
+            <ul class="nav navbar-nav hidden-xs- hidden-sm-">
 
-                @if(Auth::check())
-                    <li class="visible-sm- visible-xs- _none">
-                        <a href="{{url('/')}}">
-                            {{--<i class="fa fa-user text-default" style="width:20px;"></i>--}}
-                            <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-icon" alt="Image">
-                            <span>{{ Auth::user()->username }}</span>
-                        </a>
-                    </li>
-                    <li class="visible-sm- visible-xs-">
-                        <a href="{{ url('/logout') }}">
-                            <i class="fa fa-sign-out text-default" style="width:16px;"></i>
-                            <span>退出</span>
-                        </a>
-                    </li>
-                @else
-                    <li class="visible-sm-">
-                        <a href="{{ url('/login-link') }}">
-                            <i class="fa fa-sign-in" style="width:20px;"></i>
-                            <span>登录</span>
-                        </a>
-                    </li>
-                    {{--<li class="visible-sm" style="display:none;">--}}
-                    {{--<a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span> 注册</span></a>--}}
-                    {{--</li>--}}
-                @endif
-
-                <li class="dropdown notifications-menu _none-">
+                {{--<!-- Notifications Menu -->--}}
+                <li class="dropdown notifications-menu _none">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-list" style="width:20px;"></i>
+                        <i class="fa fa-list" style="width:16px;"></i>
                         {{--<span class="label label-warning">10</span>--}}
                     </a>
                     <ul class="dropdown-menu">
@@ -114,7 +64,7 @@
                                     </li>
                                 @else
                                     <li>
-                                        <a href="{{ url('/login') }}">
+                                        <a href="{{ url('/login-link') }}">
                                             <i class="fa fa-sign-in"></i>
                                             <span>登录</span>
                                         </a>
@@ -126,12 +76,69 @@
                     </ul>
                 </li>
 
+                {{--<!-- User Account Menu -->--}}
+                @if(Auth::check())
+                <li class="dropdown user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!-- The user image in the navbar-->
+                            <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="user-image" alt="User Image">
+                            <span class="hidden-xs"><span>{{ Auth::user()->username }}</span></span>
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- The user image in the menu -->
+                            <li class="user-header">
+                                <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-circle" alt="User Image">
+                                <p>
+                                    {{ Auth::user()->username }}
+                                    <small>Member since Nov. 2012</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-xs-6 text-center">
+                                        <i class="fa fa-heart text-red"></i>
+                                        <a href="{{ url('/my-follow') }}">我的关注</a>
+                                    </div>
+                                    <div class="col-xs-6 text-center">
+                                        <i class="fa fa-heart text-red"></i>
+                                        <a href="{{ url('/my-favor') }}">我的收藏</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center _none">
+                                        <a href="javascript:void(0);">Friends</a>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{{ url('/info/index') }}" class="btn btn-default btn-flat">
+                                        <i class="fa fa-user"></i>
+                                        <span>个人资料</span>
+                                    </a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">
+                                        <i class="fa fa-sign-in"></i>
+                                        <span>退出</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
+
 
                 <!-- Control Sidebar Toggle Button -->
-                <li style="display:none;">
+                <li class="_none">
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>
             </ul>
+
         </div>
     </nav>
+
 </header>

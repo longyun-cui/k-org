@@ -4,7 +4,7 @@
         <!-- Logo -->
         <a href="{{ url('/admin') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>Admin</b></span>
+            <span class="logo-mini"><b>A</b></span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>管理员后台</b></span>
         </a>
@@ -213,9 +213,10 @@
                     </li>
 
                     <!-- Control Sidebar Toggle Button -->
-                    <li style="display:none;">
+                    <li class="_none">
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
+
                 </ul>
             </div>
         </nav>

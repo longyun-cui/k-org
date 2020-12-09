@@ -63,7 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('/lib/css/swiper-4.2.2.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('/common/css/common.css') }}" media="all" />
-    <link rel="stylesheet" href="{{ asset('/common/css/frontend/index.css') }}" media="all" />
+    {{--<link rel="stylesheet" href="{{ asset('/common/css/frontend/index.css') }}" media="all" />--}}
     <link rel="stylesheet" href="{{ asset('/common/css/backend/index.css') }}" media="all" />
 
     <link rel="stylesheet" href="{{ asset('/css/common.css') }}">

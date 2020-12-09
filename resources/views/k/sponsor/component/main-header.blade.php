@@ -219,9 +219,10 @@
                     </li>
 
                     <!-- Control Sidebar Toggle Button -->
-                    <li style="display:none;">
+                    <li class="_none">
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
+
                 </ul>
             </div>
         </nav>

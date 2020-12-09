@@ -1,6 +1,16 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
-@section('head_title') {{ $data->username or '' }}的主页 @endsection
+@section('head_title')
+    @if(request('type') == 'root')
+        {{ $data->username or '' }}的主页
+    @elseif(request('type') == 'article')
+        {{ $data->username or '' }}的文章
+    @elseif(request('type') == 'activity')
+        {{ $data->username or '' }}的活动
+    @else
+        {{ $data->username or '' }}的主页
+    @endif
+@endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection
 @section('meta_description')@endsection
@@ -19,39 +29,9 @@
 
 
 @section('sidebar')
-<ul class="sidebar-menu">
 
-    <li class="header">目录</li>
+    @include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-user')
 
-    <li class="treeview {{ $menu_all or '' }}">
-        <a href="{{url('/')}}"><i class="fa fa-list text-orange"></i> <span>平台首页</span></a>
-    </li>
-
-    <li class="treeview {{ $menu_debates or '' }}">
-        <a href="{{url('/?type=activity')}}"><i class="fa fa-list text-orange"></i> <span>活动</span></a>
-    </li>
-
-    <li class="treeview {{ $menu_anonymous or '' }}">
-        <a href="{{url('/anonymous')}}"><i class="fa fa-list text-orange"></i> <span>匿名话题</span></a>
-    </li>
-
-    <li class="header">Home</li>
-
-    @if(!Auth::check())
-
-        <li class="treeview">
-            <a href="{{url('/login')}}"><i class="fa fa-circle-o"></i> <span>登录</span></a>
-        </li>
-        <li class="treeview">
-            <a href="{{url('/register')}}"><i class="fa fa-circle-o"></i> <span>注册</span></a>
-        </li>
-    @else
-        <li class="treeview">
-            <a href="{{url('/home')}}"><i class="fa fa-home text-default"></i> <span>返回我的后台</span></a>
-        </li>
-    @endif
-
-</ul>
 @endsection
 
 
