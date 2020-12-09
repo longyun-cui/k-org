@@ -58,19 +58,27 @@
         <div class="box-body item-row item-tools-row item-tools-container">
 
             {{--点赞&$收藏--}}
-            <a class="tool-button operate-btn favor-btn" data-num="{{ $i->item->favor_num or 0 }}" role="button">
+            <span class="tool-button operate-btn favor-btn" data-num="{{ $i->item->favor_num or 0 }}" role="button">
                 @if(Auth::check())
                     @if($i->item->pivot_item_relation->contains('relation_type', 1))
-                        <span class="remove-this-favor"><i class="fa fa-heart text-red"></i></span>
+                        <a class="remove-this-favor" role="button">
+                            <i class="fa fa-heart text-red"></i>
+                            <span class="num">@if($i->item->favor_num){{ $i->item->favor_num }}@endif</span>
+                        </a>
                     @else
-                        <span class="add-this-favor"><i class="fa fa-heart-o"></i></span>
+                        <a class="add-this-favor" role="button">
+                            <i class="fa fa-heart-o"></i>
+                            <span class="num">@if($i->item->favor_num){{ $i->item->favor_num }}@endif</span>
+                        </a>
                     @endif
                 @else
-                    <span class="add-this-favor"><i class="fa fa-heart-o"></i></span>
+                    <a class="add-this-favor" role="button">
+                        <i class="fa fa-heart-o"></i>
+                        <span class="num">@if($i->item->favor_num){{ $i->item->favor_num }}@endif</span>
+                    </a>
                 @endif
 
-                @if($i->item->favor_num)<span class="num">{{ $i->item->favor_num }}</span>@endif
-            </a>
+            </span>
 
             {{--分享--}}
             <a class="tool-button _none" role="button"><i class="fa fa-share"></i> @if($i->item->share_num) {{$i->item->share_num}} @endif</a>
