@@ -23,10 +23,10 @@
                         <span class="tool-inn tool-set _none"><i class="fa fa-cog"></i></span>
 
                         @if($u->fans_list->contains('relation_type', 41))
-                            <span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-check"></i> 已关注</span>
+                            <span class="tool-inn tool-info follow-remove follow-remove-it" role="button"><i class="fa fa-check"></i> 已关注</span>
                             {{--<span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-minus"></i> 取消关注</span>--}}
                         @else
-                            <span class="tool-inn tool-info follow-add follow-add-it"><i class="fa fa-plus"></i> 关注</span>
+                            <span class="tool-inn tool-info follow-add follow-add-it" role="button"><i class="fa fa-plus"></i> 关注</span>
                         @endif
 
 

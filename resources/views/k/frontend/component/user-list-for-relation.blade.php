@@ -20,12 +20,12 @@
 
                         @if(Auth::check() && $u->relation_user_id != Auth::user()->id)
 
-                            <span class="tool-inn tool-set"><i class="fa fa-cog"></i></span>
+                            <span class="tool-inn tool-set _none"><i class="fa fa-cog"></i></span>
 
                             @if($u->relation_type == 21)
-                                <span class="tool-inn tool-info"><i class="fa fa-exchange"></i> 相互关注</span>
+                                <span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-exchange"></i> 相互关注</span>
                             @elseif($u->relation_type == 41)
-                                <span class="tool-inn tool-info"><i class="fa fa-check"></i> 已关注</span>
+                                <span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-check"></i> 已关注</span>
                             @elseif($u->relation_type == 71)
                                 <span class="tool-inn tool-info follow-add follow-add-it"><i class="fa fa-plus text-yellow"></i> 关注</span>
                             @else
@@ -34,13 +34,11 @@
 
                             <div class="tool-menu-list _none" style="z-index:999;">
                                 <ul>
-                                    @if($u->relation_type == 21)
-                                        <li class="follow-remove-it">取消关注</li>
-                                        <li class="fans-remove-it">移除粉丝</li>
-                                    @elseif($u->relation_type == 41)
-                                        <li class="follow-remove-it">取消关注</li>
-                                    @elseif($u->relation_type == 71)
-                                        <li class="fans-remove-it">移除粉丝</li>
+                                    @if(in_array($u->relation_type, [21,41]))
+                                        <li class="follow-remove-it" role="button"><i class="fa fa-minus"></i> 取消关注</li>
+                                    @endif
+                                    @if(in_array($u->relation_type, [21,71]))
+                                        <li class="fans-remove-it" role="button"><i class="fa fa-minus"></i> 移除粉丝</li>
                                     @endif
                                 </ul>
                             </div>
