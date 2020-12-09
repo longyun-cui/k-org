@@ -10,13 +10,15 @@
 
         <div class="panel-default box-default item-entity-container with-portrait-">
 
-            <div class="item-row item-info-row text-muted">
-                            <span class="item-user-portrait pull-left _pointer _none-">
-                                <img src="{{ url(env('DOMAIN_CDN').'/'.$v->portrait_img) }}" alt="">
-                            </span>
+            <div class="item-row item-title-row text-muted">
+                <span class="item-user-portrait pull-left _pointer _none-">
+                    <img src="{{ url(env('DOMAIN_CDN').'/'.$v->portrait_img) }}" alt="">
+                </span>
                 <span class="item-user-name pull-left">
-                                <a target="_self" href="{{ url('/user/'.$v->id) }}" class="text-hover-red font-sm">{{ $v->username or '' }}</a>
-                            </span>
+                    <a target="_self" href="{{ url('/user/'.$v->id) }}" class="text-hover-red font-sm">
+                        <b>{{ $v->username or '' }}</b>
+                    </a>
+                </span>
             </div>
 
             @if(!empty($v->linkman) or !empty($v->contact_phone) or !empty($v->contact_address))
