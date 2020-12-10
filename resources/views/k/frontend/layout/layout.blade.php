@@ -249,7 +249,7 @@ desired effect
     var timestamp = Date.parse(new Date());
     var time = Date.parse(new Date());
     console.log(timestamp / 1000 - wechat_config.timestamp);
-    console.log((wechat_config.timestamp * 1000).toLocaleString());
+    console.log(new Date(wechat_config.timestamp * 1000).toLocaleString());
 
     $(function()
     {
