@@ -35,6 +35,7 @@ class TokenManager
 //        }
 //        else
         {
+            self::init();
             $appID = self::$app_id;
             $ticket = self::getTicket();
             $nonce_str = self::getNonceStr();
