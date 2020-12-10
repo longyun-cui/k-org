@@ -24,22 +24,24 @@ class TokenManager
         $url = 'http://'.$_SERVER["HTTP_HOST"].request()->getRequestUri();
 
 
-//        if(Cache::has(self::cache_key))
-//        {
-//            $cache = Cache::get(self::cache_key);
-//
-//            $appID = $cache['app_id'];
-//            $ticket = $cache['ticket'];
-//            $nonce_str = $cache['nonce_str'];
-//            $timestamp = $cache['timestamp'];
-//        }
-//        else
+        if(Cache::has(self::cache_key))
+        {
+            $cache = Cache::get(self::cache_key);
+
+            $appID = $cache['app_id'];
+            $ticket = $cache['ticket'];
+            $nonce_str = $cache['nonce_str'];
+            $timestamp = $cache['timestamp'];
+            $cache = 'cache';
+        }
+        else
         {
             self::init();
             $appID = self::$app_id;
             $ticket = self::getTicket();
             $nonce_str = self::getNonceStr();
             $timestamp = time();
+            $cache = 'init';
 
             $cache_config['app_id'] = $appID;
             $cache_config['ticket'] = $ticket;
@@ -47,7 +49,7 @@ class TokenManager
             $cache_config['timestamp'] = $timestamp;
 
             Cache::forget(self::cache_key);
-            Cache::put(self::cache_key, $cache_config, 119); //119 minutes
+            Cache::put(self::cache_key, $cache_config, 59); //59 minutes
         }
 
 //        $params = ['jsapi_ticket' => $ticket, 'noncestr' => $nonce_str, 'timestamp' => $timestamp, 'url' => $url];
@@ -60,6 +62,8 @@ class TokenManager
             'nonce_str' => $nonce_str,
             'timestamp' => $timestamp,
             'signature' => $sign,
+            'cache' => $cache,
+            '' => $sign,
 //            'ticket' => $ticket,
 //            'string' => $string,
 //            'url' => $url,
