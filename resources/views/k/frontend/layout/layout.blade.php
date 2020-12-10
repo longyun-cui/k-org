@@ -250,9 +250,6 @@ desired effect
 
     $(function()
     {
-
-        alert(3);
-        console.log(1);
 //        var link = window.location.href;
         var link = location.href.split('#')[0];
         console.log(link);
