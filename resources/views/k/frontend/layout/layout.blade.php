@@ -246,6 +246,10 @@ desired effect
 
     var wechat_config = {!! $wechat_config or '' !!};
     console.log(wechat_config.cache);
+    var timestamp = Date.parse(new Date());
+    var time = Date.parse(new Date());
+    console.log(timestamp / 1000 - wechat_config.timestamp);
+    console.log(toLocaleString(wechat_config.timestamp * 1000));
 
     $(function()
     {
