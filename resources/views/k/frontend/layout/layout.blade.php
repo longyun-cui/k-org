@@ -244,11 +244,15 @@ desired effect
 <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script>
 
+    alert(3);
     var wechat_config = {!! $wechat_config or '' !!};
     //    console.log(wechat_config);
 
-    $(function(){
+    $(function()
+    {
 
+        alert(3);
+        console.log(1);
 //        var link = window.location.href;
         var link = location.href.split('#')[0];
         console.log(link);
@@ -316,7 +320,7 @@ desired effect
                 });
             });
 
-            {{--wx.ready(function(){--}}
+            wx.ready(function() {
                 {{--wx.onMenuShareAppMessage({--}}
                     {{--title: "@yield('wx_share_title')",--}}
                     {{--desc: "@yield('wx_share_desc')",--}}
