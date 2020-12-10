@@ -35,10 +35,10 @@ class TokenManager
         }
         else
         {
+            $appID = self::$app_id;
             $ticket = self::getTicket();
             $nonce_str = self::getNonceStr();
             $timestamp = time();
-            $appID = self::$app_id;
 
             $cache_config['app_id'] = $appID;
             $cache_config['ticket'] = $ticket;

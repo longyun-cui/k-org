@@ -244,7 +244,6 @@ desired effect
 <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script>
 
-    alert(3);
     var wechat_config = {!! $wechat_config or '' !!};
     //    console.log(wechat_config);
 
