@@ -10,7 +10,7 @@
                 @endif
             </a>
         @else
-            <a href="{{ url('/user/'.$comment->user->id) }}">{{ $comment->user->username }}11</a>
+            <a href="{{ url('/user/'.$comment->user->id) }}">{{ $comment->user->username }}</a>
         @endif
 
         @if($comment->support == 1) <b class="text-primary">【正方 <i class="fa fa-thumbs-o-up"></i>】</b>
