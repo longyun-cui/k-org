@@ -17,10 +17,10 @@
         @elseif($comment->support == 2) <b class="text-danger">【反方 <i class="fa fa-thumbs-o-up"></i>】</b>
         @endif
 
-        <span class="pull-right text-muted disabled"><small>{{ $comment->created_at->format('n月j日 H:i') }}</small></span>
+        <span class="pull-right text-muted disabled"><small>{{ time_show($comment->updated_at->timestamp) }}</small></span>
 
         <span class="pull-right text-muted disabled comment-reply-toggle" role="button" data-num="{{ $comment->comment_num or 0 }}">
-            回复 @if($comment->comment_num){{ $comment->comment_num }}@endif
+            <small>回复</small> @if($comment->comment_num){{ $comment->comment_num }}@endif
         </span>
 
         <span class="comment-favor-btn" data-num="{{ $comment->favor_num or 0 }}">

@@ -40,10 +40,10 @@
     {{--回复工具--}}
     <div class="box-body reply-tools-container">
 
-        <span class="pull-left text-muted disabled"><small>{{ $reply->created_at->format('n月j日 H:i') }}</small></span>
+        <span class="pull-left text-muted disabled"><small>{{ time_show($reply->updated_at->timestamp) }}</small></span>
 
         <span class="pull-right text-muted disabled reply-toggle" role="button" data-num="{{ $reply->comment_num }}">
-            回复 @if($reply->comment_num){{ $reply->comment_num }}@endif
+            <small>回复</small> @if($reply->comment_num){{ $reply->comment_num }}@endif
         </span>
 
         <span class="comment-favor-btn" data-num="{{ $reply->favor_num or 0 }}">
@@ -81,7 +81,7 @@
             <span class="input-group-addon _none">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="is_anonymous" class="reply-anonymous">匿名
+                        <input type="checkbox" name="is_anonymous" class="reply-anonymous"><small>匿名</small>
                     </label>
                 </div>
             </span>
