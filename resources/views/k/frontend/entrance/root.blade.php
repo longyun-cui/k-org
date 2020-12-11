@@ -53,7 +53,6 @@
 <style>
     .box-footer a {color:#777;cursor:pointer;}
     .box-footer a:hover {color:orange;cursor:pointer;}
-    .comment-container {border-top:2px solid #ddd;}
     .comment-choice-container {border-top:2px solid #ddd;}
     .comment-choice-container .form-group { margin-bottom:0;}
     .comment-entity-container {border-top:2px solid #ddd;}
