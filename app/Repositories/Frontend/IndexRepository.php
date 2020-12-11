@@ -2098,8 +2098,8 @@ class IndexRepository {
                 // 通知对方
                 if($item->user_id != $me_id)
                 {
-                    $notification_insert['type'] = 11;
-                    $notification_insert['sort'] = 1;
+                    $notification_insert['notification_category'] = 11;
+                    $notification_insert['notification_type'] = 1;
                     $notification_insert['user_id'] = $item->user_id;
                     $notification_insert['source_id'] = $me_id;
                     $notification_insert['item_id'] = $item_id;
@@ -2360,8 +2360,8 @@ class IndexRepository {
                 // 通知对方
                 if($comment->user_id != $me_id)
                 {
-                    $notification_insert_1['type'] = 11;
-                    $notification_insert_1['sort'] = 2;
+                    $notification_insert_1['notification_category'] = 11;
+                    $notification_insert_1['notification_type'] = 2;
                     $notification_insert_1['user_id'] = $comment->user_id;
                     $notification_insert_1['source_id'] = $me_id;
                     $notification_insert_1['item_id'] = $item_id;
@@ -2375,8 +2375,8 @@ class IndexRepository {
 
                 if(($item->user_id != $me_id) && ($item->user_id != $comment->user_id))
                 {
-                    $notification_insert_2['type'] = 11;
-                    $notification_insert_2['sort'] = 3;
+                    $notification_insert_2['notification_category'] = 11;
+                    $notification_insert_2['notification_type'] = 3;
                     $notification_insert_2['user_id'] = $item->user_id;
                     $notification_insert_2['source_id'] = $me_id;
                     $notification_insert_2['item_id'] = $item_id;
@@ -2509,7 +2509,7 @@ class IndexRepository {
             $comment_id = $post_data['comment_id'];
             if(!is_numeric($comment_id)) return response_error([],"[comment_id] 参数有误，刷新一下试试！");
 
-            $communication_insert['type'] = 11;
+            $communication_insert['communication_type'] = 11;
             $communication_insert['user_id'] = $me_id;
             $communication_insert['item_id'] = $item_id;
             $communication_insert['reply_id'] = $comment_id;
@@ -2533,8 +2533,8 @@ class IndexRepository {
 //                通知对方
                 if($comment->user_id != $me_id)
                 {
-                    $notification_insert_1['type'] = 11;
-                    $notification_insert_1['sort'] = 12;
+                    $notification_insert_1['notification_category'] = 11;
+                    $notification_insert_1['notification_type'] = 12;
                     $notification_insert_1['user_id'] = $comment->user_id;
                     $notification_insert_1['source_id'] = $me_id;
                     $notification_insert_1['item_id'] = $item_id;
@@ -2548,8 +2548,8 @@ class IndexRepository {
 
                 if(($item->user_id != $me_id) && ($item->user_id != $comment->user_id))
                 {
-                    $notification_insert_2['type'] = 11;
-                    $notification_insert_2['sort'] = 13;
+                    $notification_insert_2['notification_category'] = 11;
+                    $notification_insert_2['notification_type'] = 13;
                     $notification_insert_2['user_id'] = $item->user_id;
                     $notification_insert_2['source_id'] = $me_id;
                     $notification_insert_2['item_id'] = $item_id;
@@ -2601,30 +2601,29 @@ class IndexRepository {
             $me_id = $me->id;
 
             $item_id = $post_data['item_id'];
-            if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试");
+            if(!is_numeric($item_id)) return response_error([],"[item_id] 参数有误，刷新一下试试！");
 
-            $comment_encode = $post_data['comment_id'];
-            $comment_decode = decode($comment_encode);
-            if(!$comment_decode) return response_error([],"参数有误，刷新一下试试！");
+            $comment_id = $post_data['comment_id'];
+            if(!is_numeric($comment_id)) return response_error([],"[comment_id] 参数有误，刷新一下试试！");
 
             DB::beginTransaction();
             try
             {
-                $comment = K_Communication::find($comment_decode);
-                if(!$comment && $comment->user_id != $me_id) return response_error([],"参数有误，刷新一下试试");
+                $comment = K_Communication::find($comment_id);
+                if(!$comment && $comment->user_id != $me_id) return response_error([],"参数有误，刷新一下试试！");
                 $comment->decrement('favor_num');
 
                 $favors = K_Communication::where([
-                    'type'=>11,
+                    'communication_type'=>11,
                     'user_id'=>$me_id,
                     'item_id'=>$item_id,
-                    'reply_id'=>$comment_decode
+                    'reply_id'=>$comment_id
                 ]);
                 $count = count($favors->get());
                 if($count)
                 {
                     $num = $favors->delete();
-                    if($num != $count) throw new Exception("delete--commnucation--fail");
+                    if($num != $count) throw new Exception("delete--communication--fail");
                 }
 
                 DB::commit();
@@ -2634,8 +2633,8 @@ class IndexRepository {
             {
                 DB::rollback();
                 $msg = '操作失败，请重试！';
-//                    $msg = $e->getMessage();
-//                    exit($e->getMessage());
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
                 return response_fail([], $msg);
             }
 

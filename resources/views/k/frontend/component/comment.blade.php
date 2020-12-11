@@ -56,7 +56,7 @@
         <div class="input-group margin">
             <input type="text" class="form-control comment-reply-content">
 
-            <span class="input-group-addon">
+            <span class="input-group-addon _none">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="is_anonymous" class="comment-reply-anonymous">匿名

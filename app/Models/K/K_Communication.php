@@ -7,11 +7,13 @@ class K_Communication extends Model
     //
     protected $table = "communication";
     protected $fillable = [
-        'active', 'communication_category', 'communication_type', 'category', 'type',
-        'source_id', 'user_id', 'item_id', 'is_anonymous', 'reply_id', 'dialog_id', 'order',
+        'active', 'communication_category', 'communication_type', 'category', 'type', 'sort',
+        'owner_id', 'user_id', 'belong_id', 'source_id',
+        'item_id', 'communication_id', 'reply_id', 'dialog_id', 'order',
+        'title', 'description', 'ps', 'content',
+        'is_anonymous', 'is_shared',
         'support',
-        'title', 'description', 'content',
-        'is_shared', 'favor_num', 'comment_num'
+        'favor_num', 'comment_num'
     ];
     protected $dateFormat = 'U';
 

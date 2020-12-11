@@ -145,6 +145,7 @@
 .comment-container { width:100%;height:auto;padding:4px;margin-top:4px;background:url(/bg.gif) repeat;}
 .items .comment-container {display:none;}
 .comment-container a.user {font-size:12px;font-weight:bold;color:#155faa;}
+.comment-container i {width:auto;}
 
 .comment-container .input-group-addon {padding:6px;}
 .comment-container .input-group-addon .checkbox {padding:0;margin:0;line-height:20px;}

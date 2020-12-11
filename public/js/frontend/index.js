@@ -922,7 +922,7 @@ jQuery( function ($) {
                     var num = parseInt(btn.attr('data-num'));
                     num = num + 1;
                     btn.attr('data-num',num);
-                    var html = '<i class="fa fa-thumbs-up text-red"></i>('+num+')';
+                    var html = '<i class="fa fa-thumbs-up text-red"></i>'+num+'';
                     that.html(html);
                 }
             },
@@ -959,8 +959,8 @@ jQuery( function ($) {
                     var num = parseInt(btn.attr('data-num'));
                     num = num - 1;
                     btn.attr('data-num',num);
-                    // if(num == 0) num = '';
-                    var html = '<i class="fa fa-thumbs-o-up"></i>('+num+')';
+                    if(num == 0) num = '';
+                    var html = '<i class="fa fa-thumbs-o-up"></i>'+num+'';
                     that.html(html);
                 }
             },

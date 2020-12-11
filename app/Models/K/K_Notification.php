@@ -7,8 +7,9 @@ class K_Notification extends Model
     //
     protected $table = "notification";
     protected $fillable = [
-        'active', 'notification_category', 'notification_type', 'sort', 'is_read',
-        'owner_id', 'user_id', 'source_id', 'item_id', 'communication_id', 'reply_id',
+        'active', 'notification_category', 'notification_type', 'category', 'type', 'sort', 'is_read',
+        'owner_id', 'user_id', 'belong_id',  'source_id',
+        'item_id', 'communication_id', 'reply_id',
         'title', 'description', 'ps', 'content'
     ];
     protected $dateFormat = 'U';
