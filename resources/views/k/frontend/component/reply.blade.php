@@ -12,7 +12,7 @@
                 @endif
             </a>
         @else
-            <a href="{{ url('/user/'.$reply->user->id) }}" target="_blank">{{ $reply->user->username }}</a>
+            <a target="_blank" href="{{ url('/user/'.$reply->user->id) }}" class="user">{{ $reply->user->username }}</a>
         @endif
 
         @if($reply->reply_id != $reply->dialog_id)
@@ -27,7 +27,7 @@
                     @endif
                 </a>
             @else
-                <a href="{{ url('/user/'.$reply->reply->user->id) }}" target="_blank">{{ $reply->reply->user->username }}</a>
+                <a target="_blank" href="{{ url('/user/'.$reply->reply->user->id) }}" class="user">{{ $reply->reply->user->username }}</a>
             @endif
         @endif
         @endif
@@ -78,10 +78,10 @@
         <div class="input-group margin">
             <input type="text" class="form-control reply-content">
 
-            <span class="input-group-addon" style="border-left:0;">
-                <div class="checkbox" style="margin:0;line-height:20px;">
+            <span class="input-group-addon">
+                <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="is_anonymous" class="reply-anonymous" style="margin-top:4px;"> 匿名
+                        <input type="checkbox" name="is_anonymous" class="reply-anonymous">匿名
                     </label>
                 </div>
             </span>

@@ -9,7 +9,7 @@
 
         <div class="box-body item-row item-title-row">
             <span>
-                <a href="{{ url('/item/'.$item->id) }}" >{{ $item->title or '' }}</a>
+                <a href="{{ url('/item/'.$item->id) }}" ><b>{{ $item->title or '' }}</b></a>
             </span>
         </div>
 

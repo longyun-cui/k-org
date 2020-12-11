@@ -10,7 +10,7 @@
                 @endif
             </a>
         @else
-            <a href="{{ url('/user/'.$comment->user->id) }}">{{ $comment->user->username }}</a>
+            <a href="{{ url('/user/'.$comment->user->id) }}" class="user">{{ $comment->user->username }}</a>
         @endif
 
         @if($comment->support == 1) <b class="text-primary">【正方 <i class="fa fa-thumbs-o-up"></i>】</b>
@@ -56,10 +56,10 @@
         <div class="input-group margin">
             <input type="text" class="form-control comment-reply-content">
 
-            <span class="input-group-addon" style="border-left:0;">
-                <div class="checkbox" style="margin:0;line-height:20px;">
+            <span class="input-group-addon">
+                <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="is_anonymous" class="comment-reply-anonymous"> 匿名
+                        <input type="checkbox" name="is_anonymous" class="comment-reply-anonymous">匿名
                     </label>
                 </div>
             </span>
