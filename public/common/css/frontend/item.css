@@ -149,6 +149,7 @@
 .comment-piece {padding:4px 8px;border-bottom:1px solid #f4f4f4;}
 
 .comment-reply-input-container {display:none;padding:2px 0;margin-bottom:16px;border-bottom:1px solid #fff;background:#f4f4f4;}
+.comment-reply-input-container .margin {margin:4px;}
 
 .reply-piece {padding:16px 8px;border-top:1px solid #dddddd;background:#f4f4f4;}
 .reply-piece:first-child  {border-top:0;}
