@@ -56,8 +56,6 @@
     .box-footer a:hover {color:orange;cursor:pointer;}
     .comment-choice-container {border-top:2px solid #ddd;}
     .comment-choice-container .form-group { margin-bottom:0;}
-    .comment-piece {border-bottom:1px solid #eee;}
-    .comment-piece:first-child {}
 </style>
 @endsection
 

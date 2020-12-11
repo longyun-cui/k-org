@@ -1,4 +1,4 @@
-<div class="colo-md-12 box-body comment-piece comment-option" data-id="{{ $comment->id or 0 }}">
+<div class="box-body comment-piece comment-option" data-id="{{ $comment->id or 0 }}">
 
     <div class="box-body comment-title-container">
         @if($comment->is_anonymous == 1)
@@ -59,7 +59,7 @@
             <span class="input-group-addon" style="border-left:0;">
                 <div class="checkbox" style="margin:0;line-height:20px;">
                     <label>
-                        <input type="checkbox" name="is_anonymous" class="comment-reply-anonymous" style="margin-top:4px;"> 匿名
+                        <input type="checkbox" name="is_anonymous" class="comment-reply-anonymous"> 匿名
                     </label>
                 </div>
             </span>
@@ -73,10 +73,10 @@
 
     <div class="box-body reply-container">
 
-        <div class="item-row reply-list-container"></div>
+        <div class="reply-list-container"></div>
 
         @if($comment->dialogs_count)
-            <div class="col-md-12 more-box" style="margin-top:4px;">
+            <div class="item-row more-box">
                 <button type="button" class="btn btn-block btn-flat- btn-more replies-more"
                         data-more="{{ $comment->dialog_more}}"
                         data-maxId="{{ $comment->dialog_max_id}}"

@@ -1,4 +1,4 @@
-<div class="colo-md-12 box-body reply-piece reply-option" data-id="{{ $reply->id }}">
+<div class="box-body reply-piece reply-option" data-id="{{ $reply->id }}">
 
     {{--回复头部--}}
     <div class="box-body reply-title-container">

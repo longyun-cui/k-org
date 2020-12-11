@@ -6,8 +6,8 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 
 .main-header {color:#fff;}
 .container {width:1010px;padding-left:0;padding-right:0;}
-.container-body-left {padding:0 8px;}
-.container-body-right {padding:0;}
+.container-body-left {padding:0 2px;}
+.container-body-right {padding:0 2px;}
 .container-body-right.pull-right {}
 
 .container-body-right {color:#444;}
@@ -190,7 +190,6 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 
 .comment-title-container {padding:4px 0}
 .comment-content-container {padding:0;}
-.comment-input-container {border-top:2px solid #eee;border-bottom:2px solid #eee;}
 
 .comment-piece {padding:4px 8px;border-bottom:1px solid #f4f4f4;}
 

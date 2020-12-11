@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" style="margin-top:16px;">
+                <div class="form-group">
                     <div class="col-md-12 ">
                         <button type="button" class="btn btn-block btn-flat btn-primary comment-submit">提交</button>
                     </div>
