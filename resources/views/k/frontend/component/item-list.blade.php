@@ -1,5 +1,6 @@
 @foreach($items as $num => $item)
 <div class="item-piece item-option {{ $getType or 'items' }}"
+     data-item="{{ $item->id or 0}}"
      data-id="{{ $item->id or 0}}"
      data-item-id="{{ $item->id or 0}}"
      data-getType="{{ $getType or 'items' }}"
@@ -94,10 +95,10 @@
         <div class="box-body item-row comment-container"  style="display:none;">
 
             <div class="box-body comment-input-container">
-            <form action="" method="post" class="form-horizontal form-bordered topic-comment-form">
+            <form action="" method="post" class="form-horizontal form-bordered item-comment-form">
 
                 {{csrf_field()}}
-                <input type="hidden" name="topic_id" value="{{encode($item->id)}}" readonly>
+                <input type="hidden" name="item_id" value="{{ $item->id }}" readonly>
                 <input type="hidden" name="type" value="1" readonly>
 
                 <div class="form-group">

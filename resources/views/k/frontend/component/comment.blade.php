@@ -1,39 +1,48 @@
-<div class="colo-md-12 box-body comment-piece comment-option" data-id="{{encode($comment->id)}}">
+<div class="colo-md-12 box-body comment-piece comment-option" data-id="{{ $comment->id or 0 }}">
 
     <div class="box-body comment-title-container">
         @if($comment->is_anonymous == 1)
             <a href="javascript:void(0)">
-                {{$comment->user->anonymous_name}} (匿名)
-                @if(Auth::check()) @if($comment->user->id == Auth::user()->id) @endif @endif
+                {{ $comment->user->anonymous_name }} (匿名)
+                @if(Auth::check())
+                    @if($comment->user->id == Auth::user()->id)
+                    @endif
+                @endif
             </a>
         @else
-            <a href="{{url('/u/'.encode($comment->user->id))}}">{{$comment->user->name}}</a>
+            <a href="{{ url('/user/'.$comment->user->id) }}">{{ $comment->user->username }}11</a>
         @endif
+
         @if($comment->support == 1) <b class="text-primary">【正方 <i class="fa fa-thumbs-o-up"></i>】</b>
         @elseif($comment->support == 2) <b class="text-danger">【反方 <i class="fa fa-thumbs-o-up"></i>】</b>
         @endif
 
-        <span class="pull-right text-muted disabled">{{ $comment->created_at->format('n月j日 H:i') }}</span>
+        <span class="pull-right text-muted disabled"><small>{{ $comment->created_at->format('n月j日 H:i') }}</small></span>
 
-        <span class="pull-right text-muted disabled comment-reply-toggle" role="button" data-num="{{$comment->comment_num}}">
-            回复 @if($comment->comment_num){{$comment->comment_num}}@endif
+        <span class="pull-right text-muted disabled comment-reply-toggle" role="button" data-num="{{ $comment->comment_num or 0 }}">
+            回复 @if($comment->comment_num){{ $comment->comment_num }}@endif
         </span>
 
-        <span class="comment-favor-btn" data-num="{{$comment->favor_num or 0}}">
+        <span class="comment-favor-btn" data-num="{{ $comment->favor_num or 0 }}">
             @if(Auth::check())
                 @if(count($comment->favors))
                     <span class="pull-right text-muted disabled comment-favor-this-cancel" data-parent=".comment-option" role="button">
                         <i class="fa fa-thumbs-up text-red"></i>
+                        @if($comment->favor_num)<span>{{ $comment->favor_num }}</span>@endif
+                    </span>
                 @else
                     <span class="pull-right text-muted disabled comment-favor-this" data-parent=".comment-option" role="button">
                         <i class="fa fa-thumbs-o-up"></i>
+                        @if($comment->favor_num)<span>{{ $comment->favor_num }}</span>@endif
+                    </span>
                 @endif
             @else
                 <span class="pull-right text-muted disabled comment-favor-this" data-parent=".comment-option" role="button">
                     <i class="fa fa-thumbs-o-up"></i>
+                    @if($comment->favor_num)<span>{{ $comment->favor_num }}</span>@endif
+                </span>
             @endif
 
-            @if($comment->favor_num){{$comment->favor_num}}@endif </span>
         </span>
 
     </div>
@@ -64,14 +73,14 @@
 
     <div class="box-body reply-container">
 
-        <div class="reply-list-container"></div>
+        <div class="item-row reply-list-container"></div>
 
         @if($comment->dialogs_count)
             <div class="col-md-12 more-box" style="margin-top:4px;">
-                <button type="button" class="btn btn-block btn-flat btn-more replies-more"
-                        data-more="{{$comment->dialog_more}}"
-                        data-maxId="{{$comment->dialog_max_id}}"
-                        data-minId="{{$comment->dialog_min_id}}"
+                <button type="button" class="btn btn-block btn-flat- btn-more replies-more"
+                        data-more="{{ $comment->dialog_more}}"
+                        data-maxId="{{ $comment->dialog_max_id}}"
+                        data-minId="{{ $comment->dialog_min_id}}"
                 >{!! $comment->dialog_more_text !!}</button>
             </div>
         @endif

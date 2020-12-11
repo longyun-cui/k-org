@@ -103,7 +103,7 @@ class IndexRepository {
         }
         else $me_id = 0;
 
-        $items = RootItem::with(['org'])->where('is_shared','>=',99);
+        $items = K_Item::with(['org'])->where('is_shared','>=',99);
 
         $category = isset($post_data["category"]) ? $post_data["category"] : '';
         if($category == 'article')
@@ -299,7 +299,7 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
-            $items = RootItem::with([
+            $items = K_Item::with([
                 'user',
                 'forward_item'=>function($query) { $query->with('user'); },
                 'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
@@ -316,7 +316,7 @@ class IndexRepository {
         }
         else
         {
-            $items = RootItem::with([
+            $items = K_Item::with([
                 'user',
                 'forward_item'=>function($query) { $query->with('user'); }
             ])->where('user_id',$user_id)
@@ -522,17 +522,17 @@ class IndexRepository {
         $return['data'] = $org;
         $return['org_root_active'] = "active";
 
-        $article_items = RootItem::with(['org'])
+        $article_items = K_Item::with(['org'])
             ->where(['org_id'=>$id,'category'=>'1'])->where('is_shared','>=',99)
             ->orderby('id','desc')->limit(8)->get();
         $return['article_items'] = $article_items;
 
-        $activity_items = RootItem::with(['org'])
+        $activity_items = K_Item::with(['org'])
             ->where(['org_id'=>$id,'category'=>'11'])->where('is_shared','>=',99)
             ->orderby('id','desc')->limit(8)->get();
         $return['activity_items'] = $activity_items;
 
-        $sponsor_items = RootItem::with(['org'])
+        $sponsor_items = K_Item::with(['org'])
             ->where(['org_id'=>$id,'category'=>'88'])->where('is_shared','>=',99)
             ->orderby('id','desc')->limit(8)->get();
         $return['sponsor_items'] = $sponsor_items;
@@ -561,7 +561,7 @@ class IndexRepository {
         }
         else return view('frontend.errors.404');
 
-        $items = RootItem::with(['org'])->where('org_id',$id)->where('is_shared','>=',99);
+        $items = K_Item::with(['org'])->where('org_id',$id)->where('is_shared','>=',99);
 
         $category = isset($post_data["category"]) ? $post_data["category"] : '';
         if($category == 'article')
@@ -846,7 +846,7 @@ class IndexRepository {
             $me = Auth::user();
             $me_id = $me->id;
 
-            $items = RootItem::select("*")->with([
+            $items = K_Item::select("*")->with([
                 'user',
                 'forward_item'=>function($query) { $query->with('user'); },
                 'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
@@ -1007,7 +1007,7 @@ class IndexRepository {
         }
         else $user_id = 0;
 
-        $items = RootItem::with([
+        $items = K_Item::with([
             'user',
             'forward_item'=>function($query) { $query->with('user'); },
             'pivot_item_relation'=>function($query) use($user_id) { $query->where('user_id',$user_id); }
@@ -1033,7 +1033,7 @@ class IndexRepository {
         }
         else $user_id = 0;
 //
-//        $items = RootItem::with([
+//        $items = K_Item::with([
 //            'user',
 //            'pivot_item_relation'=>function($query) use($user_id) { $query->where('user_id',$user_id); }
 //        ])->where('is_shared','>=',99)->orderBy('id','desc')->get();
@@ -1070,7 +1070,7 @@ class IndexRepository {
         }
         else $user_id = 0;
 //
-//        $items = RootItem::with([
+//        $items = K_Item::with([
 //            'user',
 //            'pivot_item_relation'=>function($query) use($user_id) { $query->where('user_id',$user_id); }
 //        ])->where('is_shared','>=',99)->orderBy('id','desc')->get();
@@ -1107,7 +1107,7 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
-            $item = RootItem::with([
+            $item = K_Item::with([
                 'user',
                 'contents'=>function($query) { $query->where(['active'=>1,'p_id'=>0])->orderBy('id','asc'); },
                 'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
@@ -1115,7 +1115,7 @@ class IndexRepository {
         }
         else
         {
-            $item = RootItem::with([
+            $item = K_Item::with([
                 'user',
                 'contents'=>function($query) { $query->where(['active'=>1,'p_id'=>0])->orderBy('id','asc'); }
             ])->find($id);
@@ -1290,7 +1290,7 @@ class IndexRepository {
         }
         else
         {
-            $data = RootItem::find($id);
+            $data = K_Item::find($id);
             if($data)
             {
                 unset($data->id);
@@ -1327,12 +1327,12 @@ class IndexRepository {
         {
             if($operate == 'create') // $id==0，添加一个新的课程
             {
-                $mine = new RootItem;
+                $mine = new K_Item;
                 $post_data["user_id"] = $user->id;
             }
             elseif('edit') // 编辑
             {
-                $mine = RootItem::find($id);
+                $mine = K_Item::find($id);
                 if(!$mine) return response_error([],"该内容不存在，刷新页面重试");
                 if($mine->user_id != $user->id) return response_error([],"你没有操作权限");
             }
@@ -1421,7 +1421,7 @@ class IndexRepository {
         if(!$id) return view('home.404')->with(['error'=>'参数有误']);
         // abort(404);
 
-        $item = RootItem::with([
+        $item = K_Item::with([
             'contents'=>function($query) { $query->orderBy('rank','asc'); }
         ])->find($id);
         if($item)
@@ -1442,7 +1442,7 @@ class IndexRepository {
         if(!$id) return view('home.404')->with(['error'=>'参数有误']);
         // abort(404);
 
-        $item = RootItem::with([
+        $item = K_Item::with([
             'contents'=>function($query) {
                 $query->orderByRaw(DB::raw('cast(replace(trim(time_point)," ","") as SIGNED) asc'));
                 $query->orderByRaw(DB::raw('cast(replace(trim(time_point)," ","") as DECIMAL) asc'));
@@ -1487,7 +1487,7 @@ class IndexRepository {
         $item_encode = $post_data["item_id"];
         $item_decode = decode($item_encode);
         if(!$item_decode) return response_error();
-        $item = RootItem::find($item_decode);
+        $item = K_Item::find($item_decode);
         if($item)
         {
             if($item->user_id == $user->id)
@@ -1504,14 +1504,14 @@ class IndexRepository {
                     $operate = $post_data["operate"];
                     if($operate == 'create') // $id==0，添加一个新的内容
                     {
-                        $content = new RootItem;
+                        $content = new K_Item;
                         $post_data["user_id"] = $user->id;
                     }
                     elseif('edit') // 编辑
                     {
                         if($content_decode == $post_data["p_id"]) return response_error([],"不能选择自己为父节点");
 
-                        $content = RootItem::find($content_decode);
+                        $content = K_Item::find($content_decode);
                         if(!$content) return response_error([],"该内容不存在，刷新页面重试");
                         if($content->user_id != $user->id) return response_error([],"你没有操作权限");
 //                        if($content->type == 1) unset($post_data["type"]);
@@ -1522,16 +1522,16 @@ class IndexRepository {
                             $p_id = $post_data["p_id"];
                             while($is_child)
                             {
-                                $p = RootItem::find($p_id);
+                                $p = K_Item::find($p_id);
                                 if(!$p) return response_error([],"参数有误，刷新页面重试");
                                 if($p->p_id == 0) $is_child = false;
                                 if($p->p_id == $content_decode)
                                 {
-                                    $content_children = RootItem::where('p_id',$content_decode)->get();
+                                    $content_children = K_Item::where('p_id',$content_decode)->get();
                                     $children_count = count($content_children);
                                     if($children_count)
                                     {
-                                        $num = RootItem::where('p_id',$content_decode)->update(['p_id'=>$content->p_id]);
+                                        $num = K_Item::where('p_id',$content_decode)->update(['p_id'=>$content->p_id]);
                                         if($num != $children_count)  throw new Exception("update--children--fail");
                                     }
                                 }
@@ -1551,7 +1551,7 @@ class IndexRepository {
 
                     if($post_data["p_id"] != 0)
                     {
-                        $parent = RootItem::find($post_data["p_id"]);
+                        $parent = K_Item::find($post_data["p_id"]);
                         if(!$parent) return response_error([],"父节点不存在，刷新页面重试");
                     }
 
@@ -1606,7 +1606,7 @@ class IndexRepository {
         $item_encode = $post_data["item_id"];
         $item_decode = decode($item_encode);
         if(!$item_decode) return response_error();
-        $item = RootItem::find($item_decode);
+        $item = K_Item::find($item_decode);
         if($item)
         {
             if($item->user_id == $user->id)
@@ -1623,12 +1623,12 @@ class IndexRepository {
                     $operate = $post_data["operate"];
                     if($operate == 'create') // $id==0，添加一个新的内容
                     {
-                        $content = new RootItem;
+                        $content = new K_Item;
                         $post_data["user_id"] = $user->id;
                     }
                     elseif('edit') // 编辑
                     {
-                        $content = RootItem::find($content_decode);
+                        $content = K_Item::find($content_decode);
                         if(!$content) return response_error([],"该内容不存在，刷新页面重试");
                         if($content->user_id != $user->id) return response_error([],"你没有操作权限");
 //                        if($content->type == 1) unset($post_data["type"]);
@@ -1678,7 +1678,7 @@ class IndexRepository {
         $id = $post_data["id"];
         if(intval($id) !== 0 && !$id) return response_error([],"该内容不存在，刷新页面试试");
 
-        $mine = RootItem::find($id);
+        $mine = K_Item::find($id);
         if($mine->user_id != $me->id) return response_error([],"你没有操作权限");
 
         DB::beginTransaction();
@@ -1995,7 +1995,7 @@ class IndexRepository {
             }
 
             $item_id = $post_data['item_id'];
-            $item = RootItem::find($item_id);
+            $item = K_Item::find($item_id);
             if($item)
             {
                 $me = Auth::user();
@@ -2004,7 +2004,7 @@ class IndexRepository {
                 DB::beginTransaction();
                 try
                 {
-                    $mine = new RootItem;
+                    $mine = new K_Item;
                     $post_data['user_id'] = $me_id;
                     $post_data['category'] = 99;
                     $post_data['is_shared'] = 100;
@@ -2020,7 +2020,7 @@ class IndexRepository {
 //                        $insert['user_id'] = $user->id;
 //                        $insert['item_id'] = $item_id;
 //
-//                        $communication = new Communication;
+//                        $communication = new K_Communication;
 //                        $bool = $communication->fill($insert)->save();
 //                        if(!$bool) throw new Exception("insert--communication--fail");
 //
@@ -2054,14 +2054,12 @@ class IndexRepository {
     public function item_comment_save($post_data)
     {
         $messages = [
-            'type.required' => '参数有误',
-            'item_id.required' => '参数有误',
-            'content.required' => '内容不能为空',
+            'type.required' => '[type] 参数有误',
+            'item_id.required' => '[item_id] 参数有误',
         ];
         $v = Validator::make($post_data, [
             'type' => 'required',
             'item_id' => 'required',
-            'content' => 'required'
         ], $messages);
         if ($v->fails())
         {
@@ -2075,10 +2073,11 @@ class IndexRepository {
             $me_id = $me->id;
 
             $item_id = $post_data['item_id'];
-            if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试");
+            if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试！");
 
-            $communication_insert['type'] = 1;
+            $communication_insert['communication_type'] = 1;
             $communication_insert['user_id'] = $me_id;
+            $communication_insert['source_id'] = $me_id;
             $communication_insert['item_id'] = $item_id;
             $communication_insert['content'] = $post_data['content'];
             $communication_insert['support'] = !empty($post_data['support']) ? $post_data['support'] : 0;
@@ -2086,13 +2085,13 @@ class IndexRepository {
             DB::beginTransaction();
             try
             {
-                $item = RootItem::find($item_id);
-                if(!$item) return response_error([],"该内容不存在，刷新一下试试");
+                $item = K_Item::find($item_id);
+                if(!$item) return response_error([],"该内容不存在，刷新一下试试！");
 
                 $item->timestamps = false;
                 $item->increment('comment_num');
 
-                $communication = new Communication;
+                $communication = new K_Communication;
                 $bool = $communication->fill($communication_insert)->save();
                 if(!$bool) throw new Exception("insert--communication--fail");
 
@@ -2106,12 +2105,13 @@ class IndexRepository {
                     $notification_insert['item_id'] = $item_id;
                     $notification_insert['communication_id'] = $communication->id;
 
-                    $notification = new Notification;
+                    $notification = new K_Notification;
                     $bool = $notification->fill($notification_insert)->save();
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
 
-                $html["html"] = view('frontend.'.env('TEMPLATE').'.component.comment')->with("comment",$communication)->__toString();
+                $view = env('TEMPLATE_DEFAULT').'frontend.component.comment';
+                $html["html"] = view($view)->with("comment",$communication)->__toString();
 
                 DB::commit();
                 return response_success($html);
@@ -2120,7 +2120,7 @@ class IndexRepository {
             {
                 DB::rollback();
                 $msg = '添加失败，请重试！';
-//                $msg = $e->getMessage();
+                $msg = $e->getMessage();
 //                exit($e->getMessage());、
                 return response_fail([], $msg);
             }
@@ -2132,8 +2132,8 @@ class IndexRepository {
     public function item_comment_get($post_data)
     {
         $messages = [
-            'type.required' => '参数有误',
-            'item_id.required' => '参数有误'
+            'type.required' => '[type] 参数有误',
+            'item_id.required' => '[item_id] 参数有误'
         ];
         $v = Validator::make($post_data, [
             'type' => 'required',
@@ -2154,7 +2154,7 @@ class IndexRepository {
         {
             $user = Auth::user();
             $user_id = $user->id;
-            $comments = Communication::with([
+            $comment_list = K_Communication::with([
                 'user',
                 'reply'=>function($query) { $query->with(['user']); },
 //                'dialogs'=>function($query) use ($user_id) { $query->with([
@@ -2162,13 +2162,13 @@ class IndexRepository {
 //                    'reply'=>function($query1) { $query1->with(['user']); },
 //                    'favors'=>function($query) use ($user_id)  { $query->where(['type'=>11,'user_id'=>$user_id]); }
 //                ])->orderBy('id','desc'); },
-                'favors'=>function($query) use ($user_id) { $query->where(['type'=>11,'user_id'=>$user_id]); }
+                'favors'=>function($query) use ($user_id) { $query->where(['communication_type'=>11,'user_id'=>$user_id]); }
             ])->withCount('dialogs')
-            ->where(['type'=>$type,'reply_id'=>0,'item_id'=>$item_id]);
+            ->where(['communication_type'=>$type,'reply_id'=>0,'item_id'=>$item_id]);
         }
         else
         {
-            $comments = Communication::with([
+            $comment_list = K_Communication::with([
                 'user',
                 'reply'=>function($query) { $query->with(['user']); }//,
 //                'dialogs'=>function($query) { $query->with([
@@ -2176,16 +2176,16 @@ class IndexRepository {
 //                    'reply'=>function($query1) { $query1->with(['user']); }
 //                ])->orderBy('id','desc'); },
             ])->withCount('dialogs')
-            ->where(['type'=>$type,'reply_id'=>0,'item_id'=>$item_id]);
+            ->where(['communication_type'=>$type,'reply_id'=>0,'item_id'=>$item_id]);
         }
 
-        if(!empty($post_data['min_id']) && $post_data['min_id'] != 0) $comments->where('id', '<', $post_data['min_id']);
+        if(!empty($post_data['min_id']) && $post_data['min_id'] != 0) $comment_list->where('id', '<', $post_data['min_id']);
 
         if(!empty($post_data['support']))
         {
             if(in_array($post_data['support'], [0,1,2]))
             {
-                if($post_data['support'] != 0) $comments->where('support', $post_data['support']);
+                if($post_data['support'] != 0) $comment_list->where('support', $post_data['support']);
             }
             else
             {
@@ -2193,9 +2193,9 @@ class IndexRepository {
             }
         }
 
-        $comments = $comments->orderBy('id','desc')->paginate(10);
+        $comment_list = $comment_list->orderBy('id','desc')->paginate(10);
 
-        foreach ($comments as $comment)
+        foreach ($comment_list as $comment)
         {
             if($comment->dialogs_count)
             {
@@ -2238,12 +2238,14 @@ class IndexRepository {
 //            }
         }
 
-        if(!$comments->isEmpty())
+        if(!$comment_list->isEmpty())
         {
-            $return["html"] = view('frontend.'.env('TEMPLATE').'.component.comments')->with("communications",$comments)->__toString();
-            $return["max_id"] = $comments->first()->id;
-            $return["min_id"] = $comments->last()->id;
-            $return["more"] = ($comments->count() >= 10) ? 'more' : 'none';
+
+            $view = env('TEMPLATE_DEFAULT').'frontend.component.comment-list';
+            $return["html"] = view($view)->with("comment_list",$comment_list)->__toString();
+            $return["max_id"] = $comment_list->first()->id;
+            $return["min_id"] = $comment_list->last()->id;
+            $return["more"] = ($comment_list->count() >= 10) ? 'more' : 'none';
         }
         else
         {
@@ -2260,8 +2262,8 @@ class IndexRepository {
     public function item_comment_get_html($post_data)
     {
         $messages = [
-            'type.required' => '参数有误',
-            'item_id.required' => '参数有误'
+            'type.required' => '[type] 参数有误！',
+            'item_id.required' => '[item_id] 参数有误！'
         ];
         $v = Validator::make($post_data, [
             'type' => 'required',
@@ -2275,12 +2277,13 @@ class IndexRepository {
 
         $item_encode = $post_data['item_id'];
         $item_decode = decode($item_encode);
-        if(!$item_decode) return response_error([],"参数有误，刷新一下试试");
+        if(!$item_decode) return response_error([],"参数有误，刷新一下试试！");
 
-        $communications = Communication::with(['user'])
+        $communications = K_Communication::with(['user'])
             ->where(['item_id'=>$item_decode])->orderBy('id','desc')->get();
 
-        $html["html"] = view('frontend.component.comments')->with("communications",$communications)->__toString();
+        $view = env('TEMPLATE_DEFAULT').'frontend.component.comment-list';
+        $html["html"] = view($view)->with("communications",$communications)->__toString();
         return response_success($html);
 
     }
@@ -2315,26 +2318,25 @@ class IndexRepository {
             $item_id = $post_data['item_id'];
             if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试");
 
-            $comment_encode = $post_data['comment_id'];
-            $comment_decode = decode($comment_encode);
-            if(!$comment_decode) return response_error([],"参数有误，刷新一下试试！");
+            $comment_id= $post_data['comment_id'];
+            if(!is_numeric($comment_id)) return response_error([],"参数有误，刷新一下试试！");
 
-            $communication_insert['type'] = 1;
+            $communication_insert['communication_type'] = 1;
             $communication_insert['user_id'] = $me_id;
             $communication_insert['item_id'] = $item_id;
-            $communication_insert['reply_id'] = $comment_decode;
+            $communication_insert['reply_id'] = $comment_id;
             $communication_insert['content'] = $post_data['content'];
 
             DB::beginTransaction();
             try
             {
-                $item = RootItem::find($item_id);
+                $item = K_Item::find($item_id);
                 if(!$item) return response_error([],"该内容不存在，刷新一下试试");
 
                 $item->timestamps = false;
                 $item->increment('comment_num');
 
-                $comment = Communication::find($comment_decode);
+                $comment = K_Communication::find($comment_id);
                 if(!$comment) return response_error([],"该评论不存在，刷新一下试试！");
                 $comment->timestamps = false;
                 $comment->increment('comment_num');
@@ -2342,16 +2344,16 @@ class IndexRepository {
                 if($comment->dialog_id)
                 {
                     $communication_insert['dialog_id'] = $comment->dialog_id;
-                    $dialog = Communication::find($communication_insert['dialog_id']);
+                    $dialog = K_Communication::find($communication_insert['dialog_id']);
                     $dialog->timestamps = false;
                     $dialog->increment('comment_num');
                 }
                 else
                 {
-                    $communication_insert['dialog_id'] = $comment_decode;
+                    $communication_insert['dialog_id'] = $comment_id;
                 }
 
-                $communication = new Communication;
+                $communication = new K_Communication;
                 $bool = $communication->fill($communication_insert)->save();
                 if(!$bool) throw new Exception("insert--communication--fail");
 
@@ -2366,7 +2368,7 @@ class IndexRepository {
                     $notification_insert_1['communication_id'] = $communication->id;
                     $notification_insert_1['reply_id'] = $comment->id;
 
-                    $notification_1 = new Notification;
+                    $notification_1 = new K_Notification;
                     $bool = $notification_1->fill($notification_insert_1)->save();
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
@@ -2381,12 +2383,12 @@ class IndexRepository {
                     $notification_insert_2['communication_id'] = $communication->id;
                     $notification_insert_2['reply_id'] = $comment->id;
 
-                    $notification_2 = new Notification;
+                    $notification_2 = new K_Notification;
                     $bool = $notification_2->fill($notification_insert_2)->save();
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
 
-                $html["html"] = view('frontend.'.env('TEMPLATE').'.component.reply')->with("reply",$communication)->__toString();
+                $html["html"] = view(env('TEMPLATE_DEFAULT').'frontend.component.reply')->with("reply",$communication)->__toString();
 
                 DB::commit();
                 return response_success($html);
@@ -2427,27 +2429,28 @@ class IndexRepository {
         $item_id = $post_data['item_id'];
         if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试");
 
-        $comment_encode = $post_data['comment_id'];
-        $comment_decode = decode($comment_encode);
-        if(!$comment_decode) return response_error([],"参数有误，刷新一下试试");
+        $comment_id = $post_data['comment_id'];
+        if(!is_numeric($comment_id)) return response_error([],"参数有误，刷新一下试试");
 
         if(Auth::check())
         {
             $user = Auth::user();
             $user_id = $user->id;
-            $comments = Communication::with([
-                'user',
-                'reply'=>function($query) { $query->with(['user']); },
-                'favors'=>function($query) use ($user_id) { $query->where(['type'=>11,'user_id'=>$user_id]); }
-            ])->where(['type'=>$type,'item_id'=>$item_id,'dialog_id'=>$comment_decode])
+            $comments = K_Communication::with([
+                    'user',
+                    'reply'=>function($query) { $query->with(['user']); },
+                    'favors'=>function($query) use ($user_id) { $query->where(['communication_type'=>11,'user_id'=>$user_id]); }
+                ])
+                ->where(['communication_type'=>$type,'item_id'=>$item_id,'dialog_id'=>$comment_id])
                 ->where('reply_id','<>',0);
         }
         else
         {
-            $comments = Communication::with([
-                'user',
-                'reply'=>function($query) { $query->with(['user']); },
-            ])->where(['type'=>$type,'item_id'=>$item_id,'dialog_id'=>$comment_decode])
+            $comments = K_Communication::with([
+                    'user',
+                    'reply'=>function($query) { $query->with(['user']); },
+                ])
+                ->where(['communication_type'=>$type,'item_id'=>$item_id,'dialog_id'=>$comment_id])
                 ->where('reply_id','<>',0);
         }
 
@@ -2457,7 +2460,8 @@ class IndexRepository {
 
         if(!$comments->isEmpty())
         {
-            $return["html"] = view('frontend.'.env('TEMPLATE').'.component.replies')->with("communications",$comments)->__toString();
+            $return["html"] = view(env('TEMPLATE_DEFAULT').'frontend.component.reply-list')
+                ->with("communication_list",$comments)->__toString();
             $return["max_id"] = $comments->first()->id;
             $return["min_id"] = $comments->last()->id;
             $return["more"] = ($comments->count() >= 10) ? 'more' : 'none';
@@ -2500,30 +2504,29 @@ class IndexRepository {
             $me_id = $me->id;
 
             $item_id = $post_data['item_id'];
-            if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试");
+            if(!is_numeric($item_id)) return response_error([],"[item_id] 参数有误，刷新一下试试！");
 
-            $comment_encode = $post_data['comment_id'];
-            $comment_decode = decode($comment_encode);
-            if(!$comment_decode) return response_error([],"参数有误，刷新一下试试！");
+            $comment_id = $post_data['comment_id'];
+            if(!is_numeric($comment_id)) return response_error([],"[comment_id] 参数有误，刷新一下试试！");
 
             $communication_insert['type'] = 11;
             $communication_insert['user_id'] = $me_id;
             $communication_insert['item_id'] = $item_id;
-            $communication_insert['reply_id'] = $comment_decode;
+            $communication_insert['reply_id'] = $comment_id;
 
             DB::beginTransaction();
             try
             {
-                $item = RootItem::find($item_id);
-                if(!$item) return response_error([],"该内容不存在，刷新一下试试");
+                $item = k_Item::find($item_id);
+                if(!$item) return response_error([],"该内容不存在，刷新一下试试！");
 
-                $comment = Communication::find($comment_decode);
+                $comment = K_Communication::find($comment_id);
                 if(!$comment) return response_error([],"该评论不存在，刷新一下试试！");
 
                 $comment->timestamps = false;
                 $comment->increment('favor_num');
 
-                $communication = new Communication;
+                $communication = new K_Communication;
                 $bool = $communication->fill($communication_insert)->save();
                 if(!$bool) throw new Exception("insert--communication--fail");
 
@@ -2536,9 +2539,9 @@ class IndexRepository {
                     $notification_insert_1['source_id'] = $me_id;
                     $notification_insert_1['item_id'] = $item_id;
                     $notification_insert_1['communication_id'] = $communication->id;
-                    $notification_insert_1['reply_id'] = $comment_decode;
+                    $notification_insert_1['reply_id'] = $comment_id;
 
-                    $notification_1 = new Notification;
+                    $notification_1 = new K_Notification;
                     $bool = $notification_1->fill($notification_insert_1)->save();
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
@@ -2553,7 +2556,7 @@ class IndexRepository {
                     $notification_insert_2['communication_id'] = $communication->id;
                     $notification_insert_2['reply_id'] = $comment->id;
 
-                    $notification_2 = new Notification;
+                    $notification_2 = new K_Notification;
                     $bool = $notification_2->fill($notification_insert_2)->save();
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
@@ -2607,11 +2610,11 @@ class IndexRepository {
             DB::beginTransaction();
             try
             {
-                $comment = Communication::find($comment_decode);
+                $comment = K_Communication::find($comment_decode);
                 if(!$comment && $comment->user_id != $me_id) return response_error([],"参数有误，刷新一下试试");
                 $comment->decrement('favor_num');
 
-                $favors = Communication::where([
+                $favors = K_Communication::where([
                     'type'=>11,
                     'user_id'=>$me_id,
                     'item_id'=>$item_id,

@@ -609,7 +609,7 @@ jQuery( function ($) {
                 "/item/comment/get",
                 {
                     _token: $('meta[name="_token"]').attr('content'),
-                    item_id: item_option.attr('data-item'),
+                    item_id: item_option.attr('data-item-id'),
                     type: 1
                 },
                 function(data){
@@ -664,7 +664,7 @@ jQuery( function ($) {
             "/item/comment/get",
             {
                 _token: $('meta[name="_token"]').attr('content'),
-                item_id: item_option.attr('data-item'),
+                item_id: item_option.attr('data-item-id'),
                 support: getSupport,
                 type: 1
             },
@@ -707,7 +707,7 @@ jQuery( function ($) {
                 "/item/comment/get",
                 {
                     _token: $('meta[name="_token"]').attr('content'),
-                    item_id: item_option.attr('data-item'),
+                    item_id: item_option.attr('data-item-id'),
                     min_id: min_id,
                     type: 1
                 },

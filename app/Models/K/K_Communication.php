@@ -7,7 +7,7 @@ class K_Communication extends Model
     //
     protected $table = "communication";
     protected $fillable = [
-        'active', 'communication_category', 'communication_type',
+        'active', 'communication_category', 'communication_type', 'category', 'type',
         'source_id', 'user_id', 'item_id', 'is_anonymous', 'reply_id', 'dialog_id', 'order',
         'support',
         'title', 'description', 'content',
