@@ -12,43 +12,47 @@
         @else
             <a href="{{ url('/user/'.$comment->user->id) }}" class="user">{{ $comment->user->username }}</a>
         @endif
+    </div>
+
+    <div class="box-body comment-content-container">
+        {{ $comment->content }} <br>
+    </div>
+
+    <div class="box-body comment-title-container">
 
         @if($comment->support == 1) <b class="text-primary">【正方 <i class="fa fa-thumbs-o-up"></i>】</b>
         @elseif($comment->support == 2) <b class="text-danger">【反方 <i class="fa fa-thumbs-o-up"></i>】</b>
         @endif
 
-        <span class="pull-right text-muted disabled"><small>{{ time_show($comment->updated_at->timestamp) }}</small></span>
-
-        <span class="pull-right text-muted disabled comment-reply-toggle" role="button" data-num="{{ $comment->comment_num or 0 }}">
-            <small>回复</small> @if($comment->comment_num){{ $comment->comment_num }}@endif
-        </span>
-
-        <span class="comment-favor-btn" data-num="{{ $comment->favor_num or 0 }}">
+        <span class="pull-right comment-favor-btn" data-num="{{ $comment->favor_num or 0 }}">
             @if(Auth::check())
                 @if(count($comment->favors))
-                    <span class="pull-right text-muted disabled comment-favor-this-cancel" data-parent=".comment-option" role="button">
+                    <span class="comment-btn pull-right text-muted disabled comment-favor-this-cancel" data-parent=".comment-option" role="button">
                         <i class="fa fa-thumbs-up text-red"></i>
                         @if($comment->favor_num)<span>{{ $comment->favor_num }}</span>@endif
                     </span>
                 @else
-                    <span class="pull-right text-muted disabled comment-favor-this" data-parent=".comment-option" role="button">
+                    <span class="comment-btn pull-right text-muted disabled comment-favor-this" data-parent=".comment-option" role="button">
                         <i class="fa fa-thumbs-o-up"></i>
                         @if($comment->favor_num)<span>{{ $comment->favor_num }}</span>@endif
                     </span>
                 @endif
             @else
-                <span class="pull-right text-muted disabled comment-favor-this" data-parent=".comment-option" role="button">
+                <span class="comment-btn pull-right text-muted disabled comment-favor-this" data-parent=".comment-option" role="button">
                     <i class="fa fa-thumbs-o-up"></i>
                     @if($comment->favor_num)<span>{{ $comment->favor_num }}</span>@endif
                 </span>
             @endif
-
         </span>
 
-    </div>
+        <span class="pull-right">|</span>
+        <span class="comment-btn pull-right text-muted disabled comment-reply-toggle" role="button" data-num="{{ $comment->comment_num or 0 }}">
+            <small>回复</small> @if($comment->comment_num){{ $comment->comment_num }}@endif
+        </span>
 
-    <div class="box-body comment-content-container">
-        {{ $comment->content }} <br>
+        <span class="pull-left _none">•</span>
+        <span class="pull-left text-muted disabled"><small>{{ time_show($comment->updated_at->timestamp) }}</small></span>
+
     </div>
 
     <div class="box-body comment-reply-input-container">

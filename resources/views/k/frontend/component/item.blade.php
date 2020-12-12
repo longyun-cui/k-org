@@ -136,11 +136,11 @@
                 </div>
                 @endif
 
-                <div class="form-group form-type">
+                <div class="form-group form-type _none">
                     <div class="col-md-12">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="is_anonymous"> 匿名
+                                <input type="checkbox" name="is_anonymous">匿名
                             </label>
                         </div>
                     </div>

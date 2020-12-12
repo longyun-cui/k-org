@@ -12,8 +12,9 @@
 
 .item-piece a { color:#888;cursor:pointer; }
 .item-piece a:hover { color:#ff7676; }
-.item-piece .pull-left { margin-right:8px; }
-.item-piece .pull-right { margin-left:8px; }
+.item-piece .pull-left { margin-right:4px; }
+.item-piece .pull-right { margin-left:4px; }
+.item-piece .comment-btn { padding:0 8px;margin:0; }
 
 .item-portrait-container {
     width:48px;
