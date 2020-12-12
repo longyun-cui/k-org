@@ -103,7 +103,7 @@
 
                 <div class="form-group">
                     <div class="col-md-12">
-                        <div><textarea class="form-control" name="content" rows="3" placeholder="请输入你的评论"></textarea></div>
+                        <div><textarea class="form-control" name="content" rows="2" placeholder="请输入你的评论"></textarea></div>
                     </div>
                 </div>
 

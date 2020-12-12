@@ -15,6 +15,7 @@
 .item-piece .pull-left { margin-right:4px; }
 .item-piece .pull-right { margin-left:4px; }
 .item-piece .comment-btn { padding:0 8px;margin:0; }
+.item-piece .separator { margin:0 2px;color:#bbbbbb; }
 
 .item-portrait-container {
     width:48px;
@@ -156,11 +157,13 @@
 .comment-input-container {display:table;width:100%;padding:4px;border-bottom:1px solid #fff;}
 .comment-input-container .form-group {margin-bottom:4px;}
 
-.comment-piece {padding:4px 8px;border-bottom:1px solid #fff;}
+.comment-piece {padding:4px;border-bottom:1px solid #fff;}
 .comment-piece:first-child {}
+.comment-piece .item-row {min-height:20px;}
 
-.comment-title-container {font-size:12px;}
+.comment-title-container {padding:4px 0;font-size:12px;}
 .comment-content-container {padding:0;}
+.comment-tools-container {padding:2px 0;font-size:12px;}
 
 .comment-reply-input-container {display:none;padding:2px 0;margin-bottom:4px;border-bottom:1px solid #fff;background:#f4f4f4;}
 .comment-reply-input-container .margin {margin:4px;}
@@ -171,6 +174,10 @@
 .reply-tools-container {padding:0 8px;}
 .reply-container {padding:0; margin-top:4px;}
 .reply-input-container {display:none;padding:2px 0;margin-top:16px;background:#fff;}
+
+
+
+
 
 .comment-textarea-box {
     display: table-cell;
@@ -210,9 +217,6 @@ a.comment-button { width:100%; height:100%; line-height:36px;color:#fff; font-si
 
 
 
-
-.comment-piece {padding:4px 8px;border-bottom:1px solid #fff;}
-.comment-piece .item-row {min-height:20px;}
 
 
 .item-row.reply-container {min-height:0;}

@@ -188,19 +188,11 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 
 .items .comment-container {display:none;}
 
-.comment-title-container {padding:4px 0}
-.comment-content-container {padding:0;}
 
 .comment-piece {padding:4px 8px;border-bottom:1px solid #f4f4f4;}
 
 .comment-reply-input-container {display:none;padding:2px 0;margin-bottom:16px;border-bottom:1px solid #fff;background:#f4f4f4;}
 
-.reply-piece {padding:16px 8px;border-top:1px solid #dddddd;background:#f4f4f4;}
-.reply-piece:first-child  {border-top:0;}
-.reply-title-container {padding:0 8px 8px}
-.reply-tools-container {padding:0 8px;}
-.reply-container {padding:0;}
-.reply-input-container {display:none;padding:2px 0;margin-top:16px;background:#fff;}
 
 
 .container-body-right

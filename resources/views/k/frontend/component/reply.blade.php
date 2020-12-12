@@ -17,7 +17,7 @@
 
         @if($reply->reply_id != $reply->dialog_id)
         @if($reply->reply)
-            <small>回复</small>
+            <small class="text-muted">回复</small>
             @if($reply->reply->is_anonymous == 1)
                 <a href="javascript:void(0)">
                     {{ $reply->reply->user->anonymous_name}} (匿名)
@@ -31,7 +31,7 @@
             @endif
         @endif
         @endif
-        :
+        <span class="text-muted">:</span>
         {{ $reply->content }} <br>
 
     </div>
@@ -42,8 +42,7 @@
 
         <span class="pull-left text-muted disabled"><small>{{ time_show($reply->updated_at->timestamp) }}</small></span>
 
-        <span class="pull-left">|</span>
-        <span class="pull-right comment-favor-btn" data-num="{{ $reply->favor_num or 0 }}">
+        <span class="pull-right comment-btn comment-favor-btn" data-num="{{ $reply->favor_num or 0 }}">
             @if(Auth::check())
                 @if(count($reply->favors))
                     <span class="pull-right text-muted disabled comment-favor-this-cancel" data-parent=".reply-option" role="button">
@@ -64,8 +63,8 @@
             @endif
         </span>
 
-        <span class="pull-right">|</span>
-        <span class="pull-right text-muted disabled reply-toggle" role="button" data-num="{{ $reply->comment_num }}">
+        <span class="separator pull-right">|</span>
+        <span class="pull-right text-muted disabled comment-btn reply-toggle" role="button" data-num="{{ $reply->comment_num }}">
             <small>回复</small> @if($reply->comment_num){{ $reply->comment_num }}@endif
         </span>
 

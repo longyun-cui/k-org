@@ -2132,8 +2132,8 @@ class IndexRepository {
     public function item_comment_get($post_data)
     {
         $messages = [
-            'type.required' => '[type] 参数有误',
-            'item_id.required' => '[item_id] 参数有误'
+            'type.required' => '[type] 参数有误！',
+            'item_id.required' => '[item_id] 参数有误！'
         ];
         $v = Validator::make($post_data, [
             'type' => 'required',
@@ -2148,35 +2148,39 @@ class IndexRepository {
         $type = $post_data['type'];
 
         $item_id = $post_data['item_id'];
-        if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试");
+        if(!is_numeric($item_id)) return response_error([],"参数有误，刷新一下试试！");
 
         if(Auth::check())
         {
             $user = Auth::user();
             $user_id = $user->id;
             $comment_list = K_Communication::with([
-                'user',
-                'reply'=>function($query) { $query->with(['user']); },
-//                'dialogs'=>function($query) use ($user_id) { $query->with([
-//                    'user',
-//                    'reply'=>function($query1) { $query1->with(['user']); },
-//                    'favors'=>function($query) use ($user_id)  { $query->where(['type'=>11,'user_id'=>$user_id]); }
-//                ])->orderBy('id','desc'); },
-                'favors'=>function($query) use ($user_id) { $query->where(['communication_type'=>11,'user_id'=>$user_id]); }
-            ])->withCount('dialogs')
-            ->where(['communication_type'=>$type,'reply_id'=>0,'item_id'=>$item_id]);
+                    'user',
+                    'reply'=>function($query) { $query->with(['user']); },
+//                    'dialogs'=>function($query) use ($user_id) { $query->with([
+//                        'user',
+//                        'reply'=>function($query1) { $query1->with(['user']); },
+//                        'favors'=>function($query) use ($user_id)  { $query->where(['type'=>11,'user_id'=>$user_id]); }
+//                    ])->orderBy('id','desc'); },
+                    'favors'=>function($query) use ($user_id) { $query->where(['communication_type'=>11,'user_id'=>$user_id]); }
+                ])
+//                ->withCount('dialogs')
+//                ->where('reply_id',0)
+                ->where(['communication_type'=>$type,'item_id'=>$item_id]);
         }
         else
         {
             $comment_list = K_Communication::with([
                 'user',
                 'reply'=>function($query) { $query->with(['user']); }//,
-//                'dialogs'=>function($query) { $query->with([
-//                    'user',
-//                    'reply'=>function($query1) { $query1->with(['user']); }
-//                ])->orderBy('id','desc'); },
-            ])->withCount('dialogs')
-            ->where(['communication_type'=>$type,'reply_id'=>0,'item_id'=>$item_id]);
+//                    'dialogs'=>function($query) { $query->with([
+//                        'user',
+//                        'reply'=>function($query1) { $query1->with(['user']); }
+//                    ])->orderBy('id','desc'); },
+                ])
+//                ->withCount('dialogs')
+//                ->where('reply_id',0)
+                ->where(['communication_type'=>$type,'item_id'=>$item_id]);
         }
 
         if(!empty($post_data['min_id']) && $post_data['min_id'] != 0) $comment_list->where('id', '<', $post_data['min_id']);

@@ -12,13 +12,32 @@
         @else
             <a href="{{ url('/user/'.$comment->user->id) }}" class="user">{{ $comment->user->username }}</a>
         @endif
-    </div>
 
-    <div class="box-body comment-content-container">
+        @if($comment->reply_id != $comment->dialog_id)
+            @if($comment->reply)
+                <small class="text-muted">回复</small>
+                @if($comment->reply->is_anonymous == 1)
+                    <a href="javascript:void(0)">
+                        {{ $reply->reply->user->anonymous_name}} (匿名)
+                        @if(Auth::check())
+                            @if($comment->reply->user->id == Auth::user()->id)
+                            @endif
+                        @endif
+                    </a>
+                @else
+                    <a target="_blank" href="{{ url('/user/'.$comment->reply->user->id) }}" class="user">{{ $comment->reply->user->username }}</a>
+                @endif
+            @endif
+        @endif
+        <span class="text-muted">:</span>
         {{ $comment->content }} <br>
     </div>
 
-    <div class="box-body comment-title-container">
+    <div class="box-body comment-content-container _none">
+        {{ $comment->content }} <br>
+    </div>
+
+    <div class="box-body comment-tools-container">
 
         @if($comment->support == 1) <b class="text-primary">【正方 <i class="fa fa-thumbs-o-up"></i>】</b>
         @elseif($comment->support == 2) <b class="text-danger">【反方 <i class="fa fa-thumbs-o-up"></i>】</b>
@@ -45,12 +64,12 @@
             @endif
         </span>
 
-        <span class="pull-right">|</span>
+        <span class="separator pull-right">|</span>
         <span class="comment-btn pull-right text-muted disabled comment-reply-toggle" role="button" data-num="{{ $comment->comment_num or 0 }}">
             <small>回复</small> @if($comment->comment_num){{ $comment->comment_num }}@endif
         </span>
 
-        <span class="pull-left _none">•</span>
+        <span class="separator pull-left _none">•</span>
         <span class="pull-left text-muted disabled"><small>{{ time_show($comment->updated_at->timestamp) }}</small></span>
 
     </div>
