@@ -19,12 +19,17 @@
         {{--</a>--}}
         <a href="{{ url('/my-follow') }}">
             <div class="box-body {{ $sidebar_menu_my_follow_active or '' }}">
-                <i class="fa fa-heart text-red" style="width:24px;"></i><span>我的关注</span>
+                <i class="fa fa-user text-red" style="width:24px;"></i><span>我的关注</span>
             </div>
         </a>
         <a href="{{ url('/my-favor') }}">
             <div class="box-body {{ $sidebar_menu_my_favor_active or '' }}">
                 <i class="fa fa-heart text-red" style="width:24px;"></i><span>我的收藏</span>
+            </div>
+        </a>
+        <a href="{{ url('/my-notification') }}">
+            <div class="box-body {{ $sidebar_menu_my_notification_active or '' }}">
+                <i class="fa fa-bell text-red" style="width:24px;"></i><span>消息通知</span>
             </div>
         </a>
     @endif

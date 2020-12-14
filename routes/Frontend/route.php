@@ -117,6 +117,7 @@ Route::group([], function () {
 
                 Route::get('/my-follow', $controller.'@view_my_follow');
                 Route::get('/my-favor', $controller.'@view_my_favor');
+                Route::get('/my-notification', $controller.'@view_my_notification');
 
             });
 

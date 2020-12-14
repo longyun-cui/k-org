@@ -34,7 +34,7 @@ class IndexRepository {
     }
 
 
-    // 【平台首页】
+    // 【K】【平台首页】
     public function view_root($post_data)
     {
         if(Auth::check())
@@ -129,7 +129,7 @@ class IndexRepository {
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.item-list')->with($return);
     }
 
-    // 【内容详情】
+    // 【K】【内容详情】
     public function view_item($post_data,$id=0)
     {
 
@@ -337,7 +337,7 @@ class IndexRepository {
         return view('frontend.entrance.user-original')->with(['data'=>$user,'items'=>$items,'user_original_active'=>'active']);
     }
 
-    // 【Ta关注的人】
+    // 【K】【Ta关注的人】
     public function view_user_follow($post_data,$id=0)
     {
         $Ta = User::withCount('items')->find($id);
@@ -380,7 +380,7 @@ class IndexRepository {
 
         return view('frontend.entrance.user-follow')->with(['data'=>$Ta,'users'=>$pivot_users,'user_relation_follow_active'=>'active']);
     }
-    // 【关注Ta的人】
+    // 【K】【关注Ta的人】
     public function view_user_fans($post_data,$id=0)
     {
         $Ta = User::withCount('items')->find($id);
@@ -424,7 +424,7 @@ class IndexRepository {
         return view('frontend.entrance.user-fans')->with(['data'=>$Ta,'users'=>$pivot_users,'user_relation_fans_active'=>'active']);
     }
 
-    // 【机构介绍页】
+    // 【K】【机构介绍页】
     public function view_user_introduction($post_data,$id=0)
     {
         if(Auth::check())
@@ -588,7 +588,7 @@ class IndexRepository {
 
 
 
-    // 【添加关注】
+    // 【K】【添加关注】
     public function user_relation_add($post_data)
     {
         $messages = [
@@ -666,7 +666,7 @@ class IndexRepository {
         }
         else return response_error([],"请先登录！");
     }
-    // 【取消关注】
+    // 【K】【取消关注】
     public function user_relation_remove($post_data)
     {
         $messages = [
@@ -733,7 +733,7 @@ class IndexRepository {
 
 
 
-    // 【我的】【关注】
+    // 【K】【我的】【关注】
     public function view_my_follow($post_data)
     {
         if(Auth::check())
@@ -769,7 +769,7 @@ class IndexRepository {
                 'sidebar_menu_my_follow_active'=>'active'
             ]);
     }
-    // 【我的】【粉丝】
+    // 【K】【我的】【粉丝】
     public function view_my_fans($post_data)
     {
         if(Auth::check())
@@ -788,7 +788,7 @@ class IndexRepository {
         return view('frontend.entrance.relation-fans')->with(['users'=>$users,'root_relation_fans_active'=>'active']);
     }
 
-    // 【我的】【收藏】
+    // 【K】【我的】【收藏】
     public function view_my_favor($post_data)
     {
         if(Auth::check())
@@ -835,6 +835,85 @@ class IndexRepository {
     }
 
 
+
+
+    // 【K】【消息提醒】
+    public function view_my_notification($post_data)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $count = K_Notification::where(['is_read'=>0,'notification_category'=>11])->count();
+        if($count)
+        {
+            $notification_list = K_Notification::with([
+                    'source',
+                    'item'=>function($query) {
+                        $query->with([
+                            'owner',
+                            'forward_item'=>function($query) { $query->with('user'); }
+                        ]);
+                    },
+                    'communication'=>function($query) { $query->with(['user']); },
+                    'reply'=>function($query) {
+                        $query->with([
+                            'user',
+                            'reply'=>function($query) { $query->with('user'); }
+                        ]);
+                    }
+                ])
+                ->where(['notification_type'=>11,'is_read'=>0])
+                ->orderBy('id','desc')
+                ->get();
+
+            $update_num = K_Notification::where(['notification_category'=>11,'is_read'=>0])->update(['is_read'=>1]);
+            view()->share('notification_style', 'new');
+        }
+        else
+        {
+            $notification_list = K_Notification::with([
+                    'source',
+                    'item'=>function($query) {
+                        $query->with([
+                            'owner',
+                            'forward_item'=>function($query) { $query->with('user'); }
+                        ]);
+                    },
+                    'communication'=>function($query) { $query->with(['user']); },
+                    'reply'=>function($query) {
+                        $query->with([
+                            'user',
+                            'reply'=>function($query) { $query->with('user'); }
+                        ]);
+                    }
+                ])
+                ->where(['notification_category'=>11])
+                ->orderBy('id','desc')
+                ->paginate(10);
+
+            view()->share('notification_style', 'paginate');
+        }
+
+
+//        dd($notification_list->toArray());
+
+//        foreach ($items as $item)
+//        {
+//            $item->custom_decode = json_decode($item->custom);
+//            $item->content_show = strip_tags($item->content);
+//            $item->img_tags = get_html_img($item->content);
+//        }
+//
+        return view(env('TEMPLATE_DEFAULT').'frontend.entrance.my-notification')
+            ->with([
+                'notification_list'=>$notification_list,
+                'sidebar_menu_my_notification_active'=>'active'
+            ]);
+    }
 
 
 
@@ -1129,74 +1208,6 @@ class IndexRepository {
 
 
 
-
-
-    // 【消息提醒】
-    public function view_home_notification($post_data)
-    {
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-        }
-        else $me_id = 0;
-
-        $count = Notification::where(['is_read'=>0,'type'=>11,'user_id'=>$me_id])->count();
-        if($count)
-        {
-            $notifications = Notification::with([
-                'source',
-                'item'=>function($query) {
-                    $query->with([
-                        'user',
-                        'forward_item'=>function($query) { $query->with('user'); }
-                    ]);
-                },
-                'communication'=>function($query) { $query->with(['user']); },
-                'reply'=>function($query) {
-                    $query->with([
-                        'user',
-                        'reply'=>function($query) { $query->with('user'); }
-                    ]);
-                }
-            ])->where(['type'=>11,'is_read'=>0,'user_id'=>$me_id])->orderBy('id','desc')->get();
-
-            $update_num = Notification::where(['type'=>11,'is_read'=>0,'user_id'=>$me_id])->update(['is_read'=>1]);
-            view()->share('notification_type', 'new');
-        }
-        else
-        {
-            $notifications = Notification::with([
-                'source',
-                'item'=>function($query) {
-                    $query->with([
-                        'user',
-                        'forward_item'=>function($query) { $query->with('user'); }
-                    ]);
-                },
-                'communication'=>function($query) { $query->with(['user']); },
-                'reply'=>function($query) {
-                    $query->with([
-                        'user',
-                        'reply'=>function($query) { $query->with('user'); }
-                    ]);
-                }
-            ])->where(['type'=>11,'user_id'=>$me_id])->orderBy('id','desc')->paginate(10);
-            view()->share('notification_type', 'paginate');
-        }
-
-
-//        dd($notifications->toArray());
-
-//        foreach ($items as $item)
-//        {
-//            $item->custom_decode = json_decode($item->custom);
-//            $item->content_show = strip_tags($item->content);
-//            $item->img_tags = get_html_img($item->content);
-//        }
-//
-        return view('frontend.entrance.root-notification')->with(['notifications'=>$notifications,'root_notification_active'=>'active']);
-    }
 
 
 
@@ -2050,7 +2061,7 @@ class IndexRepository {
 
 
 
-    // 添加评论
+    // 【K】添加评论
     public function item_comment_save($post_data)
     {
         $messages = [
@@ -2128,7 +2139,7 @@ class IndexRepository {
         else return response_error([],"请先登录！");
 
     }
-    // 获取评论
+    // 【K】获取评论
     public function item_comment_get($post_data)
     {
         $messages = [
@@ -2262,7 +2273,7 @@ class IndexRepository {
         return response_success($return);
 
     }
-    // 用户评论
+    // 【K】用户评论
     public function item_comment_get_html($post_data)
     {
         $messages = [
@@ -2293,7 +2304,7 @@ class IndexRepository {
     }
 
 
-    // 添加回复
+    // 【K】添加回复
     public function item_reply_save($post_data)
     {
         $messages = [
@@ -2409,7 +2420,7 @@ class IndexRepository {
         else return response_error([],"请先登录！");
 
     }
-    // 获取回复
+    // 【K】获取回复
     public function item_reply_get($post_data)
     {
         $messages = [
@@ -2483,7 +2494,7 @@ class IndexRepository {
     }
 
 
-    // 评论点赞
+    // 【K】评论点赞
     public function item_comment_favor_save($post_data)
     {
         $messages = [
@@ -2580,7 +2591,7 @@ class IndexRepository {
         else return response_error([],"请先登录！");
 
     }
-    // 评论取消赞
+    // 【K】评论取消赞
     public function item_comment_favor_cancel($post_data)
     {
         $messages = [

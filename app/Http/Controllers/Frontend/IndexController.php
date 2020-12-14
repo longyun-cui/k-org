@@ -83,6 +83,13 @@ class IndexController extends Controller
     }
 
 
+    // 【我的粉丝】
+    public function view_my_notification()
+    {
+        return $this->repo->view_my_notification(request()->all());
+    }
+
+
 
 
 

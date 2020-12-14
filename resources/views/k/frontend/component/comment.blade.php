@@ -13,7 +13,7 @@
             <a href="{{ url('/user/'.$comment->user->id) }}" class="user">{{ $comment->user->username }}</a>
         @endif
 
-        @if($comment->reply_id != $comment->dialog_id)
+        {{--@if($comment->reply_id != $comment->dialog_id)--}}
             @if($comment->reply)
                 <small class="text-muted">回复</small>
                 @if($comment->reply->is_anonymous == 1)
@@ -28,7 +28,7 @@
                     <a target="_blank" href="{{ url('/user/'.$comment->reply->user->id) }}" class="user">{{ $comment->reply->user->username }}</a>
                 @endif
             @endif
-        @endif
+        {{--@endif--}}
         <span class="text-muted">:</span>
         {{ $comment->content }} <br>
     </div>

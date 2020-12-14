@@ -94,6 +94,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link type="text/css" rel="stylesheet" href="{{ asset('common/css/common.css') }}" media="all" />
     <link type="text/css" rel="stylesheet" href="{{ asset('common/css/frontend.css') }}" media="all" />
 
+    <link type="text/css" rel="stylesheet" href="{{ asset('common/css/frontend/style.min.css') }}" media="all" />
+
     <link type="text/css" rel="stylesheet" href="{{ asset('common/css/frontend/index.css') }}" media="all" />
     <link type="text/css" rel="stylesheet" href="{{ asset('common/css/frontend/item.css') }}" media="all" />
     <link type="text/css" rel="stylesheet" href="{{ asset('common/css/frontend/menu.css') }}" media="all" />
