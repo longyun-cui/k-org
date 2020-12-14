@@ -35,6 +35,21 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu tree"data-widget="tree">
 
+            {{--基本资料--}}
+            <li class="header">基本资料</li>
+
+            <li class="treeview {{ $sidebar_me_info_active or '' }}">
+                <a href="{{ url('/org/info/index') }}">
+                    <i class="fa fa-user"></i><span>基本信息</span>
+                </a>
+            </li>
+
+            <li class="treeview {{ $sidebar_me_introduction_active or '' }}">
+                <a href="{{ url('/org/introduction') }}">
+                    <i class="fa fa-user"></i><span>图文介绍</span>
+                </a>
+            </li>
+
             {{--用户管理--}}
             <li class="header">用户管理</li>
 

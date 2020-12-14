@@ -45,14 +45,16 @@ class IndexRepository {
     public function view_info_index()
     {
         $me = Auth::guard('sponsor')->user();
-        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.info.index')->with(['data'=>$me]);
+        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.info.index')
+            ->with(['data'=>$me,'sidebar_me_info_active'=>'active menu-open']);
     }
 
     // 【基本信息】返回-编辑-视图
     public function view_info_edit()
     {
         $me = Auth::guard('sponsor')->user();
-        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.info.edit')->with(['data'=>$me]);
+        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.info.edit')
+            ->with(['data'=>$me]);
     }
     // 【基本信息】保存-数据
     public function operate_info_save($post_data)
@@ -165,7 +167,8 @@ class IndexRepository {
         $me = Auth::guard('sponsor')->user();
         $data = K_Item::find($me->introduction_id);
         if(!$data) $data = [];
-        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.introduction.index')->with(['data'=>$data]);
+        return view(env('TEMPLATE_ADMIN').'sponsor.entrance.introduction.index')
+            ->with(['data'=>$data,'sidebar_me_introduction_active'=>'active menu-open']);
     }
 
     // 【基本信息】返回-编辑-视图

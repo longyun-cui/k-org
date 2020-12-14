@@ -11,8 +11,8 @@
 @section('header','')
 @section('description','朝鲜族组织活动平台 - 赞助商后台管理系统 - 如未科技')
 @section('breadcrumb')
-    <li><a href="{{ url('/org') }}"><i class="fa fa-home"></i>首页</a></li>
-    <li><a href="{{ url('/org/info/index') }}"><i class="fa fa-info-circle"></i>基本资料</a></li>
+    <li><a href="{{ url('/sponsor') }}"><i class="fa fa-home"></i>首页</a></li>
+    <li><a href="{{ url('/sponsor/info/index') }}"><i class="fa fa-info-circle"></i>基本资料</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
 @endsection
 

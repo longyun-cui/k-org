@@ -25,7 +25,7 @@
             <div class="box-header with-border" style="margin: 15px 0;">
                 <h3 class="box-title">图文详情</h3>
                 <div class="pull-right">
-                    <a href="{{url('/sponsor/introduction/edit')}}">
+                    <a href="{{ url('/sponsor/introduction/edit') }}">
                         <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa "></i>编辑图文</button>
                     </a>
                 </div>
@@ -57,9 +57,9 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        {{--<a href="{{url('/admin/administrator/edit')}}">--}}
-                            {{--<button type="button" onclick="" class="btn btn-success"><i class="fa "></i>编辑信息</button>--}}
-                        {{--</a>--}}
+                        <a href="{{ url('/sponsor/introduction/edit') }}">
+                            <button type="button" onclick="" class="btn btn-success"><i class="fa "></i>编辑图文</button>
+                        </a>
                         <button type="button" onclick="history.go(-1);" class="btn btn-default">返回</button>
                     </div>
                 </div>

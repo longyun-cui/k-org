@@ -158,6 +158,102 @@ class IndexRepository {
 
 
 
+    // 【基本信息】返回--视图
+    public function view_introduction_index()
+    {
+        $me = Auth::guard('org')->user();
+        $data = K_Item::find($me->introduction_id);
+        if(!$data) $data = [];
+        return view(env('TEMPLATE_ADMIN').'org.entrance.introduction.index')
+            ->with(['data'=>$data,'sidebar_me_introduction_active'=>'active menu-open']);
+    }
+
+    // 【基本信息】返回-编辑-视图
+    public function view_introduction_edit()
+    {
+        $me = Auth::guard('org')->user();
+        $data = K_Item::find($me->introduction_id);
+        if(!$data) $data = [];
+        return view(env('TEMPLATE_ADMIN').'org.entrance.introduction.edit')->with(['data'=>$data]);
+    }
+    // 【基本信息】保存-数据
+    public function operate_introduction_save($post_data)
+    {
+        $me = Auth::guard('org')->user();
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if(!empty($post_data['custom']))
+            {
+                $post_data['custom'] = json_encode($post_data['custom']);
+            }
+
+            $mine_data = $post_data;
+            unset($mine_data['operate']);
+            unset($mine_data['operate_id']);
+
+            if($me->introduction_id == 0)
+            {
+                $item = new K_Item;
+                $mine_data['owner_id'] = $me->id;
+                $mine_data['item_category'] = 1;
+                $mine_data['item_type'] = 9;
+            }
+            else
+            {
+                $item = K_Item::find($me->introduction_id);
+            }
+
+            $bool = $item->fill($mine_data)->save();
+            if($bool)
+            {
+
+                if($me->introduction_id == 0)
+                {
+                    $me->introduction_id = $item->id;
+                    $me->save();
+                }
+
+                // 头像
+                if(!empty($post_data["cover"]))
+                {
+                    // 删除原文件
+                    $mine_original_file = $me->cover_pic;
+                    if(!empty($mine_original_file) && file_exists(storage_path('resource/'.$mine_original_file)))
+                    {
+                        unlink(storage_path('resource/'.$mine_original_file));
+                    }
+
+                    $result = upload_file_storage($post_data["cover"]);
+                    if($result["result"])
+                    {
+                        $item->cover_pic = $result["local"];
+                        $item->save();
+                    }
+                    else throw new Exception("upload-cover-pic-file-fail");
+                }
+
+            }
+            else throw new Exception("insert--item--fail");
+
+            DB::commit();
+            return response_success(['id'=>$me->id]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+
+
+
     /*
      * 用户系统
      */

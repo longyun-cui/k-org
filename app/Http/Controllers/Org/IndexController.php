@@ -60,6 +60,26 @@ class IndexController extends Controller
 
 
     /*
+     * 用户基本信息
+     */
+
+    // 【基本信息】返回
+    public function view_introduction_index()
+    {
+        return $this->repo->view_introduction_index();
+    }
+
+    // 【基本信息】编辑
+    public function operate_introduction_edit()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_introduction_edit();
+        else if (request()->isMethod('post')) return $this->repo->operate_introduction_save(request()->all());
+    }
+
+
+
+
+    /*
      * 用户系统
      */
 

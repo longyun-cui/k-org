@@ -1735,7 +1735,7 @@ class IndexRepository {
 
 
 
-    // 【添加】
+    // 【K】【ITEM】【添加】【点赞&收藏 | +待办事 | +日程】
     public function item_add_this($post_data,$type=0)
     {
         if(Auth::check())
@@ -1872,7 +1872,7 @@ class IndexRepository {
         }
         else return response_error([],'请先登录！');
     }
-    // 【移除】
+    // 【K】【ITEM】【移除】【点赞&收藏 | +待办事 | +日程】
     public function item_remove_this($post_data,$type=0)
     {
         if(Auth::check())
@@ -2388,6 +2388,7 @@ class IndexRepository {
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
 
+                // 通知作者
                 if(($item->user_id != $me_id) && ($item->user_id != $comment->user_id))
                 {
                     $notification_insert_2['notification_category'] = 11;

@@ -35,10 +35,16 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu tree"data-widget="tree">
 
-            {{--用户管理--}}
-            <li class="header">我的介绍</li>
+            {{--基本资料--}}
+            <li class="header">基本资料</li>
 
-            <li class="treeview {{ $sidebar_user_member_list_active or '' }}">
+            <li class="treeview {{ $sidebar_me_info_active or '' }}">
+                <a href="{{ url('/sponsor/info/index') }}">
+                    <i class="fa fa-user"></i><span>基本信息</span>
+                </a>
+            </li>
+
+            <li class="treeview {{ $sidebar_me_introduction_active or '' }}">
                 <a href="{{ url('/sponsor/introduction') }}">
                     <i class="fa fa-user"></i><span>图文介绍</span>
                 </a>
