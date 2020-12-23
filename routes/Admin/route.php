@@ -23,6 +23,8 @@ Route::group([], function () {
 
         $controller = "IndexController";
 
+        Route::get('/sql-init', $controller.'@sql_init');
+
         Route::get('/', $controller.'@index');
         Route::get('index', $controller.'@index');
 

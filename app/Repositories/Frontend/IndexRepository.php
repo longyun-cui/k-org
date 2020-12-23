@@ -465,6 +465,7 @@ class IndexRepository {
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
                 ->where('user_type',11)
+                ->where('active',1)
                 ->paginate(20);
         }
         else
@@ -477,6 +478,7 @@ class IndexRepository {
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
                 ->where('user_type',11)
+                ->where('active',1)
                 ->paginate(20);
         }
 

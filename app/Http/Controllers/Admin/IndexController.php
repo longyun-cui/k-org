@@ -30,6 +30,46 @@ class IndexController extends Controller
     }
 
 
+    // 返回【主页】视图
+    public function sql_init()
+    {
+//        dd(1);
+        echo 'user insert start--'.time().'<br>';
+        $password = password_encode(1);
+        for($i = 2; $i <= 10000; $i++)
+        {
+            $user_insert[$i]['active'] = 0;
+            $user_insert[$i]['user_category'] = 1;
+            $user_insert[$i]['user_type'] = 1;
+            $user_insert[$i]['mobile'] = $i;
+            $user_insert[$i]['password'] = $password;
+            $user_insert[$i]['username'] = "用户_".$i;
+
+            if($i <= 10) $user_insert[$i]['user_type'] = 0;
+            else if($i >= 11 && $i <= 100) $user_insert[$i]['user_type'] = 11;
+            else if($i >= 101 && $i <= 200) $user_insert[$i]['user_type'] = 88;
+            else if($i >= 201 && $i <= 1000) $user_insert[$i]['user_type'] = 11;
+        }
+//        DB::table('user')->insert($user_insert);
+//        $user = new K_User;
+//        $user::insert($user_insert);
+        echo 'user insert end--'.time().'<br>';
+
+
+        echo 'item insert start--'.time().'<br>';
+        for($i = 1; $i <= 10000; $i++)
+        {
+            $item_insert[$i]['active'] = 0;
+            $item_insert[$i]['item_category'] = 1;
+            $item_insert[$i]['item_type'] = 1;
+            $item_insert[$i]['title'] = 'title_'.$i;
+        }
+//        $item = new K_User;
+//        $item::insert($item_insert);
+        echo 'item insert end--'.time().'<br>';
+    }
+
+
 
 
     /*
