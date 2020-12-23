@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="box-body datatable-body" id="item-main-body">
+            <div class="box-body datatable-body item-main-body" id="item-main-body">
 
 
                 <div class="row col-md-12 datatable-search-row">
@@ -758,9 +758,12 @@
                     if(!data.success) layer.msg(data.msg);
                     else
                     {
-                        if(data.data.user_type == 1) window.open('/');
-                        else if(data.data.user_type == 11) window.open('/org');
-                        else if(data.data.user_type == 88) window.open('/sponsor');
+                        console.log(data);
+//                        window.open('/');
+                        var temp_window=window.open();
+                        if(data.data.user.user_type == 1) temp_window.location='/';
+                        else if(data.data.user.user_type == 11) temp_window.location='/org';
+                        else if(data.data.user.user_type == 88) temp_window.location='/sponsor';
 
                     }
                 },

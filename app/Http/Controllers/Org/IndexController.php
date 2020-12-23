@@ -30,6 +30,30 @@ class IndexController extends Controller
     }
 
 
+    // 【用户】用户-登录
+    public function operate_login_user()
+    {
+        if(!Auth::guard('org')->check()) // 未登录
+        {
+            return Response(response_error([],"请先登录！"));
+//            $return["status"] = false;
+//            $return["log"] = "admin-no-login";
+//            $return["msg"] = "请先登录";
+//            return Response::json($return);
+        }
+        else
+        {
+            $id = request('id',0);
+            $me = Auth::guard('org')->user();
+            $me_id = $me->id;
+            if($id != $me_id) return Response(response_error([],"账号异常，请刷新页面重试！"));
+
+            Auth::guard('org')->login($me,true);
+            return response_success();
+        }
+    }
+
+
 
 
     /*
@@ -704,6 +728,16 @@ class IndexController extends Controller
     public function operate_download_keyword_detect()
     {
         $this->repo->operate_download_keyword_detect(request()->all());
+    }
+
+
+
+
+    // 【公告】返回-列表-视图
+    public function show_notification_all_list()
+    {
+        if(request()->isMethod('get')) return $this->repo->show_notification_all_list(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_notice_notice_list_datatable(request()->all());
     }
 
 

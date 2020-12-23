@@ -62,9 +62,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/4.2.2/css/swiper.min.css">--}}
     <link rel="stylesheet" href="{{ asset('/lib/css/swiper-4.2.2.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('/common/css/common.css') }}" media="all" />
-    {{--<link rel="stylesheet" href="{{ asset('/common/css/frontend/index.css') }}" media="all" />--}}
-    <link rel="stylesheet" href="{{ asset('/common/css/backend/index.css') }}" media="all" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('/common/css/common.css') }}" media="all" />
+    {{--<link type="text/css" rel="stylesheet" href="{{ asset('/common/css/frontend/index.css') }}" media="all" />--}}
+    <link type="text/css" rel="stylesheet" href="{{ asset('/common/css/frontend/item.css') }}" media="all" />
+{{--    <link type="text/css" rel="stylesheet" href="{{ asset('/common/css/frontend/menu.css') }}" media="all" />--}}
+
+    <link type="text/css" rel="stylesheet" href="{{ asset('/common/css/backend/index.css') }}" media="all" />
+
+    <link type="text/css" rel="stylesheet" href="{{ asset('common/css/animate/wicked.css') }}" media="all" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('common/css/animate/hover.css') }}" media="all" />
 
     <link rel="stylesheet" href="{{ asset('/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/admin/index.css') }}">
@@ -94,7 +100,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<div class="wrapper main-body-ctn">
 
 
     {{--main-header--}}
@@ -168,6 +174,36 @@ desired effect
 
 
 <script src="{{ asset('/js/admin/index.js') }}"></script>
+
+
+<script>
+
+    // 【登录】
+    $(".main-body-ctn").on('click', ".org-login-user", function() {
+        var that = $(this);
+        var $id= that.attr('data-id');
+        var $type = that.attr('data-type');
+        $.post(
+            "{{ url('/org/login-user') }}",
+            {
+                _token: $('meta[name="_token"]').attr('content'),
+                id: $id,
+                type: $type
+            },
+            function(data){
+                if(!data.success) layer.msg(data.msg);
+                else
+                {
+                    if($type == "") window.open('/');
+                    else if($type == "root") window.open('/user/'+$id);
+                    else if($type == "notification") window.open('/my-notification');
+                }
+            },
+            'json'
+        );
+    });
+
+</script>
 
 @yield('custom-js')
 @yield('custom-script')

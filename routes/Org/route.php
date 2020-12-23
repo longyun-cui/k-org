@@ -18,11 +18,16 @@ Route::group([], function () {
     });
 
 
+    $controller = "IndexController";
+
+    Route::match(['get','post'], '/login-user/', $controller.'@operate_login_user');
+
+
     // 后台管理，需要登录
     Route::group(['middleware' => 'org'], function () {
 
 
-        Route::fallback(function(){
+        Route::fallback(function() {
             return response()->view(env('TEMPLATE_ADMIN').'org.errors.404');
         });
 
@@ -129,6 +134,15 @@ Route::group([], function () {
         Route::match(['get','post'], '/item/item-publish', $controller.'@operate_item_item_publish');
         Route::match(['get','post'], '/item/item-ad-set', $controller.'@operate_item_ad_set');
         Route::match(['get','post'], '/item/item-ad-cancel', $controller.'@operate_item_ad_cancel');
+
+
+
+
+        /*
+         * notification
+         */
+        // notification-list
+        Route::match(['get','post'], '/notification/notification-all-list', $controller.'@show_notification_all_list');
 
 
 

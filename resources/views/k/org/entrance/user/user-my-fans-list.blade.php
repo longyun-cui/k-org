@@ -331,42 +331,14 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
 
-                            // 二级代理权限
-                            var $sub_agent = "";
-                            if(row.usergroup == "Agent2")
-                            {
-                                $sub_agent = '<a class="btn btn-xs btn-default item-sub-agent-none-submit" data-id="'+data+'" >禁止二级代理</a>';
-                            }
-                            else {
-                                if(row.isopen_subagent == 1) {
-                                    $sub_agent = '<a class="btn btn-xs btn-danger item-sub-agent-close-submit" data-id="'+data+'" >关闭二级代理</a>';
-                                }
-                                else {
-                                    $sub_agent = '<a class="btn btn-xs btn-success item-sub-agent-open-submit" data-id="'+data+'" >开启二级代理</a>';
-                                }
-                            }
-
-                            // 充值限制权限
-                            var $recharge_limit = "";
-                            if(row.is_recharge_limit == 1) {
-                                $recharge_limit = '<a class="btn btn-xs btn-danger item-recharge-limit-close-submit" data-id="'+data+'" >关闭充值额度限制</a>';
-                            } else {
-                                $recharge_limit = '<a class="btn btn-xs btn-success item-recharge-limit-open-submit" data-id="'+data+'" >开启充值额度限制</a>';
-                            }
-
                             var html =
 //                                '<a class="btn btn-xs item-enable-submit" data-id="'+value+'">启用</a>'+
 //                                '<a class="btn btn-xs item-disable-submit" data-id="'+value+'">禁用</a>'+
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
                                 {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
-                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'" data-name="'+row.username+'">充值/退款</a>'+
-                                $sub_agent+
-                                $recharge_limit+
-                                '<a class="btn btn-xs bg-navy item-edit-submit" data-id="'+data+'">编辑</a>'+
-                                '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">修改密码</a>'+
-                                '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
-                                '<a class="btn btn-xs bg-navy item-login-submit" data-id="'+data+'">登录</a>'+
+                                '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">移除粉丝</a>'+
+                                '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >添加为成员</a>'+
                                 '';
                             return html;
                         }

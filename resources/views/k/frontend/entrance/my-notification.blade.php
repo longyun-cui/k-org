@@ -1,6 +1,6 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
-@section('head_title','朝鲜族组织活动网')
+@section('head_title','消息通知 - 朝鲜族组织活动网')
 @section('meta_title')@endsection
 @section('meta_author')@endsection
 @section('meta_description')@endsection
@@ -40,7 +40,7 @@
     <div class="col-sm-12 col-md-3 hidden-xs hidden-sm container-body-right">
 
         @include(env('TEMPLATE_DEFAULT').'frontend.component.right-root')
-        @include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')
+        {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')--}}
 
     </div>
 

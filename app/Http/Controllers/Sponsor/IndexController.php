@@ -30,6 +30,30 @@ class IndexController extends Controller
     }
 
 
+    // 【用户】用户-登录
+    public function operate_login_user()
+    {
+        if(!Auth::guard('sponsor')->check()) // 未登录
+        {
+            return Response(response_error([],"请先登录！"));
+//            $return["status"] = false;
+//            $return["log"] = "admin-no-login";
+//            $return["msg"] = "请先登录";
+//            return Response::json($return);
+        }
+        else
+        {
+            $id = request('id',0);
+            $me = Auth::guard('sponsor')->user();
+            $me_id = $me->id;
+            if($id != $me_id) return Response(response_error([],"账号异常，请刷新页面重试！"));
+
+            Auth::guard('sponsor')->login($me,true);
+            return response_success();
+        }
+    }
+
+
 
 
     /*

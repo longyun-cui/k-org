@@ -107,24 +107,18 @@ class IndexController extends Controller
         $user_id = request()->get('id');
         $user = K_User::where('id',$user_id)->first();
 
-        $return['user_type'] = 'user';
-        if($user->user_type == 1)
-        {
-            Auth::login($user,true);
-            $return['user_type'] = 'individual';
-        }
-        else if($user->user_type == 11)
+        Auth::login($user,true);
+
+        if($user->user_type == 11)
         {
             Auth::guard('org')->login($user,true);
-            $return['user_type'] = 'org';
         }
         else if($user->user_type == 88)
         {
             Auth::guard('sponsor')->login($user,true);
-            $return['user_type'] = 'sponsor';
         }
 
-
+        $return['user'] = $user;
         return response_success($return);
     }
 
@@ -134,6 +128,7 @@ class IndexController extends Controller
     {
         $org_id = request()->get('id');
         $org = K_User::where('id',$org_id)->first();
+        Auth::login($org,true);
         Auth::guard('org')->login($org,true);
         return response_success();
     }
@@ -144,6 +139,7 @@ class IndexController extends Controller
     {
         $sponsor_id = request()->get('id');
         $sponsor = K_User::where('id',$sponsor_id)->first();
+        Auth::login($sponsor_id,true);
         Auth::guard('sponsor')->login($sponsor,true);
         return response_success();
     }

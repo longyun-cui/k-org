@@ -28,7 +28,7 @@
         <div class="navbar-custom-menu">
 
             @if(!Auth::check())
-            <div class="navbar-custom-menu" style="height:50px;line-height:50px;float:left;">
+            <div class="navbar-custom-menu" style="height:50px;line-height:50px;padding:0 8px;float:left;">
                 <a href="{{ url('/login-link') }}">
                     <i class="fa fa-sign-in"></i>
                     <span>登录</span>
@@ -37,6 +37,16 @@
             @endif
 
             <ul class="nav navbar-nav hidden-xs- hidden-sm-">
+
+
+                @if(Auth::check())
+                <li class="">
+                    <a  href="{{ url('/my-notification') }}" data-type="notification">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="label label-success">{{ $notification_count or '' }}</span>
+                    </a>
+                </li>
+                @endif
 
                 {{--<!-- Notifications Menu -->--}}
                 <li class="dropdown notifications-menu _none">

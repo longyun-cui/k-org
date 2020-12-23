@@ -48,7 +48,7 @@ class K_User extends Authenticatable
         return $this->hasMany('App\Models\K\K_User','parent_id','id');
     }
 
-    // 名下代理商
+    // 粉丝
     function fans()
     {
         return $this->hasMany('App\Models\K\K_User','parent_id','id');

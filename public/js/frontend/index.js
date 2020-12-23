@@ -610,7 +610,8 @@ jQuery( function ($) {
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     item_id: item_option.attr('data-item-id'),
-                    type: 1
+                    category: 11,
+                    type: 0
                 },
                 function(data){
                     if(!data.success) layer.msg(data.msg);
@@ -666,7 +667,8 @@ jQuery( function ($) {
                 _token: $('meta[name="_token"]').attr('content'),
                 item_id: item_option.attr('data-item-id'),
                 support: getSupport,
-                type: 1
+                category: 11,
+                type: 0
             },
             function(data){
                 if(!data.success) layer.msg(data.msg);
@@ -709,7 +711,8 @@ jQuery( function ($) {
                     _token: $('meta[name="_token"]').attr('content'),
                     item_id: item_option.attr('data-item-id'),
                     min_id: min_id,
-                    type: 1
+                    category: 11,
+                    type: 0
                 },
                 function(data){
                     if(!data.success) layer.msg(data.msg);

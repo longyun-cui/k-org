@@ -94,7 +94,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<div class="wrapper main-body-ctn">
 
 
     {{--main-header--}}
@@ -165,6 +165,36 @@ desired effect
 <script src="{{ asset('/lib/js/swiper-4.2.2.min.js') }}"></script>
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+
+
+<script>
+
+    // 【登录】
+    $(".main-body-ctn").on('click', ".org-login-user", function() {
+        var that = $(this);
+        var $id= that.attr('data-id');
+        var $type = that.attr('data-type');
+        $.post(
+            "{{ url('/org/login-user') }}",
+            {
+                _token: $('meta[name="_token"]').attr('content'),
+                id: $id,
+                type: $type
+            },
+            function(data){
+                if(!data.success) layer.msg(data.msg);
+                else
+                {
+                    if($type == "") window.open('/');
+                    else if($type == "root") window.open('/user/'+$id);
+                    else if($type == "notification") window.open('/my-notification');
+                }
+            },
+            'json'
+        );
+    });
+
+</script>
 
 
 <script src="{{ asset('/js/admin/index.js') }}"></script>

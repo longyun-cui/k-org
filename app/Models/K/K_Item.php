@@ -8,7 +8,8 @@ class K_Item extends Model
     protected $table = "item";
     protected $fillable = [
         'active', 'status', 'item_category', 'item_type', 'category', 'type', 'sort',
-        'owner_id', 'creator_id', 'org_id', 'admin_id', 'user_id', 'p_id', 'parent_id',
+        'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'p_id', 'parent_id',
+        'org_id', 'admin_id',
         'item_id', 'menu_id',
         'name', 'title', 'subtitle', 'description', 'content', 'custom', 'custom2', 'custom3',
         'link_url', 'cover_pic', 'attachment_name', 'attachment_src',
@@ -25,18 +26,17 @@ class K_Item extends Model
 //    }
 
 
-
-
+    // 拥有者
     function owner()
     {
         return $this->belongsTo('App\Models\K\K_User','owner_id','id');
     }
-
+    // 创作者
     function creator()
     {
         return $this->belongsTo('App\Models\K\K_User','creator_id','id');
     }
-
+    // 用户
     function user()
     {
         return $this->belongsTo('App\Models\K\K_User','user_id','id');

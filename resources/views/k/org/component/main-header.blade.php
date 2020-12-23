@@ -75,6 +75,13 @@
                         </ul>
                     </li>
 
+                    <li class="">
+                        <a class="org-login-user" data-id="{{ Auth::guard('org')->user()->id }}" data-type="notification">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="label label-success">4</span>
+                        </a>
+                    </li>
+
                     <!-- Messages: style can be found in dropdown.less-->
                     <li class="dropdown messages-menu">
                         <!-- Menu toggle button -->

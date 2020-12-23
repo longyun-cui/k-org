@@ -3,7 +3,7 @@
     <a href="{{ url('/') }}">
         <div class="box-body {{ $sidebar_menu_root_active or '' }}">
             <i class="fa fa-list text-orange" style="width:24px;"></i>
-            <span>首页</span>
+            <span>平台首页</span>
         </div>
     </a>
 

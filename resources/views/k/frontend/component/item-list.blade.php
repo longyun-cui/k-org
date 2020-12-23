@@ -16,12 +16,17 @@
 
         <div class="box-body item-row item-info-row">
             @if($item->item_type == 88)
-                <span class="info-tags text-danger">广告</span>
+                <span class="info-tags text-danger pull-left">广告</span>
             @endif
             @if($item->item_type == 11 || $item->time_type == 1)
-                <span class="info-tags text-default">活动</span>
+                <span class="info-tags text-default pull-left">活动</span>
             @endif
-            <span><a href="{{ url('/user/'.$item->owner->id) }}">{{ $item->owner->username or '' }}</a></span>
+            <span class="pull-left">
+                <a href="{{ url('/user/'.$item->owner->id) }}">
+                    <span class="item-user-portrait _none"><img src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt=""></span>
+                    {{ $item->owner->username or '' }}
+                </a>
+            </span>
             <span class="pull-right"><a class="show-menu" role="button"></a></span>
             <span class=" text-muted disabled"> • {{ time_show($item->updated_at->timestamp) }}</span>
             {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}

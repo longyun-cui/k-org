@@ -41,7 +41,7 @@
     <div class="col-sm-12 col-md-3 hidden-xs hidden-sm container-body-right">
 
         @include(env('TEMPLATE_DEFAULT').'frontend.component.right-root')
-        @include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')
+        {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')--}}
 
     </div>
 

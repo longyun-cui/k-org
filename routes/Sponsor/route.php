@@ -18,6 +18,11 @@ Route::group([], function () {
     });
 
 
+    $controller = "IndexController";
+
+    Route::match(['get','post'], '/login-user/', $controller.'@operate_login_user');
+
+
     // 后台管理，需要登录
     Route::group(['middleware' => 'sponsor'], function () {
 

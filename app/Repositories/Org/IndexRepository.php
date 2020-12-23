@@ -4,6 +4,7 @@ namespace App\Repositories\Org;
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
 use App\Models\K\K_Pivot_User_Relation;
+use App\Models\K\K_Notification;
 
 use App\Repositories\Common\CommonRepository;
 
@@ -5471,6 +5472,88 @@ class IndexRepository {
             });
         })->export('xls');
         return response_success([]);
+    }
+
+
+
+
+    /*
+     * 公告&通知
+     */
+    // 【公告】返回-添加-视图
+    public function show_notification_all_list($post_data)
+    {
+        $me = Auth::guard('org')->user();
+        $me_id = $me->id;
+
+        $count = K_Notification::where(['is_read'=>0,'notification_category'=>11])->count();
+        if($count)
+        {
+            $notification_list = K_Notification::with([
+                'source',
+                'item'=>function($query) {
+                    $query->with([
+                        'owner',
+                        'forward_item'=>function($query) { $query->with('user'); }
+                    ]);
+                },
+                'communication'=>function($query) { $query->with(['user']); },
+                'reply'=>function($query) {
+                    $query->with([
+                        'user',
+                        'reply'=>function($query) { $query->with('user'); }
+                    ]);
+                }
+            ])
+                ->where(['notification_type'=>11,'is_read'=>0])
+//                ->where(['user_id'=>$me_id])
+                ->orderBy('id','desc')
+                ->get();
+
+            $update_num = K_Notification::where(['notification_category'=>11,'is_read'=>0])->update(['is_read'=>1]);
+            view()->share('notification_style', 'new');
+        }
+        else
+        {
+            $notification_list = K_Notification::with([
+                'source',
+                'item'=>function($query) {
+                    $query->with([
+                        'owner',
+                        'forward_item'=>function($query) { $query->with('user'); }
+                    ]);
+                },
+                'communication'=>function($query) { $query->with(['user']); },
+                'reply'=>function($query) {
+                    $query->with([
+                        'user',
+                        'reply'=>function($query) { $query->with('user'); }
+                    ]);
+                }
+            ])
+                ->where(['notification_category'=>11])
+//                ->where(['user_id'=>$me_id])
+                ->orderBy('id','desc')
+                ->paginate(20);
+
+            view()->share('notification_style', 'paginate');
+        }
+
+
+//        dd($notification_list->toArray());
+
+//        foreach ($items as $item)
+//        {
+//            $item->custom_decode = json_decode($item->custom);
+//            $item->content_show = strip_tags($item->content);
+//            $item->img_tags = get_html_img($item->content);
+//        }
+//
+        return view(env('TEMPLATE_DEFAULT').'org.entrance.notification.notification-all-list')
+            ->with([
+                'notification_list'=>$notification_list,
+                'sidebar_notification_all_list_active'=>'active'
+            ]);
     }
 
 

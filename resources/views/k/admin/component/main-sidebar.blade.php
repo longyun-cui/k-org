@@ -35,11 +35,11 @@
             {{--用户管理--}}
             <li class="header">机构管理</li>
 
-            {{--<li class="treeview {{ $sidebar_user_all_list_active or '' }}">--}}
-                {{--<a href="{{ url('/admin/user/all-list') }}">--}}
-                    {{--<i class="fa fa-user"></i><span>全部用户</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li class="treeview {{ $sidebar_user_all_list_active or '' }}">
+                <a href="{{ url('/admin/user/all-list') }}">
+                    <i class="fa fa-user"></i><span>全部用户</span>
+                </a>
+            </li>
             {{--<li class="treeview {{ $sidebar_user_org_list_active or '' }}">--}}
                 {{--<a href="{{ url('/admin/user/individual-list') }}">--}}
                     {{--<i class="fa fa-user"></i><span>个人用户</span>--}}
@@ -47,12 +47,17 @@
             {{--</li>--}}
             <li class="treeview {{ $sidebar_user_org_list_active or '' }}">
                 <a href="{{ url('/admin/user/org-list') }}">
-                    <i class="fa fa-user"></i><span>组织列表</span>
+                    <i class="fa fa-user"></i><span>组织机构</span>
                 </a>
             </li>
             <li class="treeview {{ $sidebar_user_sponsor_list_active or '' }}">
                 <a href="{{ url('/admin/user/sponsor-list') }}">
-                    <i class="fa fa-user"></i><span>赞助商列表</span>
+                    <i class="fa fa-user"></i><span>赞助商</span>
+                </a>
+            </li>
+            <li class="treeview {{ $sidebar_user_individual_list_active or '' }}">
+                <a href="{{ url('/admin/user/individual-list') }}">
+                    <i class="fa fa-user"></i><span>个人用户</span>
                 </a>
             </li>
 
@@ -60,13 +65,7 @@
 
 
             {{--用户管理--}}
-            <li class="header">用户管理</li>
-
-            <li class="treeview {{ $sidebar_user_individual_list_active or '' }}">
-                <a href="{{ url('/admin/user/individual-list') }}">
-                    <i class="fa fa-user"></i><span>用户列表</span>
-                </a>
-            </li>
+            <li class="header _none">用户管理</li>
 
 
 
