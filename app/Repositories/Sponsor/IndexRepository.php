@@ -417,17 +417,9 @@ class IndexRepository {
     public function get_user_my_fans_list_datatable($post_data)
     {
         $me = Auth::guard("sponsor")->user();
-        $query = User::select('*')
-//            ->whereHas('fund', function ($query1) { $query1->where('totalfunds', '>=', 1000); } )
-            ->with('ep','parent','fund')
-            ->withCount([
-                'agents'=>function ($query) { $query->where('usergroup','Agent2'); },
-                'clients'=>function ($query) { $query->where('usergroup','Service'); }
-            ])
-            ->where(['userstatus'=>'正常','status'=>1])
-            ->whereIn('usergroup',['Agent','Agent2']);
+        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_user_id'=>$me->id]);
 
-        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
+//        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
         $total = $query->count();
 

@@ -372,9 +372,9 @@ class IndexRepository {
     public function get_user_my_member_list_datatable($post_data)
     {
         $me = Auth::guard("org")->user();
-        $query = K_User::select('*')->where(['user_category'=>1,'user_type'=>88]);
+        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_type'=>11,'relation_user_id'=>$me->id]);
 
-        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
+//        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
         $total = $query->count();
 
@@ -415,7 +415,7 @@ class IndexRepository {
     public function get_user_my_fans_list_datatable($post_data)
     {
         $me = Auth::guard("org")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_user_id'=>$me->id]);
+        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_user_id'=>$me->id]);
 
 //        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
@@ -458,7 +458,8 @@ class IndexRepository {
     public function get_user_my_sponsor_list_datatable($post_data)
     {
         $me = Auth::guard("org")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('relation_user')->where(['mine_user_id'=>$me->id,'relation_type'=>88]);
+        $query = K_Pivot_User_Relation::select('*')->with('relation_user')
+            ->where(['mine_user_id'=>$me->id,'relation_category'=>88,'relation_type'=>1]);
 
         if(!empty($post_data['username']))
         {
@@ -576,7 +577,7 @@ class IndexRepository {
         $me = Auth::guard('org')->user();
         if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
 
-        $pivot_relation = K_Pivot_User_Relation::where(['relation_type'=>88,'mine_user_id'=>$me->id,'relation_user_id'=>$id])->first();
+        $pivot_relation = K_Pivot_User_Relation::where(['relation_category'=>88,'relation_type'=>1,'mine_user_id'=>$me->id,'relation_user_id'=>$id])->first();
         if($pivot_relation) return response_error([],"该赞助商已经关联过了！");
 
         // 启动数据库事务
@@ -585,7 +586,8 @@ class IndexRepository {
         {
             $mine = new K_Pivot_User_Relation;
 
-            $mine_data['relation_type'] = 88;
+            $mine_data['relation_category'] = 88;
+            $mine_data['relation_type'] = 1;
             $mine_data['mine_user_id'] = $me->id;
             $mine_data['relation_user_id'] = $id;
 
@@ -640,12 +642,13 @@ class IndexRepository {
             foreach($sponsor_ids as $key => $sponsor_id)
             {
                 if(intval($sponsor_id) !== 0 && !$sponsor_id) return response_error([],"参数ID有误！");
-                $pivot_relation = K_Pivot_User_Relation::where(['relation_type'=>88,'mine_user_id'=>$me->id,'relation_user_id'=>$sponsor_id])->first();
+                $pivot_relation = K_Pivot_User_Relation::where(['relation_category'=>88,'mine_user_id'=>$me->id,'relation_user_id'=>$sponsor_id])->first();
                 if(!$pivot_relation)
                 {
                     $mine = new K_Pivot_User_Relation;
 
-                    $mine_data['relation_type'] = 88;
+                    $mine_data['relation_category'] = 88;
+                    $mine_data['relation_type'] = 1;
                     $mine_data['mine_user_id'] = $me->id;
                     $mine_data['relation_user_id'] = $sponsor_id;
 
@@ -752,7 +755,7 @@ class IndexRepository {
         $pivot_relation = K_Pivot_User_Relation::find($id);
         if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
         if($pivot_relation->mine_user_id != $me->id) return response_error([],"该关联有误！");
-        if($pivot_relation->relation_type != 88) return response_error([],"非赞助商关联，不能执行该操作！");
+        if($pivot_relation->relation_category != 88) return response_error([],"非赞助商关联，不能执行该操作！");
 
         // 启动数据库事务
         DB::beginTransaction();
@@ -806,7 +809,7 @@ class IndexRepository {
         $pivot_relation = K_Pivot_User_Relation::find($id);
         if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
         if($pivot_relation->mine_user_id != $me->id) return response_error([],"该关联有误！");
-        if($pivot_relation->relation_type != 88) return response_error([],"非赞助商关联，不能执行该操作！");
+        if($pivot_relation->relation_category != 88) return response_error([],"非赞助商关联，不能执行该操作！");
 
         $me_sponsor_count = K_Pivot_User_Relation::where(['relation_active'=>1,'relation_type'=>88,'mine_user_id'=>$me->id])->count();
         if($me_sponsor_count >= 3) return response_error([],"启用的赞助商不能超过3个！");

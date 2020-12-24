@@ -45,18 +45,6 @@
                                 </a>
                             </li>
 
-                            <li class="header _none">添加内容</li>
-                            <li class="header _none">
-                                <a href="{{url('/org/item/create?category=about')}}">
-                                    <i class="fa fa-plus text-green"></i> 添加关于企业
-                                </a>
-                            </li>
-                            <li class="header _none">
-                                <a href="{{url('/org/item/create?category=advantage')}}">
-                                    <i class="fa fa-plus text-green"></i> 添加选择我们
-                                </a>
-                            </li>
-
                             <li class="header">广告</li>
                             <li class="header">
                                 <a href="{{url('/org/item/advertising-create')}}">
@@ -75,15 +63,19 @@
                         </ul>
                     </li>
 
+
                     <li class="">
                         <a class="org-login-user" data-id="{{ Auth::guard('org')->user()->id }}" data-type="notification">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">4</span>
+                            @if(!empty($org_notification_count))
+                            <span class="label label-danger">{{ $org_notification_count }}</span>
+                            @endif
                         </a>
                     </li>
 
+
                     <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
+                    <li class="dropdown messages-menu _none">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
@@ -117,8 +109,9 @@
                         </ul>
                     </li>
 
+
                     <!-- Notifications Menu -->
-                    <li class="dropdown notifications-menu">
+                    <li class="dropdown notifications-menu _none">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
@@ -141,8 +134,9 @@
                         </ul>
                     </li>
 
+
                     <!-- Tasks Menu -->
-                    <li class="dropdown tasks-menu">
+                    <li class="dropdown tasks-menu _none">
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-flag-o"></i>
@@ -177,6 +171,7 @@
                             </li>
                         </ul>
                     </li>
+
 
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
@@ -231,6 +226,7 @@
                             </li>
                         </ul>
                     </li>
+
 
                     <!-- Control Sidebar Toggle Button -->
                     <li class="_none">

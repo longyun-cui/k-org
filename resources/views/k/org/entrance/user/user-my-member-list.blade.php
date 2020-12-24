@@ -65,9 +65,6 @@
                             <th>ID</th>
                             <th></th>
                             <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -280,7 +277,7 @@
                     {
                         'className':"text-left",
                         'width':"",
-                        "title": "组织名称",
+                        "title": "成员",
                         "data": "id",
                         'orderable': false,
                         render: function(data, type, row, meta) {
@@ -288,70 +285,8 @@
                         }
                     },
                     {
-                        'className':"text-left",
-                        'width':"128px",
-                        "title": "负责人",
-                        "data": "id",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            if(row.principal) {
-                                return '<a target="_blank" href="/user/'+data+'">'+row.principal.username+'</a>';
-                            }
-                            else return '--';
-                        }
-                    },
-                    {
-                        'width':"72px",
-                        "title": "成员数",
-                        "data": "id",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            if(row.members_count && row.members_count > 0)
-                            {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.members_count+'</a>';
-                            }
-                            else return '--';
-                        }
-                    },
-                    {
-                        'width':"72px",
-                        "title": "粉丝数",
-                        "data": "fund_total",
-                        'orderable': true,
-                        render: function(data, type, row, meta) {
-                            if(row.fans_count && row.fans_count > 0)
-                            {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.fans_count+'</a>';
-                            }
-                            else return '--';
-                        }
-                    },
-//                    {
-//                        'data': 'menu_id',
-//                        'orderable': false,
-//                        render: function(data, type, row, meta) {
-////                            return row.menu == null ? '未分类' : row.menu.title;
-//                            if(row.menu == null) return '<small class="label btn-info">未分类</small>';
-//                            else {
-//                                return '<a href="/org-admin/item/menu?id='+row.menu.encode_id+'">'+row.menu.title+'</a>';
-//                            }
-//                        }
-//                    },
-//                    {
-//                        'data': 'id',
-//                        'orderable': false,
-//                        render: function(data, type, row, meta) {
-//                            return row.menu == null ? '未分类' : row.menu.title;
-////                            var html = '';
-////                            $.each(data,function( key, val ) {
-////                                html += '<a href="/org-admin/item/menu?id='+this.id+'">'+this.title+'</a><br>';
-////                            });
-////                            return html;
-//                        }
-//                    },
-                    {
-                        'width':"128px",
-                        "title": "创建时间",
+                        'width': "128px",
+                        "title": "记录时间",
                         'data': 'created_at',
                         'orderable': true,
                         render: function(data, type, row, meta) {
@@ -366,19 +301,15 @@
 //                            return $year+'-'+$month+'-'+$day;
                             return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute;
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
-                        }
-                    },
-//                    {
-//                        'data': 'created_at',
-//                        'orderable': true,
-//                        render: function(data) {
+
 //                            newDate = new Date();
 //                            newDate.setTime(data * 1000);
-////                            return newDate.toLocaleString('chinese',{hour12:false});
+//                            return newDate.toLocaleString('chinese',{hour12:false});
 //                            return newDate.toLocaleDateString();
-//                        }
-//                    },
+                        }
+                    },
                     {
+                        'width': "192px",
                         'data': 'id',
                         'orderable': false,
                         render: function(data, type, row, meta) {

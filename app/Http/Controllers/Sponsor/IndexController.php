@@ -48,7 +48,7 @@ class IndexController extends Controller
             $me_id = $me->id;
             if($id != $me_id) return Response(response_error([],"账号异常，请刷新页面重试！"));
 
-            Auth::guard('sponsor')->login($me,true);
+            Auth::login($me,true);
             return response_success();
         }
     }

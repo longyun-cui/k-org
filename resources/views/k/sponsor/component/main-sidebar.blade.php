@@ -99,10 +99,22 @@
 
 
 
-            {{--消息管理--}}
-            <li class="header">消息管理</li>
+            {{--用户管理--}}
+            <li class="header">用户管理</li>
 
-            <li class="treeview {{ $sidebar_message_list_active or '' }}">
+            <li class="treeview {{ $sidebar_user_fans_list_active or '' }}">
+                <a href="{{ url('/sponsor/user/my-fans-list') }}">
+                    <i class="fa fa-user text-orange"></i><span>粉丝列表</span>
+                </a>
+            </li>
+
+
+
+
+            {{--消息管理--}}
+            <li class="header _none">消息管理</li>
+
+            <li class="treeview {{ $sidebar_message_list_active or '' }} _none">
                 <a href="{{ url('/sponsor/message/message-list') }}">
                     <i class="fa fa-envelope text-green"></i> <span>消息列表</span>
                 </a>

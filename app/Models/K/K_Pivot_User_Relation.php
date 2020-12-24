@@ -7,7 +7,8 @@ class K_Pivot_User_Relation extends Model
     //
     protected $table = "pivot_user_relation";
     protected $fillable = [
-        'active', 'relation_active', 'type', 'relation_type', 'relation', 'mine_user_id', 'relation_user_id'
+        'active', 'category', 'type', 'relation_active', 'relation_category', 'relation_type', 'relation',
+        'mine_user_id', 'relation_user_id'
     ];
     protected $dateFormat = 'U';
 

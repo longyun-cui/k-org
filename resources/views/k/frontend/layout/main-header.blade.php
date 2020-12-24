@@ -43,7 +43,8 @@
                 <li class="">
                     <a  href="{{ url('/my-notification') }}" data-type="notification">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success">{{ $notification_count or '' }}</span>
+
+                        <span class="label label-success">@if(!empty($notification_count)){{ $notification_count or '' }}@endif</span>
                     </a>
                 </li>
                 @endif
@@ -99,37 +100,56 @@
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-circle" alt="User Image">
-                                <p>
-                                    {{ Auth::user()->username }}
-                                    <small>Member since Nov. 2012</small>
-                                </p>
+                                    <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-circle" alt="User Image">
+                                    <p>
+                                        {{ Auth::user()->username }}
+                                        <small>Member since Nov. 2020</small>
+                                    </p>
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="row">
-                                    <div class="col-xs-6 text-center">
-                                        <i class="fa fa-heart text-red"></i>
-                                        <a href="{{ url('/my-follow') }}">我的关注</a>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="{{ url('/user/'.Auth::user()->id) }}">
+                                            <i class="fa fa-home text-red"></i> 主页
+                                        </a>
                                     </div>
-                                    <div class="col-xs-6 text-center">
-                                        <i class="fa fa-heart text-red"></i>
-                                        <a href="{{ url('/my-favor') }}">我的收藏</a>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="{{ url('/my-follow') }}">
+                                            <i class="fa fa-user text-red"></i> 关注
+                                        </a>
                                     </div>
-                                    <div class="col-xs-4 text-center _none">
-                                        <a href="javascript:void(0);">Friends</a>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="{{ url('/my-favor') }}">
+                                            <i class="fa fa-heart text-red"></i> 收藏
+                                        </a>
                                     </div>
                                 </div>
-                                <!-- /.row -->
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
+                                @if(Auth::user()->user_type == 1)
                                 <div class="pull-left">
                                     <a href="{{ url('/info/index') }}" class="btn btn-default btn-flat">
-                                        <i class="fa fa-user"></i>
+                                        <i class="fa fa-info"></i>
                                         <span>个人资料</span>
                                     </a>
                                 </div>
+                                @elseif(Auth::user()->user_type == 11)
+                                    <div class="pull-left">
+                                        <a href="{{ url('/org') }}" class="btn btn-default btn-flat">
+                                            <i class="fa fa-home"></i>
+                                            <span>返回后台</span>
+                                        </a>
+                                    </div>
+                                @elseif(Auth::user()->user_type == 88)
+                                    <div class="pull-left">
+                                        <a href="{{ url('/sponsor') }}" class="btn btn-default btn-flat">
+                                            <i class="fa fa-home"></i>
+                                            <span>返回后台</span>
+                                        </a>
+                                    </div>
+                                @endif
                                 <div class="pull-right">
                                     <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">
                                         <i class="fa fa-sign-in"></i>

@@ -24,23 +24,20 @@
             @if(!empty($v->linkman) or !empty($v->contact_phone) or !empty($v->contact_address))
             <div class="item-row item-info-row">
                 @if(!empty($v->linkman))
-                <div class="margin-8px">
+                <div class="margin-4px">
                     <i class="fa fa-user text-orange"></i>
-                    &nbsp;
                     <span class="text-muted">{{ $v->linkman or '暂无' }}</span>
                 </div>
                 @endif
                 @if(!empty($v->contact_phone))
-                <div class="margin-8px">
+                <div class="margin-4px">
                     <i class="fa fa-phone text-success"></i>
-                    &nbsp;
                     <span class="text-muted">{{ $v->contact_phone or '暂无' }}</span>
                 </div>
                 @endif
                 @if(!empty($v->contact_address))
-                <div class="margin-8px">
+                <div class="margin-4px">
                     <i class="fa fa-map-marker text-primary"></i>
-                    &nbsp;
                     <span class="text-muted">{{ $v->contact_address or '暂无' }}</span>
                 </div>
                 @endif

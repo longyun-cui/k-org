@@ -26,7 +26,7 @@
                 <h3 class="box-title">基本资料</h3>
                 <div class="pull-right">
                     <a href="{{ url('/sponsor/info/edit') }}">
-                        <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa "></i>编辑信息</button>
+                        <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa fa-edit"></i> 编辑信息</button>
                     </a>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">修改密码：</label>
                     <div class="col-md-8 ">
-                        <a class="btn btn-danger _left" href="{{ url('/org/info/password-reset') }}">修改密码</a>
+                        <a class="btn btn-danger _left" href="{{ url('/org/info/password-reset') }}"><i class="fa fa-lock"></i> 修改密码</a>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <a href="{{ url('/sponsor/info/edit') }}">
-                            <button type="button" onclick="" class="btn btn-success"><i class="fa "></i>编辑信息</button>
+                            <button type="button" onclick="" class="btn btn-success"><i class="fa fa-edit"></i> 编辑信息</button>
                         </a>
                         <button type="button" onclick="history.go(-1);" class="btn btn-default">返回</button>
                     </div>

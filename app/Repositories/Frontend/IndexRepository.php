@@ -35,8 +35,8 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
-            $notification_count = K_Notification::where(['user_id'=>$me_id,'is_read'=>0])->count();
-            view()->share('notification_count',$notification_count);
+//            $notification_count = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->count();
+//            view()->share('notification_count',$notification_count);
         }
         else $me_id = 0;
 
@@ -191,9 +191,11 @@ class IndexRepository {
             'items'=>function($query) { $query->with('owner')->orderBy('updated_at','desc'); },
             'ad',
             'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
-            'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
-            'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
+            'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
+            'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
         ])->withCount([
+            'pivot_sponsor_list as pivot_sponsor_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
+            'pivot_org_list as pivot_org_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
             'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
             'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
         ])->find($user_id);
@@ -225,11 +227,11 @@ class IndexRepository {
 
             if($user_id != $me_id)
             {
-                $relation = Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                $relation = Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 view()->share(['relation'=>$relation]);
             }
 
-            $relation_with_me = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            $relation_with_me = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
             if($relation_with_me &&  in_array($relation_with_me->relation_type,[21,41]))
             {
                 $is_follow = 1;
@@ -259,8 +261,10 @@ class IndexRepository {
 
         $sidebar_active = '';
         if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
+        else if($type == 'introduction') $sidebar_active = 'sidebar_menu_introduction_active';
         else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
         else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
+        else if($type == 'org') $sidebar_active = 'sidebar_menu_org_active';
 
         view()->share('user_root_active','active');
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.user')
@@ -271,6 +275,7 @@ class IndexRepository {
                 $sidebar_active => 'active'
             ]);
     }
+
     // 【用户】【原创】
     public function view_user_original($post_data,$id=0)
     {
@@ -421,27 +426,95 @@ class IndexRepository {
     // 【K】【机构介绍页】
     public function view_user_introduction($post_data,$id=0)
     {
+//        $user_encode = $id;
+//        $user_decode = decode($user_encode);
+//        if(!$user_decode) return view('frontend.404');
+
+        $user_id = $id;
+
+        $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
+
+        $user = K_User::with([
+            'introduction',
+            'items'=>function($query) { $query->with('owner')->orderBy('updated_at','desc'); },
+            'ad',
+            'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
+            'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
+            'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
+        ])->withCount([
+            'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+            'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+        ])->find($user_id);
+//        dd($user->toArray());
+
+        if(!$user) return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+
+        $user->timestamps = false;
+        $user->increment('visit_num');
+
+        $is_follow = 0;
+
         if(Auth::check())
         {
             $me = Auth::user();
             $me_id = $me->id;
-        }
-        else $me_id = 0;
+            $item_query = K_Item::with([
+                'owner',
+                //                'forward_item'=>function($query) { $query->with('user'); },
+                'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+            ])
+                ->where('owner_id',$user_id);
 
-        $org = OrgOrganization::with([])->find($id);
-        if($org)
+            if($type == 'root') $item_query->whereIn('item_type',[1,11]);
+            else if($type == 'article') $item_query->whereIn('item_type',[1]);
+            else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+
+            $items = $item_query->orderBy('updated_at','desc')->paginate(20);
+
+            if($user_id != $me_id)
+            {
+                $relation = Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                view()->share(['relation'=>$relation]);
+            }
+
+            $relation_with_me = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            if($relation_with_me &&  in_array($relation_with_me->relation_type,[21,41]))
+            {
+                $is_follow = 1;
+            }
+        }
+        else
         {
-            $org->timestamps = false;
-            $org->increment('visit_num');
+            $item_query = K_Item::with(['owner'])
+                ->where('owner_id',$user_id);
 
-            $org->custom_decode = json_decode($org->custom);
+            if($type == 'root') $item_query->whereIn('item_type',[1,11]);
+            else if($type == 'article') $item_query->whereIn('item_type',[1]);
+            else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+
+            $items = $item_query->orderBy('updated_at','desc')->paginate(20);
         }
-        else return view('frontend.errors.404');
 
-        $return['data'] = $org;
-        $return['org_introduce_active'] = "active";
+        foreach ($items as $item)
+        {
+            $item->custom_decode = json_decode($item->custom);
+            $item->content_show = strip_tags($item->content);
+            $item->img_tags = get_html_img($item->content);
+        }
+//        dd($item->toArray());
 
-        return view('frontend.entrance.org-introduce')->with($return);
+
+
+        $sidebar_active = 'sidebar_menu_introduction_active';
+
+        view()->share('user_root_active','active');
+        return view(env('TEMPLATE_DEFAULT').'frontend.entrance.user-introduction')
+            ->with([
+                'data'=>$user,
+                'items'=>$items,
+                'is_follow'=>$is_follow,
+                $sidebar_active => 'active'
+            ]);
     }
 
 
@@ -614,7 +687,7 @@ class IndexRepository {
             DB::beginTransaction();
             try
             {
-                $me_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                $me_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 if($me_relation)
                 {
                     if($me_relation->relation_type == 71) $me_relation->relation_type = 21;
@@ -624,15 +697,16 @@ class IndexRepository {
                 else
                 {
                     $me_relation = new Pivot_User_Relation;
+                    $me_relation->relation_category = 1;
+                    $me_relation->relation_type = 41;
                     $me_relation->mine_user_id = $me_id;
                     $me_relation->relation_user_id = $user_id;
-                    $me_relation->relation_type = 41;
                     $me_relation->save();
                 }
                 $me->timestamps = false;
                 $me->increment('follow_num');
 
-                $it_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                $it_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
                 if($it_relation)
                 {
                     if($it_relation->relation_type == 41) $it_relation->relation_type = 21;
@@ -642,9 +716,10 @@ class IndexRepository {
                 else
                 {
                     $it_relation = new K_Pivot_User_Relation;
+                    $it_relation->relation_category = 1;
+                    $it_relation->relation_type = 71;
                     $it_relation->mine_user_id = $user_id;
                     $it_relation->relation_user_id = $me_id;
-                    $it_relation->relation_type = 71;
                     $it_relation->save();
                 }
                 $user->timestamps = false;
@@ -703,7 +778,7 @@ class IndexRepository {
             DB::beginTransaction();
             try
             {
-                $me_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                $me_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 if($me_relation)
                 {
                     if($me_relation->relation_type == 21) $me_relation->relation_type = 71;
@@ -714,7 +789,7 @@ class IndexRepository {
                 $me->timestamps = false;
                 $me->decrement('follow_num');
 
-                $it_relation = K_Pivot_User_Relation::where(['mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                $it_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
                 if($it_relation)
                 {
                     if($it_relation->relation_type == 21) $it_relation->relation_type = 41;
@@ -856,7 +931,7 @@ class IndexRepository {
         }
         else $me_id = 0;
 
-        $count = K_Notification::where(['is_read'=>0])->whereIn('notification_type',[9,11])->count();
+        $count = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->whereIn('notification_category',[9,11])->count();
         if($count)
         {
             $notification_list = K_Notification::with([
@@ -881,8 +956,8 @@ class IndexRepository {
                 ->orderBy('id','desc')
                 ->get();
 
-            $update_num = K_Notification::where(['notification_category'=>11,'is_read'=>0])->update(['is_read'=>1]);
             view()->share('notification_style', 'new');
+            $update_num = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->whereIn('notification_category',[9,11])->update(['is_read'=>1]);
         }
         else
         {

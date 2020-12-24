@@ -24,7 +24,7 @@ Route::group([], function () {
 
 
     // 后台管理，需要登录
-    Route::group(['middleware' => 'org'], function () {
+    Route::group(['middleware' => ['org','org.notification']], function () {
 
 
         Route::fallback(function() {

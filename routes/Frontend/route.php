@@ -55,7 +55,7 @@ Route::group([], function () {
 
 
 
-    Route::group(['middleware' => 'wechat.share'], function () {
+    Route::group(['middleware' => ['wechat.share','notification']], function () {
 
         $controller = "IndexController";
 
@@ -77,12 +77,13 @@ Route::group([], function () {
 
         Route::get('u/{id?}', $controller.'@view_user');
         Route::get('user/{id?}', $controller.'@view_user');
+        Route::get('user/{id?}/introduction', $controller.'@view_user_introduction');
         Route::get('user/{id?}/original', $controller.'@view_user_original');
         Route::get('user/{id?}/follow', $controller.'@view_user_follow');
         Route::get('user/{id?}/fans', $controller.'@view_user_fans');
 
 
-        Route::group(['middleware' => 'login.turn'], function () {
+        Route::group(['middleware' => ['login.turn']], function () {
 
             $controller = "IndexController";
 

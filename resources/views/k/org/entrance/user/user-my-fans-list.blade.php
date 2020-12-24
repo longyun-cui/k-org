@@ -65,7 +65,6 @@
                         <th>ID</th>
                         <th>用户名</th>
                         <th>关注时间</th>
-                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -302,31 +301,15 @@
 //                            return $year+'-'+$month+'-'+$day;
                             return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
-                        }
-                    },
-//                    {
-//                        "data": 'created_at',
-//                        "orderable": true,
-//                        render: function(data) {
+
 //                            newDate = new Date();
 //                            newDate.setTime(data * 1000);
-////                            return newDate.toLocaleString('chinese',{hour12:false});
+//                            return newDate.toLocaleString('chinese',{hour12:false});
 //                            return newDate.toLocaleDateString();
-//                        }
-//                    },
-                    {
-                        "width": "64px",
-                        "data": 'active',
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            return data;
-//                            if(data == 0) return '<small class="btn btn-xs">未启用</small>';
-//                            else if(data == 1) return '<small class="btn btn-xs">正常</small>';
-//                            else return '<small class="btn btn-xs bg-red">禁用</small>';
                         }
                     },
                     {
-                        "width": "480px",
+                        "width": "240px",
                         "data": "id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
@@ -337,8 +320,9 @@
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
                                 {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
-                                '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">移除粉丝</a>'+
-                                '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >添加为成员</a>'+
+//                                '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">修改密码</a>'+
+                                '<a class="btn btn-xs bg-olive item-add-member-submit" data-id="'+data+'" >添加为成员</a>'+
+                                '<a class="btn btn-xs bg-navy item-remove-fans-submit" data-id="'+data+'">移除粉丝</a>'+
                                 '';
                             return html;
                         }

@@ -17,7 +17,9 @@
                 </span>
             </div>
             <div class="item-row item-info-row text-muted">
-                <span class="">{{ $data->visit_num or 0 }}次访问</span>
+                <span class="">粉丝 {{ $data->fans_num or 0 }}</span>
+                <span class="">•</span>
+                <span class="">访问 {{ $data->visit_num or 0 }}</span>
                 {{--<span class="info-tags text-danger">作者</span>--}}
             </div>
         </div>
@@ -37,28 +39,30 @@
             </div>
         </div>
 
+        @if(!Auth::check())
         <div class="item-row">
-            @if(!Auth::check())
             <div class="tool-inn tool-info follow-add follow-add-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
                 <i class="fa fa-plus"></i>
                 <span class="">关注</span>
             </div>
-            @else
-                @if(Auth::user()->id != $data->id)
-                    @if($is_follow)
-                    <div class="tool-inn tool-info follow-remove follow-remove-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
-                        <i class="fa fa-check"></i>
-                        <span class="">已关注</span>
-                    </div>
-                    @else
-                    <div class="tool-inn tool-info follow-add follow-add-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
-                        <i class="fa fa-plus"></i>
-                        <span class="">关注</span>
-                    </div>
-                    @endif
-                @endif
-            @endif
         </div>
+        @else
+            @if(Auth::user()->id != $data->id)
+            <div class="item-row">
+                @if($is_follow)
+                <div class="tool-inn tool-info follow-remove follow-remove-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
+                    <i class="fa fa-check"></i>
+                    <span class="">已关注</span>
+                </div>
+                @else
+                <div class="tool-inn tool-info follow-add follow-add-it" style="width:100%;text-align:center;" data-user-id="{{ $data->id }}">
+                    <i class="fa fa-plus"></i>
+                    <span class="">关注</span>
+                </div>
+                @endif
+            </div>
+            @endif
+        @endif
 
     </div>
 

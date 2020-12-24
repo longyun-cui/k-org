@@ -170,12 +170,12 @@ desired effect
 <script>
 
     // 【登录】
-    $(".main-body-ctn").on('click', ".org-login-user", function() {
+    $(".main-body-ctn").on('click', ".sponsor-login-user", function() {
         var that = $(this);
         var $id= that.attr('data-id');
         var $type = that.attr('data-type');
         $.post(
-            "{{ url('/org/login-user') }}",
+            "{{ url('/sponsor/login-user') }}",
             {
                 _token: $('meta[name="_token"]').attr('content'),
                 id: $id,

@@ -1,15 +1,7 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
 @section('head_title')
-    @if(request('type') == 'root')
-        {{ $data->username or '' }}的主页
-    @elseif(request('type') == 'article')
-        {{ $data->username or '' }}的文章
-    @elseif(request('type') == 'activity')
-        {{ $data->username or '' }}的活动
-    @else
-        {{ $data->username or '' }}的主页
-    @endif
+    图文简介 - {{ $data->username or '朝鲜族组织活动网' }}
 @endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection
@@ -51,26 +43,12 @@
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user-menu', ['data'=>$data])
 
+
         </div>
 
 
         <div class="col-xs-12 col-sm-12 col-md-9 container-body-left">
 
-            {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:4px;background:#fff;">--}}
-                {{--<i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->name or '' }}</b>--}}
-            {{--</div>--}}
-
-            {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:16px;background:#fff;">--}}
-                {{--<div class="margin">访问：{{ $data->visit_num or 0 }}</div>--}}
-                {{--<div class="margin">文章：{{ $data->article_count or 0 }}</div>--}}
-                {{--<div class="margin">活动：{{ $data->activity_count or 0 }}</div>--}}
-            {{--</div>--}}
-
-            @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list')
-
-            {{ $items->links() }}
-
-            @if(request('type') == 'introduction')
             <div class="item-piece item-option topic-option">
                 <div class="box-body item-row item-content-row">
                     <div class="item-row">
@@ -85,12 +63,8 @@
                     </div>
                 </div>
             </div>
-            @endif
 
-            @if($data->user_type == 88 && request('type') == 'org')
-                @include(env('TEMPLATE_DEFAULT').'frontend.component.user-list',['user_list'=>$data->pivot_org_list])
-            @endif
-
+            @include(env('TEMPLATE_DEFAULT').'frontend.component.user-list',['user_list'=>$data->pivot_org_list])
         </div>
 
 

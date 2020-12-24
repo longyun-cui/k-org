@@ -33,29 +33,17 @@
                                 </a>
                             </li>
 
-                            <li class="header">内容</li>
-                            <li class="header">
-                                <a href="{{url('/sponsor/item/article-create')}}">
-                                    <i class="fa fa-plus text-blue"></i> 添加文章
-                                </a>
-                            </li>
-                            <li class="header">
-                                <a href="{{url('/sponsor/item/activity-create')}}">
-                                    <i class="fa fa-plus text-blue"></i> 添加活动
-                                </a>
-                            </li>
-
-                            <li class="header _none">添加内容</li>
-                            <li class="header _none">
-                                <a href="{{url('/sponsor/item/create?category=about')}}">
-                                    <i class="fa fa-plus text-green"></i> 添加关于企业
-                                </a>
-                            </li>
-                            <li class="header _none">
-                                <a href="{{url('/sponsor/item/create?category=advantage')}}">
-                                    <i class="fa fa-plus text-green"></i> 添加选择我们
-                                </a>
-                            </li>
+                            {{--<li class="header">内容</li>--}}
+                            {{--<li class="header">--}}
+                                {{--<a href="{{url('/sponsor/item/article-create')}}">--}}
+                                    {{--<i class="fa fa-plus text-blue"></i> 添加文章--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
+                            {{--<li class="header">--}}
+                                {{--<a href="{{url('/sponsor/item/activity-create')}}">--}}
+                                    {{--<i class="fa fa-plus text-blue"></i> 添加活动--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
 
                             <li class="header">广告</li>
                             <li class="header">
@@ -68,8 +56,19 @@
                         </ul>
                     </li>
 
+
+                    <li class="">
+                        <a class="sponsor-login-user" data-id="{{ Auth::guard('sponsor')->user()->id }}" data-type="notification">
+                            <i class="fa fa-envelope-o"></i>
+                            @if(!empty($sponsor_notification_count))
+                            <span class="label label-danger">{{ $sponsor_notification_count }}</span>
+                            @endif
+                        </a>
+                    </li>
+
+
                     <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
+                    <li class="dropdown messages-menu _none">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
@@ -103,8 +102,9 @@
                         </ul>
                     </li>
 
+
                     <!-- Notifications Menu -->
-                    <li class="dropdown notifications-menu">
+                    <li class="dropdown notifications-menu _none">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
@@ -127,8 +127,9 @@
                         </ul>
                     </li>
 
+
                     <!-- Tasks Menu -->
-                    <li class="dropdown tasks-menu">
+                    <li class="dropdown tasks-menu _none">
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-flag-o"></i>
@@ -217,6 +218,7 @@
                             </li>
                         </ul>
                     </li>
+
 
                     <!-- Control Sidebar Toggle Button -->
                     <li class="_none">
