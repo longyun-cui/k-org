@@ -28,6 +28,7 @@ class IndexController extends Controller
 
 
 
+    // 【K】【】
     public function login_link()
     {
         $state  = url()->previous();
@@ -46,6 +47,22 @@ class IndexController extends Controller
             $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state={$state}#wechat_redirect";
             return redirect($url);
         }
+    }
+
+
+
+
+    // 【K】【基本信息】返回
+    public function view_my_info_index()
+    {
+        return $this->repo->view_my_info_index();
+    }
+
+    // 【K】【基本信息】编辑
+    public function view_my_info_edit()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_my_info_edit();
+        else if (request()->isMethod('post')) return $this->repo->operate_my_info_save(request()->all());
     }
 
 

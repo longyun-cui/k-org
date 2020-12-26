@@ -116,6 +116,9 @@ Route::group([], function () {
                 Route::get('/home/relation/fans', $controller.'@view_relation_fans');
 
 
+                Route::get('/my-info/index', $controller.'@view_my_info_index');
+                Route::match(['get','post'], '/my-info/edit', $controller.'@view_my_info_edit');
+
                 Route::get('/my-follow', $controller.'@view_my_follow');
                 Route::get('/my-favor', $controller.'@view_my_favor');
                 Route::get('/my-notification', $controller.'@view_my_notification');

@@ -87,6 +87,81 @@ class IndexRepository {
     }
 
 
+
+
+    /*
+     * 用户基本信息
+     */
+
+    // 【基本信息】返回--视图
+    public function view_my_info_index()
+    {
+        $me = Auth::user();
+        return view(env('TEMPLATE_ADMIN').'frontend.entrance.my-info-index')->with(['info'=>$me]);
+    }
+
+    // 【基本信息】返回-编辑-视图
+    public function view_my_info_edit()
+    {
+        $me = Auth::user();
+        return view(env('TEMPLATE_ADMIN').'frontend.entrance.my-info-edit')->with(['info'=>$me]);
+    }
+    // 【基本信息】保存-数据
+    public function operate_my_info_save($post_data)
+    {
+        $me = Auth::user();
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if(!empty($post_data['custom']))
+            {
+                $post_data['custom'] = json_encode($post_data['custom']);
+            }
+
+            $mine_data = $post_data;
+            unset($mine_data['operate']);
+            unset($mine_data['operate_id']);
+            $bool = $me->fill($mine_data)->save();
+            if($bool)
+            {
+                // 头像
+                if(!empty($post_data["portrait"]))
+                {
+                    // 删除原文件
+                    $mine_original_file = $me->portrait_img;
+                    if(!empty($mine_original_file) && file_exists(storage_path('resource/'.$mine_original_file)))
+                    {
+                        unlink(storage_path('resource/'.$mine_original_file));
+                    }
+
+                    $result = upload_file_storage($post_data["portrait"]);
+                    if($result["result"])
+                    {
+                        $me->portrait_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload-portrait-img-file-fail");
+                }
+
+            }
+            else throw new Exception("insert--item--fail");
+
+            DB::commit();
+            return response_success(['id'=>$me->id]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+
     // 【内容列表】
     public function view_item_list($post_data)
     {
