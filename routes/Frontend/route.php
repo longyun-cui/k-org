@@ -130,7 +130,7 @@ Route::group([], function () {
     });
 
 
-    Route::group(['middleware' => 'login'], function () {
+    Route::group(['middleware' => ['login']], function () {
 
         $controller = "IndexController";
 
