@@ -8,18 +8,18 @@
             <span class="sr-only">Toggle navigation</span>
         </a>
 
-        <a href="{{ url('/') }}">
         <div class="navbar-custom-menu" style="height:50px;line-height:50px;float:left;">
-                <span class="logo-big">
+            <a href="{{ url('/') }}">
+                <span class="logo-big hidden-xs">
                     <img src="/favicon_transparent.png" class="img-icon" alt="Image">
                     <b class="hidden-xs">朝鲜族组织活动网</b>
-                    <b class="visible-xs">首页</b>
                 </span>
-                <span class="logo-big">
-                    <b class="visible-xs">首页</b>
+                <span class="logo-big visible-xs">
+                    <img src="/favicon_transparent.png" class="img-icon" alt="Image">
+                    <b class="">首页</b>
                 </span>
+            </a>
         </div>
-        </a>
 
 
 
