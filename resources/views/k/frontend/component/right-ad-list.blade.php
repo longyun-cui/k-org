@@ -22,8 +22,8 @@
         <div class="text-container">
 
             <div class="item-row">
-                <div class="item-row text-title-row multi-ellipsis-1 margin-4px">
-                    <a href="{{ url('/item/'.$item->id) }}"><c>{{ $item->title or '' }}</c></a>
+                <div class="item-row text-title-row multi-ellipsis-1">
+                    <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a>
                 </div>
                 <div class="item-row text-info-row text-muted">
                     <span class="info-tags text-danger">{{ $ad_tag or '该组织•贴片广告' }}</span>

@@ -250,7 +250,7 @@ class IndexRepository {
 
 
 
-    // 【用户】【主页】
+    // 【K】【用户】【主页】
     public function view_user($post_data,$id=0)
     {
 //        $user_encode = $id;
