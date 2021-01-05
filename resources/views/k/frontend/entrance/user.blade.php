@@ -17,10 +17,6 @@
 @section('meta_keywords')@endsection
 
 
-@section('header','')
-@section('description','')
-
-
 @section('wx_share_title'){{ $data->username or '朝鲜族组织活动网' }}@endsection
 @section('wx_share_desc')欢迎来到我的主页@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}@endsection
@@ -37,6 +33,8 @@
 
 
 
+@section('header','')
+@section('description','')
 @section('content')
 
     <div style="display:none;">
@@ -98,12 +96,30 @@
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$data->ad])
 
+
+            @if(count($data->pivot_org_list))
+                <div class="item-row margin-top-16px margin-bottom-4px pull-right">
+                    <strong>Ta赞助的组织</strong>
+                </div>
+            @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-org', ['org_list'=>$data->pivot_org_list])
 
+
+            @if(count($data->ad_list))
+                <div class="item-row margin-top-16px margin-bottom-4px pull-right">
+                    <strong>Ta的广告</strong>
+                </div>
+            @endif
             @if($data->user_type == 88)
                 @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
             @endif
 
+
+            @if(count($data->pivot_sponsor_list))
+                <div class="item-row margin-top-16px margin-bottom-4px pull-right">
+                    <strong>Ta的赞助商</strong>
+                </div>
+            @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])
 
         </div>

@@ -21,14 +21,6 @@
             <div class="box-header with-border" style="margin:16px 0;">
                 <h3 class="box-title">赞助机构</h3>
 
-                <div class="caption pull-right">
-                    <i class="icon-pin font-blue"></i>
-                    <span class="caption-subject font-blue sbold uppercase"></span>
-                    <a href="{{ url('/org/user/relation-sponsor-list') }}">
-                        <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa fa-plus"></i> 关联赞助商</button>
-                    </a>
-                </div>
-
                 <div class="pull-right _none">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
                         <i class="fa fa-minus"></i>

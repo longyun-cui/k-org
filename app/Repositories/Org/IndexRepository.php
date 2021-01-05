@@ -1373,7 +1373,12 @@ class IndexRepository {
         if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
-        return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0, 'category'=>'item', 'type'=>'item']);
+        return view($view_blade)->with([
+            'operate'=>'create',
+            'operate_id'=>0,
+            'category'=>'item',
+            'type'=>'item'
+        ]);
     }
     // 【ITEM】返回-编辑-视图
     public function view_item_item_edit($post_data)
@@ -1385,11 +1390,52 @@ class IndexRepository {
         $mine = K_Item::with(['user'])->find($id);
         if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
+
+        $item_type = 'item';
+        $item_type_text = '内容';
+        $title_text = '编辑'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-list';
+
+        if($mine->item_type == 1)
+        {
+            $item_type = 'article';
+            $item_type_text = '文章';
+            $title_text = '编辑'.$item_type_text;
+            $list_text = $item_type_text.'列表';
+            $list_link = '/org/item/item-article-list';
+        }
+        else if($mine->item_type == 11)
+        {
+            $item_type = 'activity';
+            $item_type_text = '活动';
+            $title_text = '编辑'.$item_type_text;
+            $list_text = $item_type_text.'列表';
+            $list_link = '/org/item/item-activity-list';
+        }
+        else if($mine->item_type == 88)
+        {
+            $item_type = 'advertising';
+            $item_type_text = '广告';
+            $title_text = '编辑'.$item_type_text;
+            $list_text = $item_type_text.'列表';
+            $list_link = '/org/item/item-advertising-list';
+        }
+
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
 
         if($id == 0)
         {
-            return view($view_blade)->with(['operate'=>'create', 'operate_id'=>$id, 'category'=>'item', 'type'=>'item']);
+            return view($view_blade)->with([
+                'operate'=>'create',
+                'operate_id'=>$id,
+                'category'=>'item',
+                'type'=>$item_type,
+                'item_type_text'=>$item_type_text,
+                'title_text'=>$title_text,
+                'list_text'=>$list_text,
+                'list_link'=>$list_link,
+            ]);
         }
         else
         {
@@ -1400,7 +1446,17 @@ class IndexRepository {
                 $mine->custom2 = json_decode($mine->custom2);
                 $mine->custom3 = json_decode($mine->custom3);
 
-                return view($view_blade)->with(['operate'=>'edit', 'operate_id'=>$id, 'category'=>'item', 'type'=>'item', 'data'=>$mine]);
+                return view($view_blade)->with([
+                    'operate'=>'edit',
+                    'operate_id'=>$id,
+                    'category'=>'item',
+                    'type'=>$item_type,
+                    'item_type_text'=>$item_type_text,
+                    'title_text'=>$title_text,
+                    'list_text'=>$list_text,
+                    'list_link'=>$list_link,
+                    'data'=>$mine
+                ]);
             }
             else return response("该文章不存在！", 404);
         }
@@ -1412,8 +1468,23 @@ class IndexRepository {
         $me = Auth::guard('org')->user();
         if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
+        $item_type = 'article';
+        $item_type_text = '文章';
+        $title_text = '编辑'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-article-list';
+
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
-        return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0, 'category'=>'item', 'type'=>'article']);
+        return view($view_blade)->with([
+            'operate'=>'create',
+            'operate_id'=>0,
+            'category'=>'item',
+            'type'=>$item_type,
+            'item_type_text'=>$item_type_text,
+            'title_text'=>$title_text,
+            'list_text'=>$list_text,
+            'list_link'=>$list_link,
+        ]);
     }
     // 【ITEM】返回-编辑-视图
     public function view_item_article_edit($post_data)
@@ -1425,11 +1496,26 @@ class IndexRepository {
         $mine = K_Item::with(['user'])->find($id);
         if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
+        $item_type = 'article';
+        $item_type_text = '文章';
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-article-list';
+        $title_text = '编辑'.$item_type_text;
+
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
 
         if($id == 0)
         {
-            return view($view_blade)->with(['operate'=>'create', 'operate_id'=>$id, 'category'=>'item', 'type'=>'article']);
+            return view($view_blade)->with([
+                'operate'=>'create',
+                'operate_id'=>$id,
+                'category'=>'item',
+                'type'=>$item_type,
+                'item_type_text'=>$item_type_text,
+                'title_text'=>$title_text,
+                'list_text'=>$list_text,
+                'list_link'=>$list_link,
+            ]);
         }
         else
         {
@@ -1440,7 +1526,17 @@ class IndexRepository {
                 $mine->custom2 = json_decode($mine->custom2);
                 $mine->custom3 = json_decode($mine->custom3);
 
-                return view($view_blade)->with(['operate'=>'edit', 'operate_id'=>$id, 'category'=>'item', 'type'=>'article', 'data'=>$mine]);
+                return view($view_blade)->with([
+                    'operate'=>'edit',
+                    'operate_id'=>$id,
+                    'category'=>'item',
+                    'type'=>$item_type,
+                    'item_type_text'=>$item_type_text,
+                    'title_text'=>$title_text,
+                    'list_text'=>$list_text,
+                    'list_link'=>$list_link,
+                    'data'=>$mine
+                ]);
             }
             else return response("该文章不存在！", 404);
         }
@@ -1452,8 +1548,23 @@ class IndexRepository {
         $me = Auth::guard('org')->user();
         if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
+        $item_type = 'activity';
+        $item_type_text = '活动';
+        $title_text = '添加'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-activity-list';
+
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
-        return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0, 'category'=>'item', 'type'=>'activity']);
+        return view($view_blade)->with([
+            'operate'=>'create',
+            'operate_id'=>0,
+            'category'=>'item',
+            'type'=>$item_type,
+            'item_type_text'=>$item_type_text,
+            'title_text'=>$title_text,
+            'list_text'=>$list_text,
+            'list_link'=>$list_link,
+        ]);
     }
     // 【ITEM】返回-编辑-视图
     public function view_item_activity_edit($post_data)
@@ -1464,6 +1575,12 @@ class IndexRepository {
         $id = $post_data["id"];
         $mine = K_Item::with(['user'])->find($id);
         if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
+
+        $item_type = 'activity';
+        $item_type_text = '活动';
+        $title_text = '编辑'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-activity-list';
 
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
 
@@ -1480,7 +1597,17 @@ class IndexRepository {
                 $mine->custom2 = json_decode($mine->custom2);
                 $mine->custom3 = json_decode($mine->custom3);
 
-                return view($view_blade)->with(['operate'=>'edit', 'operate_id'=>$id, 'category'=>'item', 'type'=>'activity', 'data'=>$mine]);
+                return view($view_blade)->with([
+                    'operate'=>'edit',
+                    'operate_id'=>$id,
+                    'category'=>'item',
+                    'type'=>$item_type,
+                    'item_type_text'=>$item_type_text,
+                    'title_text'=>$title_text,
+                    'list_text'=>$list_text,
+                    'list_link'=>$list_link,
+                    'data'=>$mine
+                ]);
             }
             else return response("该活动不存在！", 404);
         }
@@ -1492,8 +1619,23 @@ class IndexRepository {
         $me = Auth::guard('org')->user();
         if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
+        $item_type = 'advertising';
+        $item_type_text = '广告';
+        $title_text = '编辑'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-advertising-list';
+
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
-        return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0, 'category'=>'item', 'type'=>'advertising']);
+        return view($view_blade)->with([
+            'operate'=>'create',
+            'operate_id'=>0,
+            'category'=>'item',
+            'type'=>$item_type,
+            'item_type_text'=>$item_type_text,
+            'title_text'=>$title_text,
+            'list_text'=>$list_text,
+            'list_link'=>$list_link,
+        ]);
     }
     // 【ITEM】返回-编辑-视图
     public function view_item_advertising_edit($post_data)
@@ -1505,11 +1647,25 @@ class IndexRepository {
         $mine = K_Item::with(['user'])->find($id);
         if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
+        $item_type = 'advertising';
+        $item_type_text = '广告';
+        $title_text = '编辑'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-advertising-list';
+
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
 
         if($id == 0)
         {
-            return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0, 'category'=>'item', 'type'=>'advertising']);
+            return view($view_blade)->with([
+                'operate'=>'create',
+                'operate_id'=>0,
+                'category'=>'item',
+                'item_type_text'=>$item_type_text,
+                'title_text'=>$title_text,
+                'list_text'=>$list_text,
+                'list_link'=>$list_link,
+            ]);
         }
         else
         {
@@ -1520,7 +1676,17 @@ class IndexRepository {
                 $mine->custom2 = json_decode($mine->custom2);
                 $mine->custom3 = json_decode($mine->custom3);
 
-                return view($view_blade)->with(['operate'=>'edit', 'operate_id'=>$id, 'category'=>'item', 'type'=>'advertising', 'data'=>$mine]);
+                return view($view_blade)->with([
+                    'operate'=>'edit',
+                    'operate_id'=>$id,
+                    'category'=>'item',
+                    'type'=>$item_type,
+                    'item_type_text'=>$item_type_text,
+                    'title_text'=>$title_text,
+                    'list_text'=>$list_text,
+                    'list_link'=>$list_link,
+                    'data'=>$mine
+                ]);
             }
             else return response("该广告不存在！", 404);
         }

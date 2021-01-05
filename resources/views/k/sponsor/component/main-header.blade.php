@@ -33,17 +33,17 @@
                                 </a>
                             </li>
 
-                            {{--<li class="header">内容</li>--}}
+                            <li class="header">内容</li>
                             {{--<li class="header">--}}
                                 {{--<a href="{{url('/sponsor/item/article-create')}}">--}}
                                     {{--<i class="fa fa-plus text-blue"></i> 添加文章--}}
                                 {{--</a>--}}
                             {{--</li>--}}
-                            {{--<li class="header">--}}
-                                {{--<a href="{{url('/sponsor/item/activity-create')}}">--}}
-                                    {{--<i class="fa fa-plus text-blue"></i> 添加活动--}}
-                                {{--</a>--}}
-                            {{--</li>--}}
+                            <li class="header">
+                                <a href="{{url('/sponsor/item/activity-create')}}">
+                                    <i class="fa fa-plus text-blue"></i> 添加活动
+                                </a>
+                            </li>
 
                             <li class="header">广告</li>
                             <li class="header">

@@ -1,35 +1,16 @@
 @extends(env('TEMPLATE_ADMIN').'org.layout.layout')
 
-@section('item-type-text')@if($type == 'article')文章@elseif($type == 'activity')活动@elseif($type == 'advertising')广告@else内容@endif
-@endsection
-
-@section('title-text')
-    @if($operate == 'create') 添加@yield('item-type-text')
-    @elseif($operate == 'edit') 编辑@yield('item-type-text')
-    @else @yield('edit-text')
-    @endif
-@endsection
-
-@section('list-text')@yield('item-type-text')列表@endsection
-@section('list-link')
-    @if($type == 'article')?type=article@elseif($type == 'activity')活动@elseif($type == 'advertising')广告@else内容@endif
-@endsection
-
-
 
 @section('head_title')
-    @yield('title-text') - 组织后台 - 朝鲜族组织活动网 - 如未科技
+    {{ $title_text }} - 组织后台管理系统 - 朝鲜族组织活动网 - 如未科技
 @endsection
 
-@section('header')
-    {{--@if($operate == 'create') @yield('create-text') @else @yield('edit-text') @endif--}}
-@endsection
 
-@section('description', '组织后台 - 朝鲜族组织活动网 - 如未科技')
-
+@section('header', '')
+@section('description', '组织后台管理系统 - 朝鲜族组织活动网 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{ url('/org') }}"><i class="fa fa-home"></i>首页</a></li>
-    <li><a href="{{ url('/org/item/item-list') }}"><i class="fa fa-list"></i>@yield('list-text')</a></li>
+    <li><a href="{{ url($list_link) }}"><i class="fa fa-list"></i>{{ $list_text or '内容列表' }}</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
 @endsection
 
@@ -41,7 +22,7 @@
         <div class="box box-info form-container">
 
             <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">@yield('title-text')</h3>
+                <h3 class="box-title">{{ $title_text or '' }}</h3>
                 <div class="box-tools pull-right">
                 </div>
             </div>

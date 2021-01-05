@@ -583,7 +583,7 @@ canvas.drawer {
 .wrapper-module-container.module-none-padding { padding-top:0; padding-bottom:0; }
 
 
-.block-full, .block-all { width:100%; }
+.block-full, .block-all { width:100%; float:left; }
 .block-in {
     width:1080px;
     margin-left:calc(50% - 540px);

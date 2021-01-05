@@ -40,59 +40,14 @@
 
             <li class="treeview {{ $sidebar_me_info_active or '' }}">
                 <a href="{{ url('/sponsor/info/index') }}">
-                    <i class="fa fa-user"></i><span>基本信息</span>
+                    <i class="fa fa-info"></i>
+                    <span>基本信息</span>
                 </a>
             </li>
-
             <li class="treeview {{ $sidebar_me_introduction_active or '' }}">
                 <a href="{{ url('/sponsor/introduction') }}">
-                    <i class="fa fa-user"></i><span>图文介绍</span>
-                </a>
-            </li>
-
-
-
-
-            {{--用户管理--}}
-            <li class="header">我的赞助</li>
-
-            <li class="treeview {{ $sidebar_user_my_org_list_active or '' }}">
-                <a href="{{ url('/sponsor/user/my-org-list') }}">
-                    <i class="fa fa-user"></i><span>赞助组织</span>
-                </a>
-            </li>
-
-
-
-
-            {{--全部内容--}}
-            <li class="header _none">内容管理</li>
-
-            <li class="treeview {{ $sidebar_item_all_list_active or '' }} _none">
-                <a href="{{ url('/sponsor/item/item-all-list') }}">
-                    <i class="fa fa-file-text"></i><span>全部内容</span>
-                </a>
-            </li>
-            <li class="treeview {{ $sidebar_item_article_list_active or '' }} _none">
-                <a href="{{ url('/sponsor/item/item-list?type=article') }}">
-                    <i class="fa fa-file-text"></i><span>文章列表</span>
-                </a>
-            </li>
-            <li class="treeview {{ $sidebar_item_activity_list_active or '' }} _none">
-                <a href="{{ url('/sponsor/item/item-activity-list') }}">
-                    <i class="fa fa-file-text"></i><span>活动列表</span>
-                </a>
-            </li>
-
-
-
-
-            {{--广告--}}
-            <li class="header">广告</li>
-
-            <li class="treeview {{ $sidebar_item_advertising_list_active or '' }}">
-                <a href="{{ url('/sponsor/item/item-advertising-list') }}">
-                    <i class="fa fa-cny text-red"></i> <span>广告列表</span>
+                    <i class="fa fa-file-image-o"></i>
+                    <span>图文介绍</span>
                 </a>
             </li>
 
@@ -102,9 +57,49 @@
             {{--用户管理--}}
             <li class="header">用户管理</li>
 
+            <li class="treeview {{ $sidebar_user_my_org_list_active or '' }}">
+                <a href="{{ url('/sponsor/user/my-org-list') }}">
+                    <i class="fa fa-user"></i>
+                    <span>赞助组织</span>
+                </a>
+            </li>
+
             <li class="treeview {{ $sidebar_user_fans_list_active or '' }}">
                 <a href="{{ url('/sponsor/user/my-fans-list') }}">
-                    <i class="fa fa-user text-orange"></i><span>粉丝列表</span>
+                    <i class="fa fa-user text-orange"></i>
+                    <span>粉丝列表</span>
+                </a>
+            </li>
+
+
+
+
+            {{--全部内容--}}
+            <li class="header">内容管理</li>
+
+            <li class="treeview {{ $sidebar_item_all_list_active or '' }}">
+                <a href="{{ url('/sponsor/item/item-all-list') }}">
+                    <i class="fa fa-list"></i>
+                    <span>全部内容</span>
+                </a>
+            </li>
+
+            <li class="treeview {{ $sidebar_item_advertising_list_active or '' }}">
+                <a href="{{ url('/sponsor/item/item-advertising-list') }}">
+                    <i class="fa fa-cny text-red"></i>
+                    <span>广告列表</span>
+                </a>
+            </li>
+            <li class="treeview {{ $sidebar_item_article_list_active or '' }} _none">
+                <a href="{{ url('/sponsor/item/item-list?type=article') }}">
+                    <i class="fa fa-file-text"></i>
+                    <span>文章列表</span>
+                </a>
+            </li>
+            <li class="treeview {{ $sidebar_item_activity_list_active or '' }}">
+                <a href="{{ url('/sponsor/item/item-activity-list') }}">
+                    <i class="fa fa-calendar text-green"></i>
+                    <span>活动列表</span>
                 </a>
             </li>
 
@@ -116,7 +111,8 @@
 
             <li class="treeview {{ $sidebar_message_list_active or '' }} _none">
                 <a href="{{ url('/sponsor/message/message-list') }}">
-                    <i class="fa fa-envelope text-green"></i> <span>消息列表</span>
+                    <i class="fa fa-envelope text-green"></i>
+                    <span>消息列表</span>
                 </a>
             </li>
 

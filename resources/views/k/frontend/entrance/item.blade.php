@@ -7,15 +7,24 @@
 @section('meta_keywords')@endsection
 
 
-@section('header') {{ $item->title or '' }} @endsection
-@section('description','')
-
-
 @section('wx_share_title'){{ $item->title or '朝鲜族组织活动网' }}@endsection
 @section('wx_share_desc'){{ $item->owner->username or '朝鲜族组织活动网' }}@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}@endsection
 
 
+
+
+@section('sidebar')
+
+    @include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-item')
+
+@endsection
+
+
+
+
+@section('header') {{ $item->title or '' }} @endsection
+@section('description','')
 @section('content')
 
     <div class="_none">

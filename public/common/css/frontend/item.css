@@ -304,7 +304,7 @@ a.link { color:#3c8dbc; }
         width:-webkit-calc(100% - 40px);
         width:-moz-calc(100% - 40px);
         width:calc(100% - 40px);
-        width:100%;
+        /*width:100%;*/
     }
 
 
