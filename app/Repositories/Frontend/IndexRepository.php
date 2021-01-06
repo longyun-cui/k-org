@@ -214,10 +214,11 @@ class IndexRepository {
 
             $user = K_User::with([
                     'ad',
-                    'pivot_relation'=>function($query) { $query->where(['relation_active'=>1,'relation_type'=>88])->orderby('updated_at','desc'); },
+                    'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88])->orderby('updated_at','desc'); },
                 ])->find($item->owner_id);
             $user->timestamps = false;
             $user->increment('visit_num');
+//            dd($user->toArray());
 
             $item->custom_decode = json_decode($item->custom);
         }

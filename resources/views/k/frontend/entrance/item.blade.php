@@ -28,7 +28,7 @@
 @section('content')
 
     <div class="_none">
-        <input type="hidden" id="" value="{{$encode or ''}}" readonly>
+        <input type="hidden" id="" value="{{ $encode or '' }}" readonly>
     </div>
 
     <div class="container">
@@ -49,7 +49,12 @@
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$user->ad])
 
-            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-sponsor', ['sponsor_list'=>$user->pivot_relation])
+            @if(count($user->pivot_sponsor_list))
+            <div class="item-row margin-top-4px margin-bottom-2px pull-right">
+                <strong>我的赞助商</strong>
+            </div>
+            @endif
+            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-sponsor', ['sponsor_list'=>$user->pivot_sponsor_list])
 
         </div>
 
