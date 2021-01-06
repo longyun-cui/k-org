@@ -7,8 +7,8 @@
 @section('meta_keywords')@endsection
 
 
-@section('wx_share_title'){{ $item->title or '朝鲜族组织活动网' }}@endsection
-@section('wx_share_desc'){{ $item->owner->username or '朝鲜族组织活动网' }}@endsection
+@section('wx_share_title'){{ $item->title or '朝鲜族组织活动平台' }}@endsection
+@section('wx_share_desc'){{ '@'.$item->owner->username }}@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}@endsection
 
 
@@ -47,6 +47,11 @@
 
         <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right">
 
+            @if(!empty($user->ad))
+                <div class="item-row margin-top-4px margin-bottom-2px pull-right">
+                    <strong>贴片广告</strong>
+                </div>
+            @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$user->ad])
 
             @if(count($user->pivot_sponsor_list))

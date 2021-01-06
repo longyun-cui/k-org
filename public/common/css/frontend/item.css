@@ -4,6 +4,9 @@
     min-height:32px;
     padding:16px;
     margin-bottom:4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     color:#444;
     background:#fff;
     float:left;
@@ -308,7 +311,7 @@ a.link { color:#3c8dbc; }
     }
 
 
-    .item-piece { padding:8px 4px; }
+    .item-piece { padding:8px; }
     .item-tools-row a { font-size:12px; }
     .item-tools-row .pull-left .margin { margin-right:8px; }
     .item-tools-row .pull-right .margin { margin-left:8px; }

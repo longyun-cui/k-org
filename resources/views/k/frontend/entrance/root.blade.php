@@ -7,7 +7,7 @@
 @section('meta_keywords')@endsection
 
 
-@section('wx_share_title')朝鲜族组织活动网@endsection
+@section('wx_share_title')朝鲜族组织活动平台@endsection
 @section('wx_share_desc')朝鲜族组织活动分享平台@endsection
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 

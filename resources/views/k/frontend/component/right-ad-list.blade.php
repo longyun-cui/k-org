@@ -1,5 +1,5 @@
 @foreach($ad_list as $item)
-<div class="box-body block-full bg-white margin-bottom-4px pull-right">
+<div class="right-piece box-body block-full bg-white margin-bottom-4px pull-right">
 
     <div class="item-container">
 

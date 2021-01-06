@@ -1,4 +1,4 @@
-<div class="box-body bg-white margin-bottom-4px right-menu hidden-xs hidden-sm pull-right">
+<div class="right-piece box-body bg-white margin-bottom-4px right-menu hidden-xs hidden-sm pull-right">
     {{--<div class="item-entity-container">--}}
 
         <a href="{{ url('/user/'.$data->id) }}">

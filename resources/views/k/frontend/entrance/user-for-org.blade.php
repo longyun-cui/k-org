@@ -11,7 +11,7 @@
 @section('description','')
 
 
-@section('wx_share_title'){{ $data->username or '朝鲜族组织活动网' }}@endsection
+@section('wx_share_title'){{ $data->username or '朝鲜族组织活动平台' }}@endsection
 @section('wx_share_desc')欢迎来到我的主页@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}@endsection
 

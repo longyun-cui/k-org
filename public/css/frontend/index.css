@@ -50,6 +50,12 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 
 
 
+.right-piece {
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
 
 
 @media (max-width: 767px) {
