@@ -52,6 +52,7 @@ class IndexRepository {
         {
             $item_query = K_Item::with(['owner']);
         }
+        $item_query->where('active',1);
 
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
@@ -60,7 +61,7 @@ class IndexRepository {
         else if($type == 'activity') $item_query->whereIn('item_type',[11]);
 
 
-        $items = $item_query->orderByDesc('id')->paginate(20);
+        $items = $item_query->orderByDesc('published_at')->paginate(20);
         $return['items'] = $items;
 
         foreach ($items as $item)
@@ -263,7 +264,7 @@ class IndexRepository {
 
         $user = K_User::with([
             'introduction',
-            'items'=>function($query) { $query->with('owner')->orderBy('updated_at','desc'); },
+            'items'=>function($query) { $query->with('owner')->where('active',1)->orderBy('published_at','desc'); },
             'ad',
             'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
             'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },

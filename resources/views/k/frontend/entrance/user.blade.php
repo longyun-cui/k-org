@@ -43,7 +43,7 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right margin-bottom-16px">
+        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right margin-bottom-8px">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$data])
 
@@ -52,7 +52,7 @@
         </div>
 
 
-        <div class="col-xs-12 col-sm-12 col-md-9 container-body-left margin-bottom-16px">
+        <div class="col-xs-12 col-sm-12 col-md-9 container-body-left margin-bottom-8px">
 
             {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:4px;background:#fff;">--}}
                 {{--<i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->name or '' }}</b>--}}

@@ -14,7 +14,8 @@ class K_Item extends Model
         'name', 'title', 'subtitle', 'description', 'content', 'custom', 'custom2', 'custom3',
         'link_url', 'cover_pic', 'attachment_name', 'attachment_src',
         'time_point', 'time_type', 'start_time', 'end_time',
-        'visit_num', 'share_num', 'favor_num', 'comment_num'
+        'visit_num', 'share_num', 'favor_num', 'comment_num',
+        'published_at'
     ];
     protected $dateFormat = 'U';
 

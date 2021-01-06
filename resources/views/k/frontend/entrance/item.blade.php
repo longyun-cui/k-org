@@ -33,7 +33,7 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-9 container-body-left">
+        <div class="col-xs-12 col-sm-12 col-md-9 container-body-left margin-bottom-8px">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.item')
 

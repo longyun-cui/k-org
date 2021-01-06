@@ -1718,6 +1718,7 @@ class IndexRepository {
         try
         {
             $item->active = 1;
+            $item->published_at = time();
             $bool = $item->save();
             if(!$bool) throw new Exception("update--item--fail");
 
