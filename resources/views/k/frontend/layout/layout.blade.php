@@ -405,11 +405,11 @@ desired effect
 <script src="{{asset('js/frontend/index.js')}}"></script>
 <script>
     $(function() {
-        $('article').readmore({
-            speed: 150,
-            moreLink: '<a href="#">展开更多</a>',
-            lessLink: '<a href="#">收起</a>'
-        });
+//        $('article').readmore({
+//            speed: 150,
+//            moreLink: '<a href="#">展开更多</a>',
+//            lessLink: '<a href="#">收起</a>'
+//        });
     });
 </script>
 
