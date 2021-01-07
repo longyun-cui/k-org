@@ -1,6 +1,6 @@
 @extends(env('TEMPLATE_ADMIN').'org.layout.layout')
 
-@section('head_title','全部内容 - 组织后台系统 - 如未科技')
+@section('head_title','文章列表 - 组织后台系统 - 如未科技')
 
 
 @section('header','')
@@ -18,7 +18,7 @@
 
             <div class="box-header with-border" style="margin:16px 0;">
 
-                <h3 class="box-title">全部内容</h3>
+                <h3 class="box-title">文章列表</h3>
 
                 <div class="pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
@@ -170,7 +170,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/org/item/item-all-list') }}",
+                    'url': "{{ url('/org/item/item-article-list') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
@@ -194,6 +194,7 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
+                        "className": "font-12px",
                         "width": "48px",
                         "title": "ID",
                         "data": "id",
@@ -219,7 +220,7 @@
                         "data": "owner_id",
                         'orderable': false,
                         render: function(data, type, row, meta) {
-                            return row.owner == null ? '未知' : '<a target="_blank" href="/admin/user/client?id='+row.owner.id+'">'+row.owner.username+'</a>';
+                            return row.owner == null ? '未知' : '<a href="javascript:void(0);">'+row.owner.username+'</a>';
                         }
                     },
                     {
@@ -254,6 +255,7 @@
                         }
                     },
                     {
+                        "className": "font-12px",
                         "width": "128px",
                         "title": "创建时间",
                         'data': 'created_at',
@@ -273,6 +275,7 @@
                         }
                     },
                     {
+                        "className": "font-12px",
                         "width": "128px",
                         "title": "修改时间",
                         'data': 'updated_at',

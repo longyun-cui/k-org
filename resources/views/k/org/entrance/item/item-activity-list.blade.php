@@ -2,14 +2,14 @@
 
 @section('head_title','活动列表 - 组织后台系统 - 如未科技')
 
+
 @section('header','')
-@section('description','朝鲜族组织活动平台 - 组织后台系统 - 如未科技')
-
-
+@section('description','组织后台系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/org')}}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
 @endsection
+
 
 @section('content')
 <div class="row">

@@ -72,17 +72,22 @@
 
             <li class="treeview {{ $sidebar_item_all_list_active or '' }} ">
                 <a href="{{ url('/org/item/item-all-list') }}">
-                    <i class="fa fa-file-text text-green"></i><span>全部内容</span>
+                    <i class="fa fa-list text-green"></i><span>全部内容</span>
                 </a>
             </li>
+            {{--<li class="treeview {{ $sidebar_item_article_list_active or '' }}">--}}
+                {{--<a href="{{ url('/org/item/item-list?type=article') }}">--}}
+                    {{--<i class="fa fa-file-text text-green"></i><span>文章列表</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
             <li class="treeview {{ $sidebar_item_article_list_active or '' }}">
-                <a href="{{ url('/org/item/item-list?type=article') }}">
+                <a href="{{ url('/org/item/item-article-list') }}">
                     <i class="fa fa-file-text text-green"></i><span>文章列表</span>
                 </a>
             </li>
             <li class="treeview {{ $sidebar_item_activity_list_active or '' }}">
                 <a href="{{ url('/org/item/item-activity-list') }}">
-                    <i class="fa fa-file-text text-green"></i><span>活动列表</span>
+                    <i class="fa fa-calendar text-green"></i><span>活动列表</span>
                 </a>
             </li>
 

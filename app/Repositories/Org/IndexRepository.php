@@ -1973,6 +1973,57 @@ class IndexRepository {
     }
 
     // 【ITEM】返回-广告列表-视图
+    public function view_item_article_list($post_data)
+    {
+        $view_blade= env('TEMPLATE_ADMIN').'org.entrance.item.item-article-list';
+        return view($view_blade)
+            ->with([
+                'sidebar_item_active'=>'active',
+                'sidebar_item_article_list_active'=>'active'
+            ]);
+    }
+    // 【ITEM】获取-广告列表-数据
+    public function get_item_article_list_datatable($post_data)
+    {
+        $me = Auth::guard("org")->user();
+        $query = K_Item::select('*')
+            ->with('owner')
+            ->where(['item_category'=>1,'item_type'=>1])
+            ->where('owner_id',$me->id);
+
+        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("updated_at", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->get();
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+            $list[$k]->description = replace_blank($v->description);
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+    // 【ITEM】返回-广告列表-视图
     public function view_item_activity_list($post_data)
     {
         $view_blade= env('TEMPLATE_ADMIN').'org.entrance.item.item-activity-list';
