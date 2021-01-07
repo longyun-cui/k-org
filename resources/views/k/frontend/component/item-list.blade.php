@@ -53,7 +53,7 @@
         <figure class="text-container clearfix">
             <div class="text-box with-border-top">
 
-                <div class="text-title-row multi-ellipsis-1">
+                <div class="text-title-row multi-ellipsis-1 margin-top-4px margin-bottom-4px">
                     <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a>
                 </div>
 
@@ -73,13 +73,6 @@
                     <span class="info-tags text-danger">该组织•贴片广告</span>
                 </div>
 
-                @if($item->time_type == 1)
-                    <div class="text-description-row">
-                        {{--<div>--}}
-                        {{--<i class="fa fa-cny"></i> <span class="font-18px color-red"><b>{{ $item->custom->price or '' }}</b></span>--}}
-                        {{--</div>--}}
-                    </div>
-                @endif
             </div>
 
             <div class="text-box with-border-top clearfix">
