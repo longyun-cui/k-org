@@ -1,5 +1,5 @@
 @foreach($user_list as $u)
-    <div class="item-piece user-option user" data-user="{{ $u->relation_user->id or 0 }}" data-type="{{ $u->relation_type or 0 }}">
+    <div class="item-piece user-option user margin-bottom-8px" data-user="{{ $u->relation_user->id or 0 }}" data-type="{{ $u->relation_type or 0 }}">
         <div class="panel-default box-default item-entity-container">
 
             <div class="item-table-box">
