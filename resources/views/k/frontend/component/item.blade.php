@@ -18,9 +18,9 @@
                 </div>
 
                 <div class="text-row text-info-row margin-bottom-8px">
-                    <small><a href="{{ url('/user/'.$item->owner->id) }}">{{ $item->owner->username or '' }}</a></small>
-                    <small class="pull-right"><a class="show-menu" role="button"></a></small>
-                    <small class=" text-muted disabled"> • {{ date_show($item->updated_at->timestamp) }}</small>
+                    <span><a href="{{ url('/user/'.$item->owner->id) }}">{{ $item->owner->username or '' }}</a></span>
+                    <span class="pull-right"><a class="show-menu" role="button"></a></span>
+                    <span class=" text-muted disabled"> • {{ date_show($item->updated_at->timestamp) }}</span>
                     {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
                 </div>
 
