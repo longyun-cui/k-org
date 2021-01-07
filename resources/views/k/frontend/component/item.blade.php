@@ -76,9 +76,9 @@
 
                     {{--评论--}}
                     <a class="tool-button comment-toggle" role="button">
-                        <small>
+                        <span>
                             <i class="fa fa-commenting-o"></i> @if($item->comment_num) {{ $item->comment_num }} @endif
-                        </small>
+                        </span>
                     </a>
 
                 </div>

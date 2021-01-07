@@ -81,9 +81,9 @@
 
                     {{--浏览--}}
                     <a class="tool-button" href="{{ url('/item/'.$item->id) }}" role="button">
-                        <small>
+                        <span>
                             <i class="fa fa-eye"></i> @if($item->visit_num) {{ $item->visit_num }} @endif
-                        </small>
+                        </span>
                     </a>
 
                     {{--点赞&$收藏--}}
@@ -115,9 +115,9 @@
 
                     {{--评论--}}
                     <a class="tool-button comment-toggle" href="{{ url('/item/'.$item->id) }}" role="button">
-                        <small>
+                        <span>
                             <i class="fa fa-commenting-o"></i> @if($item->comment_num) {{ $item->comment_num }} @endif
-                        </small>
+                        </span>
                     </a>
 
                 </div>
