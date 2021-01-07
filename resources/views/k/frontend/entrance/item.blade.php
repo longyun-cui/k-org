@@ -1,6 +1,7 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
-@section('head_title') {{ $item->title or '' }} @endsection
+
+@section('head_title') {{ $item->title or '朝鲜族组织活动平台' }} @endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection
 @section('meta_description')@endsection

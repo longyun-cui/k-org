@@ -1,5 +1,6 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
+
 @section('head_title')
     @if(request('type') == 'root')
         {{ $data->username or '' }}的主页
