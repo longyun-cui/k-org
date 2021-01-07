@@ -294,7 +294,8 @@ class IndexRepository {
     //                'forward_item'=>function($query) { $query->with('user'); },
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
                 ])
-                ->where('owner_id',$user_id);
+                ->where('owner_id',$user_id)
+                ->where('active',1);
 
             if($type == 'root') $item_query->whereIn('item_type',[1,11]);
             else if($type == 'article') $item_query->whereIn('item_type',[1]);
