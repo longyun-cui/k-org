@@ -151,7 +151,7 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 .reply-more-box {margin:16px 16px 8px;padding:0;}
 .btn-more {width:100%;height:100%;border:1px solid #f4f4f4;font-size:12px;background:#f8f8f8;}
 
-.item-piece {padding:16px 16px 12px;margin-bottom:8px;background:#fff;}
+.item-piece {padding:16px 16px 12px;background:#fff;}
 .item-piece .pull-left {margin-right:12px;}
 .item-piece .pull-right {margin-left:12px;}
 .item-piece .text-red {color:#e21433}
@@ -170,7 +170,7 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 .item-info-row {font-size:12px;}
 .item-info-row a {}
 
-.info-tags { display:inline-block; padding:0 5px; margin-right:2px; height:18px; line-height:18px; border:1px solid #ddd; font-size:12px; border-radius:2px; }
+.info-tags { display:inline-block; padding:0 5px; margin-right:2px; height:18px; line-height:18px; border:1px solid #ddd; font-size:12px; border-radius:2px; background:#fff; }
 .info-tags.text-default { color:#888;border-color:#f2f2f2;background-color:#f2f2f2; }
 .info-tags.text-danger { color:#dd4b39;border-color:#dd4b39; }
 .info-tags.text-success { color:#00a65a;border-color:#00a65a; }

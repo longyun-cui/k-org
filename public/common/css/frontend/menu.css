@@ -143,9 +143,9 @@
 @media (max-width: 767px)
 {
     .fixed .content-wrapper, .fixed .right-side, .control-sidebar { padding-top: 50px; }
-    .content {padding-left:0;padding-right:0;}
+    .content {padding:0;}
     .container {width: auto;padding-left:0;padding-right:0;}
-    .container .container-body-left {padding-left:8px;padding-right:8px;}
+    .container .container-body-left {padding:16px 8px;}
     .container .container-body-right {padding-left:8px;padding-right:8px;}
     .item-piece .media .media-left {width:120px;height:auto;max-height:120px;float:left;}
 }

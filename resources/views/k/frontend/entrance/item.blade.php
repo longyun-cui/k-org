@@ -33,7 +33,7 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-9 container-body-left margin-bottom-8px">
+        <div class="col-xs-12 col-sm-12 col-md-9 container-body-left margin-bottom-8px bg-white">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.item')
 
@@ -49,14 +49,14 @@
 
             @if(!empty($user->ad))
                 <div class="item-row margin-top-4px margin-bottom-2px pull-right">
-                    <strong>贴片广告</strong>
+                    <strong>Ta的贴片广告</strong>
                 </div>
             @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$user->ad])
 
             @if(count($user->pivot_sponsor_list))
             <div class="item-row margin-top-4px margin-bottom-2px pull-right">
-                <strong>我的赞助商</strong>
+                <strong>Ta的赞助商</strong>
             </div>
             @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-sponsor', ['sponsor_list'=>$user->pivot_sponsor_list])

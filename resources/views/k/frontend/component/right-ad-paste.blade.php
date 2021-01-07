@@ -12,8 +12,8 @@
                     {{--<img class="grow" src="{{ url('/common/images/notexist.png') }}">--}}
                     {{--@endif--}}
                 </a>
-                {{--<span class="btn btn-warning-">热销中</span>--}}
-                <span class="paste-tag info-tags text-danger">该组织•贴片广告</span>
+                {{--<span class="btn btn-warning">热销中</span>--}}
+                <span class="paste-tag-inn info-tags text-danger">该组织•贴片广告</span>
             </div>
         </figure>
 

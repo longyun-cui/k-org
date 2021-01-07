@@ -43,7 +43,7 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right margin-bottom-8px">
+        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right margin-top-16px margin-bottom-8px">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$data])
 
@@ -102,7 +102,7 @@
 
             @if(!empty($data->ad))
                 <div class="item-row margin-top-4px margin-bottom-2px pull-right">
-                    <strong>贴片广告</strong>
+                    <strong>Ta的贴片广告</strong>
                 </div>
             @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$data->ad])
@@ -110,7 +110,7 @@
 
             @if(count($data->pivot_org_list))
                 <div class="item-row margin-top-4px margin-bottom-2px pull-right">
-                    <strong>我赞助的组织</strong>
+                    <strong>Ta赞助的组织</strong>
                 </div>
             @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-org', ['org_list'=>$data->pivot_org_list])
@@ -119,7 +119,7 @@
             @if($data->user_type == 88)
                 @if(count($data->ad_list))
                     <div class="item-row margin-top-4px margin-bottom-2px pull-right">
-                        <strong>我的广告</strong>
+                        <strong>Ta的广告</strong>
                     </div>
                 @endif
                 @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
@@ -128,7 +128,7 @@
 
             @if(count($data->pivot_sponsor_list))
                 <div class="item-row margin-top-4px margin-bottom-2px pull-right">
-                    <strong>我的赞助商</strong>
+                    <strong>Ta的赞助商</strong>
                 </div>
             @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])

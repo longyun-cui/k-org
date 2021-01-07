@@ -109,7 +109,49 @@ if(!function_exists('date_show'))
 {
     function date_show($stamp)
     {
-        return date("Y-m-j",$stamp);
+        global $today_start_unix;	//今天开始；
+        global $today_ended_unix;	//今天结束；
+
+        global $yesterday_start_unix;	//昨天开始；
+        global $yesterday_ended_unix;	//昨天结束；
+
+        global $beforeday_start_unix;	//前天开始；
+        global $beforeday_ended_unix;	//前天结束；
+
+        global $tomorrow_start_unix;	//明天开始；
+        global $tomorrow_ended_unix;	//明天结束；
+
+        global $afterday_start_unix;	//后天开始；
+        global $afterday_ended_unix;	//后天结束；
+
+        global $this_year_start_unix;	//今年开始；
+        global $this_year_ended_unix;	//今年结束；
+
+        time_init();
+
+        if( ($stamp >= $beforeday_start_unix) && ($stamp < $yesterday_start_unix) ) {
+            return "前天";
+        }
+        elseif( ($stamp >= $yesterday_start_unix) && ($stamp < $today_start_unix) ) {
+            return "昨天";
+        }
+        elseif( ($stamp >= $today_start_unix) && ($stamp <= $today_ended_unix) ) {
+            return "今天";
+        }
+        elseif( ($stamp >= $today_ended_unix) && ($stamp < $tomorrow_ended_unix) ) {
+            return "明天";
+        }
+        elseif( ($stamp >= $tomorrow_ended_unix) && ($stamp < $afterday_ended_unix) ) {
+            return "后天";
+        }
+        else {
+            if( ($this_year_start_unix <= $stamp) && ($stamp <= $this_year_ended_unix) ) {
+                return date("n月j日",$stamp);
+            } else {
+                return date("Y-n-j",$stamp);
+            }
+        }
+
     }
 }
 

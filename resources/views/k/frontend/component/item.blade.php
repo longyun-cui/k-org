@@ -1,19 +1,107 @@
-<div class="item-piece item-option {{ $getType or 'item' }}"
+<div class="item-piece item-option {{ $getTypes or 'items' }}"
      data-item="{{ $item->id or 0}}"
      data-id="{{ $item->id or 0}}"
      data-item-id="{{ $item->id or 0}}"
      data-getType="{{ $getType or 'item' }}"
+     style="border-radius:0;"
 >
+
+    <div class="item-container">
+
+
+        <figure class="text-container clearfix">
+
+            <div class="text-box">
+
+                <div class="text-row text-title-row margin-bottom-8px">
+                    {{ $item->title or '' }}
+                </div>
+
+                <div class="text-row text-info-row margin-bottom-8px">
+                    <small><a href="{{ url('/user/'.$item->owner->id) }}">{{ $item->owner->username or '' }}</a></small>
+                    <small class="pull-right"><a class="show-menu" role="button"></a></small>
+                    <small class=" text-muted disabled"> • {{ date_show($item->updated_at->timestamp) }}</small>
+                    {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
+                </div>
+
+                @if(!empty($item->description))
+                    <div class="text-row text-description-row text-muted margin-bottom-8px">
+                        {{ $item->description or '' }}
+                    </div>
+                @endif
+
+                @if(!empty($item->content))
+                    <div class="text-row text-content-row margin-top-8px margin-bottom-8px">
+                        <article class="colo-md-12"> {!! $item->content or '' !!} </article>
+                    </div>
+                @endif
+
+            </div>
+
+        </figure>
+
+
+        <figure class="text-container clearfix">
+
+            <div class="text-box with-border-top clearfix">
+
+                <div class="text-tool-row">
+
+                    {{--点赞&$收藏--}}
+                    <small class="tool-button operate-btn favor-btn" data-num="{{ $item->favor_num or 0 }}" role="button">
+                        @if(Auth::check())
+                            @if($item->pivot_item_relation->contains('relation_type', 1))
+                                <a class="remove-this-favor">
+                                    <i class="fa fa-heart text-red"></i>
+                                    <span class="num">@if($item->favor_num){{ $item->favor_num }}@endif</span>
+                                </a>
+                            @else
+                                <a class="add-this-favor">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span class="num">@if($item->favor_num){{ $item->favor_num }}@endif</span>
+                                </a>
+                            @endif
+                        @else
+                            <a class="add-this-favor">
+                                <i class="fa fa-heart-o"></i>
+                                <span class="num">@if($item->favor_num){{ $item->favor_num }}@endif</span>
+                            </a>
+                        @endif
+                    </small>
+
+                    {{--分享--}}
+                    <a class="tool-button _none" role="button">
+                        <i class="fa fa-share"></i> @if($item->share_num) {{ $item->share_num }} @endif
+                    </a>
+
+                    {{--评论--}}
+                    <a class="tool-button comment-toggle" role="button">
+                        <small>
+                            <i class="fa fa-commenting-o"></i> @if($item->comment_num) {{ $item->comment_num }} @endif
+                        </small>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </figure>
+
+
+    </div>
+
+
+
     <!-- BEGIN PORTLET-->
     <div class="boxe panel-default- box-default item-entity-container">
 
-        <div class="box-body item-row item-title-row">
+        <div class="box-body item-row item-title-row _none">
             <span>
                 <a href="{{ url('/item/'.$item->id) }}" ><b>{{ $item->title or '' }}</b></a>
             </span>
         </div>
 
-        <div class="box-body item-row item-info-row">
+        <div class="box-body item-row item-info-row _none">
             @if($item->item_type == 88)
                 <span class="info-tags text-danger">贴片广告</span>
             @endif
@@ -22,13 +110,13 @@
             @endif
             <span><a href="{{ url('/user/'.$item->owner->id) }}">{{ $item->owner->username or '' }}</a></span>
             <span class="pull-right"><a class="show-menu" role="button"></a></span>
-            <span class=" text-muted disabled"> • {{ time_show($item->updated_at->timestamp) }}</span>
+            <span class=" text-muted disabled"> • {{ date_show($item->updated_at->timestamp) }}</span>
             {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
             <span class=" text-muted disabled"> • 浏览 <span class="text-blue">{{ $item->visit_num }}</span> 次</span>
         </div>
 
         @if($item->time_type == 1)
-            <div class="box-body item-row item-time-row text-muted">
+            <div class="box-body item-row item-time-row text-muted _none">
                 <div class="colo-md-12">
                     @if(!empty($item->start_time))
                     <span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b> (开始)</span>
@@ -42,20 +130,20 @@
         @endif
 
         @if(!empty($item->description))
-            <div class="box-body item-row item-description-row text-muted">
+            <div class="box-body item-row item-description-row text-muted _none">
                 <div class="colo-md-12"> {{ $item->description or '' }} </div>
             </div>
         @endif
 
         @if(!empty($item->content))
-            <div class="box-body item-row item-content-row">
+            <div class="box-body item-row item-content-row _none">
                 <article class="colo-md-12"> {!! $item->content or '' !!} </article>
             </div>
         @endif
 
 
         {{--tools--}}
-        <div class="box-body item-row item-tools-row item-tools-container">
+        <div class="box-body item-row item-tools-row item-tools-container _none">
 
             {{--点赞&$收藏--}}
             <span class="tool-button operate-btn favor-btn" data-num="{{ $item->favor_num or 0 }}" role="button">
