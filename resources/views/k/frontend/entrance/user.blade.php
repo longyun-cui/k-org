@@ -69,8 +69,8 @@
                 {{--<div class="item-row margin-bottom-4px pull-right visible-xs">--}}
                     {{--<strong>Ta的内容</strong>--}}
                 {{--</div>--}}
-                @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list')
-                {{ $items->links() }}
+                @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list',['item_list'=>$item_list])
+                {{ $item_list->links() }}
             @endif
 
 

@@ -1,4 +1,4 @@
-@foreach($items as $num => $item)
+@foreach($item_list as $num => $item)
 <div class="item-piece item-option {{ $getType or 'items' }} margin-bottom-16px"
      data-item="{{ $item->id or 0}}"
      data-id="{{ $item->id or 0}}"

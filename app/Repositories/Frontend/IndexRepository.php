@@ -61,10 +61,10 @@ class IndexRepository {
         else if($type == 'activity') $item_query->whereIn('item_type',[11]);
 
 
-        $items = $item_query->orderByDesc('published_at')->paginate(20);
-        $return['items'] = $items;
+        $item_list = $item_query->orderByDesc('published_at')->paginate(20);
+        $return['item_list'] = $item_list;
 
-        foreach ($items as $item)
+        foreach ($item_list as $item)
         {
             $item->custom_decode = json_decode($item->custom);
             $item->content_show = strip_tags($item->content);
@@ -294,14 +294,14 @@ class IndexRepository {
     //                'forward_item'=>function($query) { $query->with('user'); },
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
                 ])
-                ->where('owner_id',$user_id)
-                ->where('active',1);
+                ->where('active',1)
+                ->where('owner_id',$user_id);
 
             if($type == 'root') $item_query->whereIn('item_type',[1,11]);
             else if($type == 'article') $item_query->whereIn('item_type',[1]);
             else if($type == 'activity') $item_query->whereIn('item_type',[11]);
 
-            $items = $item_query->orderBy('updated_at','desc')->paginate(20);
+            $items = $item_query->orderBy('published_at','desc')->paginate(20);
 
             if($user_id != $me_id)
             {
@@ -318,13 +318,14 @@ class IndexRepository {
         else
         {
             $item_query = K_Item::with(['owner'])
+                ->where('active',1)
                 ->where('owner_id',$user_id);
 
             if($type == 'root') $item_query->whereIn('item_type',[1,11]);
             else if($type == 'article') $item_query->whereIn('item_type',[1]);
             else if($type == 'activity') $item_query->whereIn('item_type',[11]);
 
-            $items = $item_query->orderBy('updated_at','desc')->paginate(20);
+            $items = $item_query->orderBy('published_at','desc')->paginate(20);
         }
 
         foreach ($items as $item)
@@ -348,7 +349,7 @@ class IndexRepository {
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.user')
             ->with([
                 'data'=>$user,
-                'items'=>$items,
+                'item_list'=>$items,
                 'is_follow'=>$is_follow,
                 $sidebar_active => 'active'
             ]);
