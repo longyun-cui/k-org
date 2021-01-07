@@ -353,6 +353,12 @@ class IndexController extends Controller
         if(request()->isMethod('get')) return $this->repo->view_item_all_list(request()->all());
         else if(request()->isMethod('post')) return $this->repo->get_item_all_list_datatable(request()->all());
     }
+    // 【文章】返回-列表-视图
+    public function show_item_article_list()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_item_article_list(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_item_article_list_datatable(request()->all());
+    }
     // 【活动】返回-列表-视图
     public function show_item_activity_list()
     {

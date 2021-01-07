@@ -5,15 +5,14 @@
 @section('list-text') 组织列表 @endsection
 
 @section('head_title')
-    @if($operate == 'create') @yield('create-text') @else @yield('edit-text') @endif - 管理员后台 - 搜索引擎智能营销系统 - 米同科技
+    @if($operate == 'create') @yield('create-text') @else @yield('edit-text') @endif - 组织后台管理系统 - 朝鲜族组织活动平台 -
 @endsection
+
 
 @section('header')
     @if($operate == 'create') @yield('create-text') @else @yield('edit-text') @endif
 @endsection
-
-@section('description', '搜索引擎智能营销系统-米同科技')
-
+@section('description', '组织后台管理系统 - 朝鲜族组织活动平台 - ')
 @section('breadcrumb')
     <li><a href="{{ url('/admin') }}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="{{ url('/admin/user/org-list') }}"><i class="fa fa-list"></i>@yield('list-text')</a></li>

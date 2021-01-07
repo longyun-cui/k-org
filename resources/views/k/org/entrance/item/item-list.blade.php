@@ -1,9 +1,10 @@
 @extends(env('TEMPLATE_ADMIN').'org.layout.layout')
 
-@section('head_title','内容列表 - 组织后台系统 - 如未科技')
+
+@section('head_title','内容列表 - 组织后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
 
 @section('header','')
-@section('description','朝鲜族组织活动平台 - 组织后台系统 - 如未科技')
+@section('description','组织后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
 
 
 @section('breadcrumb')

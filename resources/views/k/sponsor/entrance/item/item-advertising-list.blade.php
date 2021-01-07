@@ -1,15 +1,16 @@
 @extends(env('TEMPLATE_ADMIN').'sponsor.layout.layout')
 
-@section('head_title','广告列表 - 赞助商后台管理系统 - 如未科技')
+
+@section('head_title','广告列表 - 赞助商后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
+
 
 @section('header','')
-@section('description','朝鲜族组织活动平台 - 如未科技')
-
-
+@section('description','赞助商后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/sponsor')}}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
 @endsection
+
 
 @section('content')
 <div class="row">

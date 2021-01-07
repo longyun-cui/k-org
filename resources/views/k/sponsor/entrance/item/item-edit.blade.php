@@ -2,12 +2,12 @@
 
 
 @section('head_title')
-    {{ $title_text }} - 赞助商后台管理系统 - 朝鲜族组织活动网 - 如未科技
+    {{ $title_text }} - 赞助商后台管理系统 - 朝鲜族组织活动平台 - 如未科技
 @endsection
 
 
 @section('header', '')
-@section('description', '赞助商后台管理系统 - 朝鲜族组织活动网 - 如未科技')
+@section('description', '赞助商后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{ url('/sponsor') }}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="{{ url($list_link) }}"><i class="fa fa-list"></i>{{ $list_text or '内容列表' }}</a></li>

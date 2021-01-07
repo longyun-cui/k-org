@@ -1,11 +1,11 @@
 @extends(env('TEMPLATE_ADMIN').'org.layout.layout')
 
 
-@section('head_title','我的赞助商 - 组织后台 - 如未科技')
+@section('head_title','我的赞助商 - 组织后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
 
 
 @section('header','')
-@section('description','组织后台-如未科技')
+@section('description','组织后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/org')}}"><i class="fa fa-dashboard"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>

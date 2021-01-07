@@ -39,13 +39,13 @@
 
         </div>
 
+
         <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right">
-
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$item->owner])
-
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right">
+
+        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right" style="clear:right;">
 
             @if(!empty($user->ad))
                 <div class="item-row margin-top-4px margin-bottom-2px pull-right">

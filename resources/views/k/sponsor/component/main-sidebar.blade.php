@@ -91,7 +91,7 @@
                 </a>
             </li>
             <li class="treeview {{ $sidebar_item_article_list_active or '' }} _none">
-                <a href="{{ url('/sponsor/item/item-list?type=article') }}">
+                <a href="{{ url('/sponsor/item/item-article-list') }}">
                     <i class="fa fa-file-text"></i>
                     <span>文章列表</span>
                 </a>

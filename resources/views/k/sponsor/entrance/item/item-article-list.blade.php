@@ -1,7 +1,7 @@
 @extends(env('TEMPLATE_ADMIN').'sponsor.layout.layout')
 
 
-@section('head_title','内容列表 - 赞助商后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
+@section('head_title','文章列表 - 赞助商后台管理系统 - 朝鲜族组织活动平台 - 如未科技')
 
 
 @section('header','')
@@ -171,7 +171,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/sponsor/item/item-list?type='.request('type')) }}",
+                    'url': "{{ url('/sponsor/item/item-article-list') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
