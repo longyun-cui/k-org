@@ -23,8 +23,9 @@
         </a>
     </li>
 
-    <li class="header">我的</li>
+    <li class="header _none">我的</li>
 
+    <div class="_none">
     @if(!Auth::check())
 
         <li class="treeview">
@@ -71,5 +72,6 @@
             </a>
         </li>
     @endif
+    </div>
 
 </ul>
