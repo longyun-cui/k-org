@@ -28,7 +28,7 @@
         <figure class="image-container padding-top-2-5">
             <div class="image-box">
                 <a class="clearfix zoom-" target="_self" href="{{ url('/item/'.$item->id) }}">
-                    <img class="grow" src="" data-src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" alt="Cover">
+                    <img class="grow" src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" data-src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" alt="Cover">
                     {{--@if(!empty($item->cover_pic))--}}
                     {{--<img class="grow" src="{{ url(env('DOMAIN_CDN').'/'.$item->cover_pic) }}">--}}
                     {{--@else--}}

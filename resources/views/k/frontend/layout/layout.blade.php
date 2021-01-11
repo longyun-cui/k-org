@@ -422,7 +422,7 @@ desired effect
                 }
             })
         }
-        setInterval(lazy_load,1000);
+//        setInterval(lazy_load,1000);
 
     });
 </script>
