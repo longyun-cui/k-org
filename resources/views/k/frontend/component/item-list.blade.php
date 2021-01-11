@@ -53,21 +53,23 @@
         <figure class="text-container clearfix">
             <div class="text-box with-border-top">
 
-                <div class="text-title-row multi-ellipsis-1 margin-top-4px margin-bottom-4px">
+                <div class="text-row text-title-row multi-ellipsis-1 margin-top-4px margin-bottom-4px">
                     <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a>
                 </div>
 
-                {{--@if($item->time_type == 1)--}}
-                {{--<div class="text-title-row multi-ellipsis-1">--}}
-                        {{--@if(!empty($item->start_time))--}}
-                            {{--<span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b> (开始)</span>--}}
-                        {{--@endif--}}
-                        {{--@if(!empty($item->end_time))--}}
-                            {{--<span style="font-size:12px;">&nbsp;&nbsp;至&nbsp;&nbsp;</span>--}}
-                            {{--<span class="label label-danger end-time-inn"><b>{{ time_show($item->end_time) }} (结束)</b></span>--}}
-                        {{--@endif--}}
-                {{--</div>--}}
-                {{--@endif--}}
+                @if(empty($item->cover_pic))
+                @if($item->time_type == 1)
+                <div class="text-row text-time-row multi-ellipsis-1">
+                        @if(!empty($item->start_time))
+                            <span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b> (开始)</span>
+                        @endif
+                        @if(!empty($item->end_time))
+                            <span class="font-12px"> 至 </span>
+                            <span class="label label-danger end-time-inn"><b>{{ time_show($item->end_time) }} (结束)</b></span>
+                        @endif
+                </div>
+                @endif
+                @endif
 
                 <div class="text-title-row multi-ellipsis-1 _none">
                     <span class="info-tags text-danger">该组织•贴片广告</span>
@@ -77,12 +79,12 @@
 
             <div class="text-box with-border-top clearfix">
 
-                <div class="text-tool-row">
+                <div class="text-row text-tool-row">
 
                     {{--浏览--}}
                     <a class="tool-button" href="{{ url('/item/'.$item->id) }}" role="button">
                         <span>
-                            <i class="fa fa-eye"></i> @if($item->visit_num) {{ $item->visit_num }} @endif
+                            <i class="fa fa-eye"></i> @if($item->visit_num){{ $item->visit_num }} @endif
                         </span>
                     </a>
 

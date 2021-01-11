@@ -24,6 +24,20 @@
                     {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
                 </div>
 
+                @if($item->time_type == 1)
+                    <div class="text-row item-time-row margin-bottom-8px text-muted">
+                        <div class="colo-md-12">
+                            @if(!empty($item->start_time))
+                                <span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b> (开始)</span>
+                            @endif
+                            @if(!empty($item->end_time))
+                                <span style="font-size:12px;">&nbsp;&nbsp;至&nbsp;&nbsp;</span>
+                                <span class="label label-danger end-time-inn"><b>{{ time_show($item->end_time) }} (结束)</b></span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+
                 @if(!empty($item->description))
                     <div class="text-row text-description-row text-muted margin-bottom-8px">
                         {{ $item->description or '' }}

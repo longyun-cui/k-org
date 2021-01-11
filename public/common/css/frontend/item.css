@@ -2,7 +2,7 @@
     position:relative;
     width:100%;
     min-height:32px;
-    /*padding:16px;*/
+    padding:8px 0;
     /*margin-bottom:16px;*/
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -311,7 +311,7 @@ a.link { color:#3c8dbc; }
     }
 
 
-    .item-piece { padding:0; }
+    .item-piece { padding:4px 0; }
     .item-tools-row a { font-size:12px; }
     .item-tools-row .pull-left .margin { margin-right:8px; }
     .item-tools-row .pull-right .margin { margin-left:8px; }
