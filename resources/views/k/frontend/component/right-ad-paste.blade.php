@@ -19,10 +19,10 @@
 
         <figure class="text-container clearfix">
             <div class="text-box">
-                <div class="text-title-row multi-ellipsis-1">
-                    <a href="{{ url('/item/'.$item->id) }}"><c>{{ $item->title or '' }}</c></a> &nbsp;
+                <div class="text-row text-title-row multi-ellipsis-1" style="padding:8px 0;">
+                    <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a> &nbsp;
                 </div>
-                <div class="text-title-row multi-ellipsis-1 _none">
+                <div class="text-row text-title-row multi-ellipsis-1 _none">
                     <span class="info-tags text-danger">该组织•贴片广告</span>
                 </div>
 
