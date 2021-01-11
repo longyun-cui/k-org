@@ -13,7 +13,9 @@
             <div class="text-box">
                 <div class="text-title-row multi-ellipsis-1">
                     <a href="{{ url('/user/'.$item->owner->id) }}" style="color:#ff7676;font-size:13px;">
-                        <span class="item-user-portrait"><img src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt=""></span>
+                        <span class="item-user-portrait">
+                            <img src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt="">
+                        </span>
                         {{ $item->owner->username or '' }}
                     </a>
                     <span class="text-muted disabled pull-right"><small>{{ date_show($item->updated_at->timestamp) }}</small></span>
@@ -26,7 +28,7 @@
         <figure class="image-container padding-top-2-5">
             <div class="image-box">
                 <a class="clearfix zoom-" target="_self" href="{{ url('/item/'.$item->id) }}">
-                    <img class="grow" src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" alt="Property Image">
+                    <img class="grow" src="" data-src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" alt="Cover">
                     {{--@if(!empty($item->cover_pic))--}}
                     {{--<img class="grow" src="{{ url(env('DOMAIN_CDN').'/'.$item->cover_pic) }}">--}}
                     {{--@else--}}
@@ -169,7 +171,9 @@
             @endif
             <span class="pull-left">
                 <a href="{{ url('/user/'.$item->owner->id) }}">
-                    <span class="item-user-portrait _none"><img src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt=""></span>
+                    <span class="item-user-portrait _none">
+                        {{--<img src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt="">--}}
+                    </span>
                     {{ $item->owner->username or '' }}
                 </a>
             </span>
