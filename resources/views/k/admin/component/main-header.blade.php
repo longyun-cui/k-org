@@ -33,6 +33,13 @@
                                 </a>
                             </li>
 
+                            <li class="header">添加内容</li>
+                            <li class="header">
+                                <a href="{{url('/admin/item/item-create')}}">
+                                    <i class="fa fa-plus text-blue"></i> 添加内容
+                                </a>
+                            </li>
+
                             <li class="header">添加用户</li>
                             <li class="header">
                                 <a href="{{url('/admin/user/org-create')}}">

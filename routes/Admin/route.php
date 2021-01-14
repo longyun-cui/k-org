@@ -81,6 +81,17 @@ Route::group([], function () {
         Route::match(['get','post'], '/item/item-activity-list', $controller.'@view_item_activity_list');
         Route::match(['get','post'], '/item/item-advertising-list', $controller.'@view_item_advertising_list');
 
+        Route::match(['get','post'], '/item/item-my-list', $controller.'@view_item_my_list');
+
+
+        Route::match(['get','post'], '/item/item-create', $controller.'@operate_item_item_create');
+        Route::match(['get','post'], '/item/item-edit', $controller.'@operate_item_item_edit');
+
+
+        Route::match(['get','post'], '/item/item-get', $controller.'@operate_item_item_get');
+        Route::match(['get','post'], '/item/item-delete', $controller.'@operate_item_item_delete');
+        Route::match(['get','post'], '/item/item-publish', $controller.'@operate_item_item_publish');
+
 
 
 

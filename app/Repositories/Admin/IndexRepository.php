@@ -266,13 +266,13 @@ class IndexRepository {
 
 
 
-    // 【用户】【全部机构】返回-列表-视图
+    // 【K】【用户】【全部机构】返回-列表-视图
     public function view_user_all_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.user.user-all-list')
             ->with(['sidebar_user_all_list_active'=>'active menu-open']);
     }
-    // 【用户】【全部机构】返回-列表-数据
+    // 【K】【用户】【全部机构】返回-列表-数据
     public function get_user_all_list_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
@@ -317,13 +317,14 @@ class IndexRepository {
         return datatable_response($list, $draw, $total);
     }
 
-    // 【用户】【组织】返回-列表-视图
+
+    // 【K】【用户】【组织】返回-列表-视图
     public function view_user_org_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.user.user-org-list')
             ->with(['sidebar_user_org_list_active'=>'active menu-open']);
     }
-    // 【用户】【组织】返回-列表-数据
+    // 【K】【用户】【组织】返回-列表-数据
     public function get_user_org_list_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
@@ -360,7 +361,8 @@ class IndexRepository {
         return datatable_response($list, $draw, $total);
     }
 
-    // 【用户】【赞助商】返回-列表-视图
+
+    // 【K】【用户】【赞助商】返回-列表-视图
     public function view_user_sponsor_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.user.user-sponsor-list')
@@ -404,13 +406,13 @@ class IndexRepository {
     }
 
 
-    // 【用户】【个人用户】返回-列表-视图
+    // 【K】【用户】【个人用户】返回-列表-视图
     public function view_user_individual_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.user.user-individual-list')
             ->with(['sidebar_user_individual_list_active'=>'active menu-open']);
     }
-    // 【用户】【个人用户】返回-列表-数据
+    // 【K】【用户】【个人用户】返回-列表-数据
     public function get_user_individual_list_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
@@ -451,14 +453,14 @@ class IndexRepository {
 
 
 
-    // 【用户】【组织】返回-添加-视图
+    // 【K】【用户】【组织】返回-添加-视图
     public function view_user_user_create()
     {
         $me = Auth::guard('admin')->user();
         $view_blade = env('TEMPLATE_ADMIN').'admin.entrance.user.user-edit';
         return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0]);
     }
-    // 【用户】【组织】返回-编辑-视图
+    // 【K】【用户】【组织】返回-编辑-视图
     public function view_user_user_edit()
     {
         $id = request("id",0);
@@ -483,7 +485,7 @@ class IndexRepository {
             else return view(env('TEMPLATE_ADMIN').'org.errors.404');
         }
     }
-    // 【用户】【组织】保存数据
+    // 【K】【用户】【组织】保存数据
     public function operate_user_user_save($post_data)
     {
         $messages = [
@@ -695,7 +697,7 @@ class IndexRepository {
 
 
 
-    // 【内容】返回-列表-视图
+    // 【K】【内容】返回-列表-视图
     public function view_item_item_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-list')
@@ -709,7 +711,8 @@ class IndexRepository {
     {
         $me = Auth::guard("admin")->user();
         $query = K_Item::select('*')
-            ->with('owner');
+            ->with('owner')
+            ->where('owner_id','>=',1);
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
@@ -743,7 +746,8 @@ class IndexRepository {
         return datatable_response($list, $draw, $total);
     }
 
-    // 【内容】【全部】返回-列表-视图
+
+    // 【K】【内容】【全部】返回-列表-视图
     public function view_item_all_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-all-list')
@@ -752,12 +756,13 @@ class IndexRepository {
                 'sidebar_item_all_list_active'=>'active'
             ]);
     }
-    // 【内容】【全部】返回-列表-数据
+    // 【K】【内容】【全部】返回-列表-数据
     public function get_item_all_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
         $query = K_Item::select('*')
-            ->with('owner');
+            ->with('owner')
+            ->where('owner_id','>=',1);
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
@@ -791,7 +796,8 @@ class IndexRepository {
         return datatable_response($list, $draw, $total);
     }
 
-    // 【内容】【文章】返回-列表-视图
+
+    // 【K】【内容】【文章】返回-列表-视图
     public function view_item_article_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-all-list')
@@ -800,13 +806,13 @@ class IndexRepository {
                 'sidebar_item_all_list_active'=>'active'
             ]);
     }
-    // 【内容】【文章】返回-列表-数据
+    // 【K】【内容】【文章】返回-列表-数据
     public function get_item_article_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
         $query = K_Item::select('*')
             ->with('owner')
-            ->where(['item_type'=>1]);
+            ->where(['item_category'=>1,'item_type'=>1]);
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
@@ -840,7 +846,8 @@ class IndexRepository {
         return datatable_response($list, $draw, $total);
     }
 
-    // 【内容】【活动】返回-列表-视图
+
+    // 【K】【内容】【活动】返回-列表-视图
     public function view_item_activity_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-activity-list')
@@ -849,13 +856,13 @@ class IndexRepository {
                 'sidebar_item_activity_list_active'=>'active'
             ]);
     }
-    // 【内容】【活动】返回-列表-数据
+    // 【K】【内容】【活动】返回-列表-数据
     public function get_item_activity_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
         $query = K_Item::select('*')
             ->with('owner')
-            ->where(['item_type'=>11]);
+            ->where(['item_category'=>1,'item_type'=>11]);
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
@@ -889,7 +896,8 @@ class IndexRepository {
         return datatable_response($list, $draw, $total);
     }
 
-    // 【内容】【广告】返回-列表-视图
+
+    // 【K】【内容】【广告】返回-列表-视图
     public function view_item_advertising_list($post_data)
     {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-advertising-list')
@@ -898,13 +906,13 @@ class IndexRepository {
                 'sidebar_item_advertising_list_active'=>'active'
             ]);
     }
-    // 【内容】【广告】返回-列表-数据
+    // 【K】【内容】【广告】返回-列表-数据
     public function get_item_advertising_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
         $query = K_Item::select('*')
             ->with('owner')
-            ->where(['item_type'=>88]);
+            ->where(['item_category'=>1,'item_type'=>88]);
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
@@ -938,6 +946,495 @@ class IndexRepository {
         return datatable_response($list, $draw, $total);
     }
 
+
+    // 【K】【内容】【全部】返回-列表-视图
+    public function view_item_my_list($post_data)
+    {
+        return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-my-list')
+            ->with([
+                'sidebar_item_active'=>'active',
+                'sidebar_item_all_list_active'=>'active'
+            ]);
+    }
+    // 【K】【内容】【全部】返回-列表-数据
+    public function get_item_my_datatable($post_data)
+    {
+        $me = Auth::guard("admin")->user();
+        $query = K_Item::select('*')
+            ->with('owner')
+            ->where('owner_id','=',1);
+
+        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("id", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->get();
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+            $list[$k]->description = replace_blank($v->description);
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+
+
+
+    // 【ITEM】返回-添加-视图
+    public function view_item_item_create($post_data)
+    {
+        $me = Auth::guard('admin')->user();
+        if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_ADMIN').'admin.errors.404');
+
+        $item_type = 'item';
+        $item_type_text = '内容';
+        $title_text = '添加'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/admin/item/item-my-list';
+
+        $view_blade = env('TEMPLATE_ADMIN').'admin.entrance.item.item-edit';
+        return view($view_blade)->with([
+            'operate'=>'create',
+            'operate_id'=>0,
+            'category'=>'item',
+            'type'=>$item_type,
+            'item_type_text'=>$item_type_text,
+            'title_text'=>$title_text,
+            'list_text'=>$list_text,
+            'list_link'=>$list_link,
+        ]);
+    }
+    // 【ITEM】返回-编辑-视图
+    public function view_item_item_edit($post_data)
+    {
+        $me = Auth::guard('admin')->user();
+        if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_ADMIN').'admin.errors.404');
+
+        $id = $post_data["id"];
+        $mine = K_Item::with(['owner'])->find($id);
+        if(!$mine) return view(env('TEMPLATE_ADMIN').'admin.errors.404');
+
+
+        $item_type = 'item';
+        $item_type_text = '内容';
+        $title_text = '编辑'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/admin/item/item-list';
+
+        if($mine->item_type == 0)
+        {
+            $item_type = 'item';
+            $item_type_text = '内容';
+            $title_text = '编辑'.$item_type_text;
+            $list_text = $item_type_text.'列表';
+            $list_link = '/admin/item/item-all-list';
+        }
+        else if($mine->item_type == 1)
+        {
+            $item_type = 'article';
+            $item_type_text = '文章';
+            $title_text = '编辑'.$item_type_text;
+            $list_text = $item_type_text.'列表';
+            $list_link = '/admin/item/item-article-list';
+        }
+        else if($mine->item_type == 11)
+        {
+            $item_type = 'activity';
+            $item_type_text = '活动';
+            $title_text = '编辑'.$item_type_text;
+            $list_text = $item_type_text.'列表';
+            $list_link = '/admin/item/item-activity-list';
+        }
+        else if($mine->item_type == 88)
+        {
+            $item_type = 'advertising';
+            $item_type_text = '广告';
+            $title_text = '编辑'.$item_type_text;
+            $list_text = $item_type_text.'列表';
+            $list_link = '/admin/item/item-advertising-list';
+        }
+
+        $view_blade = env('TEMPLATE_ADMIN').'admin.entrance.item.item-edit';
+
+        if($id == 0)
+        {
+            return view($view_blade)->with([
+                'operate'=>'create',
+                'operate_id'=>$id,
+                'category'=>'item',
+                'type'=>$item_type,
+                'item_type_text'=>$item_type_text,
+                'title_text'=>$title_text,
+                'list_text'=>$list_text,
+                'list_link'=>$list_link,
+            ]);
+        }
+        else
+        {
+            $mine = K_Item::with(['user'])->find($id);
+            if($mine)
+            {
+                $mine->custom = json_decode($mine->custom);
+                $mine->custom2 = json_decode($mine->custom2);
+                $mine->custom3 = json_decode($mine->custom3);
+
+                return view($view_blade)->with([
+                    'operate'=>'edit',
+                    'operate_id'=>$id,
+                    'category'=>'item',
+                    'type'=>$item_type,
+                    'item_type_text'=>$item_type_text,
+                    'title_text'=>$title_text,
+                    'list_text'=>$list_text,
+                    'list_link'=>$list_link,
+                    'data'=>$mine
+                ]);
+            }
+            else return response("该内容不存在！", 404);
+        }
+    }
+    // 【ITEM】保存-数据
+    public function operate_item_item_save($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'title.required' => '请输入标题',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'title' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $me = Auth::guard('admin')->user();
+        if(!in_array($me->user_type,[0,1])) return response_error([],"你没有操作权限！");
+
+
+        $operate = $post_data["operate"];
+        $operate_id = $post_data["operate_id"];
+        $type = $post_data["type"];
+
+        if($operate == 'create') // 添加 ( $id==0，添加一个内容 )
+        {
+            $mine = new K_Item;
+            $post_data["owner_id"] = $me->id;
+            $post_data["item_category"] = 1;
+            if($type == 'item') $post_data["item_type"] = 0;
+            else if($type == 'article') $post_data["item_type"] = 1;
+            else if($type == 'activity') $post_data["item_type"] = 11;
+            else if($type == 'advertising') $post_data["item_type"] = 88;
+        }
+        else if($operate == 'edit') // 编辑
+        {
+            $mine = K_Item::find($operate_id);
+            if(!$mine) return response_error([],"该内容不存在，刷新页面重试！");
+        }
+        else return response_error([],"参数有误！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if(!empty($post_data['custom']))
+            {
+                $post_data['custom'] = json_encode($post_data['custom']);
+            }
+
+
+            $mine_data = $post_data;
+            unset($mine_data['operate']);
+            unset($mine_data['operate_id']);
+            unset($mine_data['category']);
+            unset($mine_data['type']);
+
+            if(!empty($post_data['start'])) {
+                $mine_data['time_type'] = 1;
+                $mine_data['start_time'] = strtotime($post_data['start']);
+            }
+
+            if(!empty($post_data['end'])) {
+                $mine_data['time_type'] = 1;
+                $mine_data['end_time'] = strtotime($post_data['end']);
+            }
+
+            $bool = $mine->fill($mine_data)->save();
+            if($bool)
+            {
+
+                // 封面图片
+                if(!empty($post_data["cover"]))
+                {
+                    // 删除原封面图片
+                    $mine_cover_pic = $mine->cover_pic;
+                    if(!empty($mine_cover_pic) && file_exists(storage_path("resource/" . $mine_cover_pic)))
+                    {
+                        unlink(storage_path("resource/" . $mine_cover_pic));
+                    }
+
+                    $result = upload_storage($post_data["cover"]);
+                    if($result["result"])
+                    {
+                        $mine->cover_pic = $result["local"];
+                        $mine->save();
+                    }
+                    else throw new Exception("upload-cover-fail");
+
+//                    $upload = new CommonRepository();
+//                    $result = $upload->upload($post_data["cover"], 'outside-unique-items' , 'cover_item_'.$encode_id);
+//                    if($result["status"])
+//                    {
+//                        $mine->cover_pic = $result["data"];
+//                        $mine->save();
+//                    }
+//                    else throw new Exception("upload-cover-fail");
+                }
+
+                // 附件
+                if(!empty($post_data["attachment"]))
+                {
+                    // 删除原附件
+                    $mine_cover_pic = $mine->attachment;
+                    if(!empty($mine_cover_pic) && file_exists(storage_path("resource/" . $mine_cover_pic)))
+                    {
+                        unlink(storage_path("resource/" . $mine_cover_pic));
+                    }
+
+                    $result = upload_file_storage($post_data["attachment"]);
+                    if($result["result"])
+                    {
+                        $mine->attachment_name = $result["name"];
+                        $mine->attachment_src = $result["local"];
+                        $mine->save();
+                    }
+                    else throw new Exception("upload-attachment-fail");
+                }
+
+                // 生成二维码
+                $qr_code_path = "resource/unique/qr_code/";  // 保存目录
+                if(!file_exists(storage_path($qr_code_path)))
+                    mkdir(storage_path($qr_code_path), 0777, true);
+                // qr_code 图片文件
+                $url = 'http://www.k-org.cn/item/'.$mine->id;  // 目标 URL
+                $filename = 'qr_code_item_'.$mine->id.'.png';  // 目标 file
+                $qr_code = $qr_code_path.$filename;
+                QrCode::errorCorrection('H')->format('png')->size(640)->margin(0)->encoding('UTF-8')->generate($url,storage_path($qr_code));
+
+            }
+            else throw new Exception("insert--item--fail");
+
+            DB::commit();
+            return response_success(['id'=>$mine->id]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+
+
+
+
+    // 【ITEM】获取详情
+    public function operate_item_item_get($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-get') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
+
+        return response_success($item,"");
+
+    }
+    // 【ITEM】删除
+    public function operate_item_item_delete($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-delete') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if($id == $me->advertising_id)
+            {
+                $me->timestamps = false;
+                $me->advertising_id = 0;
+                $bool_0 = $me->save();
+                if(!$bool_0) throw new Exception("update--user--fail");
+            }
+
+            $mine_cover_pic = $item->cover_pic;
+            $mine_attachment_src = $item->attachment_src;
+            $mine_content = $item->content;
+
+
+            $bool = $item->delete();
+            if(!$bool) throw new Exception("delete--item--fail");
+
+            DB::commit();
+
+
+            // 删除原封面图片
+            if(!empty($mine_cover_pic) && file_exists(storage_path("resource/" . $mine_cover_pic)))
+            {
+                unlink(storage_path("resource/" . $mine_cover_pic));
+            }
+
+            // 删除原附件
+            if(!empty($mine_attachment_src) && file_exists(storage_path("resource/" . $mine_attachment_src)))
+            {
+                unlink(storage_path("resource/" . $mine_attachment_src));
+            }
+
+            // 删除二维码
+            if(file_exists(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png')))
+            {
+                unlink(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png'));
+            }
+
+            // 删除UEditor图片
+            $img_tags = get_html_img($mine_content);
+            foreach ($img_tags[2] as $img)
+            {
+                if (!empty($img) && file_exists(public_path($img)))
+                {
+                    unlink(public_path($img));
+                }
+            }
+
+
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【ITEM】推送
+    public function operate_item_item_publish($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-publish') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $item->active = 1;
+            $item->published_at = time();
+            $bool = $item->save();
+            if(!$bool) throw new Exception("update--item--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
 
 
 

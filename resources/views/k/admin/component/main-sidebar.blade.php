@@ -93,6 +93,11 @@
                     <i class="fa fa-file-text text-green"></i><span>广告</span>
                 </a>
             </li>
+            <li class="treeview {{ $sidebar_item_my_list_active or '' }}">
+                <a href="{{ url('/admin/item/item-my-list') }}">
+                    <i class="fa fa-file-text text-green"></i><span>我的</span>
+                </a>
+            </li>
 
 
 

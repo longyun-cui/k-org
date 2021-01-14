@@ -44,7 +44,7 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right margin-top-16px margin-bottom-8px">
+        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right margin-bottom-8px">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$data])
 

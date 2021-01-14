@@ -168,7 +168,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/item/item-article-list') }}",
+                    'url': "{{ url('/admin/item/item-my-list') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
@@ -345,7 +345,7 @@
                                     {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
                                     $html_1+
                                     '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'">删除</a>'+
-                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
+                                    '<a class="btn btn-xs bg-primary item-work-order-show" data-id="'+data+'">查看详情</a>'+
                                     '';
                             return html;
                         }

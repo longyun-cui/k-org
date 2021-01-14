@@ -1372,12 +1372,22 @@ class IndexRepository {
         $me = Auth::guard('org')->user();
         if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
 
+        $item_type = 'item';
+        $item_type_text = '内容';
+        $title_text = '添加'.$item_type_text;
+        $list_text = $item_type_text.'列表';
+        $list_link = '/org/item/item-all-list';
+
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
         return view($view_blade)->with([
             'operate'=>'create',
             'operate_id'=>0,
             'category'=>'item',
-            'type'=>'item'
+            'type'=>$item_type,
+            'item_type_text'=>$item_type_text,
+            'title_text'=>$title_text,
+            'list_text'=>$list_text,
+            'list_link'=>$list_link,
         ]);
     }
     // 【ITEM】返回-编辑-视图
@@ -1470,7 +1480,7 @@ class IndexRepository {
 
         $item_type = 'article';
         $item_type_text = '文章';
-        $title_text = '编辑'.$item_type_text;
+        $title_text = '添加'.$item_type_text;
         $list_text = $item_type_text.'列表';
         $list_link = '/org/item/item-article-list';
 
@@ -1498,9 +1508,9 @@ class IndexRepository {
 
         $item_type = 'article';
         $item_type_text = '文章';
+        $title_text = '编辑'.$item_type_text;
         $list_text = $item_type_text.'列表';
         $list_link = '/org/item/item-article-list';
-        $title_text = '编辑'.$item_type_text;
 
         $view_blade = env('TEMPLATE_ADMIN').'org.entrance.item.item-edit';
 
