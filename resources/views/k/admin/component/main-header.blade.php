@@ -42,7 +42,7 @@
 
                             <li class="header">添加用户</li>
                             <li class="header">
-                                <a href="{{url('/admin/user/org-create')}}">
+                                <a href="{{url('/admin/user/user-create')}}">
                                     <i class="fa fa-plus text-blue"></i> 添加组织
                                 </a>
                             </li>
