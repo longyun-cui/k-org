@@ -104,9 +104,9 @@ class AuthRepository {
             catch (Exception $e)
             {
                 DB::rollback();
-//                exit($e->getMessage());
-//                $msg = $e->getMessage();
                 $msg = '注册失败，请重试！';
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
                 return response_fail([],$msg);
             }
         }

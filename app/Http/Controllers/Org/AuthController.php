@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
 
+use App\Repositories\Org\AuthRepository;
+
 use Response, Auth, Validator, DB, Exception;
 
 
@@ -17,7 +19,7 @@ class AuthController extends Controller
     private $repo;
     public function __construct()
     {
-//        $this->repo = new AuthRepository;
+        $this->repo = new AuthRepository;
     }
 
     // 登陆
@@ -69,6 +71,19 @@ class AuthController extends Controller
     {
         Auth::guard('org')->logout();
         return redirect('/org/login');
+    }
+
+    // 登陆
+    public function register()
+    {
+        if(request()->isMethod('get'))
+        {
+            return view(env('TEMPLATE_ADMIN').'org.auth.register');
+        }
+        else if(request()->isMethod('post'))
+        {
+            return $this->repo->register(request()->all());
+        }
     }
 
 

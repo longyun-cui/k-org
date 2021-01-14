@@ -69,6 +69,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -312,6 +313,16 @@
                                 return '<a target="_blank" href="/user/'+data+'">'+row.principal.username+'</a>';
                             }
                             else return '--';
+                        }
+                    },
+                    {
+                        'className':"text-left",
+                        "width": "96px",
+                        "title": "手机号",
+                        "data": "mobile",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return data;
                         }
                     },
                     {

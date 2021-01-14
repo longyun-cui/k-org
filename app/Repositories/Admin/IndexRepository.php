@@ -276,7 +276,7 @@ class IndexRepository {
     public function get_user_all_list_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
-        $query = K_User::select('*')->where(['active'=>1,'user_category'=>1]);
+        $query = K_User::select('*')->where(['user_category'=>1]);
 //            ->whereHas('fund', function ($query1) { $query1->where('totalfunds', '>=', 1000); } )
 //            ->with('ep','parent','fund')
 //            ->withCount([

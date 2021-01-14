@@ -24,27 +24,31 @@ class AuthRepository {
     public function register($post_data)
     {
         $messages = [
-            'name.required' => '请填写用户名',
-            'captcha.required' => '请输入验证码',
-            'captcha.captcha' => '验证码有误',
-            'email.unique' => '邮箱已存在，请更换邮箱',
+//            'captcha.required' => '请输入验证码',
+//            'captcha.captcha' => '验证码有误',
+            'username.required' => '请填写组织名称！',
+            'mobile.required' => '请输入手机！',
+            'mobile.unique' => '手机已存在，请更换手机！',
+            'password.required' => '请输入密码！',
+            'password_confirm.required' => '请确认密码！',
         ];
         $v = Validator::make($post_data, [
-            'captcha' => 'required|captcha',
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
+//            'captcha' => 'required|captcha',
+            'username' => 'required',
+            'mobile' => 'required|unique:user',
             'password' => 'required',
             'password_confirm' => 'required'
         ], $messages);
         if ($v->fails())
         {
             $messages = $v->errors();
-            return response_error([],$messages->first());
+            return response_error(['error_type'=>$messages->keys()[0]],$messages->first());
         }
 
 
-        $name = $post_data['name'];
-        $email = $post_data['email'];
+        $username = $post_data['username'];
+        $mobile = $post_data['mobile'];
+        if(!isMobile($mobile)) return response_error(['error_type'=>'mobile'],'非法手机号！');
         $password = $post_data['password'];
         $password_confirm = $post_data['password_confirm'];
         if($password == $password_confirm)
@@ -53,64 +57,32 @@ class AuthRepository {
             try
             {
                 // 注册超级管理员
-                $admin = new Administrator;
-                $admin_create['name'] = $name;
-                $admin_create['email'] = $email;
-                $admin_create['password'] = password_encode($password);
-                $bool = $admin->fill($admin_create)->save();
+                $user = new K_User;
+                $user_create['user_category'] = 1;
+                $user_create['user_type'] = 11;
+                $user_create['username'] = $username;
+                $user_create['mobile'] = $mobile;
+                $user_create['password'] = password_encode($password);
+                $user_create['portrait_img'] = 'unique/portrait/user2.jpg';
+                $bool = $user->fill($user_create)->save();
                 if($bool)
                 {
-                    $string = '&user_id='.$admin->id.'&time='.time();
-                    $code = hash("sha512", $string);
-
-                    $verification_create['type'] = 1;
-                    $verification_create['user_id'] = $admin->id;
-                    $verification_create['email'] = $email;
-                    $verification_create['code'] = $code;
-
-                    $verification = new Verification;
-                    $bool4 = $verification->fill($verification_create)->save();
-                    if($bool4)
-                    {
-                        $post_data['host'] = 'http://longyun.pub';
-                        $post_data['sort'] = 'email_activation';
-                        $post_data['type'] = 1;
-                        $post_data['admin_id'] = encode($admin->id);
-                        $post_data['code'] = $code;
-                        $post_data['target'] = $email;
-
-                        $url = 'http://live2.pub:8088/products/email/activation';
-                        $ch = curl_init();
-                        curl_setopt($ch, CURLOPT_URL, $url);
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                        curl_setopt($ch, CURLOPT_TIMEOUT, 7);
-                        curl_setopt($ch, CURLOPT_POST, 1);
-                        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-                        $response = curl_exec($ch);
-                        curl_close($ch);
-                        if(empty($response)) throw new Exception('curl get request failed');
-                        else
-                        {
-                            $response = json_decode($response, true);
-                            if(!$response['success']) throw new Exception("send-email-failed");
-                        }
-                    }
                 }
-                else throw new Exception("insert-admin-failed");
+                else throw new Exception("insert--user--failed");
 
                 DB::commit();
-                return response_success([],'注册成功,请前往邮箱激活账户');
+                return response_success([],'注册成功！');
             }
             catch (Exception $e)
             {
                 DB::rollback();
-//                exit($e->getMessage());
-//                $msg = $e->getMessage();
                 $msg = '注册失败，请重试！';
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
                 return response_fail([],$msg);
             }
         }
-        else return response_error([],'密码不一致！');
+        else return response_error(['error_type'=>'password_confirm'],'确认密码不一致！');
     }
 
     // 激活邮箱

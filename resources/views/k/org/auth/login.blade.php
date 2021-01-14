@@ -5,11 +5,11 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a href="/org"><b>{{ config('common.name') }}</b> 朝鲜族组织活动平台</a>
+        <a href="/org"></a><b></b> 登录
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">组织后台登陆</p>
+        <p class="login-box-msg">组织管理后台登陆</p>
 
         <form action="/admin/login" method="post" id="form-admin-login">
             {{ csrf_field() }}
@@ -48,8 +48,19 @@
         </div>
         <!-- /.social-auth-links -->
 
-        <a href="#">忘记密码</a><br>
-        {{--<a href="/admin/register" class="text-center">注册新用户</a>--}}
+        {{--<a href="#">忘记密码</a><br>--}}
+
+        <div class="row" style="margin-top:16px;">
+            <div class="col-sm-12">
+                <a href="/org/register" class="text-center">注册新组织</a>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:8px;">
+            <div class="col-sm-12">
+                <a href="/" class="text-center">返回平台首页</a>
+            </div>
+        </div>
 
     </div>
     <!-- /.login-box-body -->

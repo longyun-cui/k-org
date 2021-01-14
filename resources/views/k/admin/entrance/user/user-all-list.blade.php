@@ -69,6 +69,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -299,6 +300,16 @@
                             else if(data == 11) return '<small class="btn-xs bg-olive">组织</small>';
                             else if(data == 88) return '<small class="btn-xs bg-purple">赞助商</small>';
                             else return "有误";
+                        }
+                    },
+                    {
+                        'className':"text-left",
+                        "width": "96px",
+                        "title": "手机号",
+                        "data": "mobile",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return data;
                         }
                     },
                     {

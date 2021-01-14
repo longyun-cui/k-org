@@ -43,6 +43,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <link href="https://cdn.bootcss.com/iCheck/1.0.2/skins/all.css" rel="stylesheet">
 
+    @yield('css')
+    @yield('custom-css')
+    @yield('custom-style')
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -64,8 +68,29 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background:url(/bg.gif) repeat;">
+
+
+
 @yield('content')
+
+{{--main-footer--}}
+<footer class="main-footer" style="position:absolute;bottom:0;left:0;right:0;margin-left:0;">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs _none">
+        Anything you want
+    </div>
+    <!-- Default to the left -->
+    {{--<strong>Copyright &copy; 上海如哉网络科技有限公司 2017-2020 <a href="#">Company</a>.</strong> All rights reserved. 沪ICP备17052782号-4--}}
+    <small>如有疑问请联系管理员 电话：</small><strong>17721364771</strong></small>
+    <br>
+    {{--<small>联系电话：</small><strong>17721364771</strong>--}}
+    {{--<br>--}}
+    <small>版权所有&copy;上海如哉网络科技有限公司</small><span class="_none">(2017-2021)</span>
+    <br class="visible-xs">
+    <a target="_blank" href="https://beian.miit.gov.cn"><small>沪ICP备17052782号-4</small></a>
+</footer>
+
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
@@ -91,6 +116,8 @@ desired effect
 <script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>
 
 @yield('js')
+@yield('custom-js')
+@yield('custom-script')
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

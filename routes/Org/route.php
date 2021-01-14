@@ -14,6 +14,7 @@ Route::group([], function () {
 
         Route::match(['get','post'], 'login', $controller.'@login');
         Route::match(['get','post'], 'logout', $controller.'@logout');
+        Route::match(['get','post'], 'register', $controller.'@register');
 
     });
 
