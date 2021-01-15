@@ -1,8 +1,7 @@
 .main-header {color:#fff;}
 .container {width:1010px;padding-left:0;padding-right:0;}
-.container-body-left {}
-.container-body-right {}
-.container-body-right.pull-right {}
+.container-body-left { position:relative; padding:0 8px; float:left; }
+.container-body-right { position:relative; float:right; }
 
 .container-body-right {color:#444;}
 .container-body-right .hover-box:hover {background:#eee;}
@@ -144,9 +143,9 @@
 {
     .fixed .content-wrapper, .fixed .right-side, .control-sidebar { padding-top: 50px; }
     .content {padding:0;}
-    .container {width: auto;padding-left:0;padding-right:0;}
-    .container .container-body-left {padding:16px 8px;}
-    .container .container-body-right {padding-left:8px;padding-right:8px;}
+    .container {width: auto;padding:0;}
+    .container .container-body-left {padding:8px;}
+    .container .container-body-right {padding:8px;}
     .item-piece .media .media-left {width:120px;height:auto;max-height:120px;float:left;}
 }
 @media (min-width:768px)

@@ -1,7 +1,7 @@
 @foreach($notification_list as $num => $val)
-<div class="item-piece item-option" data-notification="{{ $val->id }}">
+<div class="a-piece a-option notification-piece notification-option margin-bottom-8px radius-2px" data-notification="{{ $val->id }}">
     <!-- BEGIN PORTLET-->
-    <div class="panel-default box-default item-portrait-container hidden-xs">
+    <div class="panel-default box-default item-portrait-container hidden-xs-">
         <a href="{{ url('/user/'.$val->source->id) }}">
             <img src="{{ url(env('DOMAIN_CDN').'/'.$val->source->portrait_img) }}" alt="">
         </a>
@@ -11,7 +11,7 @@
 
         {{--header--}}
         <div class="item-row item-info-row text-muted">
-            <span class="item-user-portrait visible-xs"><img src="{{ url(env('DOMAIN_CDN').'/'.$val->source->portrait_img) }}" alt=""></span>
+            <span class="item-user-portrait visible-xs _none"><img src="{{ url(env('DOMAIN_CDN').'/'.$val->source->portrait_img) }}" alt=""></span>
             <span class="item-user-name"><a href="{{ url('/user/'.$val->source->id) }}"><b>{{ $val->source->username or '' }}</b></a></span>
 
             <span style="margin-left:4px;">
@@ -36,7 +36,7 @@
 
             <div class="pull-right">
                 <span class="" role="button">
-                    {{ time_show($val->created_at->timestamp) }}
+                    {{ date_show($val->created_at->timestamp) }}
                     {{--{{ time_show($val->created_at->getTimestamp()) }}--}}
                 </span>
             </div>

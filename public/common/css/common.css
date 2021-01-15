@@ -325,6 +325,18 @@ a { cursor:pointer; }
 
 
 
+.radius-2px { -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px; }
+.radius-4px { -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; }
+.radius-8px { -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.radius-12px { -webkit-border-radius:12px; -moz-border-radius:12px; border-radius:12px; }
+.radius-16px { -webkit-border-radius:16px; -moz-border-radius:16px; border-radius:16px; }
+
+
+
+
+
+
+
 .font-12px { font-size:12px !important; }
 .font-13px { font-size:13px !important; }
 .font-14px { font-size:14px !important; }

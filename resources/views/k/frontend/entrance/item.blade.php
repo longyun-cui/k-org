@@ -56,7 +56,7 @@
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$user->ad])
 
             @if(count($user->pivot_sponsor_list))
-            <div class="item-row margin-top-4px margin-bottom-2px pull-right">
+            <div class="item-row margin-top-16px margin-bottom-2px pull-right">
                 <strong>Ta的赞助商</strong>
             </div>
             @endif

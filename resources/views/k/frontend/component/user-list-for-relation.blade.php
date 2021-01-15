@@ -1,5 +1,5 @@
 @foreach($user_list as $u)
-<div class="item-piece user-option user padding-8px margin-bottom-8px"
+<div class="a-piece a-option user-piece user-option user margin-bottom-8px radius-2px"
      data-user="{{ $u->relation_user->id or 0 }}"
      data-type="{{ $u->relation_type or 0 }}"
 >

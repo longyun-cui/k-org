@@ -1,5 +1,5 @@
 @foreach($sponsor_list as $v)
-<div class="right-piece box-body block-full bg-white margin-bottom-4px pull-right">
+<div class="right-piece box-body block-full bg-white margin-bottom-4px radius-4px pull-right">
 
     <div class="item-container">
         <div class="panel-default box-default item-portrait-container _none">

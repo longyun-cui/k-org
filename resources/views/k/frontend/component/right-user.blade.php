@@ -1,4 +1,4 @@
-<div class="right-piece- box-body bg-white margin-bottom-4px section-user">
+<div class="right-piece- box-body bg-white margin-bottom-4px section-user radius-2px">
 
     <div class="item-container">
         <div class="panel-default box-default item-portrait-container">

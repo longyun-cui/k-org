@@ -44,7 +44,7 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right margin-bottom-8px">
+        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$data])
 
@@ -128,7 +128,7 @@
 
 
             @if(count($data->pivot_sponsor_list))
-                <div class="item-row margin-top-4px margin-bottom-2px pull-right">
+                <div class="item-row margin-top-16px margin-bottom-2px pull-right">
                     <strong>Ta的赞助商</strong>
                 </div>
             @endif
