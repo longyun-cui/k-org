@@ -163,8 +163,6 @@ class IndexController extends Controller
         $return['user'] = $user;
         return response_success($return);
     }
-
-
     // 【用户】登录-组织
     public function operate_user_org_login()
     {
@@ -174,8 +172,6 @@ class IndexController extends Controller
         Auth::guard('org')->login($org,true);
         return response_success();
     }
-
-
     // 【用户】登录-赞助商
     public function operate_user_sponsor_login()
     {
@@ -200,6 +196,20 @@ class IndexController extends Controller
     {
         if(request()->isMethod('get')) return $this->repo->view_user_user_edit();
         else if (request()->isMethod('post')) return $this->repo->operate_user_user_save(request()->all());
+    }
+
+
+
+
+    // 【内容】禁用
+    public function operate_user_admin_disable()
+    {
+        return $this->repo->operate_user_admin_disable(request()->all());
+    }
+    // 【内容】解禁
+    public function operate_user_admin_enable()
+    {
+        return $this->repo->operate_user_admin_enable(request()->all());
     }
 
 
@@ -286,6 +296,20 @@ class IndexController extends Controller
     public function operate_item_item_publish()
     {
         return $this->repo->operate_item_item_publish(request()->all());
+    }
+
+
+
+
+    // 【内容】禁用
+    public function operate_item_admin_disable()
+    {
+        return $this->repo->operate_item_admin_disable(request()->all());
+    }
+    // 【内容】解禁
+    public function operate_item_admin_enable()
+    {
+        return $this->repo->operate_item_admin_enable(request()->all());
     }
 
 

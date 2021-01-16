@@ -200,21 +200,26 @@
 
 
         // 【启用】
-        $("#item-main-body").on('click', ".item-enable-submit", function() {
+        $("#item-main-body").on('click', ".item-admin-enable-submit", function() {
             var that = $(this);
-            layer.msg('确定启用该"产品"？', {
+            layer.msg('确定"封禁"？', {
                 time: 0
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
                     $.post(
-                        "{{ url('/item/enable') }}",
+                        "{{ url('/admin/item/item-admin-enable') }}",
                         {
                             _token: $('meta[name="_token"]').attr('content'),
+                            operate: "item-admin-enable",
                             id:that.attr('data-id')
                         },
                         function(data){
+                            layer.close(index);
                             if(!data.success) layer.msg(data.msg);
-                            else location.reload();
+                            else
+                            {
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
                         },
                         'json'
                     );
@@ -222,21 +227,26 @@
             });
         });
         // 【禁用】
-        $("#item-main-body").on('click', ".item-disable-submit", function() {
+        $("#item-main-body").on('click', ".item-admin-disable-submit", function() {
             var that = $(this);
-            layer.msg('确定禁用该"产品"？', {
+            layer.msg('确定"解禁"？', {
                 time: 0
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
                     $.post(
-                        "{{ url('/item/disable') }}",
+                        "{{ url('/admin/item/item-admin-disable') }}",
                         {
                             _token: $('meta[name="_token"]').attr('content'),
+                            operate: "item-admin-disable",
                             id:that.attr('data-id')
                         },
                         function(data){
+                            layer.close(index);
                             if(!data.success) layer.msg(data.msg);
-                            else location.reload();
+                            else
+                            {
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
                         },
                         'json'
                     );

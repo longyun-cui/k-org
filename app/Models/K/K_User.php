@@ -10,7 +10,8 @@ class K_User extends Authenticatable
     protected $table = "user";
 
     protected $fillable = [
-        'active', 'status', 'parent_id', 'user_category', 'user_group', 'user_type',
+        'active', 'status', 'user_active', 'user_status', 'user_category', 'user_group', 'user_type', 'category', 'group', 'type',
+        'parent_id', 'p_id',
         'name', 'username', 'nickname', 'true_name', 'description', 'portrait_img',
         'mobile', 'telephone', 'email', 'password',
         'linkman', 'contact_phone', 'contact_address',

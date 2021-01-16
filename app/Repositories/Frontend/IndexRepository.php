@@ -52,7 +52,7 @@ class IndexRepository {
         {
             $item_query = K_Item::with(['owner']);
         }
-        $item_query->where('active',1);
+        $item_query->where(['item_status'=>1,'active'=>1]);
 
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
@@ -203,12 +203,11 @@ class IndexRepository {
     public function view_item($post_data,$id=0)
     {
 
-        $item = K_Item::with([
-            'owner'
-            ])
-            ->find($id);
+        $item = K_Item::with(['owner'])->find($id);
         if($item)
         {
+            if($item->item_status != 1) return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+
             $item->timestamps = false;
             $item->increment('visit_num');
 
@@ -264,21 +263,44 @@ class IndexRepository {
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
 
         $user = K_User::with([
-            'introduction',
-            'items'=>function($query) { $query->with('owner')->where('active',1)->orderBy('published_at','desc'); },
-            'ad',
-            'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
-            'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
-            'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
-        ])->withCount([
-            'pivot_sponsor_list as pivot_sponsor_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
-            'pivot_org_list as pivot_org_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
-            'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-            'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
-        ])->find($user_id);
-//        dd($user->toArray());
+                'introduction',
+//                'items'=>function($query) { $query->with('owner')->where(['item_status'=>1,'active'=>1])->orderBy('published_at','desc'); },
+//                'ad',
+//                'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
+//                'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1])->orderby('updated_at','desc'); },
+//                'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
+            ])
+            ->withCount([
+                'pivot_sponsor_list as pivot_sponsor_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1]); },
+                'pivot_org_list as pivot_org_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
+                'items as article_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>1]); },
+                'items as activity_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>11]); },
+            ])
+            ->find($user_id);
 
-        if(!$user) return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+
+
+        if($user)
+        {
+            if($user->user_status != 1) return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+
+            if($user->user_type == 11)
+            {
+                $user->load([
+                    'ad',
+                    'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1])->orderby('updated_at','desc'); }
+                ]);
+            }
+            else if($user->user_type == 88)
+            {
+                $user->load([
+                    'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); }
+                ]);
+            }
+//        dd($user->toArray());
+        }
+        else return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+
 
         $user->timestamps = false;
         $user->increment('visit_num');
@@ -294,6 +316,7 @@ class IndexRepository {
     //                'forward_item'=>function($query) { $query->with('user'); },
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
                 ])
+                ->where('item_status',1)
                 ->where('active',1)
                 ->where('owner_id',$user_id);
 
@@ -301,7 +324,7 @@ class IndexRepository {
             else if($type == 'article') $item_query->whereIn('item_type',[1]);
             else if($type == 'activity') $item_query->whereIn('item_type',[11]);
 
-            $items = $item_query->orderBy('published_at','desc')->paginate(20);
+            $item_list = $item_query->orderBy('published_at','desc')->paginate(20);
 
             if($user_id != $me_id)
             {
@@ -318,6 +341,7 @@ class IndexRepository {
         else
         {
             $item_query = K_Item::with(['owner'])
+                ->where('item_status',1)
                 ->where('active',1)
                 ->where('owner_id',$user_id);
 
@@ -325,10 +349,10 @@ class IndexRepository {
             else if($type == 'article') $item_query->whereIn('item_type',[1]);
             else if($type == 'activity') $item_query->whereIn('item_type',[11]);
 
-            $items = $item_query->orderBy('published_at','desc')->paginate(20);
+            $item_list = $item_query->orderBy('published_at','desc')->paginate(20);
         }
 
-        foreach ($items as $item)
+        foreach ($item_list as $item)
         {
             $item->custom_decode = json_decode($item->custom);
             $item->content_show = strip_tags($item->content);
@@ -349,7 +373,7 @@ class IndexRepository {
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.user')
             ->with([
                 'data'=>$user,
-                'item_list'=>$items,
+                'item_list'=>$item_list,
                 'is_follow'=>$is_follow,
                 $sidebar_active => 'active'
             ]);
@@ -617,6 +641,7 @@ class IndexRepository {
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
                 ->where('user_type',11)
+                ->where('user_status',1)
                 ->where('active',1)
                 ->paginate(20);
         }
@@ -630,6 +655,7 @@ class IndexRepository {
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
                 ->where('user_type',11)
+                ->where('user_status',1)
                 ->where('active',1)
                 ->paginate(20);
         }

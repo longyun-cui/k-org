@@ -144,8 +144,8 @@
     .fixed .content-wrapper, .fixed .right-side, .control-sidebar { padding-top: 50px; }
     .content {padding:0;}
     .container {width: auto;padding:0;}
-    .container .container-body-left {padding:8px;}
-    .container .container-body-right {padding:8px;}
+    .container .container-body-left {padding:16px 8px;}
+    .container .container-body-right {padding:16px 8px;}
     .item-piece .media .media-left {width:120px;height:auto;max-height:120px;float:left;}
 }
 @media (min-width:768px)

@@ -53,17 +53,19 @@ Route::group([], function () {
         Route::match(['get','post'], '/user/user-create', $controller.'@operate_user_user_create');
         Route::match(['get','post'], '/user/user-edit', $controller.'@operate_user_user_edit');
 
-        Route::match(['get','post'], '/user/all-list', $controller.'@view_user_all_list');
-        Route::match(['get','post'], '/user/org-list', $controller.'@view_user_org_list');
-        Route::match(['get','post'], '/user/sponsor-list', $controller.'@view_user_sponsor_list');
-
-        Route::match(['get','post'], '/user/individual-list', $controller.'@view_user_individual_list');
+        Route::match(['get','post'], '/user/user-all-list', $controller.'@view_user_all_list');
+        Route::match(['get','post'], '/user/user-org-list', $controller.'@view_user_org_list');
+        Route::match(['get','post'], '/user/user-sponsor-list', $controller.'@view_user_sponsor_list');
+        Route::match(['get','post'], '/user/user-individual-list', $controller.'@view_user_individual_list');
 
         Route::match(['get','post'], '/user/user-login', $controller.'@operate_user_user_login');
         Route::match(['get','post'], '/user/org-login', $controller.'@operate_user_org_login');
         Route::match(['get','post'], '/user/sponsor-login', $controller.'@operate_user_sponsor_login');
 
         Route::match(['get','post'], '/user/org-delete', $controller.'@operate_user_org_delete');
+
+        Route::match(['get','post'], '/user/user-admin-disable', $controller.'@operate_user_admin_disable');
+        Route::match(['get','post'], '/user/user-admin-enable', $controller.'@operate_user_admin_enable');
 
 
         Route::match(['get','post'], '/user/change-password', $controller.'@operate_user_change_password');
@@ -91,6 +93,9 @@ Route::group([], function () {
         Route::match(['get','post'], '/item/item-get', $controller.'@operate_item_item_get');
         Route::match(['get','post'], '/item/item-delete', $controller.'@operate_item_item_delete');
         Route::match(['get','post'], '/item/item-publish', $controller.'@operate_item_item_publish');
+
+        Route::match(['get','post'], '/item/item-admin-disable', $controller.'@operate_item_admin_disable');
+        Route::match(['get','post'], '/item/item-admin-enable', $controller.'@operate_item_admin_enable');
 
 
 

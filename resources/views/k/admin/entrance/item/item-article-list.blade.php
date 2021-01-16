@@ -299,22 +299,29 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
-                            if(data == 0)
+                            if(row.item_status == 1)
                             {
-                                return '<small class="btn-xs bg-teal">待发布</small>';
-                            }
-                            else if(data == 1)
-                            {
-                                return '<small class="btn-xs bg-primary">已发布</small>';
+                                if(data == 0)
+                                {
+                                    return '<small class="btn-xs bg-teal">待发布</small>';
+                                }
+                                else if(data == 1)
+                                {
+                                    return '<small class="btn-xs bg-primary">已发布</small>';
 //                                if(row.is_read == 0) return '<small class="btn-xs bg-olive">未读</small>';
 //                                else if(row.is_read == 1) return '<small class="btn-xs bg-primary">已读</small>';
 //                                else return "--";
+                                }
+                                else if(data == 9)
+                                {
+                                    return '<small class="btn-xs bg-purple">已完成</small>';
+                                }
+                                else return "有误";
                             }
-                            else if(data == 9)
+                            else
                             {
-                                return '<small class="btn-xs bg-purple">已完成</small>';
+                                return '<small class="btn-xs btn-danger">已封禁</small>';
                             }
-                            else return "有误";
                         }
                     },
                     {
@@ -323,18 +330,16 @@
                         "data": 'id',
                         "orderable": false,
                         render: function(data, type, row, meta) {
-                            if(row.active == 0)
+                            if(row.item_status == 1)
                             {
-                                $html_1 =
-                                    '<a class="btn btn-xs bg-navy item-edit-link" data-id="'+data+'">编辑</a>'+
-                                    '<a class="btn btn-xs bg-navy item-publish-submit" data-id="'+data+'">发布</a>'+
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-danger item-admin-disable-submit" data-id="'+data+'">封禁</a>'+
                                     '';
                             }
                             else
                             {
-                                $html_1 =
-                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>'+
-                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">发布</a>'+
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-success item-admin-enable-submit" data-id="'+data+'">解禁</a>'+
                                     '';
                             }
                             var html =
@@ -343,9 +348,9 @@
 //                                    '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                    '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
                                     {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
-                                    $html_1+
-                                    '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'">删除</a>'+
-                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
+                                    $html_0+
+                                    '<a class="btn btn-xs bg-navy item-admin-delete-submit" data-id="'+data+'">删除</a>'+
+//                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
                                     '';
                             return html;
                         }

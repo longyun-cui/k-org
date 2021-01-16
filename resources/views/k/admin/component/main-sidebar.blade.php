@@ -36,7 +36,7 @@
             <li class="header">机构管理</li>
 
             <li class="treeview {{ $sidebar_user_all_list_active or '' }}">
-                <a href="{{ url('/admin/user/all-list') }}">
+                <a href="{{ url('/admin/user/user-all-list') }}">
                     <i class="fa fa-user"></i><span>全部用户</span>
                 </a>
             </li>
@@ -46,17 +46,17 @@
                 {{--</a>--}}
             {{--</li>--}}
             <li class="treeview {{ $sidebar_user_org_list_active or '' }}">
-                <a href="{{ url('/admin/user/org-list') }}">
+                <a href="{{ url('/admin/user/user-org-list') }}">
                     <i class="fa fa-user"></i><span>组织机构</span>
                 </a>
             </li>
             <li class="treeview {{ $sidebar_user_sponsor_list_active or '' }}">
-                <a href="{{ url('/admin/user/sponsor-list') }}">
+                <a href="{{ url('/admin/user/user-sponsor-list') }}">
                     <i class="fa fa-user"></i><span>赞助商</span>
                 </a>
             </li>
             <li class="treeview {{ $sidebar_user_individual_list_active or '' }}">
-                <a href="{{ url('/admin/user/individual-list') }}">
+                <a href="{{ url('/admin/user/user-individual-list') }}">
                     <i class="fa fa-user"></i><span>个人用户</span>
                 </a>
             </li>

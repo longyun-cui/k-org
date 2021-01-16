@@ -697,6 +697,110 @@ class IndexRepository {
 
 
 
+    // 【K】【用户】管理员封禁
+    public function operate_user_admin_disable($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'user-admin-disable') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $user = K_User::find($id);
+        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($me->user_category != 0) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $user->user_status = 9;
+            $user->timestamps = false;
+            $bool = $user->save();
+            if(!$bool) throw new Exception("update--user--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【K】【用户】管理员解禁
+    public function operate_user_admin_enable($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'user-admin-enable') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $user = K_User::find($id);
+        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($me->user_category != 0) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $user->user_status = 1;
+            $user->timestamps = false;
+            $bool = $user->save();
+            if(!$bool) throw new Exception("update--user--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+
+
+
+
     // 【K】【内容】返回-列表-视图
     public function view_item_item_list($post_data)
     {
@@ -800,10 +904,10 @@ class IndexRepository {
     // 【K】【内容】【文章】返回-列表-视图
     public function view_item_article_list($post_data)
     {
-        return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-all-list')
+        return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-article-list')
             ->with([
                 'sidebar_item_active'=>'active',
-                'sidebar_item_all_list_active'=>'active'
+                'sidebar_item_article_list_active'=>'active'
             ]);
     }
     // 【K】【内容】【文章】返回-列表-数据
@@ -953,7 +1057,7 @@ class IndexRepository {
         return view(env('TEMPLATE_ADMIN').'admin.entrance.item.item-my-list')
             ->with([
                 'sidebar_item_active'=>'active',
-                'sidebar_item_all_list_active'=>'active'
+                'sidebar_item_my_list_active'=>'active'
             ]);
     }
     // 【K】【内容】【全部】返回-列表-数据
@@ -1419,6 +1523,110 @@ class IndexRepository {
         {
             $item->active = 1;
             $item->published_at = time();
+            $bool = $item->save();
+            if(!$bool) throw new Exception("update--item--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+
+
+
+
+    // 【ITEM】管理员封禁
+    public function operate_item_admin_disable($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-admin-disable') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($me->user_category != 0) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $item->item_status = 9;
+            $item->timestamps = false;
+            $bool = $item->save();
+            if(!$bool) throw new Exception("update--item--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【ITEM】管理员解禁
+    public function operate_item_admin_enable($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-admin-enable') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($me->user_category != 0) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $item->item_status = 1;
+            $item->timestamps = false;
             $bool = $item->save();
             if(!$bool) throw new Exception("update--item--fail");
 

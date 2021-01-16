@@ -5,7 +5,7 @@
 
 
 @section('header','')
-@section('description','管理员后台-如未科技')
+@section('description','赞助商列表 - 管理员后台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
@@ -63,6 +63,7 @@
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -351,29 +352,6 @@
                             else return '--';
                         }
                     },
-//                    {
-//                        'data': 'menu_id',
-//                        'orderable': false,
-//                        render: function(data, type, row, meta) {
-////                            return row.menu == null ? '未分类' : row.menu.title;
-//                            if(row.menu == null) return '<small class="label btn-info">未分类</small>';
-//                            else {
-//                                return '<a href="/org-admin/item/menu?id='+row.menu.encode_id+'">'+row.menu.title+'</a>';
-//                            }
-//                        }
-//                    },
-//                    {
-//                        'data': 'id',
-//                        'orderable': false,
-//                        render: function(data, type, row, meta) {
-//                            return row.menu == null ? '未分类' : row.menu.title;
-////                            var html = '';
-////                            $.each(data,function( key, val ) {
-////                                html += '<a href="/org-admin/item/menu?id='+this.id+'">'+this.title+'</a><br>';
-////                            });
-////                            return html;
-//                        }
-//                    },
                     {
                         'width':"128px",
                         "title": "创建时间",
@@ -381,6 +359,12 @@
                         'orderable': true,
                         render: function(data, type, row, meta) {
 //                            return data;
+
+//                            newDate = new Date();
+//                            newDate.setTime(data * 1000);
+//                            return newDate.toLocaleString('chinese',{hour12:false});
+//                            return newDate.toLocaleDateString();
+
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
@@ -393,53 +377,47 @@
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
                         }
                     },
-//                    {
-//                        'data': 'created_at',
-//                        'orderable': true,
-//                        render: function(data) {
-//                            newDate = new Date();
-//                            newDate.setTime(data * 1000);
-////                            return newDate.toLocaleString('chinese',{hour12:false});
-//                            return newDate.toLocaleDateString();
-//                        }
-//                    },
                     {
-                        'data': 'id',
-                        'orderable': false,
+                        "width": "64px",
+                        "title": "状态",
+                        "data": "active",
+                        "orderable": false,
                         render: function(data, type, row, meta) {
-
-                            // 二级代理权限
-                            var $sub_agent = "";
-                            if(row.usergroup == "Agent2")
+//                            return data;
+                            if(row.user_status == 1)
                             {
-                                $sub_agent = '<a class="btn btn-xs btn-default item-sub-agent-none-submit" data-id="'+data+'" >禁止二级代理</a>';
+                                return '<small class="btn-xs btn-success">正常</small>';
                             }
-                            else {
-                                if(row.isopen_subagent == 1) {
-                                    $sub_agent = '<a class="btn btn-xs btn-danger item-sub-agent-close-submit" data-id="'+data+'" >关闭二级代理</a>';
-                                }
-                                else {
-                                    $sub_agent = '<a class="btn btn-xs btn-success item-sub-agent-open-submit" data-id="'+data+'" >开启二级代理</a>';
-                                }
+                            else
+                            {
+                                return '<small class="btn-xs btn-danger">已封禁</small>';
                             }
-
-                            // 充值限制权限
-                            var $recharge_limit = "";
-                            if(row.is_recharge_limit == 1) {
-                                $recharge_limit = '<a class="btn btn-xs btn-danger item-recharge-limit-close-submit" data-id="'+data+'" >关闭充值额度限制</a>';
-                            } else {
-                                $recharge_limit = '<a class="btn btn-xs btn-success item-recharge-limit-open-submit" data-id="'+data+'" >开启充值额度限制</a>';
+                        }
+                    },
+                    {
+                        "width": "240px",
+                        "title": "操作",
+                        "data": "id",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            if(row.user_status == 1)
+                            {
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>'+
+                                    '';
+                            }
+                            else
+                            {
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>'+
+                                    '';
                             }
 
                             var html =
-//                                '<a class="btn btn-xs item-enable-submit" data-id="'+value+'">启用</a>'+
-//                                '<a class="btn btn-xs item-disable-submit" data-id="'+value+'">禁用</a>'+
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
-                                {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
-                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'" data-name="'+row.username+'">充值/退款</a>'+
-                                $sub_agent+
-                                $recharge_limit+
+//                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
+                                $html_0+
                                 '<a class="btn btn-xs bg-navy item-edit-submit" data-id="'+data+'">编辑</a>'+
                                 '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">修改密码</a>'+
                                 '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+

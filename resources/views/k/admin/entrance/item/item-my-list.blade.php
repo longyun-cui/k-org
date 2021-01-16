@@ -323,6 +323,19 @@
                         "data": 'id',
                         "orderable": false,
                         render: function(data, type, row, meta) {
+                            if(row.item_status == 1)
+                            {
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-danger item-admin-disable-submit" data-id="'+data+'">封禁</a>'+
+                                    '';
+                            }
+                            else
+                            {
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-success item-admin-enable-submit" data-id="'+data+'">解禁</a>'+
+                                    '';
+                            }
+
                             if(row.active == 0)
                             {
                                 $html_1 =
@@ -337,15 +350,15 @@
                                     '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">发布</a>'+
                                     '';
                             }
+
                             var html =
-//                                    '<a class="btn btn-xs item-enable-submit" data-id="'+value+'">启用</a>'+
-//                                    '<a class="btn btn-xs item-disable-submit" data-id="'+value+'">禁用</a>'+
 //                                    '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                    '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
                                     {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
+                                    $html_0+
                                     $html_1+
                                     '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'">删除</a>'+
-                                    '<a class="btn btn-xs bg-primary item-work-order-show" data-id="'+data+'">查看详情</a>'+
+//                                    '<a class="btn btn-xs bg-primary item-work-order-show" data-id="'+data+'">查看详情</a>'+
                                     '';
                             return html;
                         }
