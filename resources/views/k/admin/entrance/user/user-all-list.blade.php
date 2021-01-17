@@ -395,8 +395,8 @@
                             var $hour = ('00'+$date.getHours()).slice(-2);
                             var $minute = ('00'+$date.getMinutes()).slice(-2);
                             var $second = ('00'+$date.getSeconds()).slice(-2);
-//                            return $year+'-'+$month+'-'+$day;
-                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute;
+                            return $year+'-'+$month+'-'+$day;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute;
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
                         }
                     },
@@ -436,12 +436,25 @@
                                     '';
                             }
 
+                            if(row.user_type == 1)
+                            {
+                                $html_edit =
+                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>'+
+                                    '';
+                            }
+                            else
+                            {
+                                $html_edit =
+                                    '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>'+
+                                    '';
+                            }
+
                             var html =
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
 //                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
                                 $html_0+
-                                '<a class="btn btn-xs bg-navy item-edit-submit" data-id="'+data+'">编辑</a>'+
+                                $html_edit+
                                 '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">修改密码</a>'+
                                 '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
                                 '<a class="btn btn-xs bg-olive item-login-submit" data-id="'+data+'">登录</a>'+
