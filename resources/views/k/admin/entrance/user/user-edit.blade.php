@@ -14,7 +14,7 @@
 
 @section('breadcrumb')
     <li><a href="{{ url('/admin') }}"><i class="fa fa-home"></i>首页</a></li>
-    <li><a href="{{ url('/admin/user/all-list') }}"><i class="fa fa-list"></i>@yield('list-text')</a></li>
+    <li><a href="{{ url('/admin/user/user-all-list') }}"><i class="fa fa-list"></i>@yield('list-text')</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
 @endsection
 
@@ -300,7 +300,7 @@
                     else
                     {
                         layer.msg(data.msg);
-                        location.href = "{{ url('/admin/user/all-list') }}";
+                        location.href = "{{ url('/admin/user/user-all-list') }}";
                     }
                 }
             };
