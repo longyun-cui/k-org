@@ -14,7 +14,7 @@
                 <div class="text-title-row multi-ellipsis-1">
                     <a href="{{ url('/user/'.$item->owner->id) }}" style="color:#ff7676;font-size:13px;">
                         <span class="item-user-portrait">
-                            <img src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt="">
+                            <img src="/common/images/bg/background-image.png" data-src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt="">
                         </span>
                         {{ $item->owner->username or '' }}
                     </a>
@@ -28,7 +28,7 @@
         <figure class="image-container padding-top-2-5">
             <div class="image-box">
                 <a class="clearfix zoom-" target="_self" href="{{ url('/item/'.$item->id) }}">
-                    <img class="grow" src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" data-src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" alt="Cover">
+                    <img class="grow" src="/common/images/bg/background-image.png" data-src="{{ env('DOMAIN_CDN').'/'.$item->cover_pic }}" alt="Cover">
                     {{--@if(!empty($item->cover_pic))--}}
                     {{--<img class="grow" src="{{ url(env('DOMAIN_CDN').'/'.$item->cover_pic) }}">--}}
                     {{--@else--}}

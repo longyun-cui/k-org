@@ -1,12 +1,152 @@
 @foreach($item_list as $i)
 <div class="a-piece item-piece item-option radius-4px {{ $getType or 'items' }}"
-     data-item="{{ $item->id or 0}}"
+     data-item="{{ $i->item->id or 0}}"
      data-id="{{ $i->item->id or 0 }}"
      data-item-id="{{ $i->item->id or 0 }}"
      data-getType="{{ $getType or 'items' }}"
 >
+
+    <div class="item-container bg-white">
+
+
+        <figure class="text-container clearfix">
+            <div class="text-box">
+                <div class="text-title-row multi-ellipsis-1">
+                    <a href="{{ url('/user/'.$i->item->owner->id) }}" style="color:#ff7676;font-size:13px;">
+                        <span class="item-user-portrait">
+                            <img src="/common/images/bg/background-image.png" data-src="{{ url(env('DOMAIN_CDN').'/'.$i->item->owner->portrait_img) }}" alt="">
+                        </span>
+                        {{ $i->item->owner->username or '' }}
+                    </a>
+                    <span class="text-muted disabled pull-right"><small>{{ date_show($i->item->updated_at->timestamp) }}</small></span>
+                </div>
+            </div>
+        </figure>
+
+
+        @if(!empty($i->item->cover_pic))
+            <figure class="image-container padding-top-2-5">
+                <div class="image-box">
+                    <a class="clearfix zoom-" target="_self" href="{{ url('/item/'.$i->item->id) }}">
+                        <img class="grow" src="/common/images/bg/background-image.png" data-src="{{ env('DOMAIN_CDN').'/'.$i->item->cover_pic }}" alt="Cover">
+                        {{--@if(!empty($i->item->cover_pic))--}}
+                        {{--<img class="grow" src="{{ url(env('DOMAIN_CDN').'/'.$i->item->cover_pic) }}">--}}
+                        {{--@else--}}
+                        {{--<img class="grow" src="{{ url('/common/images/notexist.png') }}">--}}
+                        {{--@endif--}}
+                    </a>
+                    {{--<span class="btn btn-warning">热销中</span>--}}
+                    <span class="paste-tag-inn">
+                    @if($i->item->time_type == 1)
+                            @if(!empty($i->item->start_time))
+                                <span class="label label-success start-time-inn"><b>{{ time_show($i->item->start_time) }}</b> (开始)</span>
+                            @endif
+                            @if(!empty($i->item->end_time))
+                                <span style="font-size:12px;">至</span>
+                                <span class="label label-danger end-time-inn"><b>{{ time_show($i->item->end_time) }} (结束)</b></span>
+                            @endif
+                        @endif
+                </span>
+                </div>
+            </figure>
+        @endif
+
+
+        <figure class="text-container clearfix">
+            <div class="text-box with-border-top">
+
+                <div class="text-row text-title-row multi-ellipsis-1 margin-top-4px margin-bottom-4px">
+                    <a href="{{ url('/item/'.$i->item->id) }}"><b>{{ $i->item->title or '' }}</b></a>
+                </div>
+
+                @if(empty($i->item->cover_pic))
+                    @if($i->item->time_type == 1)
+                        <div class="text-row text-time-row multi-ellipsis-1">
+                            @if(!empty($i->item->start_time))
+                                <span class="label label-success start-time-inn"><b>{{ time_show($i->item->start_time) }}</b> (开始)</span>
+                            @endif
+                            @if(!empty($i->item->end_time))
+                                <span class="font-12px"> 至 </span>
+                                <span class="label label-danger end-time-inn"><b>{{ time_show($i->item->end_time) }} (结束)</b></span>
+                            @endif
+                        </div>
+                    @endif
+                @endif
+
+                <div class="text-title-row multi-ellipsis-1 _none">
+                    <span class="info-tags text-danger">该组织•贴片广告</span>
+                </div>
+
+            </div>
+
+            <div class="text-box with-border-top clearfix">
+
+                <div class="text-row text-tool-row">
+
+                    {{--浏览--}}
+                    <a class="tool-button" href="{{ url('/item/'.$i->item->id) }}" role="button">
+                        <span>
+                            <i class="fa fa-eye"></i> @if($i->item->visit_num){{ $i->item->visit_num }} @endif
+                        </span>
+                    </a>
+
+                    {{--点赞&$收藏--}}
+                    <small class="tool-button operate-btn favor-btn" data-num="{{ $i->item->favor_num or 0 }}" role="button">
+                        @if(Auth::check())
+                            @if($i->item->pivot_item_relation->contains('relation_type', 1))
+                                <a class="remove-this-favor">
+                                    <i class="fa fa-heart text-red"></i>
+                                    <span class="num">@if($i->item->favor_num){{ $i->item->favor_num }}@endif</span>
+                                </a>
+                            @else
+                                <a class="add-this-favor">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span class="num">@if($i->item->favor_num){{ $i->item->favor_num }}@endif</span>
+                                </a>
+                            @endif
+                        @else
+                            <a class="add-this-favor">
+                                <i class="fa fa-heart-o"></i>
+                                <span class="num">@if($i->item->favor_num){{ $i->item->favor_num }}@endif</span>
+                            </a>
+                        @endif
+                    </small>
+
+                    {{--分享--}}
+                    <a class="tool-button _none" role="button">
+                        <i class="fa fa-share"></i> @if($i->item->share_num) {{ $i->item->share_num }} @endif
+                    </a>
+
+                    {{--评论--}}
+                    <a class="tool-button comment-toggle" href="{{ url('/item/'.$i->item->id) }}" role="button">
+                        <span>
+                            <i class="fa fa-commenting-o"></i> @if($i->item->comment_num) {{ $i->item->comment_num }} @endif
+                        </span>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="text-box with-border-top text-center clearfix _none">
+                <a target="_self" href="{{ url('/item/'.$i->item->id) }}">
+                    <button class="btn btn-default btn-flat btn-3d btn-clicker" data-hover="点击查看" style="border-radius:0;">
+                        <strong>查看详情</strong>
+                    </button>
+                </a>
+            </div>
+
+
+
+
+        </figure>
+
+    </div>
+
+
     <!-- BEGIN PORTLET-->
-    <div class="boxe panel-default- box-default item-entity-container">
+    <div class="boxe panel-default- box-default item-entity-container _none">
 
         <div class="box-body item-row item-title-row">
             <span>

@@ -76,10 +76,10 @@
 
 
             @if(request('type') == 'introduction')
-            <div class="item-piece item-option topic-option">
+            <div class="item-piece item-option">
                 <div class="box-body item-row item-content-row">
                     <div class="item-row">
-                        <h4>图文简介</h4>
+                        <h4>我的简介</h4>
                     </div>
                     <div class="item-row">
                         @if(!empty($data->introduction->content))

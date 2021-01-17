@@ -106,6 +106,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @yield('style')
 
     <style>
+        /*.item-piece img { background:url("/common/images/bg/background-image.png");background-size:cover; }*/
+
         .header-logo {
             -webkit-transition: width .3s ease-in-out;
             -o-transition: width .3s ease-in-out;
@@ -421,8 +423,8 @@ desired effect
                     _this.attr("src",_this.attr("data-src"));
                 }
             })
-        }
-//        setInterval(lazy_load,1000);
+        };
+        setInterval(lazy_load,1000);
 
     });
 </script>

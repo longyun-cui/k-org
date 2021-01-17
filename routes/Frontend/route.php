@@ -62,6 +62,8 @@ Route::group([], function () {
         Route::get('/', $controller.'@view_root');
         Route::get('/root-1', $controller.'@view_root');
 
+        Route::get('/introduction', $controller.'@view_introduction');
+
         Route::get('/item-list', $controller.'@view_item_list');
         Route::get('/item/{id?}', $controller.'@view_item');
 

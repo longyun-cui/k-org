@@ -9,7 +9,7 @@
 
 
 @section('wx_share_title')朝鲜族组织活动平台@endsection
-@section('wx_share_desc')朝鲜族组织活动分享平台@endsection
+@section('wx_share_desc')@endsection
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 
@@ -63,11 +63,11 @@
 @section('js')
 <script>
     $(function() {
-        $('article').readmore({
-            speed: 150,
-            moreLink: '<a href="#">展开更多</a>',
-            lessLink: '<a href="#">收起</a>'
-        });
+//        $('article').readmore({
+//            speed: 150,
+//            moreLink: '<a href="#">展开更多</a>',
+//            lessLink: '<a href="#">收起</a>'
+//        });
     });
 </script>
 @endsection

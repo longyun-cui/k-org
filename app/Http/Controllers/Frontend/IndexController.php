@@ -28,6 +28,14 @@ class IndexController extends Controller
 
 
 
+    public function view_introduction()
+    {
+        return $this->repo->view_introduction();
+    }
+
+
+
+
     // 【K】【】
     public function login_link()
     {

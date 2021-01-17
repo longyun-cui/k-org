@@ -88,6 +88,29 @@ class IndexRepository {
     }
 
 
+    // 【K】【平台介绍】
+    public function view_introduction()
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+//            $notification_count = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->count();
+//            view()->share('notification_count',$notification_count);
+        }
+        else $me_id = 0;
+
+        $introduction = K_Item::find(1);
+
+        $return['data'] = $introduction;
+
+        $path = request()->path();
+        if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
+//        else return view('frontend.entrance.root')->with($return);
+        else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-introduction')->with($return);
+    }
+
+
 
 
     /*
@@ -163,7 +186,7 @@ class IndexRepository {
     }
 
 
-    // 【内容列表】
+    // 【K】【内容列表】
     public function view_item_list($post_data)
     {
         if(Auth::check())

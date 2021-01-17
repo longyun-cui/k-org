@@ -1,7 +1,7 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
 @section('head_title')
-    图文简介 - {{ $data->username or '朝鲜族组织活动网' }}
+    图文简介 - {{ $data->username or '朝鲜族组织活动平台' }}
 @endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection
