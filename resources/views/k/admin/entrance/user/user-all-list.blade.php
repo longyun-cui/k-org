@@ -281,7 +281,7 @@
                         }
                     },
                     {
-                        'className':"text-left",
+                        "className": "text-left",
                         "width": "",
                         "title": "名称",
                         "data": "id",
@@ -293,7 +293,7 @@
                     {
                         "width": "72px",
                         "title": "用户类型",
-                        'data': 'user_type',
+                        "data": 'user_type',
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
@@ -304,7 +304,7 @@
                         }
                     },
                     {
-                        'className':"text-left",
+                        "className": "text-left",
                         "width": "96px",
                         "title": "手机号",
                         "data": "mobile",
@@ -314,7 +314,7 @@
                         }
                     },
                     {
-                        'className':"text-left",
+                        "className": "text-left",
                         "width": "128px",
                         "title": "负责人",
                         "data": "id",
@@ -332,9 +332,9 @@
                         "data": "id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
-                            if(row.members_count && row.members_count > 0)
+                            if(row.member_count && row.member_count > 0)
                             {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.members_count+'</a>';
+                                return '<a target="_blank" href="/admin/user/member?user-id='+data+'">'+row.member_count+'</a>';
                             }
                             else return '--';
                         }
@@ -342,19 +342,19 @@
                     {
                         "width": "72px",
                         "title": "粉丝数",
-                        "data": "fund_total",
-                        "orderable": true,
+                        "data": "id",
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.fans_count && row.fans_count > 0)
                             {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.fans_count+'</a>';
+                                return '<a target="_blank" href="/admin/user/fans?user-id='+data+'">'+row.fans_count+'</a>';
                             }
                             else return '--';
                         }
                     },
 //                    {
-//                        'data': 'menu_id',
-//                        'orderable': false,
+//                        "data": 'menu_id',
+//                        "orderable": false,
 //                        render: function(data, type, row, meta) {
 ////                            return row.menu == null ? '未分类' : row.menu.title;
 //                            if(row.menu == null) return '<small class="label btn-info">未分类</small>';
@@ -364,8 +364,8 @@
 //                        }
 //                    },
 //                    {
-//                        'data': 'id',
-//                        'orderable': false,
+//                        "data": 'id',
+//                        "orderable": false,
 //                        render: function(data, type, row, meta) {
 //                            return row.menu == null ? '未分类' : row.menu.title;
 ////                            var html = '';
@@ -378,7 +378,7 @@
                     {
                         "width": "128px",
                         "title": "创建时间",
-                        'data': 'created_at',
+                        "data": 'created_at',
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;

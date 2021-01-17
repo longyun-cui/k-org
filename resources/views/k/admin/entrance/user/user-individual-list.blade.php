@@ -68,7 +68,6 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -299,19 +298,6 @@
                             else if(data == 11) return '<small class="btn-xs bg-olive">组织</small>';
                             else if(data == 88) return '<small class="btn-xs bg-purple">赞助商</small>';
                             else return "有误";
-                        }
-                    },
-                    {
-                        'className':"text-left",
-                        "width": "128px",
-                        "title": "负责人",
-                        "data": "id",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            if(row.principal) {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.principal.username+'</a>';
-                            }
-                            else return '--';
                         }
                     },
                     {

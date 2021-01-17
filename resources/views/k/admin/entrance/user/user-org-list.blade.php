@@ -272,20 +272,20 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
-                        'width':"48px",
+                        "width":"48px",
                         "title": "ID",
                         "data": "id",
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        'className':"text-left",
-                        'width':"",
+                        "className": "text-left",
+                        "width":"",
                         "title": "组织名称",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return '<a target="_blank" href="/user/'+data+'">'+row.username+'</a>';
                         }
@@ -293,7 +293,7 @@
                     {
                         "width": "72px",
                         "title": "用户类型",
-                        'data': 'user_type',
+                        "data": 'user_type',
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
@@ -304,20 +304,7 @@
                         }
                     },
                     {
-                        'className':"text-left",
-                        'width':"128px",
-                        "title": "负责人",
-                        "data": "id",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            if(row.principal) {
-                                return '<a target="_blank" href="/user/'+data+'">'+row.principal.username+'</a>';
-                            }
-                            else return '--';
-                        }
-                    },
-                    {
-                        'className':"text-left",
+                        "className": "text-left",
                         "width": "96px",
                         "title": "手机号",
                         "data": "mobile",
@@ -327,36 +314,49 @@
                         }
                     },
                     {
-                        'width':"72px",
-                        "title": "成员数",
+                        "className": "text-left",
+                        "width":"128px",
+                        "title": "负责人",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
-                            if(row.members_count && row.members_count > 0)
-                            {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.members_count+'</a>';
+                            if(row.principal) {
+                                return '<a target="_blank" href="/user/'+data+'">'+row.principal.username+'</a>';
                             }
                             else return '--';
                         }
                     },
                     {
-                        'width':"72px",
+                        "width":"72px",
+                        "title": "成员数",
+                        "data": "id",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            if(row.member_count && row.member_count > 0)
+                            {
+                                return '<a target="_blank" href="/admin/user/member?user-id='+data+'">'+row.member_count+'</a>';
+                            }
+                            else return '--';
+                        }
+                    },
+                    {
+                        "width":"72px",
                         "title": "粉丝数",
                         "data": "fund_total",
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             if(row.fans_count && row.fans_count > 0)
                             {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.fans_count+'</a>';
+                                return '<a target="_blank" href="/admin/user/fans?user-id='+data+'">'+row.fans_count+'</a>';
                             }
                             else return '--';
                         }
                     },
                     {
-                        'width':"128px",
+                        "width":"128px",
                         "title": "创建时间",
-                        'data': 'created_at',
-                        'orderable': true,
+                        "data": 'created_at',
+                        "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
 
