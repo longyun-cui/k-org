@@ -185,7 +185,7 @@ class IndexRepository {
         if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
 
         $me = Auth::guard('admin')->user();
-        if($me->usertype != "admin") return response_error([],"你没有操作权限");
+        if($me->user_type != 0) return response_error([],"你没有操作权限");
 
         $password = $post_data["user-password"];
         $confirm = $post_data["user-password-confirm"];
@@ -198,23 +198,17 @@ class IndexRepository {
 
         $user = K_User::find($id);
         if(!$user) return response_error([],"该用户不存在，刷新页面重试");
-        if(!in_array($user->usergroup,['Agent','Agent2','Service'])) return response_error([],"该用户参数有误，你不能操作！");
 
 
         // 启动数据库事务
         DB::beginTransaction();
         try
         {
-            $user->password_1 = $password;
             $user->password = password_encode($password);
-            $user->userpass = basic_encrypt($password);
             $user->save();
 
             $bool = $user->save();
-            if($bool)
-            {
-            }
-            else throw new Exception("update--user--fail");
+            if(!$bool) throw new Exception("update--user--fail");
 
             DB::commit();
             return response_success(['id'=>$user->id]);
