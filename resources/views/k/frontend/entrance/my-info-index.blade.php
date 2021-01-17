@@ -28,7 +28,7 @@
 
 <div class="container">
 
-    <div class="col-sm-12 col-md-9 container-body-left">
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 container-body-left">
 
         <div class="row">
             <div class="col-md-12">
@@ -148,7 +148,7 @@
 
     </div>
 
-    <div class="col-sm-12 col-md-3 hidden-xs hidden-sm container-body-right">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 hidden-xs hidden-sm container-body-right">
 
         @include(env('TEMPLATE_DEFAULT').'frontend.component.right-root')
         @include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')

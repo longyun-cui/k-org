@@ -29,7 +29,7 @@
 
     <div class="container">
 
-        <div class="col-sm-12 col-md-9 container-body-left bg-white">
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 container-body-left bg-white">
 
             <div class="item-piece item-option">
                 <div class="box-body item-row item-content-row">
@@ -49,7 +49,7 @@
         </div>
 
 
-        <div class="col-sm-12 col-md-3 hidden-xs hidden-sm container-body-right">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 hidden-xs hidden-sm container-body-right">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-root')
             {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')--}}

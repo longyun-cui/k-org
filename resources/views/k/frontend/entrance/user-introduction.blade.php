@@ -37,7 +37,7 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 container-body-right pull-right">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$data])
 
@@ -47,7 +47,7 @@
         </div>
 
 
-        <div class="col-xs-12 col-sm-12 col-md-9 container-body-left">
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 container-body-left">
 
             <div class="item-piece item-option topic-option">
                 <div class="box-body item-row item-content-row">
@@ -68,7 +68,7 @@
         </div>
 
 
-        <div class="col-xs-12 col-sm-12 col-md-3 container-body-right pull-right" style="clear:right;">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 container-body-right pull-right" style="clear:right;">
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$data->ad])
 
