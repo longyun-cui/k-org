@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-use App\Models\K\KUser;
+use App\Models\K\K_User;
 
 use Auth, Response;
 

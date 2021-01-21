@@ -36,6 +36,14 @@
                     <div class="item-row">
                         <h4>平台介绍</h4>
                     </div>
+
+
+                    @if(!empty($data->description))
+                        <div class="item-row item-description-row text-muted margin-bottom-8px">
+                            {{ $data->description or '' }}
+                        </div>
+                    @endif
+
                     <div class="item-row">
                         @if(!empty($data->content))
                             {!! $data->content or '' !!}
