@@ -870,7 +870,7 @@ class IndexRepository {
             catch (Exception $e)
             {
                 DB::rollback();
-                $msg = '关注失败，请重试！';
+                $msg = '操作失败，请重试！';
                 $msg = $e->getMessage();
 //                exit($e->getMessage());
                 return response_fail([], $msg);
@@ -909,10 +909,27 @@ class IndexRepository {
                 $me_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 if($me_relation)
                 {
-                    if($me_relation->relation_type == 21) $me_relation->relation_type = 71;
-                    else if($me_relation->relation_type == 41) $me_relation->relation_type = 91;
-                    else $me_relation->relation_type = 91;
-                    $me_relation->save();
+                    if($me_relation->relation_type == 21)
+                    {
+                        $me_relation->relation_type = 71;
+                        $me_relation->save();
+                    }
+                    else if($me_relation->relation_type == 41)
+                    {
+//                        $me_relation->relation_type = 91;
+//                        $me_relation->save();
+
+                        $bool = $me_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
+                    else
+                    {
+//                        $me_relation->relation_type = 91;
+//                        $me_relation->save();
+
+                        $bool = $me_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
                 }
                 $me->timestamps = false;
                 $me->decrement('follow_num');
@@ -920,10 +937,27 @@ class IndexRepository {
                 $it_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
                 if($it_relation)
                 {
-                    if($it_relation->relation_type == 21) $it_relation->relation_type = 41;
-                    else if($it_relation->relation_type == 71) $it_relation->relation_type = 92;
-                    else $it_relation->relation_type = 92;
-                    $it_relation->save();
+                    if($it_relation->relation_type == 21)
+                    {
+                        $it_relation->relation_type = 41;
+                        $it_relation->save();
+                    }
+                    else if($it_relation->relation_type == 71)
+                    {
+//                        $it_relation->relation_type = 92;
+//                        $it_relation->save();
+
+                        $bool = $it_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
+                    else
+                    {
+//                        $it_relation->relation_type = 92;
+//                        $it_relation->save();
+
+                        $bool = $it_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
                 }
                 $user->timestamps = false;
                 $user->decrement('fans_num');
@@ -934,9 +968,9 @@ class IndexRepository {
             catch (Exception $e)
             {
                 DB::rollback();
-                $msg = '取消关注失败，请重试！';
-//                $msg = $e->getMessage();
-//                exit($e->getMessage());、
+                $msg = '操作失败，请重试！';
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
                 return response_fail([], $msg);
             }
         }

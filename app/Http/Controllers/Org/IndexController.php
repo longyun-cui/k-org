@@ -164,20 +164,41 @@ class IndexController extends Controller
 
 
 
-    // 【代理商】删除
+    // 【赞助商】删除
     public function operate_user_sponsor_delete()
     {
         return $this->repo->operate_user_sponsor_delete(request()->all());
     }
-    // 【代理商】关闭-二级代理商
+    // 【赞助商】关闭
     public function operate_user_sponsor_close()
     {
         return $this->repo->operate_user_sponsor_close(request()->all());
     }
-    // 【代理商】开启-二级代理商
+    // 【赞助商】开启
     public function operate_user_sponsor_open()
     {
         return $this->repo->operate_user_sponsor_open(request()->all());
+    }
+
+
+
+
+    // 【成员】添加
+    public function operate_user_fans_remove()
+    {
+        return $this->repo->operate_user_fans_remove(request()->all());
+    }
+
+
+    // 【成员】添加
+    public function operate_user_member_add()
+    {
+        return $this->repo->operate_user_member_add(request()->all());
+    }
+    // 【成员】移除
+    public function operate_user_member_remove()
+    {
+        return $this->repo->operate_user_member_remove(request()->all());
     }
 
 

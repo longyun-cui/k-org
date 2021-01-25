@@ -372,7 +372,7 @@ class IndexRepository {
     public function get_user_my_member_list_datatable($post_data)
     {
         $me = Auth::guard("org")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_type'=>11,'relation_user_id'=>$me->id]);
+        $query = K_Pivot_User_Relation::select('*')->with('relation_user')->where(['relation_category'=>11,'relation_type'=>11,'mine_user_id'=>$me->id]);
 
 //        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
@@ -415,7 +415,8 @@ class IndexRepository {
     public function get_user_my_fans_list_datatable($post_data)
     {
         $me = Auth::guard("org")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_user_id'=>$me->id]);
+        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_user_id'=>$me->id])
+        ->whereIn('relation_type',['21','41']);
 
 //        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
@@ -675,6 +676,9 @@ class IndexRepository {
         }
     }
 
+
+
+
     // 【赞助商】删除
     public function operate_user_sponsor_delete($post_data)
     {
@@ -824,6 +828,243 @@ class IndexRepository {
             {
             }
             else throw new Exception("update--pivot_relation--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+
+
+
+
+    // 【成员】移除
+    public function operate_user_fans_remove($post_data)
+    {
+        $messages = [
+            'operate.required' => 'Parameter operate Missing.',
+            'pivot_id.required' => 'Parameter pivot_id Missing.',
+            'user_id.required' => 'Parameter user_id Missing.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'pivot_id' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'fans-remove') return response_error([],"操作参数有误！");
+
+        $me = Auth::guard('org')->user();
+        $me_id = $me->id;
+        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+
+
+        $pivot_id = $post_data["pivot_id"];
+        $pivot_relation = K_Pivot_User_Relation::find($pivot_id);
+        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试！");
+        if($pivot_relation->relation_category != 1) return response_error([],"关联类型有误！");
+        if($pivot_relation->relation_user_id != $me->id) return response_error([],"不是我的关联！");
+
+        $user_id = $post_data["user_id"];
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"用户ID参数有误！");
+        if($pivot_relation->mine_user_id != $user_id) return response_error([],"关联对象有误！");
+
+        $user = K_User::find($user_id);
+        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $me_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            if($me_relation)
+            {
+                if($me_relation->relation_type == 21)
+                {
+                    $me_relation->relation_type = 41;
+                    $me_relation->save();
+                }
+                else if($me_relation->relation_type == 71)
+                {
+                    $bool = $me_relation->delete();
+                    if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                }
+                else
+                {
+//                    $me_relation->relation_type = 93;
+//                    $me_relation->save();
+
+                    $bool = $me_relation->delete();
+                    if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                }
+            }
+
+            $me->timestamps = false;
+            $me->decrement('fans_num');
+
+            $it_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+            if($it_relation)
+            {
+                if($it_relation->relation_type == 21)
+                {
+                    $it_relation->relation_type = 71;
+                    $it_relation->save();
+                }
+                else if($it_relation->relation_type == 41)
+                {
+                    $bool = $it_relation->delete();
+                    if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                }
+                else
+                {
+//                    $it_relation->relation_type = 94;
+//                    $it_relation->save();
+
+                    $bool = $it_relation->delete();
+                    if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                }
+            }
+            $user->timestamps = false;
+            $user->decrement('follow_num');
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+
+
+    // 【成员】添加
+    public function operate_user_member_add($post_data)
+    {
+        $messages = [
+            'operate.required' => 'Parameter operate Missing.',
+            'user_id.required' => 'Parameter user_id Missing.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'member-add') return response_error([],"操作参数有误！");
+
+        $me = Auth::guard('org')->user();
+        $me_id = $me->id;
+        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+
+        $user_id = $post_data["user_id"];
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"用户ID参数有误！");
+        $user = K_User::find($user_id);
+        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
+
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $relation = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            if($relation)
+            {
+                $relation->relation_type = 11;
+                $relation->save();
+            }
+            else
+            {
+                $relation = new K_Pivot_User_Relation;
+                $relation->relation_category = 11;
+                $relation->relation_type = 11;
+                $relation->mine_user_id = $me_id;
+                $relation->relation_user_id = $user_id;
+                $relation->save();
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【成员】移除
+    public function operate_user_member_remove($post_data)
+    {
+        $messages = [
+            'operate.required' => 'Parameter operate Missing.',
+            'pivot_id.required' => 'Parameter pivot_id Missing.',
+            'user_id.required' => 'Parameter user_id Missing.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'pivot_id' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'member-remove') return response_error([],"操作参数有误！");
+
+        $me = Auth::guard('org')->user();
+        $me_id = $me->id;
+        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+
+
+        $pivot_id = $post_data["pivot_id"];
+        $pivot_relation = K_Pivot_User_Relation::find($pivot_id);
+        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试！");
+        if($pivot_relation->relation_category != 11) return response_error([],"关联类型有误！");
+        if($pivot_relation->mine_user_id != $me->id) return response_error([],"不是我的关联！");
+
+        $user_id = $post_data["user_id"];
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"用户ID参数有误！");
+        if($pivot_relation->relation_user_id != $user_id) return response_error([],"关联对象有误！");
+
+        $user = K_User::find($user_id);
+        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $bool = $pivot_relation->delete();
+            if(!$bool) throw new Exception("delete--pivot_relation--fail");
 
             DB::commit();
             return response_success([]);

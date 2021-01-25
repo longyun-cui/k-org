@@ -80,6 +80,10 @@ Route::group([], function () {
         Route::match(['get','post'], '/user/sponsor-relation', $controller.'@operate_user_sponsor_relation');
         Route::match(['get','post'], '/user/sponsor-relation-bulk', $controller.'@operate_user_sponsor_relation_bulk');
 
+        Route::match(['get','post'], '/user/member-add', $controller.'@operate_user_member_add');
+        Route::match(['get','post'], '/user/member-remove', $controller.'@operate_user_member_remove');
+        Route::match(['get','post'], '/user/fans-remove', $controller.'@operate_user_fans_remove');
+
 
 
 

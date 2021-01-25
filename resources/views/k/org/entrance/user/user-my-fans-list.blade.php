@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="box-body datatable-body" id="item-main-body">
+            <div class="box-body datatable-body item-main-body" id="item-main-body">
 
 
                 <div class="row col-md-12 datatable-search-row">
@@ -62,9 +62,11 @@
                 <table class='table table-striped table-bordered' id='datatable_ajax'>
                     <thead>
                     <tr role='row' class='heading'>
-                        <th>ID</th>
-                        <th>用户名</th>
-                        <th>关注时间</th>
+                        <th>序号</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -267,27 +269,43 @@
                 "columns": [
                     {
                         "width": "48px",
+                        "title": "序号",
+                        "data": null,
+                        "targets": 0,
+                        'orderable': false
+                    },
+                    {
+                        "width": "48px",
                         "title": "ID",
                         "data": "id",
-                        "orderable": true,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
+//                    {
+//                        "width": "48px",
+//                        "title": "用户ID",
+//                        "data": "id",
+//                        "orderable": false,
+//                        render: function(data, type, row, meta) {
+//                            return row.mine_user.id;
+//                        }
+//                    },
                     {
                         "className":"text-left",
 //                        "width":"192px",
-                        "title": "用户",
+                        "title": "用户名",
                         "data": "id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/user/'+data+'">'+row.mine_user.username+'</a>';
+                            return '<a target="_blank" href="/user/'+row.mine_user.id+'">'+row.mine_user.username+'</a>';
                         }
                     },
                     {
                         "width": "128px",
                         "title": "关注时间",
-                        "data": 'created_at',
+                        "data": 'updated_at',
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -298,8 +316,8 @@
                             var $hour = ('00'+$date.getHours()).slice(-2);
                             var $minute = ('00'+$date.getMinutes()).slice(-2);
                             var $second = ('00'+$date.getSeconds()).slice(-2);
-//                            return $year+'-'+$month+'-'+$day;
-                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
+                            return $year+'-'+$month+'-'+$day;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
 
 //                            newDate = new Date();
@@ -309,26 +327,48 @@
                         }
                     },
                     {
+                        "width": "80px",
+                        "title": "关系",
+                        "data": "relation_type",
+                        'orderable': false,
+                        render: function(data, type, row, meta) {
+//                            return data;
+                            if(data == 21)
+                            {
+                                return '<small class="btn-xs bg-primary">互相关注</small>';
+                            }
+                            else if(data == 41)
+                            {
+                                return '<small class="btn-xs bg-purple">粉丝</small>';
+                            }
+                            else return "有误";
+                        }
+                    },
+                    {
                         "width": "240px",
                         "data": "id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
 
                             var html =
-//                                '<a class="btn btn-xs item-enable-submit" data-id="'+value+'">启用</a>'+
-//                                '<a class="btn btn-xs item-disable-submit" data-id="'+value+'">禁用</a>'+
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
-                                {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
+//                                '<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+
 //                                '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">修改密码</a>'+
-                                '<a class="btn btn-xs bg-olive item-add-member-submit" data-id="'+data+'" >添加为成员</a>'+
-                                '<a class="btn btn-xs bg-navy item-remove-fans-submit" data-id="'+data+'">移除粉丝</a>'+
+                                '<a class="btn btn-xs btn-success item-member-add-submit" data-user-id="'+row.mine_user.id+'" >添加为成员</a>'+
+                                '<a class="btn btn-xs btn-danger item-fans-remove-submit" data-pivot-id="'+data+'" data-user-id="'+row.mine_user.id+'">移除粉丝</a>'+
                                 '';
                             return html;
                         }
                     }
                 ],
                 "drawCallback": function (settings) {
+
+                    let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    this.api().column(0).nodes().each(function(cell, i) {
+                        cell.innerHTML =  startIndex + i + 1;
+                    });
+
                     ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
                     $("a.verify").click(function(event){
                         event.preventDefault();
@@ -396,351 +436,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-<script>
-    $(function() {
-
-        // 【搜索】
-        $(".item-main-body").on('click', ".filter-submit", function() {
-            $('#datatable_ajax').DataTable().ajax.reload();
-        });
-        // 【重置】
-        $(".item-main-body").on('click', ".filter-cancel", function() {
-            $('textarea.form-filter, input.form-filter, select.form-filter').each(function () {
-                $(this).val("");
-            });
-
-//                $('select.form-filter').selectpicker('refresh');
-            $('select.form-filter option').attr("selected",false);
-            $('select.form-filter').find('option:eq(0)').attr('selected', true);
-
-            $('#datatable_ajax').DataTable().ajax.reload();
-        });
-        // 【查询】回车
-        $(".item-main-body").on('keyup', ".item-search-keyup", function(event) {
-            if(event.keyCode ==13)
-            {
-                $("#filter-submit").click();
-            }
-        });
-
-
-        // 【下载二维码】
-        $("#item-main-body").on('click', ".item-download-qrcode-submit", function() {
-            var that = $(this);
-            window.open("/download-qrcode?sort=org-item&id="+that.attr('data-id'));
-        });
-
-        // 【数据分析】
-        $("#item-main-body").on('click', ".item-statistics-submit", function() {
-            var that = $(this);
-            window.open("/statistics/item?id="+that.attr('data-id'));
-        });
-
-        // 【编辑】
-        $("#item-main-body").on('click', ".item-edit-submit", function() {
-            var that = $(this);
-            window.location.href = "/admin/user/agent-edit?id="+that.attr('data-id');
-        });
-
-
-
-
-        // 显示【修改密码】
-        $("#item-main-body").on('click', ".item-change-password-show", function() {
-            var that = $(this);
-            $('input[name=id]').val(that.attr('data-id'));
-            $('input[name=user-password]').val('');
-            $('input[name=user-password-confirm]').val('');
-            $('#modal-password-body').modal('show');
-        });
-        // 【修改密码】取消
-        $("#modal-password-body").on('click', "#item-change-password-cancel", function() {
-            $('input[name=id]').val('');
-            $('input[name=user-password]').val('');
-            $('input[name=user-password-confirm]').val('');
-            $('#modal-password-body').modal('hide');
-        });
-        // 【修改密码】提交
-        $("#modal-password-body").on('click', "#item-change-password-submit", function() {
-            var that = $(this);
-            layer.msg('确定"修改"么', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    var options = {
-                        url: "{{ url('/admin/user/change-password') }}",
-                        type: "post",
-                        dataType: "json",
-                        // target: "#div2",
-                        success: function (data) {
-                            if(!data.success) layer.msg(data.msg);
-                            else
-                            {
-                                layer.msg(data.msg);
-                                $('#modal-password-body').modal('hide');
-                            }
-                        }
-                    };
-                    $("#form-change-password-modal").ajaxSubmit(options);
-                }
-            });
-        });
-
-
-
-
-        // 显示【充值】
-        $("#item-main-body").on('click', ".item-recharge-show", function() {
-            var that = $(this);
-            $('input[name=id]').val(that.attr('data-id'));
-            $('.recharge-user-id').html(that.attr('data-id'));
-            $('.recharge-username').html(that.attr('data-name'));
-            $('#modal-body').modal('show');
-        });
-        // 【充值】取消
-        $("#modal-body").on('click', "#item-recharge-cancel", function() {
-            $('.recharge-user-id').html('');
-            $('.recharge-username').html('');
-            $('#modal-body').modal('hide');
-        });
-        // 【充值】提交
-        $("#modal-body").on('click', "#item-recharge-submit", function() {
-            var that = $(this);
-            layer.msg('确定"充值"么', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    var options = {
-                        url: "{{ url('/admin/user/agent-recharge') }}",
-                        type: "post",
-                        dataType: "json",
-                        // target: "#div2",
-                        success: function (data) {
-                            if(!data.success) layer.msg(data.msg);
-                            else
-                            {
-                                layer.msg(data.msg);
-                                location.reload();
-                            }
-                        }
-                    };
-                    $("#form-edit-modal").ajaxSubmit(options);
-                }
-            });
-        });
-
-
-        // 关闭【充值限制】
-        $("#item-main-body").on('click', ".item-recharge-limit-close-submit", function() {
-            var that = $(this);
-            layer.msg('确定"关闭"么?', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    $.post(
-                        "{{ url('/admin/user/agent-recharge-limit-close') }}",
-                        {
-                            _token: $('meta[name="_token"]').attr('content'),
-                            operate:"recharge-limit-close",
-                            id:that.attr('data-id')
-                        },
-                        function(data){
-                            if(!data.success) layer.msg(data.msg);
-                            else
-                            {
-                                layer.msg("操作完成");
-                                location.reload();
-                            }
-                        },
-                        'json'
-                    );
-                }
-            });
-        });
-        // 开启【充值限制】
-        $("#item-main-body").on('click', ".item-recharge-limit-open-submit", function() {
-            var that = $(this);
-            layer.msg('确定"开启"么?', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    $.post(
-                        "{{ url('/admin/user/agent-recharge-limit-open') }}",
-                        {
-                            _token: $('meta[name="_token"]').attr('content'),
-                            operate:"recharge-limit-open",
-                            id:that.attr('data-id')
-                        },
-                        function(data){
-                            if(!data.success) layer.msg(data.msg);
-                            else
-                            {
-                                layer.msg("操作完成");
-                                location.reload();
-                            }
-                        },
-                        'json'
-                    );
-                }
-            });
-        });
-
-
-
-
-        // 关闭【二级代理】
-        $("#item-main-body").on('click', ".item-sub-agent-close-submit", function() {
-            var that = $(this);
-            layer.msg('确定"关闭二级代理"么?', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    $.post(
-                        "{{ url('/admin/user/agent-sub-agent-close') }}",
-                        {
-                            _token: $('meta[name="_token"]').attr('content'),
-                            operate:"sub-agent-close",
-                            id:that.attr('data-id')
-                        },
-                        function(data){
-                            if(!data.success) layer.msg(data.msg);
-                            else
-                            {
-                                layer.msg("操作完成");
-                                location.reload();
-                            }
-                        },
-                        'json'
-                    );
-                }
-            });
-        });
-        // 开启【二级代理】
-        $("#item-main-body").on('click', ".item-sub-agent-open-submit", function() {
-            var that = $(this);
-            layer.msg('确定"开启二级代理"么?', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    $.post(
-                        "{{ url('/admin/user/agent-sub-agent-open') }}",
-                        {
-                            _token: $('meta[name="_token"]').attr('content'),
-                            operate:"sub-agent-open",
-                            id:that.attr('data-id')
-                        },
-                        function(data){
-                            if(!data.success) layer.msg(data.msg);
-                            else
-                            {
-                                layer.msg("操作完成");
-                                location.reload();
-                            }
-                        },
-                        'json'
-                    );
-                }
-            });
-        });
-
-
-
-
-        // 【登录】
-        $("#item-main-body").on('click', ".item-login-submit", function() {
-            var that = $(this);
-            $.post(
-                "{{ url('/admin/user/agent-login') }}",
-                {
-                    _token: $('meta[name="_token"]').attr('content'),
-                    id:that.attr('data-id')
-                },
-                function(data){
-                    if(!data.success) layer.msg(data.msg);
-                    else window.open('/agent/');
-                },
-                'json'
-            );
-        });
-
-
-
-
-        // 【删除】
-        $("#item-main-body").on('click', ".item-delete-submit", function() {
-            var that = $(this);
-            layer.msg('确定"删除"么?', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    $.post(
-                        "{{ url('/admin/user/agent-delete') }}",
-                        {
-                            _token: $('meta[name="_token"]').attr('content'),
-                            id:that.attr('data-id')
-                        },
-                        function(data){
-                            if(!data.success) layer.msg(data.msg);
-                            else
-                            {
-                                layer.msg("操作完成");
-                                location.reload();
-                            }
-                        },
-                        'json'
-                    );
-                }
-            });
-        });
-
-
-
-
-        // 【启用】
-        $("#item-main-body").on('click', ".item-enable-submit", function() {
-            var that = $(this);
-            layer.msg('确定启用该"产品"？', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    $.post(
-                        "{{ url('/item/enable') }}",
-                        {
-                            _token: $('meta[name="_token"]').attr('content'),
-                            id:that.attr('data-id')
-                        },
-                        function(data){
-                            if(!data.success) layer.msg(data.msg);
-                            else location.reload();
-                        },
-                        'json'
-                    );
-                }
-            });
-        });
-        // 【禁用】
-        $("#item-main-body").on('click', ".item-disable-submit", function() {
-            var that = $(this);
-            layer.msg('确定禁用该"产品"？', {
-                time: 0
-                ,btn: ['确定', '取消']
-                ,yes: function(index){
-                    $.post(
-                        "{{ url('/item/disable') }}",
-                        {
-                            _token: $('meta[name="_token"]').attr('content'),
-                            id:that.attr('data-id')
-                        },
-                        function(data){
-                            if(!data.success) layer.msg(data.msg);
-                            else location.reload();
-                        },
-                        'json'
-                    );
-                }
-            });
-        });
-
-    });
-</script>
+@include(env('TEMPLATE_ADMIN').'org.entrance.user.user-script')
 @endsection
