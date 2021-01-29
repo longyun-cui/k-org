@@ -1,4 +1,5 @@
 @foreach($item_list as $i)
+@if(!empty($i->item))
 <div class="a-piece item-piece item-option radius-4px {{ $getType or 'items' }}"
      data-item="{{ $i->item->id or 0}}"
      data-id="{{ $i->item->id or 0 }}"
@@ -358,5 +359,10 @@
     </div>
     <!-- END PORTLET-->
 </div>
+@else
+    <div class="item-row forward-item-container" role="button" style="line-height:40px;text-align:center;">
+        内容被作者删除或取消分享。
+    </div>
+@endif
 @endforeach
 

@@ -47,13 +47,37 @@ class IndexRepository {
                     'owner',
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
                 ]);
+
+            $user_list = K_User::with([
+                    'ad',
+                    'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
+                ])->withCount([
+                    'fans_list as fans_count' => function($query) { $query->where([]); },
+                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+                ])
+                ->where('user_type',11)
+                ->where('user_status',1)
+                ->where('active',1)
+                ->paginate(20);
         }
         else
         {
             $item_query = K_Item::with(['owner']);
-        }
-        $item_query->where(['item_status'=>1,'active'=>1]);
 
+            $user_list = K_User::with([
+                    'ad',
+                ])->withCount([
+                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+                ])
+                ->where('user_type',11)
+                ->where('user_status',1)
+                ->where('active',1)
+                ->paginate(20);
+        }
+
+        $item_query->where(['item_status'=>1,'active'=>1]);
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
         if($type == 'root') $item_query->whereIn('item_type',[1,11]);
@@ -63,6 +87,8 @@ class IndexRepository {
 
         $item_list = $item_query->orderByDesc('published_at')->paginate(20);
         $return['item_list'] = $item_list;
+
+        $return['user_list'] = $user_list;
 
         foreach ($item_list as $item)
         {
