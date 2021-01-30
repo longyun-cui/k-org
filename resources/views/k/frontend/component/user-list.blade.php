@@ -94,9 +94,11 @@
                 </div>
                 @endif
 
+                @if(!empty($u->description))
                 <div class="item-row item-info-row">
                     {{ $u->description or '暂无简介' }}
                 </div>
+                @endif
 
             </div>
 

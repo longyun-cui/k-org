@@ -56,9 +56,11 @@
                     <span> • 活动 {{ $u->relation_user->activity_count }}</span>
                 </div>
 
-                <div class="item-row">
+                {{--@if(!empty($u->description))--}}
+                <div class="item-row item-info-row">
                     {{ $u->relation_user->description or '暂无简介' }}
                 </div>
+                {{--@endif--}}
 
             </div>
 
