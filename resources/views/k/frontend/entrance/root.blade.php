@@ -9,7 +9,7 @@
 
 
 @section('wx_share_title')朝鲜族组织活动平台@endsection
-@section('wx_share_desc')@endsection
+@section('wx_share_desc')朝鲜族的社群活动分享平台@endsection
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 
