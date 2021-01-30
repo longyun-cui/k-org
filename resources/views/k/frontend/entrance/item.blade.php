@@ -49,9 +49,9 @@
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 container-body-right pull-right" style="clear:right;">
 
             @if(!empty($user->ad))
-                <div class="item-row margin-top-4px margin-bottom-2px pull-right">
-                    <strong>Ta的贴片广告</strong>
-                </div>
+                {{--<div class="item-row margin-top-4px margin-bottom-2px pull-right">--}}
+                    {{--<strong>Ta的贴片广告</strong>--}}
+                {{--</div>--}}
             @endif
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-ad-paste', ['item'=>$user->ad])
 
