@@ -83,7 +83,11 @@
                 @if(!empty($u->contact_phone))
                 <div class="item-row item-info-row">
                     <i class="fa fa-phone text-success" style="width:16px;"></i>
-                    <span class="text-muted">{{ $u->contact_phone or '暂无' }}</span>
+                    <span class="text-muted">
+                        <a href="tel:{{ $u->contact_phone or '' }}">
+                            <strong>{{ $u->contact_phone or '暂无' }}</strong>
+                        </a>
+                    </span>
                 </div>
                 @endif
 
