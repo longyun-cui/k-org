@@ -425,37 +425,30 @@
                         render: function(data, type, row, meta) {
                             if(row.user_status == 1)
                             {
-                                $html_0 =
-                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>'+
-                                    '';
+                                $html_able =
+                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>';
                             }
                             else
                             {
-                                $html_0 =
-                                    '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>'+
-                                    '';
+                                $html_able = '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>';
                             }
 
                             if(row.user_type == 1)
                             {
-                                $html_edit =
-                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>'+
-                                    '';
+                                $html_edit = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>';
                             }
                             else
                             {
-                                $html_edit =
-                                    '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>'+
-                                    '';
+                                $html_edit = '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>';
                             }
 
                             var html =
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
 //                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
-                                $html_0+
                                 $html_edit+
                                 '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">修改密码</a>'+
+                                $html_able+
                                 '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
                                 '<a class="btn btn-xs bg-olive item-login-submit" data-id="'+data+'">登录</a>'+
                                 '';

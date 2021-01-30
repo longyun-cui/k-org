@@ -47,7 +47,7 @@
             {{--</li>--}}
             <li class="treeview {{ $sidebar_user_org_list_active or '' }}">
                 <a href="{{ url('/admin/user/user-org-list') }}">
-                    <i class="fa fa-user"></i><span>组织机构</span>
+                    <i class="fa fa-user"></i><span>社群组织</span>
                 </a>
             </li>
             <li class="treeview {{ $sidebar_user_sponsor_list_active or '' }}">

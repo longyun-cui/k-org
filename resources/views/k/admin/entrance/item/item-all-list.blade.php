@@ -330,27 +330,37 @@
                         "data": 'id',
                         "orderable": false,
                         render: function(data, type, row, meta) {
+
                             if(row.item_status == 1)
                             {
-                                $html_0 =
-                                    '<a class="btn btn-xs btn-danger item-admin-disable-submit" data-id="'+data+'">封禁</a>'+
-                                    '';
+                                $html_able = '<a class="btn btn-xs btn-danger item-admin-disable-submit" data-id="'+data+'">封禁</a>';
                             }
                             else
                             {
-                                $html_0 =
-                                    '<a class="btn btn-xs btn-success item-admin-enable-submit" data-id="'+data+'">解禁</a>'+
-                                    '';
+                                $html_able = '<a class="btn btn-xs btn-success item-admin-enable-submit" data-id="'+data+'">解禁</a>';
                             }
+
+                            if(row.is_me == 1 && row.active == 0)
+                            {
+                                $html_publish = '<a class="btn btn-xs bg-navy item-publish-submit" data-id="'+data+'">发布</a>';
+                            }
+                            else
+                            {
+                                $html_publish = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">发布</a>';
+                            }
+
                             var html =
 //                                    '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                    '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
-                                    {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
-                                    $html_0+
+//                                    '<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+
+                                    '<a class="btn btn-xs btn-primary item-edit-link" data-id="'+data+'">编辑</a>'+
+                                    $html_publish+
+                                    $html_able+
                                     '<a class="btn btn-xs bg-navy item-admin-delete-submit" data-id="'+data+'">删除</a>'+
 //                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
                                     '';
                             return html;
+
                         }
                     }
                 ],

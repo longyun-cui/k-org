@@ -119,6 +119,35 @@
                     </div>
                 </div>
 
+                {{--联系人--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">联系人</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="linkman" placeholder="请输入联系人" value="{{ $data->linkman or '' }}">
+                    </div>
+                </div>
+                {{--联系人电话--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">联系人电话</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="contact_phone" placeholder="请输入联系人电话" value="{{ $data->contact_wechat_id or '' }}">
+                    </div>
+                </div>
+                {{--联系人微信--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">联系人微信</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="contact_wechat_id" placeholder="请输入联系人微信" value="{{ $data->contact_wechat_id or '' }}">
+                    </div>
+                </div>
+                {{--联系地址--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">联系地址</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="contact_address" placeholder="请输入联系地址" value="{{ $data->contact_address or '' }}">
+                    </div>
+                </div>
+
                 {{--链接地址--}}
                 <div class="form-group _none">
                     <label class="control-label col-md-2">链接地址</label>

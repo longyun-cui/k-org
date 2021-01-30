@@ -338,25 +338,19 @@
 
                             if(row.active == 0)
                             {
-                                $html_1 =
-                                    '<a class="btn btn-xs bg-navy item-edit-link" data-id="'+data+'">编辑</a>'+
-                                    '<a class="btn btn-xs bg-navy item-publish-submit" data-id="'+data+'">发布</a>'+
-                                    '';
+                                $html_publish = '<a class="btn btn-xs bg-navy item-publish-submit" data-id="'+data+'">发布</a>';
                             }
                             else
                             {
-                                $html_1 =
-                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>'+
-                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">发布</a>'+
-                                    '';
+                                $html_publish = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">发布</a>';
                             }
 
                             var html =
 //                                    '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                    '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
-                                    {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
+                                    '<a class="btn btn-xs btn-primary item-edit-link" data-id="'+data+'">编辑</a>'+
+                                    $html_publish+
                                     $html_0+
-                                    $html_1+
                                     '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'">删除</a>'+
 //                                    '<a class="btn btn-xs bg-primary item-work-order-show" data-id="'+data+'">查看详情</a>'+
                                     '';

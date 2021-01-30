@@ -889,6 +889,9 @@ class IndexRepository {
         {
             $list[$k]->encode_id = encode($v->id);
             $list[$k]->description = replace_blank($v->description);
+
+            if($v->owner_id == $me->id) $list[$k]->is_me = 1;
+            else $list[$k]->is_me = 0;
         }
 //        dd($list->toArray());
         return datatable_response($list, $draw, $total);
@@ -939,6 +942,9 @@ class IndexRepository {
         {
             $list[$k]->encode_id = encode($v->id);
             $list[$k]->description = replace_blank($v->description);
+
+            if($v->owner_id == $me->id) $list[$k]->is_me = 1;
+            else $list[$k]->is_me = 0;
         }
 //        dd($list->toArray());
         return datatable_response($list, $draw, $total);
@@ -989,6 +995,9 @@ class IndexRepository {
         {
             $list[$k]->encode_id = encode($v->id);
             $list[$k]->description = replace_blank($v->description);
+
+            if($v->owner_id == $me->id) $list[$k]->is_me = 1;
+            else $list[$k]->is_me = 0;
         }
 //        dd($list->toArray());
         return datatable_response($list, $draw, $total);
@@ -1039,6 +1048,9 @@ class IndexRepository {
         {
             $list[$k]->encode_id = encode($v->id);
             $list[$k]->description = replace_blank($v->description);
+
+            if($v->owner_id == $me->id) $list[$k]->is_me = 1;
+            else $list[$k]->is_me = 0;
         }
 //        dd($list->toArray());
         return datatable_response($list, $draw, $total);
@@ -1249,6 +1261,8 @@ class IndexRepository {
         {
             $mine = K_Item::find($operate_id);
             if(!$mine) return response_error([],"该内容不存在，刷新页面重试！");
+
+            if($mine->owner_id != $me->id) $mine->timestamps = false;
         }
         else return response_error([],"参数有误！");
 

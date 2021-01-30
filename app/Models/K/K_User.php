@@ -14,7 +14,7 @@ class K_User extends Authenticatable
         'parent_id', 'p_id',
         'name', 'username', 'nickname', 'true_name', 'description', 'portrait_img',
         'mobile', 'telephone', 'email', 'password',
-        'linkman', 'contact_phone', 'contact_address',
+        'linkman', 'contact_phone', 'contact_wechat_id', 'contact_address',
         'QQ_number', 'wechat_id', 'weibo_address', 'wx_unionid',
         'advertising_id',
         'visit_num', 'follow_num', 'fans_num',
