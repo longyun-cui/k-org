@@ -74,6 +74,7 @@ class IndexRepository {
                 ->where('user_type',11)
                 ->where('user_status',1)
                 ->where('active',1)
+                ->orderByDesc('id')
                 ->paginate(20);
         }
 
