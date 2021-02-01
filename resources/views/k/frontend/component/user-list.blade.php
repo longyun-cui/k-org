@@ -82,13 +82,20 @@
 
                 @if(!empty($u->contact_phone))
                 <div class="item-row item-info-row">
-                    <i class="fa fa-phone text-success" style="width:16px;"></i>
+                    <i class="fa fa-phone text-danger" style="width:16px;"></i>
                     <span class="text-muted">
                         <a href="tel:{{ $u->contact_phone or '' }}">
                             <strong>{{ $u->contact_phone or '暂无' }}</strong>
                         </a>
                     </span>
                 </div>
+                @endif
+
+                @if(!empty($u->contact_wechat_id))
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-weixin text-success" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->contact_wechat_id or '暂无' }}</span>
+                    </div>
                 @endif
 
                 @if(!empty($u->contact_address))

@@ -30,8 +30,12 @@
                 <span class="text-muted">{{ $data->linkman or '暂无' }}</span>
             </div>
             <div class="margin-4px">
-                <i class="fa fa-phone text-success"></i>
+                <i class="fa fa-phone text-danger"></i>
                 <span class="text-muted">{{ $data->contact_phone or '暂无' }}</span>
+            </div>
+            <div class="margin-4px">
+                <i class="fa fa-phone text-success"></i>
+                <span class="text-muted">{{ $data->contact_wechat_id or '暂无' }}</span>
             </div>
             <div class="margin-4px">
                 <i class="fa fa-map-marker text-primary"></i>
