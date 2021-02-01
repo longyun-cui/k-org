@@ -12,7 +12,7 @@
             <a href="{{ url('/') }}">
                 <span class="logo-big hidden-xs">
                     <img src="/favicon_transparent.png" class="img-icon" alt="Image">
-                    <b class="hidden-xs">朝鲜族组织活动网</b>
+                    <b class="hidden-xs">朝鲜族组织平台</b>
                 </span>
                 <span class="logo-big visible-xs">
                     <img src="/favicon_transparent.png" class="img-icon" alt="Image">
