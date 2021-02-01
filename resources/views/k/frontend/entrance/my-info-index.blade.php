@@ -1,6 +1,6 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
-@section('head_title','我的信息 - 朝鲜族组织活动网')
+@section('head_title','我的信息 - 朝鲜族组织平台')
 @section('meta_title')@endsection
 @section('meta_author')@endsection
 @section('meta_description')@endsection
