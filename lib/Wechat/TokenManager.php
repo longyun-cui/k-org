@@ -11,7 +11,7 @@ class TokenManager
     private static $instance;
     const token_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=@app_id&secret=@secret';
     const ticket_url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=@access_token&type=jsapi';
-    const cache_key = 'wechat_config';
+    const cache_key = 'k_org_wechat_config';
 
     private function __construct()
     {
@@ -33,7 +33,7 @@ class TokenManager
             $nonce_str = $cache['nonce_str'];
             $timestamp = $cache['timestamp'];
             $cache = 'cache';
-            if((time() - $timestamp) > 3599)
+            if((time() - $timestamp) > 3540)
             {
                 self::init();
                 $appID = self::$app_id;
