@@ -130,7 +130,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">联系人电话</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="contact_phone" placeholder="请输入联系人电话" value="{{ $data->contact_wechat_id or '' }}">
+                        <input type="text" class="form-control" name="contact_phone" placeholder="请输入联系人电话" value="{{ $data->contact_phone or '' }}">
                     </div>
                 </div>
                 {{--联系人微信--}}
