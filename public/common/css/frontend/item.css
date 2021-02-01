@@ -62,6 +62,7 @@
 .item-info-row a { color:#666; }
 .item-info-row a:hover { color:#ff7676; }
 .item-info-row i { width:auto; }
+.container-body-right .item-info-row i { width:16px; }
 
 .item-title-row { color:#666; }
 .item-title-row a { color:#155faa; }
