@@ -31,7 +31,11 @@
             </div>
             <div class="margin-4px">
                 <i class="fa fa-phone text-danger"></i>
-                <span class="text-muted">{{ $data->contact_phone or '暂无' }}</span>
+                <span class="text-muted">
+                    <a href="tel:{{ $u->contact_phone or '' }}">
+                        {{ $data->contact_phone or '暂无' }}
+                    </a>
+                </span>
             </div>
             <div class="margin-4px">
                 <i class="fa fa-weixin text-success"></i>
