@@ -12,14 +12,14 @@
     <li class="treeview {{ $sidebar_menu_activity_active or '' }}">
         <a href="{{ url('/?type=activity') }}">
             <i class="fa fa-list text-orange"></i>
-            <span>活动</span>
+            <span>只看活动</span>
         </a>
     </li>
 
     <li class="treeview {{ $sidebar_menu_organization_active or '' }}">
         <a href="{{ url('/organization-list') }}">
             <i class="fa fa-list text-orange"></i>
-            <span>组织</span>
+            <span>社群组织</span>
         </a>
     </li>
 
