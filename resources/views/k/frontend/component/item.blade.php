@@ -20,7 +20,8 @@
                 <div class="text-row text-info-row margin-bottom-8px">
                     <span><a href="{{ url('/user/'.$item->owner->id) }}">{{ $item->owner->username or '' }}</a></span>
                     <span class="pull-right"><a class="show-menu" role="button"></a></span>
-                    <span class=" text-muted disabled"> • {{ date_show($item->updated_at->timestamp) }}</span>
+                    <span class="text-muted disabled"> • {{ date_show($item->updated_at->timestamp) }}</span>
+                    <span class="text-muted disabled"> • {{ $item->visit_num }}次浏览</span>
                     {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
                 </div>
 
