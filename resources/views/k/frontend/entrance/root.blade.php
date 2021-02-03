@@ -40,7 +40,7 @@
             @include(env('TEMPLATE_DEFAULT').'frontend.component.user-list',['user_list'=>$user_list])
         @endif
 
-        {{ $item_list->links() }}
+        {!! $item_list->links() !!}
 
     </div>
 

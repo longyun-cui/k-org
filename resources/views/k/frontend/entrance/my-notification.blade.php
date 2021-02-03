@@ -34,6 +34,7 @@
             {{--@include('frontend.component.topic')--}}
         {{--@endforeach--}}
         @include(env('TEMPLATE_DEFAULT').'frontend.component.notification-list',['notification_list'=>$notification_list])
+        {{--{!! $notification_list->links() !!}--}}
 
     </div>
 

@@ -71,7 +71,7 @@
                     {{--<strong>Ta的内容</strong>--}}
                 {{--</div>--}}
                 @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list',['item_list'=>$item_list])
-                {{ $item_list->links() }}
+                {!! $item_list->links() !!}
             @endif
 
 

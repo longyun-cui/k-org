@@ -11,6 +11,7 @@ use App\Models\K\K_Communication;
 use App\Models\K\K_Pivot_User_Relation;
 use App\Models\K\K_Pivot_User_Item;
 use App\Models\K\K_Notification;
+use App\Models\K\K_Record;
 
 use App\Repositories\Common\CommonRepository;
 
@@ -35,8 +36,7 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
-//            $notification_count = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->count();
-//            view()->share('notification_count',$notification_count);
+            $record["creator_id"] = $me_id;
         }
         else $me_id = 0;
 
@@ -82,12 +82,28 @@ class IndexRepository {
         $item_query->where(['item_status'=>1,'active'=>1]);
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
-        if($type == 'root') $item_query->whereIn('item_type',[1,11]);
-        else if($type == 'article') $item_query->whereIn('item_type',[1]);
-        else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+        if($type == 'root')
+        {
+            $item_query->whereIn('item_type',[1,11]);
+            $record["page_module"] = 1; // page_module=1 default index
+        }
+        else if($type == 'article')
+        {
+            $item_query->whereIn('item_type',[1]);
+            $record["page_module"] = 9; // page_module=9 article
+        }
+        else if($type == 'activity')
+        {
+            $item_query->whereIn('item_type',[11]);
+            $record["page_module"] = 11; // page_module=11 activity
+        }
+        else
+        {
+            $record["page_module"] = 1; // page_module=0 default index
+        }
 
 
-        $item_list = $item_query->orderByDesc('published_at')->paginate(20);
+        $item_list = $item_query->orderByDesc('published_at')->paginate(2);
         $return['item_list'] = $item_list;
 
         $return['user_list'] = $user_list;
@@ -98,6 +114,17 @@ class IndexRepository {
             $item->content_show = strip_tags($item->content);
             $item->img_tags = get_html_img($item->content);
         }
+
+
+
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 1; // page_type=1 default platform
+        $record["page_num"] = $item_list->toArray()["current_page"];
+        $record["from"] = request('from',NULL);
+        $this->record($record);
 
 
         $sidebar_active = '';
@@ -123,12 +150,24 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
-//            $notification_count = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->count();
-//            view()->share('notification_count',$notification_count);
+            $record["creator_id"] = $me_id;
         }
         else $me_id = 0;
 
         $introduction = K_Item::find(1);
+
+
+
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 1; // page_type=1 default platform
+        $record["page_module"] = 2; // page_module=2 introduction
+        $record["page_num"] = 1;
+        $record["from"] = request('from',NULL);
+        $this->record($record);
+
 
         $return['data'] = $introduction;
 
@@ -281,6 +320,7 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
+            $record["creator_id"] = $me_id;
 
             $relation_with_me = K_Pivot_User_Relation::where(['mine_user_id'=>$me_id,'relation_user_id'=>$item->owner_id])->first();
             if($relation_with_me &&  in_array($relation_with_me->relation_type,[21,41]))
@@ -289,6 +329,20 @@ class IndexRepository {
             }
         }
         else $me_id = 0;
+
+
+
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 3; // page_type=3 item
+        $record["page_module"] = 1; // page_type=1 default index
+        $record["object_id"] = $item->owner_id;
+        $record["item_id"] = $id;
+        $record["from"] = request('from',NULL);
+        $this->record($record);
+
 
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.item')
             ->with([
@@ -305,10 +359,6 @@ class IndexRepository {
     // 【K】【用户】【主页】
     public function view_user($post_data,$id=0)
     {
-//        $user_encode = $id;
-//        $user_decode = decode($user_encode);
-//        if(!$user_decode) return view('frontend.404');
-
         $user_id = $id;
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
@@ -348,7 +398,6 @@ class IndexRepository {
                     'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); }
                 ]);
             }
-//        dd($user->toArray());
         }
         else return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
 
@@ -362,6 +411,8 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+
             $item_query = K_Item::with([
                     'owner',
     //                'forward_item'=>function($query) { $query->with('user'); },
@@ -371,9 +422,29 @@ class IndexRepository {
                 ->where('active',1)
                 ->where('owner_id',$user_id);
 
-            if($type == 'root') $item_query->whereIn('item_type',[1,11]);
-            else if($type == 'article') $item_query->whereIn('item_type',[1]);
-            else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+            if($type == 'root')
+            {
+                $item_query->whereIn('item_type',[1,11]);
+                $record["page_module"] = 1; // page_module=0 default index
+            }
+            else if($type == 'introduction')
+            {
+                $record["page_module"] = 2; // page_module=2 introduction
+            }
+            else if($type == 'article')
+            {
+                $item_query->whereIn('item_type',[1]);
+                $record["page_module"] = 9; // page_module=0 article
+            }
+            else if($type == 'activity')
+            {
+                $item_query->whereIn('item_type',[11]);
+                $record["page_module"] = 11; // page_module=0 activity
+            }
+            else
+            {
+                $record["page_module"] = 1; // page_module=0 default index
+            }
 
             $item_list = $item_query->orderBy('published_at','desc')->paginate(20);
 
@@ -396,9 +467,29 @@ class IndexRepository {
                 ->where('active',1)
                 ->where('owner_id',$user_id);
 
-            if($type == 'root') $item_query->whereIn('item_type',[1,11]);
-            else if($type == 'article') $item_query->whereIn('item_type',[1]);
-            else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+            if($type == 'root')
+            {
+                $item_query->whereIn('item_type',[1,11]);
+                $record["page_module"] = 1; // page_module=0 default index
+            }
+            else if($type == 'introduction')
+            {
+                $record["page_module"] = 2; // page_module=2 introduction
+            }
+            else if($type == 'article')
+            {
+                $item_query->whereIn('item_type',[1]);
+                $record["page_module"] = 9; // page_module=0 article
+            }
+            else if($type == 'activity')
+            {
+                $item_query->whereIn('item_type',[11]);
+                $record["page_module"] = 11; // page_module=0 activity
+            }
+            else
+            {
+                $record["page_module"] = 1; // page_module=0 default index
+            }
 
             $item_list = $item_query->orderBy('published_at','desc')->paginate(20);
         }
@@ -411,6 +502,21 @@ class IndexRepository {
         }
 //        dd($item->toArray());
 
+
+        if($type == 'root') $record["page_module"] = 1; // page_module=0 default index
+        else if($type == 'introduction') $record["page_module"] = 2; // page_module=2 introduction
+        else if($type == 'article') $record["page_module"] = 9; // page_module=0 article
+        else if($type == 'activity') $record["page_module"] = 11; // page_module=0 activity
+        else $record["page_module"] = 1; // page_module=0 default index
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 2; // page_type=2 user
+        $record["page_num"] = $item_list->toArray()["current_page"];
+        $record["object_id"] = $user_id;
+        $record["from"] = request('from',NULL);
+        $this->record($record);
 
 
         $sidebar_active = '';
@@ -612,6 +718,8 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+
             $item_query = K_Item::with([
                 'owner',
                 //                'forward_item'=>function($query) { $query->with('user'); },
@@ -659,6 +767,17 @@ class IndexRepository {
 
 
 
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 2; // page_type=2 user
+        $record["page_num"] = 1;
+        $record["object_id"] = $user_id;
+        $record["from"] = request('from',NULL);
+        $this->record($record);
+
+
         $sidebar_active = 'sidebar_menu_introduction_active';
 
         view()->share('user_root_active','active');
@@ -682,6 +801,7 @@ class IndexRepository {
         {
             $me = Auth::user();
             $me_id = $me->id;
+            $record["creator_id"] = $me_id;
 
             $user_list = K_User::with([
                     'ad',
@@ -716,6 +836,18 @@ class IndexRepository {
 //            if(count($u->fans_list->whereIn('relation_type', [21,41])) > 0) echo 1;
 //        }
 //        dd($user_list->toArray());
+
+
+
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 1; // page_type=1 platform
+        $record["page_module"] = 33; // page_module=33 organization
+        $record["page_num"] = $user_list->toArray()["current_page"];
+        $record["from"] = request('from',NULL);
+        $this->record($record);
 
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.organization-list')
             ->with([
@@ -3025,6 +3157,29 @@ class IndexRepository {
             $data_year_weeks .= "calendar-week-".date("Y.W",$i)." ";
         }
         return $data_year_weeks;
+    }
+
+
+
+    // 记录访问
+    public function record($post_data)
+    {
+        $record = new K_Record();
+
+        $browseInfo = getBrowserInfo();
+        $type = $browseInfo['type'];
+        if($type == "Mobile") $post_data["open_device_type"] = 1;
+        else if($type == "PC") $post_data["open_device_type"] = 2;
+
+        $post_data["referer"] = $browseInfo['referer'];
+        $post_data["open_system"] = $browseInfo['system'];
+        $post_data["open_browser"] = $browseInfo['browser'];
+        $post_data["open_app"] = $browseInfo['app'];
+
+        $post_data["ip"] = Get_IP();
+        $bool = $record->fill($post_data)->save();
+        if($bool) return true;
+        else return false;
     }
 
 

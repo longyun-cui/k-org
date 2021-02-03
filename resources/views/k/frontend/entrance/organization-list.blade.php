@@ -35,7 +35,7 @@
             {{--@include('frontend.component.topic')--}}
         {{--@endforeach--}}
         @include(env('TEMPLATE_DEFAULT').'frontend.component.user-list',['user_list'=>$user_list])
-        {{ $user_list->links() }}
+        {!! $user_list->links() !!}
 
     </div>
 
