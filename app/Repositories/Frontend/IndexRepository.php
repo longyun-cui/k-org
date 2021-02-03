@@ -103,7 +103,7 @@ class IndexRepository {
         }
 
 
-        $item_list = $item_query->orderByDesc('published_at')->paginate(2);
+        $item_list = $item_query->orderByDesc('published_at')->paginate(20);
         $return['item_list'] = $item_list;
 
         $return['user_list'] = $user_list;
