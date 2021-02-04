@@ -1668,21 +1668,10 @@ class IndexRepository {
         $last_month_year = date('Y',strtotime('last month'));
         $last_month_month = date('m',strtotime('last month'));
 
-        $sql = K_Record::select(
-                DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month"),
-                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-                DB::raw('count(*) as count')
-            )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->get();
-
         $all = K_Record::select(
                 DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
                 DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
                 DB::raw('count(*) as count')
             )
@@ -1692,16 +1681,11 @@ class IndexRepository {
             ->where(['record_category'=>1,'record_type'=>1])
             ->get();
         $all = $all->keyBy('day');
-//        dd($all->toArray());
-
-
-//        STR_TO_DATE(standarddate,'%Y-%m-%d') as date,
-//                    DATE_FORMAT(standarddate,'%Y-%m') as month,
-//                    DATE_FORMAT(standarddate,'%d') as day,
-//                    DATE_FORMAT(standarddate,'%e') as day_0,
 
         $rooted = K_Record::select(
                 DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
                 DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
                 DB::raw('count(*) as count')
             )
@@ -1714,6 +1698,8 @@ class IndexRepository {
 
         $introduction = K_Record::select(
                 DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
                 DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
                 DB::raw('count(*) as count')
             )
@@ -1723,6 +1709,9 @@ class IndexRepository {
             ->where(['record_category'=>1,'record_type'=>1,'page_type'=>1,'page_module'=>2])
             ->get();
         $introduction = $introduction->keyBy('day');
+
+
+
 
         $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
             ->groupBy('open_device_type')
@@ -1735,15 +1724,48 @@ class IndexRepository {
             else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
         }
 
+        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
+            ->groupBy('open_system')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+
         $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
             ->groupBy('open_app')
             ->where(['record_category'=>1,'record_type'=>1])
             ->get();
 
-        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
-            ->groupBy('open_system')
-            ->where(['record_category'=>1,'record_type'=>1])
+
+
+        $shared_all = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2])
             ->get();
+        $shared_all = $shared_all->keyBy('day');
+
+        $shared_root = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>1,'page_module'=>1])
+            ->get();
+        $shared_root = $shared_root->keyBy('day');
+
+
+
 
         $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
             ->groupBy('shared_location')
@@ -1779,7 +1801,9 @@ class IndexRepository {
         $view_data["open_device_type"] = $open_device_type;
         $view_data["open_app"] = $open_app;
         $view_data["open_system"] = $open_system;
+        $view_data["shared_all"] = $shared_all;
         $view_data["shared_all_scale"] = $shared_all_scale;
+        $view_data["shared_root"] = $shared_root;
         $view_data["shared_root_scale"] = $shared_root_scale;
         $view_data["sidebar_statistic_active"] = 'active';
 

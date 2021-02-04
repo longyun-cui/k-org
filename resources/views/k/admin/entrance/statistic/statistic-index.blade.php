@@ -114,14 +114,14 @@
                 </div>
             </div>
 
-            {{--根分享数--}}
+            {{--主页分享数--}}
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-9">
                         <div id="echart-shared-root" style="width:100%;height:240px;"></div>
                     </div>
                     <div class="col-md-3">
-                        <div id="echart-shared-root-scale-" style="width:100%;height:320px;"></div>
+                        <div id="echart-shared-root-scale" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
         <div class="box box-warning">
 
             <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">总分享占比</h3>
+                <h3 class="box-title">分享占比</h3>
             </div>
 
             <div class="box-body">
@@ -276,7 +276,6 @@ $(function() {
         var $root_res = new Array();
         $.each({!! $rooted !!},function(key,v){
             $root_res[(v.day - 1)] = { value:v.count, name:v.day };
-//            $root_res.push({ value:v.sum, name:v.date });
         });
         var option_root = {
             title: {
@@ -358,7 +357,6 @@ $(function() {
         var $introduction_res = new Array();
         $.each({!! $introduction !!},function(key,v){
             $introduction_res[(v.day - 1)] = { value:v.count, name:v.day };
-//            $introduction_res.push({ value:v.sum, name:v.date });
         });
         var option_introduction = {
             title: {
@@ -631,6 +629,10 @@ $(function() {
 
 
         // 总分享数
+        var $shared_all_res = new Array();
+        $.each({!! $shared_all !!},function(key,v){
+            $shared_all_res[(v.day - 1)] = { value:v.count, name:v.day };
+        });
         var option_shared_all = {
             title: {
                 text: '总分享量'
@@ -662,10 +664,9 @@ $(function() {
                 {
                     type : 'category',
                     boundaryGap : false,
+                    axisLabel : { interval:0 },
                     data : [
-                        @foreach($share_all as $v)
-                                @if (!$loop->last) '{{$v->date}}', @else '{{$v->date}}' @endif
-                        @endforeach
+                        1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
                     ]
                 }
             ],
@@ -691,15 +692,16 @@ $(function() {
                             }
                         }
                     },
-                    data:[
-                        @foreach($share_all as $v)
-                        @if (!$loop->last)
-                            { value:'{{ $v->count }}',name:'{{$v->date}}'},
-                        @else
-                            { value:'{{ $v->count }}',name:'{{$v->date}}'}
-                        @endif
-                        @endforeach
-                    ]
+                    data: $shared_all_res
+                    {{--data:[--}}
+                        {{--@foreach($share_all as $v)--}}
+                        {{--@if (!$loop->last)--}}
+                            {{--{ value:'{{ $v->count }}',name:'{{$v->date}}'},--}}
+                        {{--@else--}}
+                            {{--{ value:'{{ $v->count }}',name:'{{$v->date}}'}--}}
+                        {{--@endif--}}
+                        {{--@endforeach--}}
+                    {{--]--}}
                 }
             ]
         };
@@ -707,9 +709,13 @@ $(function() {
         myChart_shared_all.setOption(option_shared_all);
 
         // 主页分享数
+        var $shared_root_res = new Array();
+        $.each({!! $shared_root !!},function(key,v){
+            $shared_root_res[(v.day - 1)] = { value:v.count, name:v.day };
+        });
         var option_shared_root = {
             title: {
-                text: '主页分享量'
+                text: '主页分享统计'
             },
             tooltip : {
                 trigger: 'axis',
@@ -721,7 +727,7 @@ $(function() {
                 }
             },
             legend: {
-                data:['主页分享量']
+                data:['主页分享统计']
             },
             toolbox: {
                 feature: {
@@ -738,10 +744,9 @@ $(function() {
                 {
                     type : 'category',
                     boundaryGap : false,
+                    axisLabel : { interval:0 },
                     data : [
-                        @foreach($share_root as $v)
-                                @if (!$loop->last) '{{ $v->date }}', @else '{{ $v->date }}' @endif
-                        @endforeach
+                        1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
                     ]
                 }
             ],
@@ -767,19 +772,20 @@ $(function() {
                             }
                         }
                     },
-                    data:[
-                        @foreach($share_root as $v)
-                        @if (!$loop->last)
-                            { value:'{{ $v->count }}', name:'{{$v->date}}'},
-                        @else
-                            { value:'{{ $v->count }}', name:'{{$v->date}}'}
-                        @endif
-                        @endforeach
-                    ]
+                    data: $shared_root_res
+                    {{--data:[--}}
+                        {{--@foreach($share_root as $v)--}}
+                        {{--@if (!$loop->last)--}}
+                            {{--{ value:'{{ $v->count }}', name:'{{$v->date}}'},--}}
+                        {{--@else--}}
+                            {{--{ value:'{{ $v->count }}', name:'{{$v->date}}'}--}}
+                        {{--@endif--}}
+                        {{--@endforeach--}}
+                    {{--]--}}
                 }
             ]
         };
-        var myChart_shared_root = echarts.init(document.getElementById('echart-share-droot'));
+        var myChart_shared_root = echarts.init(document.getElementById('echart-shared-root'));
         myChart_shared_root.setOption(option_shared_root);
 
 
