@@ -225,7 +225,7 @@ class IndexController extends Controller
 
 
     /*
-     * 业务系统
+     * 内容
      */
     // 【K】【内容】返回-列表-视图
     public function view_item_item_list()
@@ -315,10 +315,23 @@ class IndexController extends Controller
 
 
 
-    // 【内容】禁用
+    /*
+     * 统计
+     */
+    // 【统计】概览
     public function view_statistic_index()
     {
         return $this->repo->view_statistic_index();
+    }
+    // 【统计】用户
+    public function view_statistic_user()
+    {
+        return $this->repo->view_statistic_user(request()->all());
+    }
+    // 【统计】内容
+    public function view_statistic_item()
+    {
+        return $this->repo->view_statistic_item(request()->all());
     }
 
 

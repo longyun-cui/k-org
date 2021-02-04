@@ -306,7 +306,7 @@
                             }
                             else if(data == 1)
                             {
-                                return '<small class="btn-xs bg-primary">已发布</small>';
+                                return '<small class="btn-xs bg-olive">已发布</small>';
 //                                if(row.is_read == 0) return '<small class="btn-xs bg-olive">未读</small>';
 //                                else if(row.is_read == 1) return '<small class="btn-xs bg-primary">已读</small>';
 //                                else return "--";
@@ -319,7 +319,7 @@
                         }
                     },
                     {
-                        "width": "192px",
+                        "width": "240px",
                         "title": "操作",
                         "data": 'id',
                         "orderable": false,

@@ -106,6 +106,18 @@
 
 
 
+            {{--流量统计--}}
+            <li class="header">流量统计</li>
+
+            <li class="treeview {{ $sidebar_statistic_active or '' }}">
+                <a href="{{ url('/sponsor/statistic') }}">
+                    <i class="fa fa-bar-chart text-green"></i> <span>流量统计</span>
+                </a>
+            </li>
+
+
+
+
             {{--消息管理--}}
             <li class="header _none">消息管理</li>
 
@@ -114,16 +126,6 @@
                     <i class="fa fa-envelope text-green"></i>
                     <span>消息列表</span>
                 </a>
-            </li>
-
-
-
-
-            {{--流量统计--}}
-            <li class="header _none">流量统计</li>
-
-            <li class="treeview _none">
-                <a href="{{ url('/sponsor/statistics/website') }}"><i class="fa fa-bar-chart text-green"></i> <span>流量统计</span></a>
             </li>
 
 

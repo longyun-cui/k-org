@@ -96,7 +96,7 @@
 
             <li class="treeview {{ $sidebar_statistic_active or '' }}">
                 <a href="{{ url('/admin/statistic') }}">
-                    <i class="fa fa-file-text text-green"></i> <span>流量统计</span>
+                    <i class="fa fa-bar-chart text-green"></i> <span>流量统计</span>
                 </a>
             </li>
 
@@ -104,9 +104,9 @@
 
 
             {{--工单管理--}}
-            <li class="header">工单管理</li>
+            <li class="header _none">工单管理</li>
 
-            <li class="treeview {{ $sidebar_work_order_list_active or '' }}">
+            <li class="treeview {{ $sidebar_work_order_list_active or '' }} _none">
                 <a href="{{ url('/admin/business/work-order-list') }}">
                     <i class="fa fa-file-text text-green"></i> <span>工单列表</span>
                 </a>
@@ -116,15 +116,15 @@
 
 
             {{--留言管理--}}
-            <li class="header">消息管理</li>
+            <li class="header _none">消息管理</li>
 
-            <li class="treeview {{ $sidebar_notice_notice_list_active or '' }}">
+            <li class="treeview {{ $sidebar_notice_notice_list_active or '' }} _none">
                 <a href="{{ url('/admin/notice/notice-list') }}">
                     <i class="fa fa-envelope"></i> <span>消息列表</span>
                 </a>
             </li>
 
-            <li class="treeview {{ $sidebar_notice_my_notice_list_active or '' }}">
+            <li class="treeview {{ $sidebar_notice_my_notice_list_active or '' }} _none">
                 <a href="{{ url('/admin/notice/my-notice-list') }}">
                     <i class="fa fa-envelope"></i> <span>我发布的</span>
                 </a>
@@ -216,30 +216,20 @@
 
 
 
-            {{--流量统计--}}
-            <li class="header _none">流量统计</li>
+            {{--平台--}}
+            <li class="header">平台</li>
 
-            <li class="treeview _none">
-                <a href="{{ url('/admin/website-statistics') }}"><i class="fa fa-bar-chart text-green"></i> <span>流量统计</span></a>
-            </li>
-
-            <li class="header _none">管理员管理</li>
-
-            <li class="treeview _none" >
-                <a href="{{ url('/admin/administrator/password/reset') }}">
-                    <i class="fa fa-circle-o text-aqua"></i><span>修改密码</span>
+            <li class="treeview">
+                <a href="{{ url('/') }}" target="_blank">
+                    <i class="fa fa-cube text-default"></i> <span>平台首页</span>
                 </a>
             </li>
 
-
-
-            {{--<li class="header">平台</li>--}}
-
-            <li class="treeview active">
+            <li class="treeview _none">
                 <a href=""><i class="fa fa-th text-aqua"></i> <span>平台</span>
                     <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class="treeview">

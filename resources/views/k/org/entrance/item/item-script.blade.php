@@ -37,7 +37,8 @@
         // 【数据分析】
         $("#item-main-body").on('click', ".item-statistics-submit", function() {
             var that = $(this);
-            window.open("/org/statistics/item?id="+that.attr('data-id'));
+//            window.open("/org/statistic/statistic-item?id="+that.attr('data-id'));
+            window.location.href = "/org/statistic/statistic-item?id="+that.attr('data-id');
         });
 
         // 【编辑】

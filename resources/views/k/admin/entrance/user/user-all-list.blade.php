@@ -418,7 +418,7 @@
                         }
                     },
                     {
-                        "width": "240px",
+                        "width": "300px",
                         "title": "操作",
                         "data": "id",
                         "orderable": false,
@@ -443,14 +443,14 @@
                             }
 
                             var html =
+                                $html_able+
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
-//                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
 //                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
                                 $html_edit+
-                                '<a class="btn btn-xs bg-navy item-change-password-show" data-id="'+data+'">修改密码</a>'+
-                                $html_able+
+                                '<a class="btn btn-xs bg-maroon item-change-password-show" data-id="'+data+'">修改密码</a>'+
                                 '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
                                 '<a class="btn btn-xs bg-olive item-login-submit" data-id="'+data+'">登录</a>'+
+                                '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
                                 '';
                             return html;
                         }

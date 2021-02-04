@@ -27,15 +27,16 @@
 
 
         // 【下载二维码】
-        $("#item-main-body").on('click', ".item-download-qrcode-submit", function() {
+        $("#item-main-body").on('click', ".item-download-qr-code-submit", function() {
             var that = $(this);
-            window.open("/download-qrcode?sort=org-item&id="+that.attr('data-id'));
+            window.open("/download/qr-code?type=user&id="+that.attr('data-id'));
         });
 
         // 【数据分析】
-        $("#item-main-body").on('click', ".item-statistics-submit", function() {
+        $("#item-main-body").on('click', ".item-statistic-submit", function() {
             var that = $(this);
-            window.open("/statistics/item?id="+that.attr('data-id'));
+            window.open("/admin/statistic/statistic-user?id="+that.attr('data-id'));
+//            window.location.href = "/admin/statistic/statistic-user?id="+that.attr('data-id');
         });
 
         // 【编辑】

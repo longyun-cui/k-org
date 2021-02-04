@@ -5,6 +5,7 @@ use App\Models\K\K_Pivot_User_Item;
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
 use App\Models\K\K_Pivot_User_Relation;
+use App\Models\K\K_Record;
 
 use App\Repositories\Common\CommonRepository;
 
@@ -825,6 +826,333 @@ class IndexRepository {
             return response_fail([],$msg);
         }
 
+    }
+
+
+
+
+    /*
+     * 统计
+     */
+
+    // 【】流量统计
+    public function view_statistic_index()
+    {
+        $me = Auth::guard('sponsor')->user();
+        $me_id = $me->id;
+
+        $this_month = date('Y-m');
+        $this_month_year = date('Y');
+        $this_month_month = date('m');
+        $last_month = date('Y-m',strtotime('last month'));
+        $last_month_year = date('Y',strtotime('last month'));
+        $last_month_month = date('m',strtotime('last month'));
+
+
+        // 总访问量【统计】
+        $all = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        $all = $all->keyBy('day');
+
+        // 首页访问量【统计】
+        $rooted = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>2,'page_module'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        $rooted = $rooted->keyBy('day');
+
+        // 介绍页访问量【统计】
+        $introduction = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>2,'page_module'=>2])
+            ->where('object_id',$me_id)
+            ->get();
+        $introduction = $introduction->keyBy('day');
+
+
+
+
+        // 打开设备类型【占比】
+        $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
+            ->groupBy('open_device_type')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        foreach($open_device_type as $k => $v)
+        {
+            if($v->open_device_type == 0) $open_device_type[$k]->name = "默认";
+            else if($v->open_device_type == 1) $open_device_type[$k]->name = "移动端";
+            else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
+        }
+
+        // 打开系统类型【占比】
+        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
+            ->groupBy('open_system')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+
+        // 打开APP类型【占比】
+        $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
+            ->groupBy('open_app')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+
+
+
+
+        // 总分享【统计】
+        $shared_all = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('object_id',$me_id)
+            ->get();
+        $shared_all = $shared_all->keyBy('day');
+
+        // 首页分享【统计】
+        $shared_root = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>2,'page_module'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        $shared_root = $shared_root->keyBy('day');
+
+
+
+
+        // 总分享【占比】
+        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('object_id',$me_id)
+            ->get();
+        foreach($shared_all_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
+            else $shared_all_scale[$k]->name = "其他";
+        }
+
+        // 首页分享【占比】
+        $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>1,'page_module'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        foreach($shared_root_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_root_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_root_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_root_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_root_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
+            else $shared_root_scale[$k]->name = "其他";
+        }
+
+        $view_data["all"] = $all;
+        $view_data["rooted"] = $rooted;
+        $view_data["introduction"] = $introduction;
+        $view_data["open_device_type"] = $open_device_type;
+        $view_data["open_app"] = $open_app;
+        $view_data["open_system"] = $open_system;
+        $view_data["shared_all"] = $shared_all;
+        $view_data["shared_root"] = $shared_root;
+        $view_data["shared_all_scale"] = $shared_all_scale;
+        $view_data["shared_root_scale"] = $shared_root_scale;
+        $view_data["sidebar_statistic_active"] = 'active';
+
+        $view_blade = env('TEMPLATE_ADMIN').'sponsor.entrance.statistic.statistic-index';
+        return view($view_blade)->with($view_data);
+    }
+    // 【】流量统计
+    public function view_statistic_item($post_data)
+    {
+        $messages = [
+            'id.required' => 'id required',
+        ];
+        $v = Validator::make($post_data, [
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $me = Auth::guard('sponsor')->user();
+        $me_id = $me->id;
+
+        $item_id = $post_data["id"];
+        $item = K_Item::find($item_id);
+        if(!$item) return view(env('TEMPLATE_ADMIN').'sponsor.errors.404');
+        if($item->owner_id != $me_id) return view(env('TEMPLATE_ADMIN').'sponsor.errors.404');
+
+        $this_month = date('Y-m');
+        $this_month_year = date('Y');
+        $this_month_month = date('m');
+        $last_month = date('Y-m',strtotime('last month'));
+        $last_month_year = date('Y',strtotime('last month'));
+        $last_month_month = date('m',strtotime('last month'));
+
+
+        // 访问量【统计】
+        $data = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+        $data = $data->keyBy('day');
+
+
+
+
+        // 打开设备类型【占比】
+        $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
+            ->groupBy('open_device_type')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+        foreach($open_device_type as $k => $v)
+        {
+            if($v->open_device_type == 0) $open_device_type[$k]->name = "默认";
+            else if($v->open_device_type == 1) $open_device_type[$k]->name = "移动端";
+            else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
+        }
+
+        // 打开系统类型【占比】
+        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
+            ->groupBy('open_system')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+
+        // 打开APP类型【占比】
+        $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
+            ->groupBy('open_app')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+
+        // 打开APP类型【占比】
+        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+        foreach($shared_all_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
+            else $shared_all_scale[$k]->name = "其他";
+        }
+
+
+
+
+        // 分享【统计】
+        $shared_data = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('item_id',$item_id)
+            ->get();
+        $shared_data = $shared_data->keyBy('day');
+
+
+
+
+        // 总分享【占比】
+        $shared_data_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('item_id',$item_id)
+            ->get();
+        foreach($shared_data_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_data_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_data_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_data_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_data_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_data_scale[$k]->name = "腾讯微博";
+            else $shared_data_scale[$k]->name = "其他";
+        }
+
+        $view_data["item"] = $item;
+        $view_data["data"] = $data;
+        $view_data["open_device_type"] = $open_device_type;
+        $view_data["open_app"] = $open_app;
+        $view_data["open_system"] = $open_system;
+        $view_data["shared_data"] = $shared_data;
+        $view_data["shared_data_scale"] = $shared_data_scale;
+
+        $view_blade = env('TEMPLATE_ADMIN').'sponsor.entrance.statistic.statistic-item';
+        return view($view_blade)->with($view_data);
     }
 
 

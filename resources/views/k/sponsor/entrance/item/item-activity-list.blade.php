@@ -376,7 +376,7 @@
                             }
                             else if(data == 1)
                             {
-                                return '<small class="btn-xs bg-primary">已发布</small>';
+                                return '<small class="btn-xs bg-olive">已发布</small>';
 //                                if(row.is_read == 0) return '<small class="btn-xs bg-olive">未读</small>';
 //                                else if(row.is_read == 1) return '<small class="btn-xs bg-primary">已读</small>';
 //                                else return "--";
@@ -397,8 +397,8 @@
                             if(row.active == 0)
                             {
                                 $html_1 =
-                                    '<a class="btn btn-xs bg-navy item-edit-link" data-id="'+data+'">编辑</a>'+
-                                    '<a class="btn btn-xs bg-navy item-publish-submit" data-id="'+data+'">发布</a>'+
+                                    '<a class="btn btn-xs bg-primary item-edit-link" data-id="'+data+'">编辑</a>'+
+                                    '<a class="btn btn-xs bg-olive item-publish-submit" data-id="'+data+'">发布</a>'+
                                     '';
                                 $html_2 =
                                     '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">下载二维码</a>'+
@@ -416,13 +416,12 @@
                                     '';
                             }
                             var html =
-//                                    '<a class="btn btn-xs item-enable-submit" data-id="'+value+'">启用</a>'+
-//                                    '<a class="btn btn-xs item-disable-submit" data-id="'+value+'">禁用</a>'+
-//                                    '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
-                                    {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
+//                                    '<a class="btn btn-xs item-enable-submit" data-id="'+data+'">启用</a>'+
+//                                    '<a class="btn btn-xs item-disable-submit" data-id="'+data+'">禁用</a>'+
                                     $html_1+
                                     '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'">删除</a>'+
-                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
+//                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
+                                    '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
                                     $html_2+
                                     '';
                             return html;

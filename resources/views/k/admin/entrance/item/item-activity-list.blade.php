@@ -308,7 +308,7 @@
                                 }
                                 else if(data == 1)
                                 {
-                                    return '<small class="btn-xs bg-primary">已发布</small>';
+                                    return '<small class="btn-xs bg-olive">已发布</small>';
 //                                if(row.is_read == 0) return '<small class="btn-xs bg-olive">未读</small>';
 //                                else if(row.is_read == 1) return '<small class="btn-xs bg-primary">已读</small>';
 //                                else return "--";
@@ -326,7 +326,7 @@
                         }
                     },
                     {
-                        "width": "192px",
+                        "width": "240px",
                         "title": "操作",
                         "data": 'id',
                         "orderable": false,
@@ -343,7 +343,7 @@
 
                             if(row.is_me == 1 && row.active == 0)
                             {
-                                $html_publish = '<a class="btn btn-xs bg-navy item-publish-submit" data-id="'+data+'">发布</a>';
+                                $html_publish = '<a class="btn btn-xs bg-olive item-publish-submit" data-id="'+data+'">发布</a>';
                             }
                             else
                             {
@@ -351,13 +351,13 @@
                             }
 
                             var html =
-//                                    '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
-//                                    '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
+                                    $html_able+
                                     '<a class="btn btn-xs btn-primary item-edit-link" data-id="'+data+'">编辑</a>'+
                                     $html_publish+
-                                    $html_able+
                                     '<a class="btn btn-xs bg-navy item-admin-delete-submit" data-id="'+data+'">删除</a>'+
 //                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
+                                    '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
+//                                    '<a class="btn btn-xs bg-olive item-download-qr-code-submit" data-id="'+data+'">下载二维码</a>'+
                                     '';
                             return html;
 

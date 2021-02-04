@@ -204,6 +204,24 @@ class IndexController extends Controller
 
 
 
+    /*
+     * 统计
+     */
+
+    // 【统计】
+    public function view_statistic_index()
+    {
+        return $this->repo->view_statistic_index();
+    }
+    // 【统计】
+    public function view_statistic_item()
+    {
+        return $this->repo->view_statistic_item(request()->all());
+    }
+
+
+
+
 
 
 

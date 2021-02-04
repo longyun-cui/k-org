@@ -35,9 +35,10 @@
         });
 
         // 【数据分析】
-        $("#item-main-body").on('click', ".item-statistics-submit", function() {
+        $("#item-main-body").on('click', ".item-statistic-submit", function() {
             var that = $(this);
-            window.open("/admin/statistics/item?id="+that.attr('data-id'));
+            window.open("/admin/statistic/statistic-item?id="+that.attr('data-id'));
+//            window.location.href = "/admin/statistic/statistic-item?id="+that.attr('data-id');
         });
 
         // 【编辑】

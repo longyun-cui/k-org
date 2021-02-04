@@ -144,6 +144,18 @@ Route::group([], function () {
 
 
         /*
+         * statistic
+         */
+        Route::match(['get','post'], '/statistic', $controller.'@view_statistic_index');
+        Route::match(['get','post'], '/statistic/index', $controller.'@view_statistic_index');
+        Route::match(['get','post'], '/statistic/statistic-index', $controller.'@view_statistic_index');
+        Route::match(['get','post'], '/statistic/statistic-user', $controller.'@view_statistic_user');
+        Route::match(['get','post'], '/statistic/statistic-item', $controller.'@view_statistic_item');
+
+
+
+
+        /*
          * notification
          */
         // notification-list

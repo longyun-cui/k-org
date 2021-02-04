@@ -20,13 +20,7 @@
         <div class="box box-info">
 
             <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">网站总流量统计</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
-                        <i class="fa fa-times"></i></button>
-                </div>
+                <h3 class="box-title">流量统计</h3>
             </div>
 
             {{--总访问量--}}
@@ -65,52 +59,14 @@
 </div>
 
 
-{{--单目录访问量统计--}}
-<div class="row" style="display:none;">
-    <div class="col-md-12">
-        <!-- BEGIN PORTLET-->
-        <div class="box box-warning">
-
-            <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">目录页流量统计</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
-                </div>
-                <input type="hidden" id="survey-question-marking" data-key="1000">
-            </div>
-
-            {{--目录--}}
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div id="echart-menu-default" style="width:100%;height:200px;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="box-footer">
-            </div>
-
-        </div>
-        <!-- END PORTLET-->
-    </div>
-</div>
-
-
-{{--总访问比例--}}
+{{--访问比例--}}
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN PORTLET-->
         <div class="box box-warning">
 
             <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">总访问比例</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
-                </div>
-                <input type="hidden" id="survey-question-marking" data-key="1000">
+                <h3 class="box-title">访问比例</h3>
             </div>
 
             <div class="box-body">
@@ -143,19 +99,17 @@
         <div class="box box-warning">
 
             <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">分享流量统计</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
-                </div>
-                <input type="hidden" id="survey-question-marking" data-key="1000">
+                <h3 class="box-title">分享统计</h3>
             </div>
 
             {{--总分享数--}}
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-9">
                         <div id="echart-share-all" style="width:100%;height:320px;"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div id="echart-shared-all-scale" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -163,17 +117,11 @@
             {{--根分享数--}}
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-9">
                         <div id="echart-share-root" style="width:100%;height:240px;"></div>
                     </div>
-                </div>
-            </div>
-
-            {{--目录分享数--}}
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div id="echart-share-menu" style="width:100%;height:240px;"></div>
+                    <div class="col-md-3">
+                        <div id="echart-shared-root-scale-" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -188,24 +136,19 @@
 
 
 {{--分享渠道比例--}}
-<div class="row">
+<div class="row _none">
     <div class="col-md-12">
         <!-- BEGIN PORTLET-->
         <div class="box box-warning">
 
             <div class="box-header with-border" style="margin:16px 0;">
                 <h3 class="box-title">总分享占比</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
-                </div>
-                <input type="hidden" id="survey-question-marking" data-key="1000">
             </div>
 
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <div id="echart-shared-all-scale" style="width:100%;height:320px;"></div>
+                        <div id="echart-shared-all-scale-" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -216,7 +159,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <div id="echart-shared-root-scale" style="width:100%;height:320px;"></div>
+                        <div id="echart-shared-root-scale-" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -263,7 +206,7 @@ $(function() {
         // 网站总访问数
         var option_all = {
             title: {
-                text: '网站总流量'
+                text: '总访问统计'
             },
             tooltip : {
                 trigger: 'axis',
@@ -275,7 +218,7 @@ $(function() {
                 }
             },
             legend: {
-                data:['总访问量']
+                data:['总访问统计']
             },
             toolbox: {
                 feature: {
@@ -342,7 +285,7 @@ $(function() {
         });
         var option_root = {
             title: {
-                text: '首页访问量'
+                text: '首页-访问统计'
             },
             tooltip : {
                 trigger: 'axis',
@@ -354,7 +297,7 @@ $(function() {
                 }
             },
             legend: {
-                data:['首页访问量']
+                data:['首页-访问量']
             },
             toolbox: {
                 feature: {
@@ -384,7 +327,7 @@ $(function() {
             ],
             series : [
                 {
-                    name:'首页访问量',
+                    name:'首页-访问量',
                     type:'line',
                     label: {
                         normal: {
@@ -425,7 +368,7 @@ $(function() {
         console.log($introduction_res);
         var option_introduction = {
             title: {
-                text: '简介页-流量统计'
+                text: '介绍页-访问统计'
             },
             tooltip : {
                 trigger: 'axis',
@@ -437,7 +380,7 @@ $(function() {
                 }
             },
             legend: {
-                data:['简介页-访问量']
+                data:['介绍页-访问统计']
             },
             toolbox: {
                 feature: {
@@ -467,7 +410,7 @@ $(function() {
             ],
             series : [
                 {
-                    name:'简介页-访问量',
+                    name:'介绍页-访问量',
                     type:'line',
                     label: {
                         normal: {
