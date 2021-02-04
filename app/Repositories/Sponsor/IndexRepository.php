@@ -1089,22 +1089,6 @@ class IndexRepository {
             ->where('item_id',$item_id)
             ->get();
 
-        // 打开APP类型【占比】
-        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('item_id',$item_id)
-            ->get();
-        foreach($shared_all_scale as $k => $v)
-        {
-            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
-            else $shared_all_scale[$k]->name = "其他";
-        }
-
 
 
 
@@ -1125,9 +1109,7 @@ class IndexRepository {
         $shared_data = $shared_data->keyBy('day');
 
 
-
-
-        // 总分享【占比】
+        // 分享【占比】
         $shared_data_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
             ->groupBy('shared_location')
             ->where(['record_category'=>1,'record_type'=>2])
@@ -1142,6 +1124,7 @@ class IndexRepository {
             else if($v->shared_location == 5) $shared_data_scale[$k]->name = "腾讯微博";
             else $shared_data_scale[$k]->name = "其他";
         }
+
 
         $view_data["item"] = $item;
         $view_data["data"] = $data;

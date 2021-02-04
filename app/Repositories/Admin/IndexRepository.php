@@ -1668,6 +1668,8 @@ class IndexRepository {
         $last_month_year = date('Y',strtotime('last month'));
         $last_month_month = date('m',strtotime('last month'));
 
+
+        // 总访问量【统计】
         $all = K_Record::select(
                 DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
                 DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
@@ -1682,6 +1684,7 @@ class IndexRepository {
             ->get();
         $all = $all->keyBy('day');
 
+        // 首页访问量【统计】
         $rooted = K_Record::select(
                 DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
                 DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
@@ -1696,6 +1699,7 @@ class IndexRepository {
             ->get();
         $rooted = $rooted->keyBy('day');
 
+        // 介绍页访问量【统计】
         $introduction = K_Record::select(
                 DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
                 DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
@@ -1713,6 +1717,7 @@ class IndexRepository {
 
 
 
+        // 打开设备类型【占比】
         $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
             ->groupBy('open_device_type')
             ->where(['record_category'=>1,'record_type'=>1])
@@ -1724,11 +1729,13 @@ class IndexRepository {
             else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
         }
 
+        // 打开系统类型【占比】
         $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
             ->groupBy('open_system')
             ->where(['record_category'=>1,'record_type'=>1])
             ->get();
 
+        // 打开APP类型【占比】
         $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
             ->groupBy('open_app')
             ->where(['record_category'=>1,'record_type'=>1])
@@ -1736,6 +1743,7 @@ class IndexRepository {
 
 
 
+        // 总分享【统计】
         $shared_all = K_Record::select(
             DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
             DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
@@ -1750,6 +1758,7 @@ class IndexRepository {
             ->get();
         $shared_all = $shared_all->keyBy('day');
 
+        // 首页分享【统计】
         $shared_root = K_Record::select(
             DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
             DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
@@ -1767,9 +1776,10 @@ class IndexRepository {
 
 
 
+        // 总分享【占比】
         $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
             ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>1])
+            ->where(['record_category'=>1,'record_type'=>2])
             ->get();
         foreach($shared_all_scale as $k => $v)
         {
@@ -1781,9 +1791,10 @@ class IndexRepository {
             else $shared_all_scale[$k]->name = "其他";
         }
 
+        // 首页分享【占比】
         $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
             ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>1])
+            ->where(['record_category'=>1,'record_type'=>2])
             ->get();
         foreach($shared_root_scale as $k => $v)
         {
@@ -1794,6 +1805,7 @@ class IndexRepository {
             else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
             else $shared_root_scale[$k]->name = "其他";
         }
+
 
         $view_data["all"] = $all;
         $view_data["rooted"] = $rooted;
@@ -1913,22 +1925,6 @@ class IndexRepository {
             ->where('object_id',$user_id)
             ->get();
 
-        // 打开APP类型【占比】
-        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('object_id',$user_id)
-            ->get();
-        foreach($shared_all_scale as $k => $v)
-        {
-            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
-            else $shared_all_scale[$k]->name = "其他";
-        }
-
 
 
 
@@ -1998,6 +1994,7 @@ class IndexRepository {
             else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
             else $shared_root_scale[$k]->name = "其他";
         }
+
 
         $view_data["user"] = $user;
         $view_data["all"] = $all;
@@ -2086,22 +2083,6 @@ class IndexRepository {
             ->where('item_id',$item_id)
             ->get();
 
-        // 打开APP类型【占比】
-        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('item_id',$item_id)
-            ->get();
-        foreach($shared_all_scale as $k => $v)
-        {
-            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
-            else $shared_all_scale[$k]->name = "其他";
-        }
-
 
 
 
@@ -2122,9 +2103,7 @@ class IndexRepository {
         $shared_data = $shared_data->keyBy('day');
 
 
-
-
-        // 总分享【占比】
+        // 分享【占比】
         $shared_data_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
             ->groupBy('shared_location')
             ->where(['record_category'=>1,'record_type'=>2])
@@ -2139,6 +2118,7 @@ class IndexRepository {
             else if($v->shared_location == 5) $shared_data_scale[$k]->name = "腾讯微博";
             else $shared_data_scale[$k]->name = "其他";
         }
+
 
         $view_data["item"] = $item;
         $view_data["data"] = $data;
