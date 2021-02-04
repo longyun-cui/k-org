@@ -69,6 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/admin/index.css') }}">
 
+    @yield('css')
     @yield('custom-css')
     @yield('custom-style')
 
@@ -170,6 +171,7 @@ desired effect
 
 <script src="{{ asset('/js/admin/index.js') }}"></script>
 
+@yield('js')
 @yield('custom-js')
 @yield('custom-script')
 

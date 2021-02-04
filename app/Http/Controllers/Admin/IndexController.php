@@ -315,6 +315,15 @@ class IndexController extends Controller
 
 
 
+    // 【内容】禁用
+    public function view_statistic_index()
+    {
+        return $this->repo->view_statistic_index();
+    }
+
+
+
+
 
 
 

@@ -3,6 +3,7 @@ namespace App\Repositories\Admin;
 
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
+use App\Models\K\K_Record;
 
 use App\Repositories\Common\CommonRepository;
 
@@ -1650,6 +1651,135 @@ class IndexRepository {
             return response_fail([],$msg);
         }
 
+    }
+
+
+
+    // 【】流量统计
+    public function view_statistic_index()
+    {
+        $me = Auth::guard('admin')->user();
+        $me_id = $me->id;
+
+        $this_month = date('Y-m');
+        $this_month_year = date('Y');
+        $this_month_month = date('m');
+        $last_month = date('Y-m',strtotime('last month'));
+        $last_month_year = date('Y',strtotime('last month'));
+        $last_month_month = date('m',strtotime('last month'));
+
+        $sql = K_Record::select(
+                DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+                DB::raw('count(*) as count')
+            )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+
+        $all = K_Record::select(
+                DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+                DB::raw('count(*) as count')
+            )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+        $all = $all->keyBy('day');
+//        dd($all->toArray());
+        
+
+
+        $rooted = K_Record::select(
+                DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+                DB::raw('count(*) as count')
+            )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>1,'page_module'=>1])
+            ->get();
+        $rooted = $rooted->keyBy('day');
+
+        $introduction = K_Record::select(
+                DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+                DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+                DB::raw('count(*) as count')
+            )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>1,'page_module'=>2])
+            ->get();
+        $introduction = $introduction->keyBy('day');
+
+        $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
+            ->groupBy('open_device_type')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+        foreach($open_device_type as $k => $v)
+        {
+            if($v->open_device_type == 0) $open_device_type[$k]->name = "默认";
+            else if($v->open_device_type == 1) $open_device_type[$k]->name = "移动端";
+            else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
+        }
+
+        $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
+            ->groupBy('open_app')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+
+        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
+            ->groupBy('open_system')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+
+        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+        foreach($shared_all_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
+            else $shared_all_scale[$k]->name = "其他";
+        }
+
+        $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->get();
+        foreach($shared_root_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_root_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_root_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_root_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_root_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
+            else $shared_root_scale[$k]->name = "其他";
+        }
+
+        $view["all"] = $all;
+        $view["rooted"] = $rooted;
+        $view["introduction"] = $introduction;
+        $view["open_device_type"] = $open_device_type;
+        $view["open_app"] = $open_app;
+        $view["open_system"] = $open_system;
+        $view["shared_all_scale"] = $shared_all_scale;
+        $view["shared_root_scale"] = $shared_root_scale;
+
+        $view_blade = env('TEMPLATE_ADMIN').'admin.entrance.statistic.statistic-index';
+        return view($view_blade)->with($view);
     }
 
 

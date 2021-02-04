@@ -124,8 +124,12 @@ Route::group([], function () {
 
 
         /*
-         * business
+         * statistic
          */
+        Route::match(['get','post'], '/statistic', $controller.'@view_statistic_index');
+        Route::match(['get','post'], '/statistic/index', $controller.'@view_statistic_index');
+
+
 
 
         // site

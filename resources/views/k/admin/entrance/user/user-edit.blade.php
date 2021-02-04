@@ -8,10 +8,9 @@
     @if($operate == 'create') @yield('create-text') @else @yield('edit-text') @endif - 管理员后台 - 如未科技
 @endsection
 
-@section('header')
-@endsection
-@section('description', '管理员后台-如未科技')
 
+@section('header','')
+@section('description', '管理员后台-如未科技')
 @section('breadcrumb')
     <li><a href="{{ url('/admin') }}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="{{ url('/admin/user/user-all-list') }}"><i class="fa fa-list"></i>@yield('list-text')</a></li>

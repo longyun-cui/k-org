@@ -40,11 +40,6 @@
                     <i class="fa fa-user"></i><span>全部用户</span>
                 </a>
             </li>
-            {{--<li class="treeview {{ $sidebar_user_org_list_active or '' }}">--}}
-                {{--<a href="{{ url('/admin/user/individual-list') }}">--}}
-                    {{--<i class="fa fa-user"></i><span>个人用户</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
             <li class="treeview {{ $sidebar_user_org_list_active or '' }}">
                 <a href="{{ url('/admin/user/user-org-list') }}">
                     <i class="fa fa-user"></i><span>社群组织</span>
@@ -60,12 +55,6 @@
                     <i class="fa fa-user"></i><span>个人用户</span>
                 </a>
             </li>
-
-
-
-
-            {{--用户管理--}}
-            <li class="header _none">用户管理</li>
 
 
 
@@ -96,6 +85,18 @@
             <li class="treeview {{ $sidebar_item_my_list_active or '' }}">
                 <a href="{{ url('/admin/item/item-my-list') }}">
                     <i class="fa fa-file-text text-green"></i><span>我的</span>
+                </a>
+            </li>
+
+
+
+
+            {{--流量统计--}}
+            <li class="header">流量统计</li>
+
+            <li class="treeview {{ $sidebar_statistic_active or '' }}">
+                <a href="{{ url('/admin/statistic') }}">
+                    <i class="fa fa-file-text text-green"></i> <span>流量统计</span>
                 </a>
             </li>
 
