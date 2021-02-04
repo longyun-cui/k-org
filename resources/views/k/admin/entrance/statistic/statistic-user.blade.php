@@ -190,13 +190,12 @@
 <script>
     $(function(){
 
-        // 网站总访问统计
+        // 总访问统计
         var $all_res = new Array();
         $.each({!! $all !!},function(key,v){
             $all_res[(v.day - 1)] = { value:v.count, name:v.day };
 //            $all_res.push({ value:v.sum, name:v.day });
         });
-        console.log($all_res);
         var option_all = {
             title: {
                 text: '网站总流量'
@@ -432,7 +431,7 @@
                 x : 'left',
                 data: [
                     @foreach($open_device_type as $v)
-                        @if (!$loop->last) '{{$v->name}}', @else '{{$v->name}}' @endif
+                        @if (!$loop->last) '{{ $v->name }}', @else '{{ $v->name }}' @endif
                     @endforeach
                 ]
             },
@@ -467,9 +466,9 @@
                     data: [
                         @foreach($open_device_type as $v)
                         @if (!$loop->last)
-                            {value:{{$v->count}},name:'{{$v->name}}'},
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' },
                         @else
-                            {value:{{$v->count}},name:'{{$v->name}}'}
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' }
                         @endif
                         @endforeach
                     ]
@@ -496,7 +495,7 @@
                 x : 'left',
                 data: [
                     @foreach($open_system as $v)
-                            @if (!$loop->last) '{{$v->open_system}}', @else '{{$v->open_system}}' @endif
+                            @if (!$loop->last) '{{ $v->open_system }}', @else '{{ $v->open_system }}' @endif
                     @endforeach
                 ]
             },
@@ -531,9 +530,9 @@
                     data: [
                             @foreach($open_system as $v)
                             @if (!$loop->last)
-                        {value:{{$v->count}},name:'{{$v->open_system}}'},
+                        { value:'{{ $v->count }}', name:'{{ $v->open_system }}' },
                             @else
-                        {value:{{$v->count}},name:'{{$v->open_system}}'}
+                        { value:'{{ $v->count }}', name:'{{ $v->open_system }}' }
                         @endif
                         @endforeach
                     ]
@@ -560,7 +559,7 @@
                 x : 'left',
                 data: [
                     @foreach($open_device_type as $v)
-                        @if (!$loop->last) '{{$v->open_app}}', @else '{{$v->open_app}}' @endif
+                        @if (!$loop->last) '{{ $v->open_app }}', @else '{{ $v->open_app }}' @endif
                     @endforeach
                 ]
             },
@@ -595,9 +594,9 @@
                     data: [
                         @foreach($open_app as $v)
                         @if (!$loop->last)
-                            {value:{{$v->count}},name:'{{$v->open_app}}'},
+                            { value:'{{ $v->count }}', name:'{{$v->open_app}}'},
                         @else
-                            {value:{{$v->count}},name:'{{$v->open_app}}'}
+                            { value:'{{ $v->count }}', name:'{{$v->open_app}}'}
                         @endif
                         @endforeach
                     ]
@@ -772,7 +771,7 @@
                 x : 'left',
                 data: [
                     @foreach($shared_all_scale as $v)
-                            @if (!$loop->last) '{{$v->name}}', @else '{{$v->name}}' @endif
+                            @if (!$loop->last) '{{ $v->name }}', @else '{{ $v->name }}' @endif
                     @endforeach
                 ]
             },
@@ -807,9 +806,9 @@
                     data: [
                         @foreach($shared_all_scale as $v)
                         @if (!$loop->last)
-                            {value:{{$v->count}},name:'{{$v->name}}'},
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' },
                         @else
-                            {value:{{$v->count}},name:'{{$v->name}}'}
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' }
                         @endif
                         @endforeach
                     ]
@@ -836,7 +835,7 @@
                 x : 'left',
                 data: [
                     @foreach($shared_root_scale as $v)
-                            @if (!$loop->last) '{{$v->name}}', @else '{{$v->name}}' @endif
+                            @if (!$loop->last) '{{ $v->name }}', @else '{{ $v->name }}' @endif
                     @endforeach
                 ]
             },
@@ -871,9 +870,9 @@
                     data: [
                         @foreach($shared_root_scale as $v)
                         @if (!$loop->last)
-                            {value:{{$v->count}},name:'{{$v->name}}'},
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' },
                         @else
-                            {value:{{$v->count}},name:'{{$v->name}}'}
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' }
                         @endif
                         @endforeach
                     ]

@@ -159,7 +159,6 @@
             $item_res[(v.day - 1)] = { value:v.count, name:v.day };
 //            $all_res.push({ value:v.sum, name:v.day });
         });
-        console.log($item_res);
         var option_item = {
             title: {
                 text: '流量统计'
@@ -251,7 +250,7 @@
                 x : 'left',
                 data: [
                     @foreach($open_device_type as $v)
-                        @if (!$loop->last) '{{$v->name}}', @else '{{$v->name}}' @endif
+                        @if (!$loop->last) '{{ $v->name }}', @else '{{ $v->name }}' @endif
                     @endforeach
                 ]
             },
@@ -286,9 +285,9 @@
                     data: [
                         @foreach($open_device_type as $v)
                         @if (!$loop->last)
-                            {value:{{$v->count}},name:'{{$v->name}}'},
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' },
                         @else
-                            {value:{{$v->count}},name:'{{$v->name}}'}
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' }
                         @endif
                         @endforeach
                     ]
@@ -315,7 +314,7 @@
                 x : 'left',
                 data: [
                     @foreach($open_system as $v)
-                            @if (!$loop->last) '{{$v->open_system}}', @else '{{$v->open_system}}' @endif
+                            @if (!$loop->last) '{{ $v->open_system }}', @else '{{ $v->open_system }}' @endif
                     @endforeach
                 ]
             },
@@ -350,9 +349,9 @@
                     data: [
                             @foreach($open_system as $v)
                             @if (!$loop->last)
-                        {value:{{$v->count}},name:'{{$v->open_system}}'},
+                        { value:'{{ $v->count }}', name:'{{ $v->open_system }}' },
                             @else
-                        {value:{{$v->count}},name:'{{$v->open_system}}'}
+                        { value:'{{ $v->count }}', name:'{{ $v->open_system }}' }
                         @endif
                         @endforeach
                     ]
@@ -414,9 +413,9 @@
                     data: [
                         @foreach($open_app as $v)
                         @if (!$loop->last)
-                            {value:{{$v->count}},name:'{{$v->open_app}}'},
+                            { value:'{{ $v->count }}', name:'{{ $v->open_app }} '},
                         @else
-                            {value:{{$v->count}},name:'{{$v->open_app}}'}
+                            { value:'{{ $v->count }}', name:'{{ $v->open_app }} '}
                         @endif
                         @endforeach
                     ]
@@ -519,7 +518,7 @@
                 x : 'left',
                 data: [
                     @foreach($shared_data_scale as $v)
-                            @if (!$loop->last) '{{$v->name}}', @else '{{$v->name}}' @endif
+                            @if (!$loop->last) '{{ $v->name }}', @else '{{ $v->name }}' @endif
                     @endforeach
                 ]
             },
@@ -554,9 +553,9 @@
                     data: [
                         @foreach($shared_data_scale as $v)
                         @if (!$loop->last)
-                            {value:{{$v->count}},name:'{{$v->name}}'},
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' },
                         @else
-                            {value:{{$v->count}},name:'{{$v->name}}'}
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}' }
                         @endif
                         @endforeach
                     ]
