@@ -159,7 +159,6 @@
             $item_res[(v.day - 1)] = { value:v.count, name:v.day };
 //            $all_res.push({ value:v.sum, name:v.day });
         });
-        console.log($item_res);
         var option_item = {
             title: {
                 text: '流量统计'
@@ -298,7 +297,6 @@
         var myChart_type = echarts.init(document.getElementById('echart-device-type'));
         myChart_type.setOption(option_device_type);
 
-
         // 打开系统占比
         var option_system = {
             title : {
@@ -361,7 +359,6 @@
         };
         var myChart_system = echarts.init(document.getElementById('echart-system'));
         myChart_system.setOption(option_system);
-
 
         // APP占比
         var option_app = {
@@ -499,8 +496,6 @@
         };
         var myChart_shared_item = echarts.init(document.getElementById('echart-shared-item'));
         myChart_shared_item.setOption(option_shared_item);
-
-
 
 
         // 分享占比

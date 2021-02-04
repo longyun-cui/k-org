@@ -75,10 +75,10 @@
                         <div id="echart-device-type" style="width:100%;height:320px;"></div>
                     </div>
                     <div class="col-md-4">
-                        <div id="echart-app" style="width:100%;height:320px;"></div>
+                        <div id="echart-system" style="width:100%;height:320px;"></div>
                     </div>
                     <div class="col-md-4">
-                        <div id="echart-system" style="width:100%;height:320px;"></div>
+                        <div id="echart-app" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -271,7 +271,6 @@ $(function() {
         var myChart_all = echarts.init(document.getElementById('echart-all'));
         myChart_all.setOption(option_all);
 
-
         // 首页访问数
         var $root_res = new Array();
         $.each({!! $rooted !!},function(key,v){
@@ -351,7 +350,6 @@ $(function() {
         };
         var myChart_root = echarts.init(document.getElementById('echart-root'));
         myChart_root.setOption(option_root);
-
 
         // 简介访问数
         var $introduction_res = new Array();

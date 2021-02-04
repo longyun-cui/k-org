@@ -81,11 +81,11 @@
                     </div>
 
                     <div class="col-md-4">
-                        <div id="echart-app" style="width:100%;height:320px;"></div>
+                        <div id="echart-system" style="width:100%;height:320px;"></div>
                     </div>
 
                     <div class="col-md-4">
-                        <div id="echart-system" style="width:100%;height:320px;"></div>
+                        <div id="echart-app" style="width:100%;height:320px;"></div>
                     </div>
 
                 </div>
@@ -194,7 +194,6 @@
         var $all_res = new Array();
         $.each({!! $all !!},function(key,v){
             $all_res[(v.day - 1)] = { value:v.count, name:v.day };
-//            $all_res.push({ value:v.sum, name:v.day });
         });
         var option_all = {
             title: {
@@ -268,7 +267,6 @@
         var myChart_all = echarts.init(document.getElementById('echart-all'));
         myChart_all.setOption(option_all);
 
-
         // 首页访问统计
         var $root_res = new Array();
         $.each({!! $rooted !!},function(key,v){
@@ -339,7 +337,6 @@
         };
         var myChart_root = echarts.init(document.getElementById('echart-root'));
         myChart_root.setOption(option_root);
-
 
         // 简介访问统计
         var $introduction_res = new Array();
@@ -478,7 +475,6 @@
         var myChart_type = echarts.init(document.getElementById('echart-device-type'));
         myChart_type.setOption(option_device_type);
 
-
         // 打开系统占比
         var option_system = {
             title : {
@@ -541,7 +537,6 @@
         };
         var myChart_system = echarts.init(document.getElementById('echart-system'));
         myChart_system.setOption(option_system);
-
 
         // APP占比
         var option_app = {
@@ -680,7 +675,6 @@
         var myChart_shared_all = echarts.init(document.getElementById('echart-shared-all'));
         myChart_shared_all.setOption(option_shared_all);
 
-
         // 主页分享数
         var $shared_root_res = new Array();
         $.each({!! $shared_root !!},function(key,v){
@@ -817,7 +811,6 @@
         };
         var myChart_shared_all_scale = echarts.init(document.getElementById('echart-shared-all-scale'));
         myChart_shared_all_scale.setOption(option_shared_all_scale);
-
 
         // 主页分享占比
         var option_shared_root_scale = {
