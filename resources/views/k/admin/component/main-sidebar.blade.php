@@ -99,6 +99,12 @@
                     <i class="fa fa-bar-chart text-green"></i> <span>流量统计</span>
                 </a>
             </li>
+            <li class="treeview {{ $sidebar_statistic_all_list_active or '' }}">
+                <a href="{{ url('/admin/statistic/statistic-all-list') }}">
+                    <i class="fa fa-bar-chart text-green"></i> <span>统计列表</span>
+                </a>
+            </li>
+
 
 
 

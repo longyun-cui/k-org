@@ -131,6 +131,7 @@ Route::group([], function () {
         Route::match(['get','post'], '/statistic/statistic-index', $controller.'@view_statistic_index');
         Route::match(['get','post'], '/statistic/statistic-user', $controller.'@view_statistic_user');
         Route::match(['get','post'], '/statistic/statistic-item', $controller.'@view_statistic_item');
+        Route::match(['get','post'], '/statistic/statistic-all-list', $controller.'@view_statistic_all_list');
 
 
 

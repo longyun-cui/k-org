@@ -2133,6 +2133,57 @@ class IndexRepository {
     }
 
 
+    // 【K】【内容】【全部】返回-列表-视图
+    public function view_statistic_all_list($post_data)
+    {
+        return view(env('TEMPLATE_ADMIN').'admin.entrance.statistic.statistic-all-list')
+            ->with([
+                'sidebar_statistic_all_list_active'=>'active'
+            ]);
+    }
+    // 【K】【内容】【全部】返回-列表-数据
+    public function get_statistic_all_datatable($post_data)
+    {
+        $me = Auth::guard("admin")->user();
+        $query = K_Record::select('*')
+            ->with(['creator','object','item']);
+
+        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("id", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->get();
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+            $list[$k]->description = replace_blank($v->description);
+
+            if($v->owner_id == $me->id) $list[$k]->is_me = 1;
+            else $list[$k]->is_me = 0;
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+
 
 
 

@@ -34,6 +34,11 @@ class K_Record extends Model
     {
         return $this->belongsTo('App\Models\K\K_User','user_id','id');
     }
+    // 用户
+    function object()
+    {
+        return $this->belongsTo('App\Models\K\K_User','object_id','id');
+    }
 
 
     // 内容
