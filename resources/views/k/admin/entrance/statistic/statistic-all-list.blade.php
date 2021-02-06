@@ -1,11 +1,11 @@
 @extends(env('TEMPLATE_ADMIN').'admin.layout.layout')
 
 
-@section('head_title','内容列表 - 管理员后台系统 - 如未科技')
+@section('head_title','记录列表 - 管理员后台系统 - 朝鲜族组织平台 - 如未科技')
 
 
 @section('header','')
-@section('description','朝鲜族组织活动平台 - 管理员后台系统 - 如未科技')
+@section('description','管理员后台系统 - 朝鲜族组织平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
@@ -19,7 +19,7 @@
 
             <div class="box-header with-border" style="margin:16px 0;">
 
-                <h3 class="box-title">内容列表</h3>
+                <h3 class="box-title">记录列表</h3>
 
                 <div class="pull-right _none">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
@@ -230,64 +230,17 @@
                         }
                     },
                     {
-                        "width": "64px",
-                        "title": "状态",
-                        "data": "active",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-//                            return data;
-                            if(row.item_status == 1)
-                            {
-                                if(data == 0)
-                                {
-                                    return '<small class="btn-xs bg-teal">待发布</small>';
-                                }
-                                else if(data == 1)
-                                {
-                                    return '<small class="btn-xs bg-olive">已发布</small>';
-//                                if(row.is_read == 0) return '<small class="btn-xs bg-olive">未读</small>';
-//                                else if(row.is_read == 1) return '<small class="btn-xs bg-primary">已读</small>';
-//                                else return "--";
-                                }
-                                else if(data == 9)
-                                {
-                                    return '<small class="btn-xs bg-purple">已完成</small>';
-                                }
-                                else return "有误";
-                            }
-                            else
-                            {
-                                return '<small class="btn-xs btn-danger">已封禁</small>';
-                            }
-                        }
-                    },
-                    {
                         "width": "240px",
                         "title": "操作",
                         "data": 'id',
                         "orderable": false,
                         render: function(data, type, row, meta) {
 
-                            if(row.item_status == 1)
-                            {
-                                $html_able = '<a class="btn btn-xs btn-danger item-admin-disable-submit" data-id="'+data+'">封禁</a>';
-                            }
-                            else
-                            {
-                                $html_able = '<a class="btn btn-xs btn-success item-admin-enable-submit" data-id="'+data+'">解禁</a>';
-                            }
-
                             var html =
-                                    $html_able+
-//                                    '<a class="btn btn-xs" href="/item/edit?id='+data+'">编辑</a>'+
-//                                    '<a class="btn btn-xs btn-primary item-edit-link" data-id="'+data+'">编辑</a>'+
                                     '<a class="btn btn-xs bg-navy item-admin-delete-submit" data-id="'+data+'">删除</a>'+
-//                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
-//                                    '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
-//                                    '<a class="btn btn-xs bg-olive item-download-qr-code-submit" data-id="'+data+'">下载二维码</a>'+
+                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
                                     '';
                             return html;
-
                         }
                     }
                 ],

@@ -274,6 +274,10 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Mac')) $info['system'] = 'Mac';
         if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
         if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
+        if(stripos($Agent, 'Unix')) $info['system'] = 'Unix';
+        if(stripos($Agent, 'Linux')) $info['system'] = 'Linux';
+        if(stripos($Agent, 'Ubuntu')) $info['system'] = 'Ubuntu';
+        if(stripos($Agent, 'CentOS')) $info['system'] = 'CentOS';
 
         $info['browser'] = 'Ohters';
         if(stripos($Agent, 'Mozilla') && !stripos($Agent, 'MSIE')) $info['browser'] = 'Netscape';
