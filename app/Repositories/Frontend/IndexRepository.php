@@ -296,10 +296,39 @@ class IndexRepository {
         $item = K_Item::with(['owner'])->find($id);
         if($item)
         {
-            if($item->item_status != 1) return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+            if($item->item_category != 1)
+            {
+                $error["text"] = '该内容拒绝访问！';
+                return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+            }
+
+            if($item->item_status != 1)
+            {
+                $error["text"] = '该内容被禁啦！';
+                return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+            }
 
             $item->timestamps = false;
             $item->increment('visit_num');
+
+            if($item->owner)
+            {
+                if($item->owner->user_category != 1)
+                {
+                    $error["text"] = '该内容用户有误！';
+                    return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+                }
+                if($item->owner->user_status != 1)
+                {
+                    $error["text"] = '该内容用户被禁啦！';
+                    return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+                }
+            }
+            else
+            {
+                $error["text"] = '作者有误！';
+                return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+            }
 
             $user = K_User::with([
                     'ad',
@@ -307,11 +336,14 @@ class IndexRepository {
                 ])->find($item->owner_id);
             $user->timestamps = false;
             $user->increment('visit_num');
-//            dd($user->toArray());
 
             $item->custom_decode = json_decode($item->custom);
         }
-        else return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+        else
+        {
+            $error["text"] = '内容不存在或者被删除了！';
+            return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+        }
 
 
         $is_follow = 0;
@@ -380,10 +412,18 @@ class IndexRepository {
             ->find($user_id);
 
 
-
         if($user)
         {
-            if($user->user_status != 1) return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+            if($user->user_category != 1)
+            {
+                $error["text"] = '该用户拒绝访问！';
+                return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+            }
+            if($user->user_status != 1)
+            {
+                $error["text"] = '该用户被禁啦！';
+                return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+            }
 
             if($user->user_type == 11)
             {
@@ -399,7 +439,11 @@ class IndexRepository {
                 ]);
             }
         }
-        else return view(env('TEMPLATE_DEFAULT').'frontend.errors.404');
+        else
+        {
+            $error["text"] = '该用户不存在！';
+            return view(env('TEMPLATE_DEFAULT').'frontend.errors.404')->with('error',$error);
+        }
 
 
         $user->timestamps = false;

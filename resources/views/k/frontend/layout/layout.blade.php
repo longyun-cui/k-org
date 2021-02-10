@@ -103,7 +103,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link type="text/css" rel="stylesheet" href="{{ asset('common/css/animate/wicked.css') }}" media="all" />
     <link type="text/css" rel="stylesheet" href="{{ asset('common/css/animate/hover.css') }}" media="all" />
 
+    @yield('css')
     @yield('style')
+    @yield('custom-css')
+    @yield('custom-style')
 
     <style>
         /*.item-piece img { background:url("/common/images/bg/background-image.png");background-size:cover; }*/
@@ -430,6 +433,7 @@ desired effect
 </script>
 
 @yield('js')
+@yield('script')
 @yield('custom-js')
 @yield('custom-script')
 
