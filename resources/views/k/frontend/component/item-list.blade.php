@@ -41,11 +41,11 @@
                 <span class="paste-tag-inn">
                     @if($item->time_type == 1)
                         @if(!empty($item->start_time))
-                            <span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b> (开始)</span>
+                            <span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b></span>
                         @endif
                         @if(!empty($item->end_time))
                             <span style="font-size:12px;">至</span>
-                            <span class="label label-danger end-time-inn"><b>{{ time_show($item->end_time) }} (结束)</b></span>
+                            <span class="label label-danger end-time-inn"><b>{{ time_show($item->end_time) }}(结束)</b></span>
                         @endif
                     @endif
                 </span>
@@ -65,7 +65,7 @@
                 @if($item->time_type == 1)
                 <div class="text-row text-time-row multi-ellipsis-1">
                         @if(!empty($item->start_time))
-                            <span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b> (开始)</span>
+                            <span class="label label-success start-time-inn"><b>{{ time_show($item->start_time) }}</b></span>
                         @endif
                         @if(!empty($item->end_time))
                             <span class="font-12px"> 至 </span>

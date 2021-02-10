@@ -1916,6 +1916,7 @@ class IndexRepository {
         $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
             ->groupBy('open_system')
             ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$user_id)
             ->get();
 
         // 打开APP类型【占比】

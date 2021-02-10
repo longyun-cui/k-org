@@ -42,7 +42,7 @@
                     <span class="paste-tag-inn">
                     @if($i->item->time_type == 1)
                             @if(!empty($i->item->start_time))
-                                <span class="label label-success start-time-inn"><b>{{ time_show($i->item->start_time) }}</b> (开始)</span>
+                                <span class="label label-success start-time-inn"><b>{{ time_show($i->item->start_time) }}</b></span>
                             @endif
                             @if(!empty($i->item->end_time))
                                 <span style="font-size:12px;">至</span>
@@ -66,7 +66,7 @@
                     @if($i->item->time_type == 1)
                         <div class="text-row text-time-row multi-ellipsis-1">
                             @if(!empty($i->item->start_time))
-                                <span class="label label-success start-time-inn"><b>{{ time_show($i->item->start_time) }}</b> (开始)</span>
+                                <span class="label label-success start-time-inn"><b>{{ time_show($i->item->start_time) }}</b></span>
                             @endif
                             @if(!empty($i->item->end_time))
                                 <span class="font-12px"> 至 </span>
