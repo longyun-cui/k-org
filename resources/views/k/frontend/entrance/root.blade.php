@@ -37,23 +37,23 @@
 
         @if($page_type == 'tag')
 
-            <div class="pull-left margin-bottom-16px">
+            <div class="container-box pull-left margin-bottom-16px">
                 @if(request('type') != 'activity')
                     @include(env('TEMPLATE_DEFAULT').'frontend.component.user-list',['user_list'=>$user_list])
                 @endif
             </div>
 
-            <div class="pull-left margin-bottom-16px">
+            <div class="container-box pull-left margin-bottom-16px">
                 @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list',['item_list'=>$item_list])
             </div>
 
         @else
 
-            <div class="pull-left margin-bottom-16px">
+            <div class="container-box pull-left margin-bottom-16px">
                 @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list',['item_list'=>$item_list])
             </div>
 
-            <div class="pull-left margin-bottom-16px">
+            <div class="container-box pull-left margin-bottom-16px">
                 @if(request('type') != 'activity')
                     @include(env('TEMPLATE_DEFAULT').'frontend.component.user-list',['user_list'=>$user_list])
                 @endif
