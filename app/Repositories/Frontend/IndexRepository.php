@@ -299,6 +299,7 @@ class IndexRepository {
 
         $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
+        $return['page_type'] = 'tag';
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
