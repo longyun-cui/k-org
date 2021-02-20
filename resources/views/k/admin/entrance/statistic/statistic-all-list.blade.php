@@ -141,13 +141,7 @@
                         render: function(data, type, row, meta) {
                             if(row.page_type == 1)
                             {
-                                if(row.page_module == 0) return 'platform';
-                                else if(row.page_module == 1) return '<small class="btn-xs bg-primary">平台•首页</small>';
-                                else if(row.page_module == 2) return '<small class="btn-xs bg-primary">平台•介绍页</small>';
-                                else if(row.page_module == 9) return '<small class="btn-xs bg-primary">平台•文章页</small>';
-                                else if(row.page_module == 11) return '<small class="btn-xs bg-primary">平台•活动页</small>';
-                                else if(row.page_module == 33) return '<small class="btn-xs bg-primary">平台•组织列表</small>';
-                                else return "platform error";
+                                return '<small class="btn-xs bg-primary">平台</small>';
                             }
                             else if(row.page_type == 2)
                             {
