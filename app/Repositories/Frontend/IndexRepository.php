@@ -128,13 +128,26 @@ class IndexRepository {
 
 
         $sidebar_active = '';
-        if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
-        else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
-        else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
+        if($type == 'root')
+        {
+            $sidebar_active = 'sidebar_menu_root_active';
+            $return['head_title'] = "首页 - 朝鲜族组织平台";
+        }
+        else if($type == 'article')
+        {
+            $sidebar_active = 'sidebar_menu_article_active';
+            $return['head_title'] = "文章 - 朝鲜族组织平台";
+        }
+        else if($type == 'activity')
+        {
+            $sidebar_active = 'sidebar_menu_activity_active';
+            $return['head_title'] = "活动 - 朝鲜族组织平台";
+        }
 
 
         $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
+        $return['page_type'] = 'root';
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
@@ -300,6 +313,7 @@ class IndexRepository {
         $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
         $return['page_type'] = 'tag';
+        $return['head_title'] = "#{$q} - 朝鲜族组织平台";
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);

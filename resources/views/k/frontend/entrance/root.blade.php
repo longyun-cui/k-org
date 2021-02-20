@@ -1,7 +1,9 @@
 @extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
 
 
-@section('head_title','朝鲜族组织平台')
+@section('head_title')
+    {{ $head_title or '朝鲜族组织平台' }}
+@endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection
 @section('meta_description')@endsection
@@ -9,7 +11,7 @@
 
 
 @section('wx_share_title')朝鲜族组织平台@endsection
-@section('wx_share_desc')朝鲜族的社群活动分享平台@endsection
+@section('wx_share_desc')朝鲜族社群组织活动分享平台@endsection
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 
@@ -44,7 +46,6 @@
             <div class="pull-left margin-bottom-16px">
                 @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list',['item_list'=>$item_list])
             </div>
-
 
         @else
 
