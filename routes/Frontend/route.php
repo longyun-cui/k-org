@@ -85,6 +85,9 @@ Route::group([], function () {
         Route::get('user/{id?}/fans', $controller.'@view_user_fans');
 
 
+        Route::get('tag/{q?}', $controller.'@view_tag');
+
+
         Route::group(['middleware' => ['login.turn']], function () {
 
             $controller = "IndexController";

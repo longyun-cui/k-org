@@ -134,7 +134,7 @@
                         }
                     },
                     {
-                        "width": "96px",
+                        "width": "128px",
                         "title": "类型",
                         "data": "id",
                         'orderable': false,
@@ -177,7 +177,13 @@
                         render: function(data, type, row, meta) {
                             if(row.page_type == 1)
                             {
-                                return '<small class="btn-xs bg-primary">平台</small>'
+                                if(row.page_module == 0) return 'platform';
+                                else if(row.page_module == 1) return '<small class="btn-xs bg-primary">首页</small>';
+                                else if(row.page_module == 2) return '<small class="btn-xs bg-primary">介绍页</small>';
+                                else if(row.page_module == 9) return '<small class="btn-xs bg-primary">文章页</small>';
+                                else if(row.page_module == 11) return '<small class="btn-xs bg-primary">活动页</small>';
+                                else if(row.page_module == 33) return '<small class="btn-xs bg-primary">组织列表</small>';
+                                else return "platform error";
                             }
                             else if(row.page_type == 2)
                             {
@@ -206,6 +212,9 @@
                         "data": "ip",
                         "orderable": false,
                         render: function(data, type, row, meta) {
+
+                            return '<a target="_blank" href="https://www.ip138.com/iplookup.asp?action=2&ip='+data+'">'+data+'</a>';
+
                             return data;
                         }
                     },

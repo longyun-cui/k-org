@@ -2,17 +2,19 @@
 namespace App\Models\K;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class K_User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     protected $table = "user";
 
     protected $fillable = [
         'active', 'status', 'user_active', 'user_status', 'user_category', 'user_group', 'user_type', 'category', 'group', 'type',
         'parent_id', 'p_id',
-        'name', 'username', 'nickname', 'true_name', 'description', 'portrait_img',
+        'name', 'username', 'nickname', 'true_name', 'description', 'portrait_img', 'tag',
         'mobile', 'telephone', 'email', 'password',
         'linkman', 'contact_phone', 'contact_wechat_id', 'contact_address',
         'QQ_number', 'wechat_id', 'weibo_address', 'wx_unionid',

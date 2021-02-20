@@ -25,12 +25,15 @@ class IndexController extends Controller
         return $this->repo->view_root(request()->all());
     }
 
-
-
-
     public function view_introduction()
     {
         return $this->repo->view_introduction();
+    }
+
+
+    public function view_tag($q='')
+    {
+        return $this->repo->view_tag(request()->all(),$q);
     }
 
 

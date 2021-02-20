@@ -142,7 +142,6 @@ class IndexRepository {
         else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root')->with($return);
     }
 
-
     // 【K】【平台介绍】
     public function view_introduction()
     {
@@ -175,6 +174,129 @@ class IndexRepository {
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
 //        else return view('frontend.entrance.root')->with($return);
         else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-introduction')->with($return);
+    }
+
+
+    // 【K】【平台首页】
+    public function view_tag($post_data,$q='')
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+        }
+        else $me_id = 0;
+
+//        dd("%$q%");
+
+        if(Auth::check())
+        {
+            $item_query = K_Item::with([
+                'owner',
+                'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+            ]);
+
+            $user_query = K_User::select('*')
+                ->with([
+                    'ad',
+                    'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
+                ])
+                ->withCount([
+                    'fans_list as fans_count' => function($query) { $query->where([]); },
+                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+                ])
+                ->where('user_type',11)
+                ->where('user_status',1)
+                ->where('active',1);
+
+            if($q) $user_query->where('tag','like',"%$q%");
+
+            $user_list = $user_query->orderByDesc('id')->paginate(20);
+        }
+        else
+        {
+            $item_query = K_Item::with(['owner']);
+
+            $user_query = K_User::select('*')
+                ->with([
+                    'ad',
+                ])
+                ->withCount([
+                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+                ])
+                ->where('user_type',11)
+                ->where('user_status',1)
+                ->where('active',1);
+
+            if($q) $user_query->where('tag','like',"%$q%");
+
+            $user_list = $user_query->orderByDesc('id')->paginate(20);
+        }
+
+        $item_query->where(['item_status'=>1,'active'=>1]);
+
+        $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
+        if($type == 'root')
+        {
+            $item_query->whereIn('item_type',[1,11]);
+            $record["page_module"] = 1; // page_module=1 default index
+        }
+        else if($type == 'article')
+        {
+            $item_query->whereIn('item_type',[1]);
+            $record["page_module"] = 9; // page_module=9 article
+        }
+        else if($type == 'activity')
+        {
+            $item_query->whereIn('item_type',[11]);
+            $record["page_module"] = 11; // page_module=11 activity
+        }
+        else
+        {
+            $record["page_module"] = 1; // page_module=0 default index
+        }
+
+
+        $item_list = $item_query->orderByDesc('published_at')->paginate(20);
+        $return['item_list'] = $item_list;
+
+        $return['user_list'] = $user_list;
+
+        foreach ($item_list as $item)
+        {
+            $item->custom_decode = json_decode($item->custom);
+            $item->content_show = strip_tags($item->content);
+            $item->img_tags = get_html_img($item->content);
+        }
+
+
+
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 1; // page_type=1 default platform
+        $record["page_num"] = $item_list->toArray()["current_page"];
+        $record["from"] = request('from',NULL);
+        $this->record($record);
+
+
+        $sidebar_active = '';
+        if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
+        else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
+        else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
+
+
+        $return[$sidebar_active] = 'active';
+        $return['getType'] = 'items';
+
+        $path = request()->path();
+        if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
+//        else return view('frontend.entrance.root')->with($return);
+        else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root')->with($return);
     }
 
 

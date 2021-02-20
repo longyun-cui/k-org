@@ -155,6 +155,14 @@
                     </div>
                 </div>
 
+                {{--标签--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">标签</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="tag" placeholder="标签" value="{{ $data->tag or '' }}">
+                    </div>
+                </div>
+
                 {{--目录--}}
                 <div class="form-group _none">
                     <label class="control-label col-md-2">目录</label>

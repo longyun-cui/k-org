@@ -1,9 +1,11 @@
 <?php
 namespace App\Models\K;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class K_Item extends Model
 {
+    use SoftDeletes;
     //
     protected $table = "item";
     protected $fillable = [
@@ -13,14 +15,14 @@ class K_Item extends Model
         'org_id', 'admin_id',
         'item_id', 'menu_id',
         'name', 'title', 'subtitle', 'description', 'content', 'custom', 'custom2', 'custom3',
-        'link_url', 'cover_pic', 'attachment_name', 'attachment_src',
+        'link_url', 'cover_pic', 'attachment_name', 'attachment_src', 'tag',
         'time_point', 'time_type', 'start_time', 'end_time',
         'visit_num', 'share_num', 'favor_num', 'comment_num',
         'published_at'
     ];
     protected $dateFormat = 'U';
 
-    protected $dates = ['created_at','updated_at'];
+    protected $dates = ['created_at','updated_at','deleted_at'];
 //    public function getDates()
 //    {
 ////        return array(); // 原形返回；

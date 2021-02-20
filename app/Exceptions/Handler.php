@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
                 {
                     return redirect('/org/404');
                 }
-                else return response()->view('frontend.errors.404');
+                else return response()->view('k.frontend.errors.404');
             }
         }
 
@@ -102,7 +102,7 @@ class Handler extends ExceptionHandler
             case ($e instanceof ModelNotFoundException):
 
                 //自定义处理异常，此处我们返回一个404页面
-                return view('frontend.errors.404');
+                return view('k.frontend.errors.404');
                 break;
 
             default:
