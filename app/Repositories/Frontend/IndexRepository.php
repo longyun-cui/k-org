@@ -188,15 +188,8 @@ class IndexRepository {
         }
         else $me_id = 0;
 
-//        dd("%$q%");
-
         if(Auth::check())
         {
-            $item_query = K_Item::with([
-                'owner',
-                'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
-            ]);
-
             $user_query = K_User::select('*')
                 ->with([
                     'ad',
@@ -214,11 +207,15 @@ class IndexRepository {
             if($q) $user_query->where('tag','like',"%$q%");
 
             $user_list = $user_query->orderByDesc('id')->paginate(20);
+
+            $item_query = K_Item::select('*')
+                ->with([
+                    'owner',
+                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+                ]);
         }
         else
         {
-            $item_query = K_Item::with(['owner']);
-
             $user_query = K_User::select('*')
                 ->with([
                     'ad',
@@ -234,9 +231,20 @@ class IndexRepository {
             if($q) $user_query->where('tag','like',"%$q%");
 
             $user_list = $user_query->orderByDesc('id')->paginate(20);
+
+            $item_query = K_Item::select('*')->with(['owner']);
         }
 
-        $item_query->where(['item_status'=>1,'active'=>1]);
+        $return['user_list'] = $user_list;
+
+        $user_ids = $user_list->pluck('id')->toArray();
+
+//        if(!count($user_ids))
+//        {
+//            $user_ids = [0];
+//        }
+
+        $item_query->where(['item_status'=>1,'active'=>1])->whereIn('owner_id',$user_ids);
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
         if($type == 'root')
@@ -263,7 +271,6 @@ class IndexRepository {
         $item_list = $item_query->orderByDesc('published_at')->paginate(20);
         $return['item_list'] = $item_list;
 
-        $return['user_list'] = $user_list;
 
         foreach ($item_list as $item)
         {
@@ -276,8 +283,8 @@ class IndexRepository {
 
 
         // 插入记录表
-        $record["record_category"] = 1; // record_category=1 browse/share
-        $record["record_type"] = 1; // record_type=1 browse
+        $record["record_category"] = 1; // record_category 1.browse/2.share/3.search
+        $record["record_type"] = 3; // record_type=3 search
         $record["page_type"] = 1; // page_type=1 default platform
         $record["page_num"] = $item_list->toArray()["current_page"];
         $record["from"] = request('from',NULL);
@@ -285,9 +292,9 @@ class IndexRepository {
 
 
         $sidebar_active = '';
-        if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
-        else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
-        else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
+//        if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
+//        else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
+//        else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
 
 
         $return[$sidebar_active] = 'active';

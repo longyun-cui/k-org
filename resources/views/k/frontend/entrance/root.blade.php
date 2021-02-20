@@ -31,9 +31,8 @@
 
     <div class="col-xs-12 col-sm-12 col-md-9 container-body-left">
 
-        {{--@foreach($datas as $num => $item)--}}
-            {{--@include('frontend.component.topic')--}}
-        {{--@endforeach--}}
+        @include(env('TEMPLATE_DEFAULT').'frontend.component.left-tag')
+
         @include(env('TEMPLATE_DEFAULT').'frontend.component.item-list',['item_list'=>$item_list])
 
         @if(request('type') != 'activity')
