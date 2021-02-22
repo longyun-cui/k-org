@@ -302,7 +302,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -346,7 +346,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -390,7 +390,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -834,7 +834,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -884,7 +884,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -937,7 +937,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -1043,7 +1043,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -1096,7 +1096,7 @@ class IndexRepository {
         else $query->orderBy("id", "desc");
 
         if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {
@@ -1406,7 +1406,7 @@ class IndexRepository {
         return response_success($item,"");
 
     }
-    // 【ITEM】删除
+    // 【ITEM】软删除
     public function operate_item_item_delete($post_data)
     {
         $messages = [
@@ -1452,6 +1452,155 @@ class IndexRepository {
 
 
             $bool = $item->delete();
+            if(!$bool) throw new Exception("delete--item--fail");
+
+            DB::commit();
+
+
+//            // 删除原封面图片
+//            if(!empty($mine_cover_pic) && file_exists(storage_path("resource/" . $mine_cover_pic)))
+//            {
+//                unlink(storage_path("resource/" . $mine_cover_pic));
+//            }
+//
+//            // 删除原附件
+//            if(!empty($mine_attachment_src) && file_exists(storage_path("resource/" . $mine_attachment_src)))
+//            {
+//                unlink(storage_path("resource/" . $mine_attachment_src));
+//            }
+//
+//            // 删除二维码
+//            if(file_exists(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png')))
+//            {
+//                unlink(storage_path("resource/unique/qr_code/".'qr_code_item_'.$id.'.png'));
+//            }
+//
+//            // 删除UEditor图片
+//            $img_tags = get_html_img($mine_content);
+//            foreach ($img_tags[2] as $img)
+//            {
+//                if (!empty($img) && file_exists(public_path($img)))
+//                {
+//                    unlink(public_path($img));
+//                }
+//            }
+
+
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【ITEM】软删除恢复
+    public function operate_item_item_restore($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required',
+            'id.required' => 'id.required',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-restore') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::withTrashed()->find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if($id == $me->advertising_id)
+            {
+                $me->timestamps = false;
+                $me->advertising_id = 0;
+                $bool_0 = $me->save();
+                if(!$bool_0) throw new Exception("update--user--fail");
+            }
+
+            $bool = $item->restore();
+            if(!$bool) throw new Exception("restore--item--fail");
+
+            DB::commit();
+
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【ITEM】永久删除
+    public function operate_item_item_delete_permanently($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请输入关键词ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-delete-permanently') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $item = K_Item::withTrashed()->find($id);
+        if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
+
+        $me = Auth::guard('admin')->user();
+        if($me->user_category != 0) return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if($id == $me->advertising_id)
+            {
+                $me->timestamps = false;
+                $me->advertising_id = 0;
+                $bool_0 = $me->save();
+                if(!$bool_0) throw new Exception("update--user--fail");
+            }
+
+            $mine_cover_pic = $item->cover_pic;
+            $mine_attachment_src = $item->attachment_src;
+            $mine_content = $item->content;
+
+
+            $bool = $item->foreceDelete();
             if(!$bool) throw new Exception("delete--item--fail");
 
             DB::commit();

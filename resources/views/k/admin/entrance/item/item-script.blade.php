@@ -87,7 +87,7 @@
         });
 
         // 内容【删除】
-        $("#item-main-body").on('click', ".item-delete-submit", function() {
+        $("#item-main-body").on('click', ".item-admin-delete-submit", function() {
             var that = $(this);
             layer.msg('确定要"删除"么？', {
                 time: 0
@@ -98,6 +98,60 @@
                         {
                             _token: $('meta[name="_token"]').attr('content'),
                             operate: "item-delete",
+                            id:that.attr('data-id')
+                        },
+                        function(data){
+                            layer.close(index);
+                            if(!data.success) layer.msg(data.msg);
+                            {
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
+                        },
+                        'json'
+                    );
+                }
+            });
+        });
+
+        // 内容【恢复】
+        $("#item-main-body").on('click', ".item-admin-restore-submit", function() {
+            var that = $(this);
+            layer.msg('确定要"恢复"么？', {
+                time: 0
+                ,btn: ['确定', '取消']
+                ,yes: function(index){
+                    $.post(
+                        "{{ url('/admin/item/item-restore') }}",
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            operate: "item-restore",
+                            id:that.attr('data-id')
+                        },
+                        function(data){
+                            layer.close(index);
+                            if(!data.success) layer.msg(data.msg);
+                            {
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
+                        },
+                        'json'
+                    );
+                }
+            });
+        });
+
+        // 内容【永久删除】
+        $("#item-main-body").on('click', ".item-admin-delete-permanently-submit", function() {
+            var that = $(this);
+            layer.msg('确定要"永久删除"么？', {
+                time: 0
+                ,btn: ['确定', '取消']
+                ,yes: function(index){
+                    $.post(
+                        "{{ url('/admin/item/item-delete-permanently') }}",
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            operate: "item-delete-permanently",
                             id:that.attr('data-id')
                         },
                         function(data){

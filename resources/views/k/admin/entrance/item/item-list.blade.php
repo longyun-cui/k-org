@@ -300,6 +300,11 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(row.deleted_at != null)
+                            {
+                                return '<small class="btn-xs bg-black">已删除</small>';
+                            }
+
                             if(data == 0)
                             {
                                 return '<small class="btn-xs bg-teal">待发布</small>';
@@ -319,7 +324,7 @@
                         }
                     },
                     {
-                        "width": "240px",
+                        "width": "288px",
                         "title": "操作",
                         "data": 'id',
                         "orderable": false,
@@ -346,6 +351,7 @@
                                     {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
                                     $html_1+
                                     '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'">删除</a>'+
+                                    '<a class="btn btn-xs bg-navy item-admin-delete-permanently-submit" data-id="'+data+'">永久删除</a>'+
                                     '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
                                     '';
                             return html;

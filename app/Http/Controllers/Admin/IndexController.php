@@ -287,10 +287,20 @@ class IndexController extends Controller
     {
         return $this->repo->operate_item_item_get(request()->all());
     }
-    // 【内容】删除
+    // 【内容】软删除
     public function operate_item_item_delete()
     {
         return $this->repo->operate_item_item_delete(request()->all());
+    }
+    // 【内容】软删除恢复
+    public function operate_item_item_restore()
+    {
+        return $this->repo->operate_item_item_restore(request()->all());
+    }
+    // 【内容】永久删除
+    public function operate_item_item_delete_permanently()
+    {
+        return $this->repo->operate_item_item_delete_permanently(request()->all());
     }
     // 【内容】发布
     public function operate_item_item_publish()

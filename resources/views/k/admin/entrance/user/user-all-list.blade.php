@@ -407,6 +407,11 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(row.deleted_at != null)
+                            {
+                                return '<small class="btn-xs bg-black">已删除</small>';
+                            }
+
                             if(row.user_status == 1)
                             {
                                 return '<small class="btn-xs btn-success">正常</small>';

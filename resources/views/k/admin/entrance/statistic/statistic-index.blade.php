@@ -33,7 +33,7 @@
             </div>
 
             {{--首页访问量--}}
-            <div class="box-body">
+            <div class="box-body _none">
                 <div class="row">
                     <div class="col-md-12">
                         <div id="echart-root" style="width:100%;height:240px;"></div>
@@ -42,7 +42,7 @@
             </div>
 
             {{--简介--}}
-            <div class="box-body">
+            <div class="box-body _none">
                 <div class="row">
                     <div class="col-md-12">
                         <div id="echart-introduction" style="width:100%;height:240px;"></div>
@@ -105,24 +105,24 @@
             {{--总分享数--}}
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <div id="echart-shared-all" style="width:100%;height:320px;"></div>
                     </div>
                     <div class="col-md-3">
-                        <div id="echart-shared-all-scale" style="width:100%;height:320px;"></div>
+                        <div id="echart-shared-root-scale-" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
 
             {{--主页分享数--}}
-            <div class="box-body">
+            <div class="box-body _none">
                 <div class="row">
                     <div class="col-md-9">
                         <div id="echart-shared-root" style="width:100%;height:240px;"></div>
                     </div>
-                    <div class="col-md-3">
-                        <div id="echart-shared-root-scale" style="width:100%;height:320px;"></div>
-                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div id="echart-shared-root-scale-" style="width:100%;height:320px;"></div>
                 </div>
             </div>
 
@@ -136,7 +136,7 @@
 
 
 {{--分享渠道比例--}}
-<div class="row _none">
+<div class="row">
     <div class="col-md-12">
         <!-- BEGIN PORTLET-->
         <div class="box box-warning">
@@ -147,19 +147,11 @@
 
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div id="echart-shared-all-scale-" style="width:100%;height:320px;"></div>
+                    <div class="col-md-6">
+                        <div id="echart-shared-all-scale" style="width:100%;height:320px;"></div>
                     </div>
-                </div>
-            </div>
-
-            <div class="box-footer">
-            </div>
-
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div id="echart-shared-root-scale-" style="width:100%;height:320px;"></div>
+                    <div class="col-md-6">
+                        <div id="echart-shared-root-scale" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -199,9 +191,22 @@ $(function() {
             $all_res[(v.day - 1)] = { value:v.count, name:v.day };
 //            $all_res.push({ value:v.sum, name:v.date });
         });
+
+        // 首页访问数
+        var $root_res = new Array();
+        $.each({!! $rooted !!},function(key,v){
+            $root_res[(v.day - 1)] = { value:v.count, name:v.day };
+        });
+
+        // 简介访问数
+        var $introduction_res = new Array();
+        $.each({!! $introduction !!},function(key,v){
+            $introduction_res[(v.day - 1)] = { value:v.count, name:v.day };
+        });
+
         var option_all = {
             title: {
-                text: '总访问统计'
+                text: '访问统计'
             },
             tooltip : {
                 trigger: 'axis',
@@ -213,7 +218,7 @@ $(function() {
                 }
             },
             legend: {
-                data:['总访问统计']
+                data:['访问总量','首页','介绍页']
             },
             toolbox: {
                 feature: {
@@ -246,7 +251,7 @@ $(function() {
             ],
             series : [
                 {
-                    name:'当月访问量',
+                    name:'访问总量',
                     type:'line',
                     label: {
                         normal: {
@@ -265,17 +270,36 @@ $(function() {
                         {{--@endif--}}
                         {{--@endforeach--}}
                     {{--]--}}
+                },
+                {
+                    name:'首页',
+                    type:'line',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    itemStyle : { normal: { label : { show: true } } },
+                    data: $root_res
+                },
+                {
+                    name:'介绍页',
+                    type:'line',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    itemStyle : { normal: { label : { show: true } } },
+                    data: $introduction_res
                 }
             ]
         };
         var myChart_all = echarts.init(document.getElementById('echart-all'));
         myChart_all.setOption(option_all);
 
-        // 首页访问数
-        var $root_res = new Array();
-        $.each({!! $rooted !!},function(key,v){
-            $root_res[(v.day - 1)] = { value:v.count, name:v.day };
-        });
         var option_root = {
             title: {
                 text: '首页-访问统计'
@@ -348,14 +372,9 @@ $(function() {
                 }
             ]
         };
-        var myChart_root = echarts.init(document.getElementById('echart-root'));
-        myChart_root.setOption(option_root);
+//        var myChart_root = echarts.init(document.getElementById('echart-root'));
+//        myChart_root.setOption(option_root);
 
-        // 简介访问数
-        var $introduction_res = new Array();
-        $.each({!! $introduction !!},function(key,v){
-            $introduction_res[(v.day - 1)] = { value:v.count, name:v.day };
-        });
         var option_introduction = {
             title: {
                 text: '介绍页-访问统计'
@@ -428,8 +447,8 @@ $(function() {
                 }
             ]
         };
-        var myChart_introduction = echarts.init(document.getElementById('echart-introduction'));
-        myChart_introduction.setOption(option_introduction);
+//        var myChart_introduction = echarts.init(document.getElementById('echart-introduction'));
+//        myChart_introduction.setOption(option_introduction);
 
 
 
@@ -631,9 +650,14 @@ $(function() {
         $.each({!! $shared_all !!},function(key,v){
             $shared_all_res[(v.day - 1)] = { value:v.count, name:v.day };
         });
+        // 主页分享数
+        var $shared_root_res = new Array();
+        $.each({!! $shared_root !!},function(key,v){
+            $shared_root_res[(v.day - 1)] = { value:v.count, name:v.day };
+        });
         var option_shared_all = {
             title: {
-                text: '总分享量'
+                text: '分享统计'
             },
             tooltip : {
                 trigger: 'axis',
@@ -645,7 +669,7 @@ $(function() {
                 }
             },
             legend: {
-                data:['总分享量']
+                data:['分享总量','首页']
             },
             toolbox: {
                 feature: {
@@ -675,7 +699,7 @@ $(function() {
             ],
             series : [
                 {
-                    name:'总分享量',
+                    name:'分享总量',
                     type:'line',
                     label: {
                         normal: {
@@ -691,26 +715,30 @@ $(function() {
                         }
                     },
                     data: $shared_all_res
-                    {{--data:[--}}
-                        {{--@foreach($share_all as $v)--}}
-                        {{--@if (!$loop->last)--}}
-                            {{--{ value:'{{ $v->count }}',name:'{{$v->date}}'},--}}
-                        {{--@else--}}
-                            {{--{ value:'{{ $v->count }}',name:'{{$v->date}}'}--}}
-                        {{--@endif--}}
-                        {{--@endforeach--}}
-                    {{--]--}}
+                },
+                {
+                    name:'首页',
+                    type:'line',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: '#36a'
+                            }
+                        }
+                    },
+                    data: $shared_root_res
                 }
             ]
         };
         var myChart_shared_all = echarts.init(document.getElementById('echart-shared-all'));
         myChart_shared_all.setOption(option_shared_all);
 
-        // 主页分享数
-        var $shared_root_res = new Array();
-        $.each({!! $shared_root !!},function(key,v){
-            $shared_root_res[(v.day - 1)] = { value:v.count, name:v.day };
-        });
         var option_shared_root = {
             title: {
                 text: '主页分享统计'
@@ -783,8 +811,8 @@ $(function() {
                 }
             ]
         };
-        var myChart_shared_root = echarts.init(document.getElementById('echart-shared-root'));
-        myChart_shared_root.setOption(option_shared_root);
+//        var myChart_shared_root = echarts.init(document.getElementById('echart-shared-root'));
+//        myChart_shared_root.setOption(option_shared_root);
 
 
 
