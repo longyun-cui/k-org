@@ -26,24 +26,36 @@
 
         <div class="item-row item-info-row">
             <div class="margin-4px">
+                <i class="fa fa-envelope text-primary"></i>
+                <span class="text-muted">{{ $data->email or '暂无' }}</span>
+            </div>
+            <div class="margin-4px">
+                <i class="fa fa-qq text-primary"></i>
+                <span class="text-muted">{{ $data->QQ_number or '暂无' }}</span>
+            </div>
+            <div class="margin-4px">
+                <i class="fa fa-weixin text-primary"></i>
+                <span class="text-muted">{{ $data->wechat_id or '暂无' }}</span>
+            </div>
+            <div class="margin-4px">
+                <i class="fa fa-map-marker text-primary"></i>
+                <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
+            </div>
+            <div class="margin-4px">
                 <i class="fa fa-user text-orange"></i>
                 <span class="text-muted">{{ $data->linkman or '暂无' }}</span>
             </div>
             <div class="margin-4px">
                 <i class="fa fa-phone text-danger"></i>
                 <span class="text-muted">
-                    <a href="tel:{{ $u->contact_phone or '' }}">
-                        {{ $data->contact_phone or '暂无' }}
+                    <a href="tel:{{ $u->linkman_phone or '' }}">
+                        {{ $data->linkman_phone or '暂无' }}
                     </a>
                 </span>
             </div>
             <div class="margin-4px">
                 <i class="fa fa-weixin text-success"></i>
-                <span class="text-muted">{{ $data->contact_wechat_id or '暂无' }}</span>
-            </div>
-            <div class="margin-4px">
-                <i class="fa fa-map-marker text-primary"></i>
-                <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
+                <span class="text-muted">{{ $data->linkman_wechat_id or '暂无' }}</span>
             </div>
         </div>
 

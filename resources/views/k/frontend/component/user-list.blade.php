@@ -73,6 +73,13 @@
                     <span> • 访问 {{ $u->visit_num }}</span>
                 </div>
 
+                @if(!empty($u->email))
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-envelope text-primary" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->email or '暂无' }}</span>
+                    </div>
+                @endif
+
                 @if(!empty($u->QQ_number))
                     <div class="item-row item-info-row">
                         <i class="fa fa-qq text-primary" style="width:16px;"></i>
