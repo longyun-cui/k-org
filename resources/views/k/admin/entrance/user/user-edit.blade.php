@@ -83,11 +83,27 @@
                 </div>
                 {{--手机--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2"><sup class="text-red">*</sup> 手机</label>
+                    <label class="control-label col-md-2"><sup class="text-red">*</sup> 登录手机</label>
                     <div class="col-md-8 ">
                         <input type="text" class="form-control" name="mobile" placeholder="请输入手机" value="{{ $data->mobile or '' }}">
                     </div>
                 </div>
+                {{--描述--}}
+                <div class="form-group _none">
+                    <label class="control-label col-md-2">描述</label>
+                    <div class="col-md-8 ">
+                        {{--<input type="text" class="form-control" name="description" placeholder="描述" value="{{$data->description or ''}}">--}}
+                        <textarea class="form-control" name="description" rows="3" cols="100%">{{ $data->description or '' }}</textarea>
+                    </div>
+                </div>
+                {{--标签--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">标签</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="tag" placeholder="标签" value="{{ $data->tag or '' }}">
+                    </div>
+                </div>
+
                 {{--邮箱--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">邮箱</label>
@@ -109,34 +125,32 @@
                         <input type="text" class="form-control" name="wechat_id" placeholder="请输入微信号" value="{{ $data->wechat_id or '' }}">
                     </div>
                 </div>
-                {{--说明--}}
-                <div class="form-group _none">
-                    <label class="control-label col-md-2">描述</label>
-                    <div class="col-md-8 ">
-                        {{--<input type="text" class="form-control" name="description" placeholder="描述" value="{{$data->description or ''}}">--}}
-                        <textarea class="form-control" name="description" rows="3" cols="100%">{{ $data->description or '' }}</textarea>
-                    </div>
-                </div>
+                {{--微信二维码--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">微信二维码</label>
+                    <div class="col-md-8 fileinput-group">
 
-                {{--联系人--}}
-                <div class="form-group">
-                    <label class="control-label col-md-2">联系人</label>
-                    <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman" placeholder="请输入联系人" value="{{ $data->linkman or '' }}">
-                    </div>
-                </div>
-                {{--联系人电话--}}
-                <div class="form-group">
-                    <label class="control-label col-md-2">联系人电话</label>
-                    <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="contact_phone" placeholder="请输入联系人电话" value="{{ $data->contact_phone or '' }}">
-                    </div>
-                </div>
-                {{--联系人微信--}}
-                <div class="form-group">
-                    <label class="control-label col-md-2">联系人微信</label>
-                    <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="contact_wechat_id" placeholder="请输入联系人微信" value="{{ $data->contact_wechat_id or '' }}">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail">
+                                @if(!empty($data->wechat_qr_code_img))
+                                    <img src="{{ url(env('DOMAIN_CDN').'/'.$data->wechat_qr_code_img) }}" alt="" />
+                                @endif
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail">
+                            </div>
+                            <div class="btn-tool-group">
+                                <span class="btn-file">
+                                    <button class="btn btn-sm btn-primary fileinput-new">选择图片</button>
+                                    <button class="btn btn-sm btn-warning fileinput-exists">更改</button>
+                                    <input type="file" name="wechat_qr_code" />
+                                </span>
+                                <span class="">
+                                    <button class="btn btn-sm btn-danger fileinput-exists" data-dismiss="fileinput">移除</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="titleImageError1" style="color: #a94442"></div>
+
                     </div>
                 </div>
                 {{--联系地址--}}
@@ -147,19 +161,61 @@
                     </div>
                 </div>
 
+                {{--联系人--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">【联系人】</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="linkman" placeholder="请输入联系人" value="{{ $data->linkman or '' }}">
+                    </div>
+                </div>
+                {{--联系人电话--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">【联系人】电话</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="linkman_phone" placeholder="请输入联系人电话" value="{{ $data->linkman_phone or '' }}">
+                    </div>
+                </div>
+                {{--联系人微信ID--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">【联系人】微信号</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="linkman_wechat_id" placeholder="请输入联系人微信" value="{{ $data->linkman_wechat_id or '' }}">
+                    </div>
+                </div>
+                {{--联系人微信二维码--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">【联系人】微信二维码</label>
+                    <div class="col-md-8 fileinput-group">
+
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail">
+                                @if(!empty($data->linkman_wechat_qr_code_img))
+                                    <img src="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wechat_qr_code_img) }}" alt="" />
+                                @endif
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail">
+                            </div>
+                            <div class="btn-tool-group">
+                                <span class="btn-file">
+                                    <button class="btn btn-sm btn-primary fileinput-new">选择图片</button>
+                                    <button class="btn btn-sm btn-warning fileinput-exists">更改</button>
+                                    <input type="file" name="linkman_wechat_qr_code" />
+                                </span>
+                                <span class="">
+                                    <button class="btn btn-sm btn-danger fileinput-exists" data-dismiss="fileinput">移除</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="titleImageError2" style="color: #a94442"></div>
+
+                    </div>
+                </div>
+
                 {{--链接地址--}}
                 <div class="form-group _none">
                     <label class="control-label col-md-2">链接地址</label>
                     <div class="col-md-8 ">
                         <input type="text" class="form-control" name="link_url" placeholder="链接地址" value="{{ $data->link_url or '' }}">
-                    </div>
-                </div>
-
-                {{--标签--}}
-                <div class="form-group">
-                    <label class="control-label col-md-2">标签</label>
-                    <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="tag" placeholder="标签" value="{{ $data->tag or '' }}">
                     </div>
                 </div>
 

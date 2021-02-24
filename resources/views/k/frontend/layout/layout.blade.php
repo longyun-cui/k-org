@@ -416,6 +416,11 @@ desired effect
 //            lessLink: '<a href="#">收起</a>'
 //        });
 
+        $('.lightcase-image').lightcase({
+            maxWidth: 9999,
+            maxHeight: 9999
+        });
+
         var viewportSize = $(window).height();
         var lazy_load = function(){
             var scrollTop = $(window).scrollTop();
@@ -427,7 +432,7 @@ desired effect
                 }
             })
         };
-        setInterval(lazy_load,1000);
+//        setInterval(lazy_load,1000);
 
     });
 </script>

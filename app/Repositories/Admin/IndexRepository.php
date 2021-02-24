@@ -483,6 +483,7 @@ class IndexRepository {
     // 【K】【用户】【组织】保存数据
     public function operate_user_user_save($post_data)
     {
+//        dd($post_data);
         $messages = [
             'operate.required' => '参数有误',
             'username.required' => '请输入用户名',
@@ -539,7 +540,7 @@ class IndexRepository {
                 // 头像
                 if(!empty($post_data["portrait"]))
                 {
-                    // 删除原封面图片
+                    // 删除原图片
                     $mine_portrait_img = $mine->portrait_img;
                     if(!empty($mine_portrait_img) && file_exists(storage_path("resource/" . $mine_portrait_img)))
                     {
@@ -552,7 +553,45 @@ class IndexRepository {
                         $mine->portrait_img = $result["local"];
                         $mine->save();
                     }
-                    else throw new Exception("upload-cover-fail");
+                    else throw new Exception("upload--portrait--fail");
+                }
+
+                // 微信二维码
+                if(!empty($post_data["wechat_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_wechat_qr_code_img = $mine->wechat_qr_code_img;
+                    if(!empty($mine_wechat_qr_code_img) && file_exists(storage_path("resource/" . $mine_wechat_qr_code_img)))
+                    {
+                        unlink(storage_path("resource/" . $mine_wechat_qr_code_img));
+                    }
+
+                    $result = upload_storage($post_data["wechat_qr_code"]);
+                    if($result["result"])
+                    {
+                        $mine->wechat_qr_code_img = $result["local"];
+                        $mine->save();
+                    }
+                    else throw new Exception("upload--wechat_qr_code--fail");
+                }
+
+                // 联系人微信二维码
+                if(!empty($post_data["linkman_wechat_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_linkman_wechat_qr_code_img = $mine->linkman_wechat_qr_code_img;
+                    if(!empty($mine_linkman_wechat_qr_code_img) && file_exists(storage_path("resource/" . $mine_linkman_wechat_qr_code_img)))
+                    {
+                        unlink(storage_path("resource/" . $mine_linkman_wechat_qr_code_img));
+                    }
+
+                    $result = upload_storage($post_data["linkman_wechat_qr_code"]);
+                    if($result["result"])
+                    {
+                        $mine->linkman_wechat_qr_code_img = $result["local"];
+                        $mine->save();
+                    }
+                    else throw new Exception("upload--linkman_wechat_qr_code--fail");
                 }
 
             }

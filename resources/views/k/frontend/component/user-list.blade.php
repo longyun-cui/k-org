@@ -73,6 +73,36 @@
                     <span> • 访问 {{ $u->visit_num }}</span>
                 </div>
 
+                @if(!empty($u->QQ_number))
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-qq text-primary" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->QQ_number or '暂无' }}</span>
+                    </div>
+                @endif
+
+                @if(!empty($u->wechat_id))
+                    @if(!empty($u->wechat_qr_code_img))
+                    <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->wechat_qr_code_img) }}">
+                        <div class="item-row item-info-row">
+                            <i class="fa fa-weixin text-success" style="width:16px;"></i>
+                            <span class="text-muted">{{ $u->wechat_id or '暂无' }}</span>
+                        </div>
+                    </a>
+                    @else
+                        <div class="item-row item-info-row">
+                            <i class="fa fa-weixin text-success" style="width:16px;"></i>
+                            <span class="text-muted">{{ $u->wechat_id or '暂无' }}</span>
+                        </div>
+                    @endif
+                @endif
+
+                @if(!empty($u->contact_address))
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->contact_address or '暂无' }}</span>
+                    </div>
+                @endif
+
                 @if(!empty($u->linkman))
                 <div class="item-row item-info-row">
                     <i class="fa fa-user text-orange" style="width:16px;"></i>
@@ -80,29 +110,32 @@
                 </div>
                 @endif
 
-                @if(!empty($u->contact_phone))
+                @if(!empty($u->linkman_phone))
                 <div class="item-row item-info-row">
                     <i class="fa fa-phone text-danger" style="width:16px;"></i>
                     <span class="text-muted">
-                        <a href="tel:{{ $u->contact_phone or '' }}">
-                            <strong>{{ $u->contact_phone or '暂无' }}</strong>
+                        <a href="tel:{{ $u->linkman_phone or '' }}">
+                            <strong>{{ $u->linkman_phone or '暂无' }}</strong>
                         </a>
                     </span>
                 </div>
                 @endif
 
-                @if(!empty($u->contact_wechat_id))
-                    <div class="item-row item-info-row">
-                        <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->contact_wechat_id or '暂无' }}</span>
-                    </div>
-                @endif
-
-                @if(!empty($u->contact_address))
-                <div class="item-row item-info-row">
-                    <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
-                    <span class="text-muted">{{ $u->contact_address or '暂无' }}</span>
-                </div>
+                @if(!empty($u->linkman_wechat_id))
+                    @if(!empty($u->linkman_wechat_qr_code_img))
+                    <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->linkman_wechat_qr_code_img) }}">
+                        <div class="item-row item-info-row">
+                            <i class="fa fa-weixin text-success" style="width:16px;"></i>
+                            <span class="text-muted">{{ $u->linkman_wechat_id or '暂无' }}</span>
+                            <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
+                        </div>
+                    </a>
+                    @else
+                        <div class="item-row item-info-row">
+                            <i class="fa fa-weixin text-success" style="width:16px;"></i>
+                            <span class="text-muted">{{ $u->linkman_wechat_id or '暂无' }}</span>
+                        </div>
+                    @endif
                 @endif
 
                 @if(!empty($u->description))
