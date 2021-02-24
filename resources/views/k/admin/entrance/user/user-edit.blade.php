@@ -160,6 +160,13 @@
                         <input type="text" class="form-control" name="contact_address" placeholder="请输入联系地址" value="{{ $data->contact_address or '' }}">
                     </div>
                 </div>
+                {{--网站--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">网站</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="website" placeholder="请输入网站地址，请携带http或https" value="{{ $data->website or '' }}">
+                    </div>
+                </div>
 
                 {{--联系人--}}
                 <div class="form-group">

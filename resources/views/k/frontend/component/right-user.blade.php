@@ -42,6 +42,16 @@
                 <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
             </div>
             <div class="margin-4px">
+                <i class="fa fa-globe text-primary"></i>
+                @if(!empty($data->website))
+                    <a target="_blank" href="{{ $data->website or '' }}">
+                        {{ $data->website or '暂无' }}
+                    </a>
+                @else
+                    <span class="text-muted">{{ $data->website or '暂无' }}</span>
+                @endif
+            </div>
+            <div class="margin-4px">
                 <i class="fa fa-user text-orange"></i>
                 <span class="text-muted">{{ $data->linkman or '暂无' }}</span>
             </div>

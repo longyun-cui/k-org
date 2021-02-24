@@ -110,6 +110,15 @@
                     </div>
                 @endif
 
+                @if(!empty($u->website))
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-globe text-primary" style="width:16px;"></i>
+                        <a target="_blank" href="{{ $u->website or '' }}">
+                            {{ $u->website or '暂无' }}
+                        </a>
+                    </div>
+                @endif
+
                 @if(!empty($u->linkman))
                 <div class="item-row item-info-row">
                     <i class="fa fa-user text-orange" style="width:16px;"></i>
