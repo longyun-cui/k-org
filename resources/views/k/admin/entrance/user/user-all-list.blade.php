@@ -59,7 +59,7 @@
 
 
                 <!-- datatable start -->
-                <table class='table table-striped table-bordered' id='datatable_ajax'>
+                <table class='table table-striped- table-bordered- table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
