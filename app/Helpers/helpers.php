@@ -463,6 +463,17 @@ if(!function_exists('get_html_img')){
         return $matches;
     }
 }
+/*
+ * 获取html
+ */
+if(!function_exists('get_html_video')){
+
+    function get_html_video($html){
+        $strPreg = '/<\s*embed\s+[^>]*?src\s*=\s*(\'|\")(.*?)\\1[^>]*?\/?\s*>/i';
+        preg_match_all($strPreg, $html, $matches);
+        return $matches;
+    }
+}
 
 
 

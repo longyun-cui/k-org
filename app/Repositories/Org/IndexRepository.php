@@ -2801,6 +2801,15 @@ class IndexRepository {
                     unlink(public_path($img));
                 }
             }
+            // 删除UEditor视频
+            $video_tags = get_html_video($mine_content);
+            foreach ($video_tags[2] as $video)
+            {
+                if (!empty($video) && file_exists(public_path($video)))
+                {
+                    unlink(public_path($video));
+                }
+            }
 
 
             return response_success([]);

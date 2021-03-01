@@ -83,7 +83,9 @@
                 @if(!empty($u->QQ_number))
                     <div class="item-row item-info-row">
                         <i class="fa fa-qq text-primary" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->QQ_number or '暂无' }}</span>
+                        <a target="_blank" href="tencent://message/?uin={{ $data->QQ_number }}">
+                            {{ $u->QQ_number or '暂无' }}
+                        </a>
                     </div>
                 @endif
 

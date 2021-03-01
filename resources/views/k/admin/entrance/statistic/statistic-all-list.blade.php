@@ -63,6 +63,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,7 +186,14 @@
                             }
                             else if(row.page_type == 3)
                             {
-                                return '<a target="_blank" href="/item/'+row.item.id+'">'+row.item.title+'</a>';
+                                if(row.item)
+                                {
+                                    return '<a target="_blank" href="/item/'+row.item.id+'">'+row.item.title+'</a>';
+                                }
+                                else
+                                {
+                                    return "item.id="+row.item_id+"，该内容已删除。";
+                                }
                             }
                         }
                     },
@@ -197,6 +205,16 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.creator == null ? '游客' : '<a target="_blank" href="/user/'+row.creator.id+'">'+row.creator.username+'</a>';
+                        }
+                    },
+                    {
+                        "className": "text-left",
+                        "width": "96px",
+                        "title": "系统",
+                        "data": "open_system",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return data;
                         }
                     },
                     {

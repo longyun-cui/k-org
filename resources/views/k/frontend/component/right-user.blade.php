@@ -31,7 +31,13 @@
             </div>
             <div class="margin-4px">
                 <i class="fa fa-qq text-primary"></i>
-                <span class="text-muted">{{ $data->QQ_number or '暂无' }}</span>
+                @if(!empty($data->QQ_number))
+                    <a class="" href="tencent://message/?uin={{ $data->QQ_number }}">
+                        {{ $data->QQ_number or '暂无' }}
+                    </a>
+                @else
+                    <span class="text-muted">{{ $data->QQ_number or '暂无' }}</span>
+                @endif
             </div>
             <div class="margin-4px">
                 <i class="fa fa-weixin text-primary"></i>
