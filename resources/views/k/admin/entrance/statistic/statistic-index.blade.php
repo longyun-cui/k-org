@@ -108,7 +108,7 @@
                     <div class="col-md-12">
                         <div id="echart-shared-all" style="width:100%;height:320px;"></div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 _none">
                         <div id="echart-shared-root-scale-" style="width:100%;height:320px;"></div>
                     </div>
                 </div>
