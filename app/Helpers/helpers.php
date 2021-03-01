@@ -268,19 +268,6 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Mobile')) $info['type'] = 'Mobile';
 
         $info['system'] = 'Unknown';
-        if(stripos($Agent, 'Windows')) $info['system'] = 'Windows';
-        if(stripos($Agent, 'Windows Phone')) $info['system'] = 'WinPhone';
-        if(stripos($Agent, 'Android')) $info['system'] = 'Android';
-        if(stripos($Agent, 'Mac')) $info['system'] = 'Mac';
-        if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
-        if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
-        if(stripos($Agent, 'Sun')) $info['system'] = 'SunOS';
-        if(stripos($Agent, 'IBM')) $info['system'] = 'IBM';
-        if(stripos($Agent, 'Unix')) $info['system'] = 'Unix';
-        if(stripos($Agent, 'Linux')) $info['system'] = 'Linux';
-        if(stripos($Agent, 'Ubuntu')) $info['system'] = 'Ubuntu';
-        if(stripos($Agent, 'CentOS')) $info['system'] = 'CentOS';
-
         if(stripos($Agent, 'PowerPC')) $info['system'] = 'PowerPC';
         else if(stripos($Agent, 'AIX')) $info['system'] = 'AIX';
         else if(stripos($Agent, 'HPUX')) $info['system'] = 'HPUX';
@@ -293,6 +280,19 @@ if(!function_exists('getBrowserInfo'))
         else if(stripos($Agent, 'flashget')) $info['system'] = 'flashget';
         else if(stripos($Agent, 'webzip')) $info['system'] = 'webzip';
         else if(stripos($Agent, 'offline')) $info['offline'] = 'webzip';
+
+        if(stripos($Agent, 'Windows')) $info['system'] = 'Windows';
+        if(stripos($Agent, 'Windows Phone')) $info['system'] = 'WinPhone';
+        if(stripos($Agent, 'Android')) $info['system'] = 'Android';
+        if(stripos($Agent, 'Mac')) $info['system'] = 'Mac';
+        if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
+        if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
+        if(stripos($Agent, 'Sun')) $info['system'] = 'SunOS';
+        if(stripos($Agent, 'IBM')) $info['system'] = 'IBM';
+        if(stripos($Agent, 'Unix')) $info['system'] = 'Unix';
+        if(stripos($Agent, 'Linux')) $info['system'] = 'Linux';
+        if(stripos($Agent, 'Ubuntu')) $info['system'] = 'Ubuntu';
+        if(stripos($Agent, 'CentOS')) $info['system'] = 'CentOS';
 
 
         $info['browser'] = 'Ohters';
