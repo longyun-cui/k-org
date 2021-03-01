@@ -274,10 +274,26 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Mac')) $info['system'] = 'Mac';
         if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
         if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
+        if(stripos($Agent, 'Sun')) $info['system'] = 'SunOS';
+        if(stripos($Agent, 'IBM')) $info['system'] = 'IBM';
         if(stripos($Agent, 'Unix')) $info['system'] = 'Unix';
         if(stripos($Agent, 'Linux')) $info['system'] = 'Linux';
         if(stripos($Agent, 'Ubuntu')) $info['system'] = 'Ubuntu';
         if(stripos($Agent, 'CentOS')) $info['system'] = 'CentOS';
+
+        if(stripos($Agent, 'PowerPC')) $info['system'] = 'PowerPC';
+        else if(stripos($Agent, 'AIX')) $info['system'] = 'AIX';
+        else if(stripos($Agent, 'HPUX')) $info['system'] = 'HPUX';
+        else if(stripos($Agent, 'NetBSD')) $info['system'] = 'NetBSD';
+        else if(stripos($Agent, 'BSD')) $info['system'] = 'BSD';
+        else if(stripos($Agent, 'OSF1')) $info['system'] = 'OSF1';
+        else if(stripos($Agent, 'IRIX')) $info['system'] = 'IRIX';
+        else if(stripos($Agent, 'FreeBSD')) $info['system'] = 'FreeBSD';
+        else if(stripos($Agent, 'teleport')) $info['system'] = 'teleport';
+        else if(stripos($Agent, 'flashget')) $info['system'] = 'flashget';
+        else if(stripos($Agent, 'webzip')) $info['system'] = 'webzip';
+        else if(stripos($Agent, 'offline')) $info['offline'] = 'webzip';
+
 
         $info['browser'] = 'Ohters';
         if(stripos($Agent, 'Mozilla') && !stripos($Agent, 'MSIE')) $info['browser'] = 'Netscape';
@@ -287,6 +303,7 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Firefox')) $info['browser'] = 'Firefox';
         if(stripos($Agent, 'FxiOS')) $info['browser'] = 'Firefox';
         if(stripos($Agent, 'Opera')) $info['browser'] = 'Opera';
+        if(stripos($Agent, 'Edge')) $info['browser'] = "Edge";
         if(stripos($Agent, 'QQBroser')) $info['browser'] = 'QQBroser';
 
         $info['app'] = 'default';

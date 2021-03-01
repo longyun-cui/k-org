@@ -64,6 +64,8 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -209,9 +211,29 @@
                     },
                     {
                         "className": "text-left",
-                        "width": "96px",
+                        "width": "80px",
                         "title": "系统",
                         "data": "open_system",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    {
+                        "className": "text-left",
+                        "width": "80px",
+                        "title": "浏览器",
+                        "data": "open_browser",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    {
+                        "className": "text-left",
+                        "width": "80px",
+                        "title": "APP",
+                        "data": "open_app",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return data;
