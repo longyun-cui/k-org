@@ -311,7 +311,7 @@ desired effect
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"), // 分享图标
                     success: function () {
                         // 用户点击了分享后执行的回调函数
-                        layer.msg("updateAppMessageShareData");
+//                        layer.msg("updateAppMessageShareData");
                         $.get(
                             "/record/share",
                             {
@@ -337,7 +337,7 @@ desired effect
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
                     success: function () {
                         // 用户点击了分享后执行的回调函数
-                        layer.msg("updateTimelineShareData");
+//                        layer.msg("updateTimelineShareData");
                         $.get(
                             "/record/share",
                             {

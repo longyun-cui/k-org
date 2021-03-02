@@ -137,8 +137,30 @@
                         }
                     },
                     {
-                        "width": "128px",
-                        "title": "类型",
+                        "width": "64px",
+                        "title": "操作",
+                        "data": "id",
+                        'orderable': false,
+                        render: function(data, type, row, meta) {
+                            if(row.record_type == 1)
+                            {
+                                return '<small class="btn-xs bg-primary">访问</small>';
+                            }
+                            else if(row.record_type == 2)
+                            {
+                                return '<small class="btn-xs bg-olive">分享</small>';
+                            }
+                            else if(row.record_type == 3)
+                            {
+                                return '<small class="btn-xs bg-purple">查询</small>';
+                            }
+                            else return "有误";
+
+                        }
+                    },
+                    {
+                        "width": "96px",
+                        "title": "页面类型",
                         "data": "id",
                         'orderable': false,
                         render: function(data, type, row, meta) {
@@ -168,10 +190,15 @@
                     {
                         "className": "text-left",
                         "width": "",
-                        "title": "访问页面",
+                        "title": "页面",
                         "data": "creator_id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
+                            if(row.record_type == 3)
+                            {
+                                return '<a target="_blank" href="/tag/'+row.title+'">'+"#"+row.title+'</a>';
+                            }
+
                             if(row.page_type == 1)
                             {
                                 if(row.page_module == 0) return 'platform';
