@@ -931,9 +931,9 @@ $(function() {
                     data: [
                         @foreach($shared_root_scale as $v)
                         @if (!$loop->last)
-                            { value:'{{ $v->count }}', name:'{{$v->name}}'},
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}'},
                         @else
-                            { value:'{{ $v->count }}', name:'{{$v->name}}'}
+                            { value:'{{ $v->count }}', name:'{{ $v->name }}'}
                         @endif
                         @endforeach
                     ]

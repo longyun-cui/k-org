@@ -1957,7 +1957,8 @@ class IndexRepository {
             ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
             ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
             ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>1,'page_module'=>1])
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where(['page_type'=>1,'page_module'=>1])
             ->get();
         $shared_root = $shared_root->keyBy('day');
 
@@ -1989,6 +1990,7 @@ class IndexRepository {
 //            ->groupBy('shared_location')
             ->groupBy('record_module')
             ->where(['record_category'=>1,'record_type'=>2])
+            ->where(['page_type'=>1,'page_module'=>1])
             ->get();
         foreach($shared_root_scale as $k => $v)
         {
@@ -1999,9 +2001,9 @@ class IndexRepository {
 //            else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
 //            else $shared_root_scale[$k]->name = "其他";
 
-            if($v->record_module == 1) $shared_all_scale[$k]->name = "微信好友|QQ好友";
-            else if($v->record_module == 2) $shared_all_scale[$k]->name = "朋友圈|QQ空间";
-            else $shared_all_scale[$k]->name = "其他";
+            if($v->record_module == 1) $shared_root_scale[$k]->name = "微信好友|QQ好友";
+            else if($v->record_module == 2) $shared_root_scale[$k]->name = "朋友圈|QQ空间";
+            else $shared_root_scale[$k]->name = "其他";
         }
 
 
