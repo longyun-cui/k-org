@@ -23,6 +23,8 @@ Route::group([], function () {
 
     Route::match(['get', 'post'],'login-link', $controller."@login_link");
 
+    Route::match(['get', 'post'],'record/share', $controller."@record_share");
+
 
     /*
      * weixin

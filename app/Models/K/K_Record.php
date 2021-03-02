@@ -7,9 +7,10 @@ class K_Record extends Model
     //
     protected $table = "record";
     protected $fillable = [
-        'record_category', 'record_type', 'category', 'type', 'sort', 'form', 'module',
+        'record_category', 'record_type', 'record_module', 'category', 'type', 'sort', 'form', 'module',
         'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'visitor_id', 'item_id',
         'page_type', 'page_module', 'page_num',
+        'title', 'content',
         'referer', 'from',
         'open',
         'open_device_type', 'open_device_name', 'open_device_version', 'open_system', 'open_browser', 'open_app',

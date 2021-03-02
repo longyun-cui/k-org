@@ -127,27 +127,43 @@ class IndexRepository {
         $this->record($record);
 
 
+        $page["type"] = 1;
+        $page["module"] = 1;
+        $page["num"] = 0;
+
         $sidebar_active = '';
+
         if($type == 'root')
         {
+            $head_title = "首页 - 朝鲜族组织平台";
             $sidebar_active = 'sidebar_menu_root_active';
-            $return['head_title'] = "首页 - 朝鲜族组织平台";
+            $page["module"] = 1;
         }
         else if($type == 'article')
         {
+            $head_title = "文章 - 朝鲜族组织平台";
             $sidebar_active = 'sidebar_menu_article_active';
-            $return['head_title'] = "文章 - 朝鲜族组织平台";
+            $page["module"] = 9;
         }
         else if($type == 'activity')
         {
+            $head_title = "活动 - 朝鲜族组织平台";
             $sidebar_active = 'sidebar_menu_activity_active';
-            $return['head_title'] = "活动 - 朝鲜族组织平台";
+            $page["module"] = 11;
+        }
+        else
+        {
+            $head_title = "首页 - 朝鲜族组织平台";
+            $sidebar_active = 'sidebar_menu_root_active';
+            $page["module"] = 1;
         }
 
 
         $return[$sidebar_active] = 'active';
+        $return['head_title'] = $head_title;
         $return['getType'] = 'items';
         $return['page_type'] = 'root';
+        $return['page'] = $page;
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
@@ -180,8 +196,12 @@ class IndexRepository {
         $record["from"] = request('from',NULL);
         $this->record($record);
 
+        $page["type"] = 1;
+        $page["module"] = 2;
+        $page["num"] = 0;
 
         $return['data'] = $introduction;
+        $return['page'] = $page;
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
@@ -293,16 +313,14 @@ class IndexRepository {
         }
 
 
-
-
         // 插入记录表
         $record["record_category"] = 1; // record_category 1.browse/2.share/3.search
         $record["record_type"] = 3; // record_type=3 search
         $record["page_type"] = 1; // page_type=1 default platform
         $record["page_num"] = $item_list->toArray()["current_page"];
+        $record["title"] = $q;
         $record["from"] = request('from',NULL);
         $this->record($record);
-
 
         $sidebar_active = '';
 //        if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
@@ -310,15 +328,52 @@ class IndexRepository {
 //        else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
 
 
+        $page["type"] = 3;
+        $page["module"] = 1;
+        $page["num"] = 0;
+
         $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
         $return['page_type'] = 'tag';
         $return['head_title'] = "#{$q} - 朝鲜族组织平台";
+        $return['page'] = $page;
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
 //        else return view('frontend.entrance.root')->with($return);
         else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root')->with($return);
+    }
+
+
+
+
+    // 【K】【分享记录】
+    public function record_share($post_data)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+        }
+        else $me_id = 0;
+
+        $record_module = isset($post_data["record_module"]) ? $post_data["record_module"] : 0;
+        $page_type = isset($post_data["page_type"]) ? $post_data["page_type"] : 0;
+        $page_module = isset($post_data["page_module"]) ? $post_data["page_module"] : 0;
+        $page_num = isset($post_data["page_num"]) ? $post_data["page_num"] : 0;
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 2; // record_type=2 share
+        $record["record_module"] = $record_module; // record_module 1.微信好友|QQ好友 2.朋友圈|QQ空间
+        $record["page_type"] = $page_type; // page_type=1 default platform
+        $record["page_module"] = $page_module; // page_module=2 introduction
+        $record["page_num"] = $page_num;
+        $record["from"] = request('from',NULL);
+        $this->record($record);
+
+        return response_success([]);
     }
 
 
@@ -507,8 +562,6 @@ class IndexRepository {
         else $me_id = 0;
 
 
-
-
         // 插入记录表
         $record["record_category"] = 1; // record_category=1 browse/share
         $record["record_type"] = 1; // record_type=1 browse
@@ -520,12 +573,17 @@ class IndexRepository {
         $this->record($record);
 
 
+        $page["type"] = 3;
+        $page["module"] = 1;
+        $page["num"] = $id;
+
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.item')
             ->with([
                 'getType'=>'item',
                 'item'=>$item,
                 'user'=>$user,
                 'is_follow'=>$is_follow,
+                'page'=>$page,
             ]);
     }
 
@@ -691,11 +749,26 @@ class IndexRepository {
 //        dd($item->toArray());
 
 
-        if($type == 'root') $record["page_module"] = 1; // page_module=0 default index
-        else if($type == 'introduction') $record["page_module"] = 2; // page_module=2 introduction
-        else if($type == 'article') $record["page_module"] = 9; // page_module=0 article
-        else if($type == 'activity') $record["page_module"] = 11; // page_module=0 activity
-        else $record["page_module"] = 1; // page_module=0 default index
+        if($type == 'root')
+        {
+            $record["page_module"] = 1;  // page_module=0 default index
+        }
+        else if($type == 'introduction')
+        {
+            $record["page_module"] = 2;  // page_module=2 introduction
+        }
+        else if($type == 'article')
+        {
+            $record["page_module"] = 9;  // page_module=0 article
+        }
+        else if($type == 'activity')
+        {
+            $record["page_module"] = 11;  // page_module=0 activity
+        }
+        else
+        {
+            $record["page_module"] = 1;  // page_module=0 default index
+        }
 
         // 插入记录表
         $record["record_category"] = 1; // record_category=1 browse/share
@@ -707,12 +780,37 @@ class IndexRepository {
         $this->record($record);
 
 
+        $page["type"] = 2;
+        $page["module"] = 1;
+        $page["num"] = 0;
+
         $sidebar_active = '';
-        if($type == 'root') $sidebar_active = 'sidebar_menu_root_active';
-        else if($type == 'introduction') $sidebar_active = 'sidebar_menu_introduction_active';
-        else if($type == 'article') $sidebar_active = 'sidebar_menu_article_active';
-        else if($type == 'activity') $sidebar_active = 'sidebar_menu_activity_active';
-        else if($type == 'org') $sidebar_active = 'sidebar_menu_org_active';
+        if($type == 'root')
+        {
+            $sidebar_active = 'sidebar_menu_root_active';
+            $page["module"] = 1;
+        }
+        else if($type == 'introduction')
+        {
+            $sidebar_active = 'sidebar_menu_introduction_active';
+            $page["module"] = 2;
+        }
+        else if($type == 'article')
+        {
+            $sidebar_active = 'sidebar_menu_article_active';
+            $page["module"] = 9;
+        }
+        else if($type == 'activity')
+        {
+            $sidebar_active = 'sidebar_menu_activity_active';
+            $page["module"] = 11;
+        }
+        else if($type == 'org')
+        {
+            $sidebar_active = 'sidebar_menu_org_active';
+            $page["module"] = 1;
+        }
+
 
         view()->share('user_root_active','active');
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.user')
@@ -720,7 +818,8 @@ class IndexRepository {
                 'data'=>$user,
                 'item_list'=>$item_list,
                 'is_follow'=>$is_follow,
-                $sidebar_active => 'active'
+                'page' => $page,
+                $sidebar_active => 'active',
             ]);
     }
 
@@ -1026,8 +1125,6 @@ class IndexRepository {
 //        dd($user_list->toArray());
 
 
-
-
         // 插入记录表
         $record["record_category"] = 1; // record_category=1 browse/share
         $record["record_type"] = 1; // record_type=1 browse
@@ -1037,10 +1134,15 @@ class IndexRepository {
         $record["from"] = request('from',NULL);
         $this->record($record);
 
+        $page["type"] = 1;
+        $page["module"] = 33;
+        $page["num"] = 0;
+
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.organization-list')
             ->with([
                 'user_list'=>$user_list,
-                'sidebar_menu_organization_list_active' => 'active'
+                'sidebar_menu_organization_list_active' => 'active',
+                'page' => $page
             ]);
     }
 

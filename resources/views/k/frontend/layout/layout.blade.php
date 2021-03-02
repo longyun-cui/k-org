@@ -311,6 +311,19 @@ desired effect
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"), // 分享图标
                     success: function () {
                         // 用户点击了分享后执行的回调函数
+                        $.get(
+                            "/record/share",
+                            {
+                                '_token': $('meta[name="_token"]').attr('content'),
+                                'record_module': 1,
+                                'page_type': "{{ $page["type"] or '0' }}",
+                                'page_module': "{{ $page["module"] or '0' }}",
+                                'page_num': "{{ $page["num"] or '0' }}"
+                            },
+                            function(data) {
+                                if(!data.success) layer.msg(data.msg);
+                            },
+                        'json');
                     }
                 });
             });
@@ -323,6 +336,19 @@ desired effect
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
                     success: function () {
                         // 用户点击了分享后执行的回调函数
+                        $.get(
+                            "/record/share",
+                            {
+                                '_token': $('meta[name="_token"]').attr('content'),
+                                'record_module': 2,
+                                'page_type': "{{ $page["type"] or '0' }}",
+                                'page_module': "{{ $page["module"] or '0' }}",
+                                'page_num': "{{ $page["num"] or '0' }}"
+                            },
+                            function(data) {
+                                if(!data.success) layer.msg(data.msg);
+                            },
+                            'json');
                     }
                 });
             });
@@ -334,20 +360,6 @@ desired effect
                     {{--link: link,--}}
                     {{--imgUrl: $.trim("@yield('wx_share_imgUrl')"),--}}
                     {{--success: function () {--}}
-                        {{--// 用户确认分享后执行的回调函数--}}
-                        {{--$.get(--}}
-                        {{--"/share",--}}
-                        {{--{--}}
-                        {{--'_token': $('meta[name="_token"]').attr('content'),--}}
-                        {{--'website': "{{$org->website_name or '0'}}",--}}
-                        {{--'sort': 1,--}}
-                        {{--'module': 0,--}}
-                        {{--'share': 1--}}
-                        {{--},--}}
-                        {{--function(data) {--}}
-                        {{--if(!data.success) layer.msg(data.msg);--}}
-                        {{--}, --}}
-                        {{--'json');--}}
                     {{--},--}}
                     {{--cancel: function () {--}}
                         {{--// 用户取消分享后执行的回调函数--}}

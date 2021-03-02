@@ -20,20 +20,28 @@ class IndexController extends Controller
     }
 
 
+    // 【K】【】
     public function view_root()
     {
         return $this->repo->view_root(request()->all());
     }
 
+    // 【K】【】
     public function view_introduction()
     {
         return $this->repo->view_introduction();
     }
 
-
+    // 【K】【】
     public function view_tag($q='')
     {
         return $this->repo->view_tag(request()->all(),$q);
+    }
+
+    // 【K】【】
+    public function record_share()
+    {
+        return $this->repo->record_share(request()->all());
     }
 
 
