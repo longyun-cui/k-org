@@ -305,16 +305,16 @@ desired effect
             });
 
 
-            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+            {{--wx.ready(function () {   //需在用户可能点击分享按钮前就先调用--}}
 
-                wx.updateAppMessageShareData({
-                    title: "@yield('wx_share_title')", // 分享标题
-                    desc: "@yield('wx_share_desc')", // 分享描述
-                    link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: $.trim("@yield('wx_share_imgUrl')"), // 分享图标
-                    success: function () {
-                        // 用户点击了分享后执行的回调函数
-                        console.log("updateAppMessageShareData");
+                {{--wx.updateAppMessageShareData({--}}
+                    {{--title: "@yield('wx_share_title')", // 分享标题--}}
+                    {{--desc: "@yield('wx_share_desc')", // 分享描述--}}
+                    {{--link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致--}}
+                    {{--imgUrl: $.trim("@yield('wx_share_imgUrl')"), // 分享图标--}}
+                    {{--success: function () {--}}
+                        {{--// 用户点击了分享后执行的回调函数--}}
+                        {{--console.log("updateAppMessageShareData");--}}
                         {{--$.post(--}}
                             {{--"/record/share",--}}
                             {{--{--}}
@@ -330,16 +330,16 @@ desired effect
                                 {{--if(!data.success) layer.msg(data.msg);--}}
                             {{--},--}}
                         {{--'json');--}}
-                    }
-                });
-                wx.updateTimelineShareData({
-                    title: "@yield('wx_share_title')",
-                    desc: "@yield('wx_share_desc')",
-                    link: link,
-                    imgUrl: $.trim("@yield('wx_share_imgUrl')"),
-                    success: function () {
-                        // 用户点击了分享后执行的回调函数
-                        console.log("updateTimelineShareData");
+                    {{--}--}}
+                {{--});--}}
+                {{--wx.updateTimelineShareData({--}}
+                    {{--title: "@yield('wx_share_title')",--}}
+                    {{--desc: "@yield('wx_share_desc')",--}}
+                    {{--link: link,--}}
+                    {{--imgUrl: $.trim("@yield('wx_share_imgUrl')"),--}}
+                    {{--success: function () {--}}
+                        {{--// 用户点击了分享后执行的回调函数--}}
+                        {{--console.log("updateTimelineShareData");--}}
                         {{--$.post(--}}
                             {{--"/record/share",--}}
                             {{--{--}}
@@ -355,15 +355,16 @@ desired effect
                                 {{--if(!data.success) layer.msg(data.msg);--}}
                             {{--},--}}
                         {{--'json');--}}
-                    }
-                });
+                    {{--}--}}
+                {{--});--}}
 
-            });
+            {{--});--}}
 
 //            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
 //            });
 
             wx.ready(function() {
+
                 wx.onMenuShareAppMessage({
                     title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
@@ -483,6 +484,7 @@ desired effect
                         // 用户取消分享后执行的回调函数
                     }
                 });
+
             });
         }
     });
