@@ -1966,7 +1966,7 @@ class IndexRepository {
 
 
         // 总分享【占比】
-        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+        $shared_all_scale = K_Record::select('record_module',DB::raw('count(*) as count'))
 //            ->groupBy('shared_location')
             ->groupBy('record_module')
             ->where(['record_category'=>1,'record_type'=>2])
@@ -1986,7 +1986,7 @@ class IndexRepository {
         }
 
         // 首页分享【占比】
-        $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+        $shared_root_scale = K_Record::select('record_module',DB::raw('count(*) as count'))
 //            ->groupBy('shared_location')
             ->groupBy('record_module')
             ->where(['record_category'=>1,'record_type'=>2])
@@ -2165,7 +2165,7 @@ class IndexRepository {
 
 
         // 总分享【占比】
-        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+        $shared_all_scale = K_Record::select('record_module',DB::raw('count(*) as count'))
             ->groupBy('record_module')
             ->where(['record_category'=>1,'record_type'=>2])
             ->where('object_id',$user_id)
@@ -2178,9 +2178,10 @@ class IndexRepository {
         }
 
         // 首页分享【占比】
-        $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+        $shared_root_scale = K_Record::select('record_module',DB::raw('count(*) as count'))
             ->groupBy('record_module')
-            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>1,'page_module'=>1])
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where(['page_type'=>1,'page_module'=>1])
             ->where('object_id',$user_id)
             ->get();
         foreach($shared_root_scale as $k => $v)
@@ -2299,7 +2300,7 @@ class IndexRepository {
 
 
         // 分享【占比】
-        $shared_data_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+        $shared_data_scale = K_Record::select('record_module',DB::raw('count(*) as count'))
             ->groupBy('record_module')
             ->where(['record_category'=>1,'record_type'=>2])
             ->where('item_id',$item_id)
