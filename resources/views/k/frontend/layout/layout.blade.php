@@ -319,7 +319,9 @@ desired effect
                                 'record_module': 1,
                                 'page_type': "{{ $page["type"] or '0' }}",
                                 'page_module': "{{ $page["module"] or '0' }}",
-                                'page_num': "{{ $page["num"] or '0' }}"
+                                'page_num': "{{ $page["num"] or '1' }}",
+                                'item_id': "{{ $page["item_id"] or '0' }}",
+                                'user_id': "{{ $page["user_id"] or '0' }}"
                             },
                             function(data) {
                                 if(!data.success) layer.msg(data.msg);
@@ -345,7 +347,9 @@ desired effect
                                 'record_module': 2,
                                 'page_type': "{{ $page["type"] or '0' }}",
                                 'page_module': "{{ $page["module"] or '0' }}",
-                                'page_num': "{{ $page["num"] or '0' }}"
+                                'page_num': "{{ $page["num"] or '1' }}",
+                                'item_id': "{{ $page["item_id"] or '0' }}",
+                                'user_id': "{{ $page["user_id"] or '0' }}"
                             },
                             function(data) {
                                 if(!data.success) layer.msg(data.msg);

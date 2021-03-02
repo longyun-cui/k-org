@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <table class='table table-striped table-bordered- table-hover' id='datatable_ajax'>
+                <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
@@ -160,7 +160,7 @@
                     },
                     {
                         "width": "96px",
-                        "title": "页面类型",
+                        "title": "类型",
                         "data": "id",
                         'orderable': false,
                         render: function(data, type, row, meta) {
@@ -268,7 +268,7 @@
                     },
                     {
                         "className": "text-left",
-                        "width": "96px",
+                        "width": "88px",
                         "title": "IP",
                         "data": "ip",
                         "orderable": false,
@@ -281,7 +281,7 @@
                     },
                     {
                         "className": "font-12px",
-                        "width": "160px",
+                        "width": "144px",
                         "title": "访问时间",
                         "data": 'created_at',
                         "orderable": true,
@@ -300,7 +300,7 @@
                         }
                     },
                     {
-                        "width": "240px",
+                        "width": "128px",
                         "title": "操作",
                         "data": 'id',
                         "orderable": false,

@@ -130,6 +130,8 @@ class IndexRepository {
         $page["type"] = 1;
         $page["module"] = 1;
         $page["num"] = 0;
+        $page["item_id"] = 0;
+        $page["user_id"] = 0;
 
         $sidebar_active = '';
 
@@ -199,6 +201,8 @@ class IndexRepository {
         $page["type"] = 1;
         $page["module"] = 2;
         $page["num"] = 0;
+        $page["item_id"] = 0;
+        $page["user_id"] = 0;
 
         $return['data'] = $introduction;
         $return['page'] = $page;
@@ -330,7 +334,8 @@ class IndexRepository {
 
         $page["type"] = 3;
         $page["module"] = 1;
-        $page["num"] = 0;
+        $page["item_id"] = 0;
+        $page["user_id"] = 0;
 
         $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
@@ -362,6 +367,8 @@ class IndexRepository {
         $page_type = isset($post_data["page_type"]) ? $post_data["page_type"] : 0;
         $page_module = isset($post_data["page_module"]) ? $post_data["page_module"] : 0;
         $page_num = isset($post_data["page_num"]) ? $post_data["page_num"] : 0;
+        $item_id = isset($post_data["item_id"]) ? $post_data["item_id"] : 0;
+        $user_id = isset($post_data["user_id"]) ? $post_data["user_id"] : 0;
 
         // 插入记录表
         $record["record_category"] = 1; // record_category=1 browse/share
@@ -370,6 +377,8 @@ class IndexRepository {
         $record["page_type"] = $page_type; // page_type=1 default platform
         $record["page_module"] = $page_module; // page_module=2 introduction
         $record["page_num"] = $page_num;
+        $record["item_id"] = $item_id;
+        $record["object_id"] = $user_id;
         $record["from"] = request('from',NULL);
         $this->record($record);
 
@@ -575,7 +584,9 @@ class IndexRepository {
 
         $page["type"] = 3;
         $page["module"] = 1;
-        $page["num"] = $id;
+        $page["num"] = 1;
+        $page["item_id"] = $id;
+        $page["user_id"] = 0;
 
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.item')
             ->with([
@@ -782,7 +793,9 @@ class IndexRepository {
 
         $page["type"] = 2;
         $page["module"] = 1;
-        $page["num"] = 0;
+        $page["num"] = $item_list->toArray()["current_page"];
+        $page["item_id"] = 0;
+        $page["user_id"] = $id;
 
         $sidebar_active = '';
         if($type == 'root')
@@ -1137,6 +1150,8 @@ class IndexRepository {
         $page["type"] = 1;
         $page["module"] = 33;
         $page["num"] = 0;
+        $page["item_id"] = 0;
+        $page["user_id"] = 0;
 
         return view(env('TEMPLATE_DEFAULT').'frontend.entrance.organization-list')
             ->with([
