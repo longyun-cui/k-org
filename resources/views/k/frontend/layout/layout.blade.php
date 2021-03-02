@@ -277,8 +277,8 @@ desired effect
                 signature: wechat_config.signature, // 必填，签名，见附录1
                 jsApiList: [
                     'checkJsApi',
-                    'updateAppMessageShareData',
-                    'updateTimelineShareData',
+//                    'updateAppMessageShareData',
+//                    'updateTimelineShareData',
                     'onMenuShareAppMessage',
                     'onMenuShareTimeline',
                     'onMenuShareQQ',
@@ -290,8 +290,8 @@ desired effect
             wx.checkJsApi({
                 jsApiList: [
                     'checkJsApi',
-                    'updateAppMessageShareData',
-                    'updateTimelineShareData',
+//                    'updateAppMessageShareData',
+//                    'updateTimelineShareData',
                     'onMenuShareAppMessage',
                     'onMenuShareTimeline',
                     'onMenuShareQQ',
