@@ -211,7 +211,14 @@
                             }
                             else if(row.page_type == 2)
                             {
-                                return '<a target="_blank" href="/user/'+row.object.id+'">'+row.object.username+'</a>';
+                                if(row.object)
+                                {
+                                    return '<a target="_blank" href="/user/'+row.object.id+'">'+row.object.username+'</a>';
+                                }
+                                else
+                                {
+                                    return "object_id.id="+row.object_id;
+                                }
                             }
                             else if(row.page_type == 3)
                             {
