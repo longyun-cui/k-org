@@ -1966,32 +1966,42 @@ class IndexRepository {
 
         // 总分享【占比】
         $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
+//            ->groupBy('shared_location')
+            ->groupBy('record_module')
             ->where(['record_category'=>1,'record_type'=>2])
             ->get();
         foreach($shared_all_scale as $k => $v)
         {
-            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
+//            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
+//            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
+//            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
+//            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
+//            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
+//            else $shared_all_scale[$k]->name = "其他";
+
+            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友|QQ好友";
+            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "朋友圈|QQ空间";
             else $shared_all_scale[$k]->name = "其他";
         }
 
         // 首页分享【占比】
         $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
+//            ->groupBy('shared_location')
+            ->groupBy('record_module')
             ->where(['record_category'=>1,'record_type'=>2])
             ->get();
         foreach($shared_root_scale as $k => $v)
         {
-            if($v->shared_location == 1) $shared_root_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_root_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_root_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_root_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
-            else $shared_root_scale[$k]->name = "其他";
+//            if($v->shared_location == 1) $shared_root_scale[$k]->name = "微信好友";
+//            else if($v->shared_location == 2) $shared_root_scale[$k]->name = "微信朋友圈";
+//            else if($v->shared_location == 3) $shared_root_scale[$k]->name = "QQ好友";
+//            else if($v->shared_location == 4) $shared_root_scale[$k]->name = "QQ空间";
+//            else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
+//            else $shared_root_scale[$k]->name = "其他";
+
+            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友|QQ好友";
+            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "朋友圈|QQ空间";
+            else $shared_all_scale[$k]->name = "其他";
         }
 
 
