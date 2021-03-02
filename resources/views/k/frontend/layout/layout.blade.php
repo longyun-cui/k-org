@@ -312,7 +312,7 @@ desired effect
                     success: function () {
                         // 用户点击了分享后执行的回调函数
 //                        layer.msg("updateAppMessageShareData");
-                        $.get(
+                        $.post(
                             "/record/share",
                             {
                                 '_token': $('meta[name="_token"]').attr('content'),
@@ -329,9 +329,6 @@ desired effect
                         'json');
                     }
                 });
-            });
-
-            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
                 wx.updateTimelineShareData({
                     title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
@@ -340,7 +337,7 @@ desired effect
                     success: function () {
                         // 用户点击了分享后执行的回调函数
 //                        layer.msg("updateTimelineShareData");
-                        $.get(
+                        $.post(
                             "/record/share",
                             {
                                 '_token': $('meta[name="_token"]').attr('content'),
@@ -358,6 +355,9 @@ desired effect
                     }
                 });
             });
+
+//            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+//            });
 
             wx.ready(function() {
                 {{--wx.onMenuShareAppMessage({--}}
