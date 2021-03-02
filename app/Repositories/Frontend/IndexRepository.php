@@ -337,6 +337,7 @@ class IndexRepository {
         $page["item_id"] = 0;
         $page["user_id"] = 0;
 
+        $return['q'] = $q;
         $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
         $return['page_type'] = 'tag';
@@ -346,7 +347,7 @@ class IndexRepository {
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root-1')->with($return);
 //        else return view('frontend.entrance.root')->with($return);
-        else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.root')->with($return);
+        else return view(env('TEMPLATE_DEFAULT').'frontend.entrance.tag')->with($return);
     }
 
 
