@@ -105,6 +105,13 @@
                         </div>
                     </div>
                 </div>
+                {{--活动地点--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">活动地点</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="address" placeholder="地点" value="{{ $data->address or '' }}">
+                    </div>
+                </div>
                 @endif
 
                 {{--链接地址--}}

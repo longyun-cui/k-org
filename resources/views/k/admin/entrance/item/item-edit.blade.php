@@ -88,8 +88,9 @@
                     </div>
                 </div>
 
-                {{--活动时间--}}
+                {{--活动--}}
                 @if($type == "activity")
+                {{--活动时间--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">活动时间</label>
                     <div class="col-md-8 ">
@@ -105,10 +106,17 @@
                         </div>
                     </div>
                 </div>
+                {{--活动地点--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">活动地点</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="address" placeholder="地点" value="{{ $data->address or '' }}">
+                    </div>
+                </div>
                 @endif
 
                 {{--链接地址--}}
-                <div class="form-group _none">
+                <div class="form-group">
                     <label class="control-label col-md-2">链接地址</label>
                     <div class="col-md-8 ">
                         <input type="text" class="form-control" name="link_url" placeholder="链接地址" value="{{ $data->link_url or '' }}">
