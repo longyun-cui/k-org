@@ -60,7 +60,8 @@ class IndexRepository {
                 ->where('user_status',1)
                 ->where('active',1)
                 ->orderByDesc('id')
-                ->paginate(20);
+                ->get();
+//                ->paginate(20);
         }
         else
         {
@@ -76,7 +77,8 @@ class IndexRepository {
                 ->where('user_status',1)
                 ->where('active',1)
                 ->orderByDesc('id')
-                ->paginate(20);
+                ->get();
+//                ->paginate(20);
         }
 
         $item_query->where(['item_status'=>1,'active'=>1]);
