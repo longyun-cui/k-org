@@ -248,7 +248,7 @@
                         "width": "80px",
                         "title": "系统",
                         "data": "open_system",
-                        "orderable": false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
@@ -258,7 +258,7 @@
                         "width": "80px",
                         "title": "浏览器",
                         "data": "open_browser",
-                        "orderable": false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
@@ -268,7 +268,7 @@
                         "width": "80px",
                         "title": "APP",
                         "data": "open_app",
-                        "orderable": false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
