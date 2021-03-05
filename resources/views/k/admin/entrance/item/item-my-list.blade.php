@@ -239,7 +239,7 @@
                         "width": "48px",
                         "title": "浏览数",
                         "data": "visit_num",
-                        "orderable": false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
@@ -248,7 +248,7 @@
                         "width": "48px",
                         "title": "分享数",
                         "data": "share_num",
-                        "orderable": false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
