@@ -61,13 +61,6 @@
                     <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a>
                 </div>
 
-                @if(!empty($item->address))
-                <div class="text-row text-info-row multi-ellipsis-1 margin-bottom-4px">
-                    <i class="icon ion-location text-blue" style="width:16px;text-align:center;"></i>
-                    <span class="">{{ $item->address or '' }}</span>
-                </div>
-                @endif
-
                 @if(empty($item->cover_pic))
                 @if($item->time_type == 1)
                 <div class="text-row text-time-row multi-ellipsis-1">
@@ -80,6 +73,13 @@
                         @endif
                 </div>
                 @endif
+                @endif
+
+                @if(!empty($item->address))
+                    <div class="text-row text-info-row multi-ellipsis-1 margin-bottom-4px">
+                        <i class="icon ion-location text-blue" style="width:16px;text-align:center;"></i>
+                        <span class="">{{ $item->address or '' }}</span>
+                    </div>
                 @endif
 
                 <div class="text-title-row multi-ellipsis-1 _none">
