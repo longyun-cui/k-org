@@ -25,10 +25,14 @@
         </div>
 
         <div class="item-row item-info-row">
+
+            @if(!empty($data->email))
             <div class="margin-4px">
                 <i class="fa fa-envelope text-primary"></i>
                 <span class="text-muted">{{ $data->email or '暂无' }}</span>
             </div>
+            @endif
+            @if(!empty($data->QQ_number))
             <div class="margin-4px">
                 <i class="fa fa-qq text-primary"></i>
                 @if(!empty($data->QQ_number))
@@ -39,14 +43,20 @@
                     <span class="text-muted">{{ $data->QQ_number or '暂无' }}</span>
                 @endif
             </div>
+            @endif
+            @if(!empty($data->wechat_id))
             <div class="margin-4px">
                 <i class="fa fa-weixin text-primary"></i>
                 <span class="text-muted">{{ $data->wechat_id or '暂无' }}</span>
             </div>
+            @endif
+            @if(!empty($data->contact_address))
             <div class="margin-4px">
                 <i class="fa fa-map-marker text-primary"></i>
                 <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
             </div>
+            @endif
+            @if(!empty($data->website))
             <div class="margin-4px">
                 <i class="fa fa-globe text-primary"></i>
                 @if(!empty($data->website))
@@ -57,6 +67,7 @@
                     <span class="text-muted">{{ $data->website or '暂无' }}</span>
                 @endif
             </div>
+            @endif
             <div class="margin-4px">
                 <i class="fa fa-user text-orange"></i>
                 <span class="text-muted">{{ $data->linkman or '暂无' }}</span>
