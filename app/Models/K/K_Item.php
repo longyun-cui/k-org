@@ -16,7 +16,7 @@ class K_Item extends Model
         'item_id', 'menu_id',
         'name', 'title', 'subtitle', 'description', 'content', 'custom', 'custom2', 'custom3',
         'link_url', 'cover_pic', 'attachment_name', 'attachment_src', 'tag',
-        'time_point', 'time_type', 'start_time', 'end_time',
+        'time_point', 'time_type', 'start_time', 'end_time', 'address',
         'visit_num', 'share_num', 'favor_num', 'comment_num',
         'published_at'
     ];

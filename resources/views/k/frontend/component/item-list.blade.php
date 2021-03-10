@@ -61,6 +61,13 @@
                     <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a>
                 </div>
 
+                @if(!empty($item->address))
+                <div class="text-row text-info-row multi-ellipsis-1 margin-top-4px margin-bottom-4px">
+                    <i class="icon ion-location" style="width:16px;margin:auto 2px auto 0;text-align:center;float:left;"></i>
+                    <span class="small">{{ $item->address or '' }}</span>
+                </div>
+                @endif
+
                 @if(empty($item->cover_pic))
                 @if($item->time_type == 1)
                 <div class="text-row text-time-row multi-ellipsis-1">
