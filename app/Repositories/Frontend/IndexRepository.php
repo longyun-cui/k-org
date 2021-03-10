@@ -385,6 +385,27 @@ class IndexRepository {
         $record["from"] = request('from',NULL);
         $this->record($record);
 
+        if($page_type == 1)
+        {
+
+        }
+        else if($page_type == 2)
+        {
+            $user = K_User::find($user_id);
+            $user->timestamps = false;
+            $user->increment('share_num');
+        }
+        else if($page_type == 3)
+        {
+            $item = K_Item::find($item_id);
+            $item->timestamps = false;
+            $item->increment('share_num');
+
+            $user = K_User::find($item->owner_id);
+            $user->timestamps = false;
+            $user->increment('share_num');
+        }
+
         return response_success([]);
     }
 
