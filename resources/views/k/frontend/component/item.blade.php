@@ -39,6 +39,13 @@
                     </div>
                 @endif
 
+                @if(!empty($item->address))
+                    <div class="text-row text-info-row text-muted margin-bottom-8px">
+                        <i class="icon ion-location text-blue" style="width:16px;text-align:center;float:left;"></i>
+                        <span class="">{{ $item->address or '' }}</span>
+                    </div>
+                @endif
+
                 @if(!empty($item->description))
                     <div class="text-row text-description-row text-muted margin-bottom-8px">
                         {{ $item->description or '' }}
