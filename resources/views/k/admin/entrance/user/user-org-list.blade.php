@@ -71,6 +71,8 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -350,6 +352,24 @@
                                 return '<a target="_blank" href="/admin/user/fans?user-id='+data+'">'+row.fans_count+'</a>';
                             }
                             else return '--';
+                        }
+                    },
+                    {
+                        "width": "72px",
+                        "title": "浏览数",
+                        "data": "visit_num",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    {
+                        "width": "72px",
+                        "title": "分享数",
+                        "data": "share_num",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            return data;
                         }
                     },
                     {
