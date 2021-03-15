@@ -3,6 +3,7 @@
     <div class="">
         <i class="fa fa-list-ul"></i>
         <a class="tag" href="{{ url('/organization-list') }}">#组织列表</a>
+        <a class="tag" href="{{ url('/?type=activity') }}">#活动</a>
         <br>
     </div>
 
@@ -24,6 +25,13 @@
         <a class="tag" href="{{ url('/tag/老年会') }}">#老年会</a>
         <a class="tag" href="{{ url('/tag/企业家') }}">#企业家</a>
         <a class="tag" href="{{ url('/tag/排球') }}">#排球</a>
+        <a class="tag" href="{{ url('/tag/羽毛球') }}">#羽毛球</a>
+    </div>
+
+    <div class="margin-top-8px">
+        <i class="fa fa-sign-in"></i>
+        <a class="tag" href="{{ url('/org') }}">#组织后台登录</a>
+        <a class="tag" href="{{ url('/org/register') }}">#注册新组织</a>
     </div>
 
 </div>

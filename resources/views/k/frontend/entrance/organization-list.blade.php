@@ -9,7 +9,7 @@
 
 
 @section('wx_share_title')朝鲜族组织平台@endsection
-@section('wx_share_desc')寻找你的社群组织@endsection
+@section('wx_share_desc')发现身边的朝鲜族社群组织@endsection
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 

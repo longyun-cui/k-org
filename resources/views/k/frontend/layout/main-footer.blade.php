@@ -10,7 +10,7 @@
         {{--注册组织•赞助商请联系管理员--}}
         <a href="/introduction">平台介绍</a>
         <span style="margin-left:4px;margin-right:4px;">|</span>
-        <a href="/org/login">组织登录</a>
+        <a href="/org">组织登录</a>
         <span style="margin-left:4px;margin-right:4px;">|</span>
         <a href="/org/register">注册新组织</a>
     </small>

@@ -2,7 +2,7 @@
 
 
 @section('head_title')
-    {{ $head_title or '朝鲜族组织平台' }}
+    {{ $head_title or '朝鲜族组织平台 - 发现身边的朝鲜族社群组织' }}
 @endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection
@@ -11,7 +11,7 @@
 
 
 @section('wx_share_title')朝鲜族组织平台@endsection
-@section('wx_share_desc')朝鲜族社群组织活动分享平台@endsection
+@section('wx_share_desc')发现身边的朝鲜族社群组织@endsection
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 
