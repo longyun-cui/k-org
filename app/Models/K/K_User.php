@@ -18,8 +18,9 @@ class K_User extends Authenticatable
         'mobile', 'telephone', 'email', 'password',
         'wx_unionid',
         'introduction_id', 'advertising_id',
-        'QQ_number', 'wechat_id', 'wechat_qr_code_img', 'weibo_address', 'contact_address', 'website',
-        'contact_phone', 'contact_wechat_id',
+        'QQ_number', 'wechat_id', 'wechat_qr_code_img', 'weibo_name', 'weibo_address', 'website',
+        'contact_address',
+        'contact_phone', 'contact_wechat_id', 'contact_wechat_qr_code_img',
         'linkman', 'linkman_phone', 'linkman_wechat_id', 'linkman_wechat_qr_code_img',
         'visit_num', 'share_num', 'favor_num',  'follow_num', 'fans_num',
 

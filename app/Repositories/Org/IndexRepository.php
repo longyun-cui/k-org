@@ -94,6 +94,44 @@ class IndexRepository {
                     else throw new Exception("upload-portrait-img-file-fail");
                 }
 
+                // 微信二维码
+                if(!empty($post_data["wechat_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_wechat_qr_code_img = $me->wechat_qr_code_img;
+                    if(!empty($mine_wechat_qr_code_img) && file_exists(storage_path("resource/" . $mine_wechat_qr_code_img)))
+                    {
+                        unlink(storage_path("resource/" . $mine_wechat_qr_code_img));
+                    }
+
+                    $result = upload_storage($post_data["wechat_qr_code"]);
+                    if($result["result"])
+                    {
+                        $me->wechat_qr_code_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload--wechat_qr_code--fail");
+                }
+
+                // 联系人微信二维码
+                if(!empty($post_data["linkman_wechat_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_linkman_wechat_qr_code_img = $me->linkman_wechat_qr_code_img;
+                    if(!empty($mine_linkman_wechat_qr_code_img) && file_exists(storage_path("resource/" . $mine_linkman_wechat_qr_code_img)))
+                    {
+                        unlink(storage_path("resource/" . $mine_linkman_wechat_qr_code_img));
+                    }
+
+                    $result = upload_storage($post_data["linkman_wechat_qr_code"]);
+                    if($result["result"])
+                    {
+                        $me->linkman_wechat_qr_code_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload--linkman_wechat_qr_code--fail");
+                }
+
             }
             else throw new Exception("insert--item--fail");
 

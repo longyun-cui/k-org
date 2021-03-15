@@ -85,7 +85,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2"><sup class="text-red">*</sup> 登录手机</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="mobile" placeholder="请输入手机" value="{{ $data->mobile or '' }}">
+                        <input type="text" class="form-control" name="mobile" placeholder="手机" value="{{ $data->mobile or '' }}">
                     </div>
                 </div>
                 {{--描述--}}
@@ -108,21 +108,21 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">邮箱</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="email" placeholder="请输入邮箱" value="{{ $data->email or '' }}">
+                        <input type="text" class="form-control" name="email" placeholder="邮箱" value="{{ $data->email or '' }}">
                     </div>
                 </div>
                 {{--QQ--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">QQ</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="QQ_number" placeholder="请输入QQ" value="{{ $data->QQ_number or '' }}">
+                        <input type="text" class="form-control" name="QQ_number" placeholder="QQ" value="{{ $data->QQ_number or '' }}">
                     </div>
                 </div>
                 {{--微信号--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">微信号</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="wechat_id" placeholder="请输入微信号" value="{{ $data->wechat_id or '' }}">
+                        <input type="text" class="form-control" name="wechat_id" placeholder="微信号" value="{{ $data->wechat_id or '' }}">
                     </div>
                 </div>
                 {{--微信二维码--}}
@@ -153,18 +153,33 @@
 
                     </div>
                 </div>
-                {{--联系地址--}}
+                {{--微博名称--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">联系地址</label>
+                    <label class="control-label col-md-2">微博名称</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="contact_address" placeholder="请输入联系地址" value="{{ $data->contact_address or '' }}">
+                        <input type="text" class="form-control" name="weibo_name" placeholder="微博名称" value="{{ $data->weibo_name or '' }}">
+                    </div>
+                </div>
+                {{--微博地址--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">微博地址</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="weibo_address" placeholder="微博地址，请携带http或https" value="{{ $data->weibo_address or '' }}">
                     </div>
                 </div>
                 {{--网站--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">网站</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="website" placeholder="请输入网站地址，请携带http或https" value="{{ $data->website or '' }}">
+                        <input type="text" class="form-control" name="website" placeholder="网站地址，请携带http或https" value="{{ $data->website or '' }}">
+                    </div>
+                </div>
+
+                {{--联系地址--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">地址</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="contact_address" placeholder="地址" value="{{ $data->contact_address or '' }}">
                     </div>
                 </div>
 
@@ -172,21 +187,21 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">【联系人】</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman" placeholder="请输入联系人" value="{{ $data->linkman or '' }}">
+                        <input type="text" class="form-control" name="linkman" placeholder="联系人" value="{{ $data->linkman or '' }}">
                     </div>
                 </div>
                 {{--联系人电话--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">【联系人】电话</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman_phone" placeholder="请输入联系人电话" value="{{ $data->linkman_phone or '' }}">
+                        <input type="text" class="form-control" name="linkman_phone" placeholder="联系人电话" value="{{ $data->linkman_phone or '' }}">
                     </div>
                 </div>
                 {{--联系人微信ID--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">【联系人】微信号</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman_wechat_id" placeholder="请输入联系人微信" value="{{ $data->linkman_wechat_id or '' }}">
+                        <input type="text" class="form-control" name="linkman_wechat_id" placeholder="联系人微信号" value="{{ $data->linkman_wechat_id or '' }}">
                     </div>
                 </div>
                 {{--联系人微信二维码--}}

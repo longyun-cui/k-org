@@ -40,8 +40,15 @@
                         <div><label class="control-label">{{ $data->username or '' }}</label></div>
                     </div>
                 </div>
-                {{--真实名称--}}
+                {{--描述•简介--}}
                 <div class="form-group">
+                    <label class="control-label col-md-2">简介：</label>
+                    <div class="col-md-8 ">
+                        <div><label class="control-label">{{ $data->description or '' }}</label></div>
+                    </div>
+                </div>
+                {{--真实名称--}}
+                <div class="form-group _none">
                     <label class="control-label col-md-2">真实名称：</label>
                     <div class="col-md-8 ">
                         <div><label class="control-label">{{ $data->true_name or '' }}</label></div>
@@ -75,11 +82,41 @@
                         <div><label class="control-label">{{ $data->wechat_id or '' }}</label></div>
                     </div>
                 </div>
+                {{--微信二维码--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">微信二维码：</label>
+                    <div class="col-md-8 ">
+                        <div class="info-img-block" style="width:120px;height:120px;overflow:hidden;">
+                            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->wechat_qr_code_img) }}" alt="">
+                        </div>
+                    </div>
+                </div>
+                {{--微博名称--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">微博名称：</label>
+                    <div class="col-md-8 ">
+                        <div><label class="control-label">{{ $data->weibo_name or '' }}</label></div>
+                    </div>
+                </div>
                 {{--微博地址--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">微博地址：</label>
                     <div class="col-md-8 ">
                         <div><label class="control-label">{{ $data->weibo_address or '' }}</label></div>
+                    </div>
+                </div>
+                {{--网站--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">网站：</label>
+                    <div class="col-md-8 ">
+                        <div><label class="control-label">{{ $data->website or '' }}</label></div>
+                    </div>
+                </div>
+                {{--地址--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">地址：</label>
+                    <div class="col-md-8 ">
+                        <div><label class="control-label">{{ $data->contact_address or '' }}</label></div>
                     </div>
                 </div>
                 {{--联系人--}}
@@ -89,25 +126,27 @@
                         <div><label class="control-label">{{ $data->linkman or '' }}</label></div>
                     </div>
                 </div>
-                {{--联系电话--}}
+                {{--联系人电话--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">联系电话：</label>
+                    <label class="control-label col-md-2">联系人电话：</label>
                     <div class="col-md-8 ">
-                        <div><label class="control-label">{{ $data->contact_phone or '' }}</label></div>
+                        <div><label class="control-label">{{ $data->linkman_phone or '' }}</label></div>
                     </div>
                 </div>
-                {{--联系地址--}}
+                {{--联系人微信号--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">联系地址：</label>
+                    <label class="control-label col-md-2">联系人微信号：</label>
                     <div class="col-md-8 ">
-                        <div><label class="control-label">{{ $data->contact_address or '' }}</label></div>
+                        <div><label class="control-label">{{ $data->linkman_wechat_id or '' }}</label></div>
                     </div>
                 </div>
-                {{--描述•简介--}}
+                {{--联系人微信二维码--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">简介：</label>
+                    <label class="control-label col-md-2">联系人微信二维码：</label>
                     <div class="col-md-8 ">
-                        <div><label class="control-label">{{ $data->description or '' }}</label></div>
+                        <div class="info-img-block" style="width:120px;height:120px;overflow:hidden;">
+                            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wechat_qr_code_img) }}" alt="">
+                        </div>
                     </div>
                 </div>
                 {{--portrait--}}
