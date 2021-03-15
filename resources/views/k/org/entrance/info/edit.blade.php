@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">联系电话</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="contact_phone" placeholder="请输入联系电话" value="{{ $data->contact_phone or '' }}">
+                        <input type="text" class="form-control" name="linkman_phone" placeholder="请输入联系电话" value="{{ $data->linkman_phone or '' }}">
                     </div>
                 </div>
 
