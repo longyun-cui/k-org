@@ -160,6 +160,11 @@ class IndexController extends Controller
             Auth::guard('sponsor')->login($user,true);
         }
 
+        if(request()->isMethod('get') && $user_id == 10000)
+        {
+            return redirect('/org');
+        }
+
         $return['user'] = $user;
         return response_success($return);
     }

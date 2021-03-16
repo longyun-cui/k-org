@@ -230,6 +230,11 @@
                     <i class="fa fa-cube text-default"></i> <span>平台首页</span>
                 </a>
             </li>
+            <li class="treeview">
+                <a href="{{ url('/admin/user/user-login?id=10000') }}" target="_blank">
+                    <i class="fa fa-sign-in text-default"></i> <span>登录组织</span>
+                </a>
+            </li>
 
             <li class="treeview _none">
                 <a href=""><i class="fa fa-th text-aqua"></i> <span>平台</span>
