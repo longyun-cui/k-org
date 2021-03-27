@@ -11,6 +11,23 @@
 |
 */
 
+
+
+
+Route::group(['domain'=>'k-org.cn'], function(){
+    Route::get('{all}', function(){
+        return Redirect::away('http://www.k-org.cn/'.ltrim(Request::path(),'/'),301);
+    })->where('all','.*');
+});
+Route::group(['domain'=>'k-org.com'], function(){
+    Route::get('{all}', function(){
+        return Redirect::away('http://www.k-org.com/'.ltrim(Request::path(),'/'),301);
+    })->where('all','.*');
+});
+
+
+
+
 Route::get('/', function () {
 
     echo("【url()->full()】  --:--  ".url()->full().'<br>');
