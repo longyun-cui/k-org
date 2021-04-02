@@ -319,7 +319,9 @@
                         "data": "creator_id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
-                            return row.creator == null ? '游客' : '<a target="_blank" href="/user/'+row.creator.id+'">'+row.creator.username+'</a>';
+                            return row.creator == null
+                                ? '<small class="btn-xs bg-black">游客</small>'
+                                : '<a target="_blank" href="/user/'+row.creator.id+'">'+row.creator.username+'</a>';
                         }
                     },
                     {
@@ -413,7 +415,7 @@
                         }
                     },
                     {
-                        "width": "128px",
+                        "width": "112px",
                         "title": "操作",
                         "data": 'id',
                         "orderable": false,
