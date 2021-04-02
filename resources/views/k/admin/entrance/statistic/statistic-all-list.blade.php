@@ -323,8 +323,8 @@
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "80px",
+                        "className": "",
+                        "width": "64px",
                         "title": "移动端",
                         "data": "open_device_type",
                         "orderable": true,
@@ -335,33 +335,44 @@
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "80px",
+                        "className": "",
+                        "width": "64px",
                         "title": "系统",
                         "data": "open_system",
                         "orderable": true,
                         render: function(data, type, row, meta) {
-                            return data;
+                            if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            else if(data == "Android") return '<small class="btn-xs bg-primary">安卓</small>';
+                            else if(data == "iPhone") return '<small class="btn-xs bg-olive">苹果</small>';
+                            else if(data == "iPad") return '<small class="btn-xs bg-olive">iPad</small>';
+                            else if(data == "Mac") return '<small class="btn-xs bg-olive">Mac</small>';
+                            else if(data == "Windows") return '<small class="btn-xs bg-purple">微软</small>';
+                            else return data;
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "80px",
+                        "className": "",
+                        "width": "64px",
                         "title": "浏览器",
                         "data": "open_browser",
                         "orderable": true,
                         render: function(data, type, row, meta) {
-                            return data;
+                            if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            else return data;
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "80px",
+                        "className": "",
+                        "width": "64px",
                         "title": "APP",
                         "data": "open_app",
                         "orderable": true,
                         render: function(data, type, row, meta) {
-                            return data;
+                            if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            else if(data == "WeChat") return '<small class="btn-xs bg-olive">微信</small>';
+                            else if(data == "QQ") return '<small class="btn-xs bg-orange">QQ</small>';
+                            else if(data == "Alipay") return '<small class="btn-xs bg-primary">支付宝巴博</small>';
+                            else return data;
                         }
                     },
                     {
@@ -379,7 +390,7 @@
                     },
                     {
                         "className": "font-12px",
-                        "width": "144px",
+                        "width": "96px",
                         "title": "访问时间",
                         "data": 'created_at',
                         "orderable": true,
@@ -387,14 +398,18 @@
 //                            return data;
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
-                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
-                            var $day = ('00'+($date.getDate())).slice(-2);
+                            var $month = ($date.getMonth()+1);
+                            var $day = $date.getDate();
+//                            var $year = ('0000'+$date.getFullYear()).slice(-2);
+//                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
+//                            var $day = ('00'+($date.getDate())).slice(-2);
                             var $hour = ('00'+$date.getHours()).slice(-2);
                             var $minute = ('00'+$date.getMinutes()).slice(-2);
                             var $second = ('00'+$date.getSeconds()).slice(-2);
 //                            return $year+'-'+$month+'-'+$day;
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
-                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
+                            return $year+'.'+$month+'.'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute;
                         }
                     },
                     {
