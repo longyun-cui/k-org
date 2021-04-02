@@ -371,7 +371,7 @@
                             if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
                             else if(data == "WeChat") return '<small class="btn-xs bg-olive">微信</small>';
                             else if(data == "QQ") return '<small class="btn-xs bg-orange">QQ</small>';
-                            else if(data == "Alipay") return '<small class="btn-xs bg-primary">支付宝巴博</small>';
+                            else if(data == "Alipay") return '<small class="btn-xs bg-primary">支付宝</small>';
                             else return data;
                         }
                     },
