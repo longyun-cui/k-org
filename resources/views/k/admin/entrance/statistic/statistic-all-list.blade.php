@@ -216,7 +216,7 @@
                         }
                     },
                     {
-                        "width": "64px",
+                        "width": "48px",
                         "title": "操作",
                         "data": "id",
                         'orderable': false,
@@ -238,7 +238,7 @@
                         }
                     },
                     {
-                        "width": "96px",
+                        "width": "72px",
                         "title": "类型",
                         "data": "id",
                         'orderable': false,
@@ -250,10 +250,10 @@
                             else if(row.page_type == 2)
                             {
                                 if(row.page_module == 0) return 'user';
-                                else if(row.page_module == 1) return '<small class="btn-xs bg-olive">用户•首页</small>';
-                                else if(row.page_module == 2) return '<small class="btn-xs bg-olive">用户•介绍页</small>';
-                                else if(row.page_module == 9) return '<small class="btn-xs bg-olive">用户•文章页</small>';
-                                else if(row.page_module == 11) return '<small class="btn-xs bg-olive">用户•活动页</small>';
+                                else if(row.page_module == 1) return '<small class="btn-xs bg-olive">U•首页</small>';
+                                else if(row.page_module == 2) return '<small class="btn-xs bg-olive">U•介绍</small>';
+                                else if(row.page_module == 9) return '<small class="btn-xs bg-olive">U•文章</small>';
+                                else if(row.page_module == 11) return '<small class="btn-xs bg-olive">U•活动</small>';
                                 else return "user page error";
                             }
                             else if(row.page_type == 3)
