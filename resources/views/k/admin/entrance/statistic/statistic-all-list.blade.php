@@ -15,7 +15,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="box box-info">
+        <div class="box box-info main-list-body">
 
             <div class="box-header with-border" style="margin:16px 0;">
 
@@ -39,6 +39,30 @@
                     <div class="input-group">
 
                         <input type="text" class="form-control form-filter item-search-keyup" name="title" placeholder="标题" />
+                        <select class="form-control form-filter" name="open_system" style="width:96px;">
+                            <option value ="0">系统</option>
+                            <option value ="1">默认</option>
+                            <option value ="Android">Android</option>
+                            <option value ="iPhone">iPhone</option>
+                            <option value ="iPad">iPad</option>
+                            <option value ="Mac">Mac</option>
+                            <option value ="Windows">Windows</option>
+                        </select>
+
+                        <select class="form-control form-filter" name="open_browser" style="width:80px;">
+                            <option value ="0">浏览器</option>
+                            <option value ="1">默认</option>
+                            <option value ="Chrome">Chrome</option>
+                            <option value ="Firefox">Firefox</option>
+                            <option value ="Safari">Safari</option>
+                        </select>
+
+                        <select class="form-control form-filter" name="open_app" style="width:80px;">
+                            <option value ="0">APP</option>
+                            <option value ="1">默认</option>
+                            <option value ="WeChat">WeChat</option>
+                            <option value ="QQ">QQ</option>
+                        </select>
 
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
                             <i class="fa fa-search"></i> 搜索
@@ -66,12 +90,35 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
 
+            </div>
+
+            <div class="box-footer">
+                <div class="row" style="margin:16px 0;">
+                    <div class="col-md-offset-0 col-md-4 col-sm-8 col-xs-12">
+                        {{--<button type="button" class="btn btn-primary"><i class="fa fa-check"></i> 提交</button>--}}
+                        {{--<button type="button" onclick="history.go(-1);" class="btn btn-default">返回</button>--}}
+                        <div class="input-group">
+                            <span class="input-group-addon"><input type="checkbox" id="check-review-all"></span>
+                            <select name="bulk-operat-status" class="form-control form-filter">
+                                <option value ="0">请选择</option>
+                                <option value ="待审核">待审核</option>
+                                <option value ="优化中">优化中</option>
+                                <option value ="合作停">合作停</option>
+                                <option value ="">被拒绝</option>
+                            </select>
+                            <span class="input-group-addon btn btn-default" id="operat-bulk-submit"><i class="fa fa-check"></i> 批量操作</span>
+                            <span class="input-group-addon btn btn-default" id="delete-bulk-submit"><i class="fa fa-trash-o"></i> 批量删除</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -98,7 +145,7 @@
             var dt = $('#datatable_ajax');
             var ajax_datatable = dt.DataTable({
 //                "aLengthMenu": [[20, 50, 200, 500, -1], ["20", "50", "200", "500", "全部"]],
-                "aLengthMenu": [[20, 50, 200], ["20", "50", "200"]],
+                "aLengthMenu": [[50, 100, 200], ["50", "10", "200"]],
                 "processing": true,
                 "serverSide": true,
                 "searching": false,
@@ -108,8 +155,10 @@
                     "dataType" : 'json',
                     "data": function (d) {
                         d._token = $('meta[name="_token"]').attr('content');
-                        d.keyword = $('input[name="keyword"]').val();
-                        d.website = $('input[name="website"]').val();
+                        d.title = $('input[name="title"]').val();
+                        d.open_system = $('select[name="open_system"]').val();
+                        d.open_browser = $('select[name="open_browser"]').val();
+                        d.open_app = $('select[name="open_app"]').val();
 //                        d.nickname 	= $('input[name="nickname"]').val();
 //                        d.certificate_type_id = $('select[name="certificate_type_id"]').val();
 //                        d.certificate_state = $('select[name="certificate_state"]').val();
@@ -126,6 +175,22 @@
                 "order": [],
                 "orderCellsTop": true,
                 "columns": [
+                    {
+                        "width": "32px",
+                        "title": "选择",
+                        "data": "id",
+                        'orderable': false,
+                        render: function(data, type, row, meta) {
+                            return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
+                        }
+                    },
+                    {
+                        "width": "32px",
+                        "title": "序号",
+                        "data": null,
+                        "targets": 0,
+                        'orderable': false
+                    },
                     {
                         "className": "font-12px",
                         "width": "48px",
@@ -322,6 +387,12 @@
                     }
                 ],
                 "drawCallback": function (settings) {
+
+                    let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    this.api().column(1).nodes().each(function(cell, i) {
+                        cell.innerHTML =  startIndex + i + 1;
+                    });
+
                     ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
                     $("a.verify").click(function(event){
                         event.preventDefault();
@@ -389,5 +460,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_ADMIN').'admin.entrance.item.item-script')
+@include(env('TEMPLATE_ADMIN').'admin.entrance.statistic.statistic-script')
 @endsection

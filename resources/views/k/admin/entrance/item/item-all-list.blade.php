@@ -15,7 +15,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="box box-info">
+        <div class="box box-info main-list-body">
 
             <div class="box-header with-border" style="margin:16px 0;">
 
@@ -50,10 +50,12 @@
                     </div>
                 </div>
 
-                <table class='table table-striped table-bordered- table-hover' id='datatable_ajax'>
+                <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -69,6 +71,27 @@
                     </tbody>
                 </table>
 
+            </div>
+
+
+            <div class="box-footer">
+                <div class="row" style="margin:16px 0;">
+                    <div class="col-md-offset-0 col-md-4 col-sm-8 col-xs-12">
+                        {{--<button type="button" class="btn btn-primary"><i class="fa fa-check"></i> 提交</button>--}}
+                        {{--<button type="button" onclick="history.go(-1);" class="btn btn-default">返回</button>--}}
+                        <div class="input-group">
+                            <span class="input-group-addon"><input type="checkbox" id="check-review-all"></span>
+                            <select name="bulk-operat-status" class="form-control form-filter">
+                                <option value ="0">请选择</option>
+                                <option value ="封禁">封禁</option>
+                                <option value ="删除">删除</option>
+                                <option value ="永久删除">永久删除</option>
+                            </select>
+                            <span class="input-group-addon btn btn-default" id="operat-bulk-submit"><i class="fa fa-check"></i> 批量操作</span>
+                            <span class="input-group-addon btn btn-default" id="delete-bulk-submit"><i class="fa fa-trash-o"></i> 批量删除</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -193,6 +216,22 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
+                        "width": "32px",
+                        "title": "选择",
+                        "data": "id",
+                        'orderable': false,
+                        render: function(data, type, row, meta) {
+                            return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
+                        }
+                    },
+                    {
+                        "width": "32px",
+                        "title": "序号",
+                        "data": null,
+                        "targets": 0,
+                        'orderable': false
+                    },
+                    {
                         "className": "font-12px",
                         "width": "48px",
                         "title": "ID",
@@ -223,7 +262,7 @@
                         }
                     },
                     {
-                        "width": "64px",
+                        "width": "48px",
                         "title": "类型",
                         "data": "item_type",
                         'orderable': false,
@@ -236,8 +275,8 @@
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "浏览数",
+                        "width": "32px",
+                        "title": "浏览",
                         "data": "visit_num",
                         "orderable": true,
                         render: function(data, type, row, meta) {
@@ -245,8 +284,8 @@
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "分享数",
+                        "width": "32px",
+                        "title": "分享",
                         "data": "share_num",
                         "orderable": true,
                         render: function(data, type, row, meta) {
@@ -255,7 +294,7 @@
                     },
                     {
                         "className": "font-12px",
-                        "width": "128px",
+                        "width": "112px",
                         "title": "创建时间",
                         "data": 'created_at',
                         "orderable": true,
@@ -275,7 +314,7 @@
                     },
                     {
                         "className": "font-12px",
-                        "width": "128px",
+                        "width": "112px",
                         "title": "修改时间",
                         "data": 'updated_at',
                         "orderable": true,
@@ -372,6 +411,12 @@
                     }
                 ],
                 "drawCallback": function (settings) {
+
+                    let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    this.api().column(1).nodes().each(function(cell, i) {
+                        cell.innerHTML =  startIndex + i + 1;
+                    });
+
                     ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
                     $("a.verify").click(function(event){
                         event.preventDefault();

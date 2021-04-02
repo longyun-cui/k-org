@@ -2343,6 +2343,75 @@ class IndexRepository {
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
+        if(!empty($post_data['open_system']))
+        {
+            if($post_data['open_system'] == "0")
+            {
+            }
+            else if($post_data['open_system'] == "1")
+            {
+                $query->whereIn('open_system',['Android','iPhone','iPad','Mac','Windows']);
+            }
+            else if(in_array($post_data['open_system'],['Android','iPhone','iPad','Mac','Windows']))
+            {
+                $query->where('open_system',$post_data['open_system']);
+            }
+            else
+            {
+                $query->where('open_system',$post_data['open_system']);
+            }
+        }
+        else
+        {
+//            $query->whereIn('open_system',['Android','iPhone','iPad','Mac','Windows']);
+        }
+
+        if(!empty($post_data['open_browser']))
+        {
+            if($post_data['open_browser'] == "0")
+            {
+            }
+            else if($post_data['open_browser'] == "1")
+            {
+                $query->whereIn('open_browser',['Chrome','Firefox','Safari']);
+            }
+            else if(in_array($post_data['open_browser'],['Chrome','Firefox','Safari']))
+            {
+                $query->where('open_browser',$post_data['open_browser']);
+            }
+            else
+            {
+                $query->where('open_browser',$post_data['open_browser']);
+            }
+        }
+        else
+        {
+//            $query->whereIn('open_browser',['Chrome','Firefox','Safari']);
+        }
+
+        if(!empty($post_data['open_app']))
+        {
+            if($post_data['open_app'] == "0")
+            {
+            }
+            else if($post_data['open_app'] == "1")
+            {
+                $query->whereIn('open_app',['WeChat','QQ']);
+            }
+            else if(in_array($post_data['open_app'],['WeChat','QQ']))
+            {
+                $query->where('open_app',$post_data['open_app']);
+            }
+            else
+            {
+                $query->where('open_app',$post_data['open_app']);
+            }
+        }
+        else
+        {
+//            $query->whereIn('open_app',['WeChat','QQ']);
+        }
+
         $total = $query->count();
 
         $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;

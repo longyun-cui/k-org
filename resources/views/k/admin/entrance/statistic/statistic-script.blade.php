@@ -50,10 +50,7 @@
 
 
 
-        /*
-            // 批量操作
-         */
-        // 【批量操作】全选or反选
+        // 【批量审核】全选or反选
         $(".main-list-body").on('click', '#check-review-all', function () {
             $('input[name="bulk-id"]').prop('checked',this.checked);//checked为true时为默认显示的状态
         });
