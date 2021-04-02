@@ -266,6 +266,7 @@ if(!function_exists('getBrowserInfo'))
 
         $info['type'] = 'PC';
         if(stripos($Agent, 'Mobile')) $info['type'] = 'Mobile';
+        if(isMobileEquipment()) $info['type'] = 'Mobile';
 
         $info['system'] = 'Unknown';
         if(stripos($Agent, 'PowerPC')) $info['system'] = 'PowerPC';
@@ -283,19 +284,19 @@ if(!function_exists('getBrowserInfo'))
 
         if(stripos($Agent, 'Windows')) $info['system'] = 'Windows';
         if(stripos($Agent, 'Windows Phone')) $info['system'] = 'WinPhone';
-        if(stripos($Agent, 'Mac')) $info['system'] = 'Mac';
-        if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
-        if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
         if(stripos($Agent, 'Sun')) $info['system'] = 'SunOS';
         if(stripos($Agent, 'IBM')) $info['system'] = 'IBM';
         if(stripos($Agent, 'Unix')) $info['system'] = 'Unix';
         if(stripos($Agent, 'Linux')) $info['system'] = 'Linux';
         if(stripos($Agent, 'Ubuntu')) $info['system'] = 'Ubuntu';
         if(stripos($Agent, 'CentOS')) $info['system'] = 'CentOS';
+        if(stripos($Agent, 'Mac')) $info['system'] = 'Mac';
+        if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
+        if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
         if(stripos($Agent, 'Android')) $info['system'] = 'Android';
 
 
-        $info['browser'] = 'Ohters';
+        $info['browser'] = 'Unknown';
         if(stripos($Agent, 'Mozilla') && !stripos($Agent, 'MSIE')) $info['browser'] = 'Netscape';
         if(stripos($Agent, 'Mozilla') && stripos($Agent, 'MSIE')) $info['browser'] = 'IExplorer';
         if(stripos($Agent, 'Safari')) $info['browser'] = 'Safari';
@@ -306,10 +307,11 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Edge')) $info['browser'] = "Edge";
         if(stripos($Agent, 'QQBroser')) $info['browser'] = 'QQBroser';
 
-        $info['app'] = 'default';
+        $info['app'] = 'Unknown';
         if(stripos($Agent, 'MicroMessenger')) $info['app'] = 'WeChat';
         if(stripos($Agent, 'QQ') && !stripos($Agent, 'MQQBrowser')) $info['app'] = 'QQ';
         if(stripos($Agent, 'QQ/')) $info['app'] = 'QQ';
+        if(stripos($Agent, 'Alipay')) $info['app'] = 'Alipay';
 
         return $info;
     }
@@ -764,7 +766,8 @@ if(!function_exists('isMobileEquipment')){
 		// 脑残法，判断手机发送的客户端标志,兼容性有待提高
 		if (isset ($_SERVER['HTTP_USER_AGENT']))
 		{
-			$clientkeywords = array ('nokia',
+			$clientkeywords = array (
+			    'nokia',
 				'sony',
 				'ericsson',
 				'mot',

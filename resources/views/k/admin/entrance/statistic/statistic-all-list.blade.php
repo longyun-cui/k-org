@@ -39,6 +39,14 @@
                     <div class="input-group">
 
                         <input type="text" class="form-control form-filter item-search-keyup" name="title" placeholder="标题" />
+
+                        <select class="form-control form-filter" name="open_device_type" style="width:96px;">
+                            <option value ="0">设备</option>
+                            <option value ="1">移动端</option>
+                            <option value ="2">PC端</option>
+                            <option value ="Others">其他</option>
+                        </select>
+
                         <select class="form-control form-filter" name="open_system" style="width:96px;">
                             <option value ="0">系统</option>
                             <option value ="1">默认</option>
@@ -47,6 +55,7 @@
                             <option value ="iPad">iPad</option>
                             <option value ="Mac">Mac</option>
                             <option value ="Windows">Windows</option>
+                            <option value ="Others">其他</option>
                         </select>
 
                         <select class="form-control form-filter" name="open_browser" style="width:80px;">
@@ -55,6 +64,7 @@
                             <option value ="Chrome">Chrome</option>
                             <option value ="Firefox">Firefox</option>
                             <option value ="Safari">Safari</option>
+                            <option value ="Others">其他</option>
                         </select>
 
                         <select class="form-control form-filter" name="open_app" style="width:80px;">
@@ -62,6 +72,7 @@
                             <option value ="1">默认</option>
                             <option value ="WeChat">WeChat</option>
                             <option value ="QQ">QQ</option>
+                            <option value ="Others">其他</option>
                         </select>
 
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
@@ -78,6 +89,7 @@
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -156,6 +168,7 @@
                     "data": function (d) {
                         d._token = $('meta[name="_token"]').attr('content');
                         d.title = $('input[name="title"]').val();
+                        d.open_device_type = $('select[name="open_device_type"]').val();
                         d.open_system = $('select[name="open_system"]').val();
                         d.open_browser = $('select[name="open_browser"]').val();
                         d.open_app = $('select[name="open_app"]').val();
@@ -306,6 +319,18 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.creator == null ? '游客' : '<a target="_blank" href="/user/'+row.creator.id+'">'+row.creator.username+'</a>';
+                        }
+                    },
+                    {
+                        "className": "text-left",
+                        "width": "80px",
+                        "title": "移动端",
+                        "data": "open_device_type",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            if(data == 1) return '<small class="btn-xs bg-primary">移动端</small>';
+                            else if(data == 2) return '<small class="btn-xs bg-olive">PC端</small>';
+                            else return '有误';
                         }
                     },
                     {

@@ -1738,6 +1738,161 @@ class IndexRepository {
     }
 
 
+    // 【ITEM】批量操作
+    public function operate_item_item_operate_bulk($post_data)
+    {
+        $messages = [
+            'bulk_keyword_id.required' => '请选择站点！',
+            'bulk_keyword_status.required' => '请选择状态！',
+        ];
+        $v = Validator::make($post_data, [
+            'bulk_keyword_id' => 'required',
+            'bulk_keyword_status' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+//        dd($post_data);
+
+        $me = Auth::guard('admin')->user();
+        if($me->usergroup != "Manage") return response_error([],"你没有操作权限！");
+
+        $keyword_status = $post_data["bulk_keyword_status"];
+        if(!in_array($keyword_status,['待审核','优化中','合作停','被拒绝'])) return response_error([],"审核参数有误！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $current_time = date('Y-m-d H:i:s');
+
+            $keyword_ids = $post_data["bulk_keyword_id"];
+            foreach($keyword_ids as $key => $keyword_id)
+            {
+                if(intval($keyword_id) !== 0 && !$keyword_id) return response_error([],"id有误，刷新页面试试！");
+
+                $keyword = SEOKeyword::find($keyword_id);
+                if($keyword)
+                {
+                    $keyword_status_original = $keyword->keywordstatus;
+                    $keyword_price = $keyword->price;
+                    $keyword_owner = User::where("id",$keyword->createuserid)->lockForUpdate()->first();
+                    if($keyword_owner)
+                    {
+                        if(($keyword_status_original == '待审核') && ($keyword_status == '优化中'))
+                        {
+                            if($keyword_owner->fund_available < ($keyword_price * 30))
+                            {
+                                return response_error([],'用户可用余额不足！');
+                            }
+                        }
+                    }
+                    else return response_error([],'用户不存在，刷新页面试试！');
+                }
+                else return response_error([],'关键词不存在，刷新页面试试！');
+
+
+                $keyword_data["reviewuserid"] = $me->id;
+                $keyword_data["reviewusername"] = $me->username;
+                $keyword_data["reviewdate"] = $current_time;
+                $keyword_data["keywordstatus"] = $keyword_status;
+
+                $bool = $keyword->fill($keyword_data)->save();
+                if(!$bool) throw new Exception("update--keyword--fail");
+
+                $cart = SEOCart::find($keyword->cartid);
+                $cart->price = $keyword_price;
+                $cart->save();
+
+                if(($keyword_status_original == '待审核') && ($keyword_status == '优化中'))
+                {
+                    $keyword_owner->fund_available = $keyword_owner->fund_available - ($keyword_price * 30);
+                    $keyword_owner->fund_frozen = $keyword_owner->fund_frozen + ($keyword_price * 30);
+                    $keyword_owner->fund_frozen_init = $keyword_owner->fund_frozen_init + ($keyword_price * 30);
+                    $keyword_owner->save();
+
+                    $freeze = new FundFreezeRecord;
+                    $freeze_date["owner_id"] = $keyword->createuserid;
+                    $freeze_date["siteid"] = $keyword->siteid;
+                    $freeze_date["keywordid"] = $keyword->id;
+                    $freeze_date["freezefunds"] = $keyword_price * 30;
+                    $freeze_date["createuserid"] = $me->id;
+                    $freeze_date["createusername"] = $me->username;
+                    $freeze_date["reguser"] = $me->username;
+                    $freeze_date["regtime"] = time();
+                    $bool_1 = $freeze->fill($freeze_date)->save();
+                    if(!$bool_1) throw new Exception("insert--freeze--fail");
+                }
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+    // 【ITEM】批量删除
+    public function operate_item_item_delete_bulk($post_data)
+    {
+        $messages = [
+            'bulk_keyword_id.required' => '请选择关键词！',
+        ];
+        $v = Validator::make($post_data, [
+            'bulk_keyword_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $me = Auth::guard('admin')->user();
+        if($me->usergroup != "Manage") return response_error([],"你没有操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $keyword_ids = $post_data["bulk_keyword_id"];
+            foreach($keyword_ids as $key => $keyword_id)
+            {
+                if(intval($keyword_id) !== 0 && !$keyword_id) return response_error([],"参数ID有误！");
+
+                $keyword = SEOKeyword::find($keyword_id);
+                if($keyword)
+                {
+                    $update["status"] = 0;
+                    $bool = $keyword->fill($update)->save();
+                    if($bool)
+                    {
+                    }
+                    else throw new Exception("update--keyword--fail");
+                }
+                else return response_error([],'关键词不存在，刷新页面试试！');
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+
 
 
     // 【ITEM】管理员封禁
@@ -2343,6 +2498,29 @@ class IndexRepository {
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
+        if(!empty($post_data['open_device_type']))
+        {
+            if($post_data['open_device_type'] == "0")
+            {
+            }
+            else if(in_array($post_data['open_system'],[1,2]))
+            {
+                $query->where('open_device_type',$post_data['open_device_type']);
+            }
+            else if($post_data['open_device_type'] == "Others")
+            {
+                $query->whereNotIn('open_device_type',[1,2]);
+            }
+            else
+            {
+                $query->where('open_device_type',$post_data['open_device_type']);
+            }
+        }
+        else
+        {
+//            $query->whereIn('open_system',['Android','iPhone','iPad','Mac','Windows']);
+        }
+
         if(!empty($post_data['open_system']))
         {
             if($post_data['open_system'] == "0")
@@ -2355,6 +2533,10 @@ class IndexRepository {
             else if(in_array($post_data['open_system'],['Android','iPhone','iPad','Mac','Windows']))
             {
                 $query->where('open_system',$post_data['open_system']);
+            }
+            else if($post_data['open_system'] == "Others")
+            {
+                $query->whereNotIn('open_system',['Android','iPhone','iPad','Mac','Windows']);
             }
             else
             {
@@ -2379,6 +2561,10 @@ class IndexRepository {
             {
                 $query->where('open_browser',$post_data['open_browser']);
             }
+            else if($post_data['open_browser'] == "Others")
+            {
+                $query->whereNotIn('open_browser',['Chrome','Firefox','Safari']);
+            }
             else
             {
                 $query->where('open_browser',$post_data['open_browser']);
@@ -2401,6 +2587,10 @@ class IndexRepository {
             else if(in_array($post_data['open_app'],['WeChat','QQ']))
             {
                 $query->where('open_app',$post_data['open_app']);
+            }
+            else if($post_data['open_app'] == "Others")
+            {
+                $query->whereNotIn('open_app',['WeChat','QQ']);
             }
             else
             {

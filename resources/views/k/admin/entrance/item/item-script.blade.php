@@ -58,6 +58,77 @@
             $('input[name="bulk-id"]').prop('checked',this.checked);//checked为true时为默认显示的状态
         });
 
+        // 【批量操作】
+        $(".main-list-body").on('click', '#operate-bulk-submit', function() {
+            var $checked = [];
+            $('input[name="bulk-id"]:checked').each(function() {
+                $checked.push($(this).val());
+            });
+
+            layer.msg('确定"批量审核"么', {
+                time: 0
+                ,btn: ['确定', '取消']
+                ,yes: function(index){
+
+                    $.post(
+                        "{{ url('/admin/item/item-operate-bulk') }}",
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            operate: "operate-bulk",
+                            bulk_keyword_id: $checked,
+                            bulk_keyword_status:$('select[name="bulk-operate-status"]').val()
+                        },
+                        function(data){
+                            layer.close(index);
+                            if(!data.success) layer.msg(data.msg);
+                            else
+                            {
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
+                        },
+                        'json'
+                    );
+
+                }
+            });
+
+        });
+
+        // 【批量删除】
+        $(".main-list-body").on('click', '#delete-bulk-submit', function() {
+            var $checked = [];
+            $('input[name="bulk-id"]:checked').each(function() {
+                $checked.push($(this).val());
+            });
+
+            layer.msg('确定"批量删除"么', {
+                time: 0
+                ,btn: ['确定', '取消']
+                ,yes: function(index){
+
+                    $.post(
+                        "{{ url('/admin/item/item-delete-bulk') }}",
+                        {
+                            _token: $('meta[name="_token"]').attr('content'),
+                            operate: "item-delete-bulk",
+                            bulk_keyword_id: $checked
+                        },
+                        function(data){
+                            layer.close(index);
+                            if(!data.success) layer.msg(data.msg);
+                            else
+                            {
+                                $('#datatable_ajax').DataTable().ajax.reload(null,false);
+                            }
+                        },
+                        'json'
+                    );
+
+                }
+            });
+
+        });
+
 
 
 
