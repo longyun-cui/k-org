@@ -280,7 +280,7 @@ if(!function_exists('getBrowserInfo'))
         else if(stripos($Agent, 'teleport')) $info['system'] = 'teleport';
         else if(stripos($Agent, 'flashget')) $info['system'] = 'flashget';
         else if(stripos($Agent, 'webzip')) $info['system'] = 'webzip';
-        else if(stripos($Agent, 'offline')) $info['offline'] = 'webzip';
+        else if(stripos($Agent, 'offline')) $info['offline'] = 'offline';
 
         if(stripos($Agent, 'Windows')) $info['system'] = 'Windows';
         if(stripos($Agent, 'Windows Phone')) $info['system'] = 'WinPhone';
