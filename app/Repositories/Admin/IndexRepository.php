@@ -2507,6 +2507,10 @@ class IndexRepository {
             {
                 $query->where('open_device_type',$post_data['open_device_type']);
             }
+            else if($post_data['open_device_type'] == "Unknown")
+            {
+                $query->where('open_device_type',"Unknown");
+            }
             else if($post_data['open_device_type'] == "Others")
             {
                 $query->whereNotIn('open_device_type',[1,2]);
@@ -2533,6 +2537,10 @@ class IndexRepository {
             else if(in_array($post_data['open_system'],['Android','iPhone','iPad','Mac','Windows']))
             {
                 $query->where('open_system',$post_data['open_system']);
+            }
+            else if($post_data['open_system'] == "Unknown")
+            {
+                $query->where('open_system',"Unknown");
             }
             else if($post_data['open_system'] == "Others")
             {
@@ -2561,6 +2569,10 @@ class IndexRepository {
             {
                 $query->where('open_browser',$post_data['open_browser']);
             }
+            else if($post_data['open_browser'] == "Unknown")
+            {
+                $query->where('open_browser',"Unknown");
+            }
             else if($post_data['open_browser'] == "Others")
             {
                 $query->whereNotIn('open_browser',['Chrome','Firefox','Safari']);
@@ -2582,15 +2594,19 @@ class IndexRepository {
             }
             else if($post_data['open_app'] == "1")
             {
-                $query->whereIn('open_app',['WeChat','QQ']);
+                $query->whereIn('open_app',['WeChat','QQ','Alipay']);
             }
-            else if(in_array($post_data['open_app'],['WeChat','QQ']))
+            else if(in_array($post_data['open_app'],['WeChat','QQ','Alipay']))
             {
                 $query->where('open_app',$post_data['open_app']);
             }
+            else if($post_data['open_app'] == "Unknown")
+            {
+                $query->where('open_app',"Unknown");
+            }
             else if($post_data['open_app'] == "Others")
             {
-                $query->whereNotIn('open_app',['WeChat','QQ']);
+                $query->whereNotIn('open_app',['WeChat','QQ','Alipay']);
             }
             else
             {

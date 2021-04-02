@@ -72,6 +72,7 @@
                             <option value ="1">默认</option>
                             <option value ="WeChat">WeChat</option>
                             <option value ="QQ">QQ</option>
+                            <option value ="Alipay">Alipay</option>
                             <option value ="Others">其他</option>
                         </select>
 
