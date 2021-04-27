@@ -415,7 +415,6 @@ class IndexRepository {
     /*
      * 用户基本信息
      */
-
     // 【基本信息】返回--视图
     public function view_my_info_index()
     {

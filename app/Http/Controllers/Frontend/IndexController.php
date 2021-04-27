@@ -55,7 +55,7 @@ class IndexController extends Controller
         {
             $app_id = env('WECHAT_SOFT_ORG_APPID');
             $app_secret = env('WECHAT_SOFT_ORG_SECRET');
-            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
+            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http%3A%2F%2Fwww.k-org.cn%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
             return redirect($url);
 
         }
@@ -63,7 +63,7 @@ class IndexController extends Controller
         {
             $app_id = env('WECHAT_WEBSITE_K_APPID');
             $app_secret = env('WECHAT_WEBSITE_K_SECRET');
-            $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http%3A%2F%2Fk-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state={$state}#wechat_redirect";
+            $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http%3A%2F%2Fwww.k-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state={$state}#wechat_redirect";
             return redirect($url);
         }
     }

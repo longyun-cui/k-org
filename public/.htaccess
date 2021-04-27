@@ -16,10 +16,10 @@
 
 
 #    RewriteCond %{HTTP_HOST} ^k-org.cn/$ [NC]
-#    RewriteRule ^(.*)$ http://www.k-rog.cn/$1 [R=301,L]
+#    RewriteRule ^(.*)$ http://www.k-org.cn/$1 [R=301,L]
 #
 #    RewriteCond %{HTTP_HOST} ^k-org.com/$ [NC]
-#    RewriteRule ^(.*)$ http://www.k-rog.com/$1 [R=301,L]
+#    RewriteRule ^(.*)$ http://www.k-org.com/$1 [R=301,L]
 
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d

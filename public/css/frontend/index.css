@@ -196,7 +196,8 @@ body { margin: 0; padding: 0; background: url('/bg.gif') repeat; }
 
 
 
-.container-body-right
+.container-body-right {}
+.right-piece { width:100%; }
 
 
 @media (max-width: 767px)

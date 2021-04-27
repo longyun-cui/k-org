@@ -14,14 +14,9 @@
 
 
 
-Route::group(['domain'=>'k-org.cn'], function(){
+Route::group(['domain'=>env('DOMAIN_ROOT')], function(){
     Route::get('{all}', function(){
-        return Redirect::away('http://www.k-org.cn/'.ltrim(Request::path(),'/'),301);
-    })->where('all','.*');
-});
-Route::group(['domain'=>'k-org.com'], function(){
-    Route::get('{all}', function(){
-        return Redirect::away('http://www.k-org.com/'.ltrim(Request::path(),'/'),301);
+        return Redirect::away(env('DOMAIN_WWW').ltrim(Request::path(),'/'),301);
     })->where('all','.*');
 });
 
