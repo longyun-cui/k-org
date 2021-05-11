@@ -121,9 +121,9 @@
                 </div>
                 {{--联系人--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">联系人：</label>
+                    <label class="control-label col-md-2">联系人姓名：</label>
                     <div class="col-md-8 ">
-                        <div><label class="control-label">{{ $data->linkman or '' }}</label></div>
+                        <div><label class="control-label">{{ $data->linkman_name or '' }}</label></div>
                     </div>
                 </div>
                 {{--联系人电话--}}

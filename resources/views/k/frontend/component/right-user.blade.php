@@ -307,6 +307,36 @@
                     @endif
                 </li>
             @endif
+            {{--联系人姓名--}}
+            @if(!empty($data->linkman_name))
+                <li class="list-group-item">
+                    <i class="fa fa-user text-primary"></i>
+                    <span class="text-muted">{{ $data->linkman_name or '暂无' }}</span>
+                </li>
+            @endif
+            {{--联系人电话--}}
+            @if(!empty($data->linkman_phone))
+                <li class="list-group-item">
+                    <i class="fa fa-phone text-primary"></i>
+                    <span class="text-muted">
+                        <a href="tel:{{ $data->linkman_phone or '' }}">
+                            <strong>{{ $data->linkman_phone or '暂无' }}</strong>
+                        </a>
+                    </span>
+                </li>
+            @endif
+            {{--联系人微信--}}
+            @if(!empty($data->linkman_wechat_id))
+                <li class="list-group-item">
+                    <i class="fa fa-weixin text-primary"></i>
+                    <span class="text-muted">{{ $data->linkman_wechat_id or '暂无' }}</span>
+                    @if(!empty($data->linkman_wechat_qr_code_img))
+                    <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wechat_qr_code_img) }}">
+                        <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
+                    </a>
+                    @endif
+                </li>
+            @endif
             {{--地址--}}
             @if(!empty($data->contact_address))
                 <li class="list-group-item">
@@ -533,4 +563,5 @@
     .description-block { margin:4px 0; }
     .widget-user .box-footer { padding-top:4px; }
     .list-group-item { padding:6px 15px; }
+    .list-group-item i { width:20px; text-align:center; }
 </style>

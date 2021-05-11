@@ -145,9 +145,9 @@
 
                 {{--联系人--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">【联系人】</label>
+                    <label class="control-label col-md-2">【联系人】姓名</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman" placeholder="联系人" value="{{ $data->linkman or '' }}">
+                        <input type="text" class="form-control" name="linkman_name" placeholder="联系人" value="{{ $data->linkman_name or '' }}">
                     </div>
                 </div>
                 {{--联系电话--}}
