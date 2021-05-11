@@ -484,6 +484,11 @@ class IndexRepository {
     }
 
 
+
+
+    /*
+     * 用户基本信息
+     */
     // 【K】【内容列表】
     public function view_item_list($post_data)
     {
@@ -564,6 +569,10 @@ class IndexRepository {
             $user = K_User::with([
                     'ad',
                     'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88])->orderby('updated_at','desc'); },
+                ])
+                ->withCount([
+                    'items as article_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>1]); },
+                    'items as activity_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>11]); },
                 ])->find($item->owner_id);
             $user->timestamps = false;
             $user->increment('visit_num');

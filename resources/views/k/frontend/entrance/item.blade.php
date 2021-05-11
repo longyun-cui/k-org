@@ -42,7 +42,8 @@
 
 
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 container-body-right pull-right">
-            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$item->owner])
+            {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$item->owner])--}}
+            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$user])
         </div>
 
 
