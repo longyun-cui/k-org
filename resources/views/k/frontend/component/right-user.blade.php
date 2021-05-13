@@ -394,6 +394,7 @@
     {{--</div>--}}
 
 
+    @if($data->user_type == 11)
     <div class="box box-widget widget-user" style="margin-bottom:0;box-shadow:0 0;">
         <div class="box-footer">
             <div class="row">
@@ -404,7 +405,6 @@
                         <span class="description-text">全部内容</span>
                     </div>
                     </a>
-                    <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4 col-sm-4 border-right">
@@ -414,7 +414,6 @@
                         <span class="description-text">活动</span>
                     </div>
                     </a>
-                    <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4 col-sm-4">
@@ -424,13 +423,36 @@
                         <span class="description-text">文章</span>
                     </div>
                     </a>
-                    <!-- /.description-block -->
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
         </div>
     </div>
+    @endif
+
+    @if($data->user_type == 88)
+    <div class="box box-widget widget-user" style="margin-bottom:0;box-shadow:0 0;">
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 border-right">
+                    <a href="{{ url('/user/'.$data->id.'?type=org') }}">
+                        <div class="description-block">
+                            <h5 class="description-header">{{ $data->pivot_org_count or 0 }}</h5>
+                            <span class="description-text">赞助组织</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-6 border-right">
+                    <a href="{{ url('/user/'.$data->id.'?type=activity') }}">
+                        <div class="description-block">
+                            <h5 class="description-header">{{ $data->activity_count or 0 }}</h5>
+                            <span class="description-text">活动</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
 
     <div class="item-container _none">

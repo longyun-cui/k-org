@@ -3,10 +3,12 @@
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation" style="margin-left:0;background-color:#1a2226;">
+
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle visible-xs" data-toggle="offcanvas" role="button">
+        <a href="#" class="sidebar-toggle visible-xs @yield('sidebar-toggle')" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
+
 
         <div class="navbar-custom-menu" style="height:50px;line-height:50px;float:left;">
             <a href="{{ url('/') }}">

@@ -15,6 +15,8 @@
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 
+
+
 @section('sidebar')
 
     @include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-root')

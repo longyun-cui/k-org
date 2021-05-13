@@ -24,10 +24,10 @@
 
 
 
-
+@section('sidebar-toggle','_none')
 @section('sidebar')
 
-    @include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-user')
+    {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-user')--}}
 
 @endsection
 
@@ -48,7 +48,7 @@
 
             @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user', ['data'=>$data])
 
-            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-user-menu', ['data'=>$data])
+            {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-user-menu', ['data'=>$data])--}}
 
         </div>
 

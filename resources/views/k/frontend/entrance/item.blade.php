@@ -15,9 +15,10 @@
 
 
 
+@section('sidebar-toggle','_none')
 @section('sidebar')
 
-    @include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-item')
+    {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-item')--}}
 
 @endsection
 

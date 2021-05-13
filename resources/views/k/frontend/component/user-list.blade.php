@@ -121,10 +121,10 @@
                     </div>
                 @endif
 
-                @if(!empty($u->linkman))
+                @if(!empty($u->linkman_name))
                 <div class="item-row item-info-row">
                     <i class="fa fa-user text-orange" style="width:16px;"></i>
-                    <span class="text-muted">{{ $u->linkman or '暂无' }}</span>
+                    <span class="text-muted">{{ $u->linkman_name or '暂无' }}</span>
                 </div>
                 @endif
 
