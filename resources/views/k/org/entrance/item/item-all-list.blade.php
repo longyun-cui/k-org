@@ -198,7 +198,7 @@
                         "width": "48px",
                         "title": "ID",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
@@ -208,7 +208,7 @@
                         "width": "",
                         "title": "标题",
                         "data": "title",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
                         }
@@ -218,7 +218,7 @@
                         "width": "160px",
                         "title": "发布者",
                         "data": "owner_id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.owner == null ? '未知' : '<a target="_blank" href="/admin/user/client?id='+row.owner.id+'">'+row.owner.username+'</a>';
                         }
@@ -227,7 +227,7 @@
                         "width": "64px",
                         "title": "类型",
                         "data": "item_type",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
                             else if(data == 1) return '<small class="btn-xs bg-primary">文章</small>';
@@ -240,7 +240,7 @@
                         "width": "48px",
                         "title": "浏览数",
                         "data": "visit_num",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return data;
                         }
@@ -249,7 +249,7 @@
                         "width": "48px",
                         "title": "分享数",
                         "data": "share_num",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return data;
                         }
@@ -258,7 +258,7 @@
                         "width": "128px",
                         "title": "创建时间",
                         'data': 'created_at',
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
                             var $date = new Date(data*1000);
@@ -277,7 +277,7 @@
                         "width": "128px",
                         "title": "修改时间",
                         'data': 'updated_at',
-                        'orderable': true,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
                             var $date = new Date(data*1000);
@@ -296,7 +296,7 @@
                         "width": "64px",
                         "title": "状态",
                         "data": "active",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(data == 0)
@@ -321,7 +321,7 @@
                         "width": "256px",
                         "title": "操作",
                         "data": 'id',
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.active == 0)
                             {
