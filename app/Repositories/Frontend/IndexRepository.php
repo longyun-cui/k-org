@@ -1135,32 +1135,38 @@ class IndexRepository {
             $me_id = $me->id;
             $record["creator_id"] = $me_id;
 
-            $user_list = K_User::with([
+            $user_list = K_User::select('*')
+                ->with([
                     'ad',
                     'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
-                ])->withCount([
-                    'fans_list as fans_count' => function($query) { $query->where([]); },
-                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
+//                ->withCount([
+//                    'fans_list as fans_count' => function($query) { $query->where([]); },
+//                    'items as item_count' => function($query) { $query->where(['item_category'=>1]); },
+//                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+//                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+//                ])
                 ->where('user_type',11)
                 ->where('user_status',1)
                 ->where('active',1)
-                ->paginate(20);
+                ->paginate(50);
         }
         else
         {
 
-            $user_list = K_User::with([
+            $user_list = K_User::select('*')
+                ->with([
                     'ad',
-                ])->withCount([
-                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
+//                ->withCount([
+//                    'items as item_count' => function($query) { $query->where(['item_category'=>1]); },
+//                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+//                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+//                ])
                 ->where('user_type',11)
                 ->where('user_status',1)
                 ->where('active',1)
-                ->paginate(20);
+                ->paginate(50);
         }
 
 //        foreach($user_list as $u)
@@ -1486,11 +1492,12 @@ class IndexRepository {
 
             $user_list = K_Pivot_User_Relation::with([
                     'relation_user'=>function($query) {
-                        $query->withCount([
-                            'fans_list as fans_count' => function($query) { $query->where(['relation_type'=>41]); },
-                            'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-                            'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
-                        ]);
+//                        $query->withCount([
+//                            'fans_list as fans_count' => function($query) { $query->where(['relation_type'=>41]); },
+//                            'items as item_count' => function($query) { $query->where(['item_category'=>1]); },
+//                            'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+//                            'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+//                        ]);
                     },
                 ])
                 ->where(['mine_user_id'=>$me_id])

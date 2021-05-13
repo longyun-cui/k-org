@@ -68,18 +68,20 @@
 
                 <div class="item-row item-info-row">
                     <span>粉丝 {{ $u->fans_num }}</span>
-                    <span> • 文章 {{ $u->article_count }}</span>
-                    <span> • 活动 {{ $u->activity_count }}</span>
+                    {{--<span> • 内容 {{ $u->item_count }}</span>--}}
+                    {{--<span> • 文章 {{ $u->article_count }}</span>--}}
+                    {{--<span> • 活动 {{ $u->activity_count }}</span>--}}
                     <span> • 访问 {{ $u->visit_num }}</span>
                 </div>
 
+                {{--Email--}}
                 @if(!empty($u->email))
                     <div class="item-row item-info-row">
                         <i class="fa fa-envelope text-primary" style="width:16px;"></i>
                         <span class="text-muted">{{ $u->email or '暂无' }}</span>
                     </div>
                 @endif
-
+                {{--QQ--}}
                 @if(!empty($u->QQ_number))
                     <div class="item-row item-info-row">
                         <i class="fa fa-qq text-primary" style="width:16px;"></i>
@@ -88,30 +90,19 @@
                         </a>
                     </div>
                 @endif
-
+                {{--微信号--}}
                 @if(!empty($u->wechat_id))
-                    @if(!empty($u->wechat_qr_code_img))
-                    <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->wechat_qr_code_img) }}">
-                        <div class="item-row item-info-row">
-                            <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                            <span class="text-muted">{{ $u->wechat_id or '暂无' }}</span>
-                        </div>
-                    </a>
-                    @else
-                        <div class="item-row item-info-row">
-                            <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                            <span class="text-muted">{{ $u->wechat_id or '暂无' }}</span>
-                        </div>
-                    @endif
-                @endif
-
-                @if(!empty($u->contact_address))
                     <div class="item-row item-info-row">
-                        <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->contact_address or '暂无' }}</span>
+                        <i class="fa fa-weixin text-success" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->wechat_id or '暂无' }}</span>
+                        @if(!empty($u->wechat_qr_code_img))
+                        <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->wechat_qr_code_img) }}">
+                            <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
+                        </a>
+                        @endif
                     </div>
                 @endif
-
+                {{--网站--}}
                 @if(!empty($u->website))
                     <div class="item-row item-info-row">
                         <i class="fa fa-globe text-primary" style="width:16px;"></i>
@@ -120,14 +111,14 @@
                         </a>
                     </div>
                 @endif
-
+                {{--联系人姓名--}}
                 @if(!empty($u->linkman_name))
                 <div class="item-row item-info-row">
                     <i class="fa fa-user text-orange" style="width:16px;"></i>
                     <span class="text-muted">{{ $u->linkman_name or '暂无' }}</span>
                 </div>
                 @endif
-
+                {{--联系人电话--}}
                 @if(!empty($u->linkman_phone))
                 <div class="item-row item-info-row">
                     <i class="fa fa-phone text-danger" style="width:16px;"></i>
@@ -138,7 +129,7 @@
                     </span>
                 </div>
                 @endif
-
+                {{--联系人微信--}}
                 @if(!empty($u->linkman_wechat_id))
                     @if(!empty($u->linkman_wechat_qr_code_img))
                     <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->linkman_wechat_qr_code_img) }}">
@@ -155,12 +146,19 @@
                         </div>
                     @endif
                 @endif
+                {{--地址--}}
+                @if(!empty($u->contact_address))
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->contact_address or '暂无' }}</span>
+                    </div>
+                @endif
 
-                @if(!empty($u->description))
+                {{--@if(!empty($u->description))--}}
                 <div class="item-row item-info-row">
                     {{ $u->description or '暂无简介' }}
                 </div>
-                @endif
+                {{--@endif--}}
 
             </div>
 
