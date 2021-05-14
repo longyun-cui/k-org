@@ -2,12 +2,12 @@
 
 
 @section('head_title')
-    {{ $title_text }} - 管理员系统 - 朝鲜族组织活动平台 - 如未科技
+    【A】{{ $title_text }}
 @endsection
 
 
 @section('header', '')
-@section('description', '管理员系统 - 朝鲜族组织活动平台 - 如未科技')
+@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{ url('/admin') }}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="{{ url($list_link) }}"><i class="fa fa-list"></i>{{ $list_text or '内容列表' }}</a></li>

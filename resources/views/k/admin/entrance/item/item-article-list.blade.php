@@ -1,11 +1,11 @@
 @extends(env('TEMPLATE_ADMIN').'admin.layout.layout')
 
 
-@section('head_title','内容列表 - 管理员后台系统 - 如未科技')
+@section('head_title','【A】文章列表')
 
 
 @section('header','')
-@section('description','朝鲜族组织活动平台 - 管理员后台系统 - 如未科技')
+@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
@@ -19,7 +19,7 @@
 
             <div class="box-header with-border" style="margin:16px 0;">
 
-                <h3 class="box-title">内容列表</h3>
+                <h3 class="box-title">文章列表</h3>
 
                 <div class="pull-right _none">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">

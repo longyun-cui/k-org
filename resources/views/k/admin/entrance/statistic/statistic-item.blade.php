@@ -1,11 +1,11 @@
 @extends(env('TEMPLATE_ADMIN').'admin.layout.layout')
 
 
-@section('head_title','【内容统计】 - 管理员后台系统 - 如未科技')
+@section('head_title','【A】内容统计')
 
 
 @section('header','')
-@section('description','【内容统计】 - 管理员后台系统 - 如未科技')
+@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-home"></i>首页</a></li>
     {{--<li><a href="{{ url('/admin/statistic') }}"><i class="fa fa-bar-chart"></i>流量统计</a></li>--}}

@@ -33,6 +33,13 @@
 
             <form class="form-horizontal form-bordered">
             <div class="box-body">
+                {{--手机号--}}
+                <div class="form-group _none">
+                    <label class="control-label col-md-2">登录手机号：</label>
+                    <div class="col-md-8 ">
+                        <div><label class="control-label">{{ $data->mobile or '' }}</label></div>
+                    </div>
+                </div>
                 {{--昵称--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">用户名：</label>
@@ -47,18 +54,11 @@
                         <div><label class="control-label">{{ $data->true_name or '' }}</label></div>
                     </div>
                 </div>
-                {{--描述•简介--}}
+                {{--描述/简介--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">简介：</label>
+                    <label class="control-label col-md-2">描述/简介：</label>
                     <div class="col-md-8 ">
                         <div><label class="control-label">{{ $data->description or '' }}</label></div>
-                    </div>
-                </div>
-                {{--手机号--}}
-                <div class="form-group">
-                    <label class="control-label col-md-2">登录手机号：</label>
-                    <div class="col-md-8 ">
-                        <div><label class="control-label">{{ $data->mobile or '' }}</label></div>
                     </div>
                 </div>
                 {{--邮箱--}}

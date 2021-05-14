@@ -47,11 +47,11 @@
                         <input type="text" class="form-control" name="true_name" placeholder="真实名称" value="{{ $data->true_name or '' }}">
                     </div>
                 </div>
-                {{--描述•简介--}}
+                {{--描述/简介--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">简介</label>
+                    <label class="control-label col-md-2">描述/简介</label>
                     <div class="col-md-8 ">
-                        <textarea class="form-control" name="description" rows="3" placeholder="简介">{{$data->description or ''}}</textarea>
+                        <textarea class="form-control" name="description" rows="3" placeholder="描述/简介">{{$data->description or ''}}</textarea>
                     </div>
                 </div>
 

@@ -5,12 +5,12 @@
 @section('list-text') 全部机构 @endsection
 
 @section('head_title')
-    @if($operate == 'create') @yield('create-text') @else @yield('edit-text') @endif - 管理员后台 - 如未科技
+    【A】@if($operate == 'create') @yield('create-text') @else @yield('edit-text') @endif
 @endsection
 
 
 @section('header','')
-@section('description', '管理员后台-如未科技')
+@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{ url('/admin') }}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="{{ url('/admin/user/user-all-list') }}"><i class="fa fa-list"></i>@yield('list-text')</a></li>
@@ -74,6 +74,14 @@
                 </div>
 
 
+                {{--登录手机--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2"><sup class="text-red">*</sup> 登录手机</label>
+                    <div class="col-md-8 ">
+                        <input type="text" class="form-control" name="mobile" placeholder="手机" value="{{ $data->mobile or '' }}">
+                    </div>
+                </div>
+
                 {{--用户名--}}
                 <div class="form-group">
                     <label class="control-label col-md-2"><sup class="text-red">*</sup> 用户名</label>
@@ -81,15 +89,8 @@
                         <input type="text" class="form-control" name="username" placeholder="用户名" value="{{ $data->username or '' }}">
                     </div>
                 </div>
-                {{--手机--}}
+                {{--描述/简介--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2"><sup class="text-red">*</sup> 登录手机</label>
-                    <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="mobile" placeholder="手机" value="{{ $data->mobile or '' }}">
-                    </div>
-                </div>
-                {{--描述--}}
-                <div class="form-group _none">
                     <label class="control-label col-md-2">描述</label>
                     <div class="col-md-8 ">
                         {{--<input type="text" class="form-control" name="description" placeholder="描述" value="{{$data->description or ''}}">--}}
@@ -103,7 +104,6 @@
                         <input type="text" class="form-control" name="tag" placeholder="标签" value="{{ $data->tag or '' }}">
                     </div>
                 </div>
-
                 {{--邮箱--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">邮箱</label>
@@ -187,7 +187,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">【联系人】</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman" placeholder="联系人" value="{{ $data->linkman or '' }}">
+                        <input type="text" class="form-control" name="linkman_name" placeholder="联系人" value="{{ $data->linkman_name or '' }}">
                     </div>
                 </div>
                 {{--联系人电话--}}

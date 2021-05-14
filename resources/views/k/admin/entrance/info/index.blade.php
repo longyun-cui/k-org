@@ -47,6 +47,13 @@
                         <div><label class="control-label">{{ $data->true_name or '' }}</label></div>
                     </div>
                 </div>
+                {{--描述/简介--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">描述/简介：</label>
+                    <div class="col-md-8 ">
+                        <div><label class="control-label">{{ $data->description or '' }}</label></div>
+                    </div>
+                </div>
                 {{--手机号--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">手机号：</label>
