@@ -219,7 +219,7 @@
                         "width": "32px",
                         "title": "选择",
                         "data": "id",
-                        'orderable': false,
+                        'orderable': true,
                         render: function(data, type, row, meta) {
                             return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
                         }
