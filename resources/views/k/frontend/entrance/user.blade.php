@@ -78,16 +78,19 @@
             @if(request('type') == 'introduction')
             <div class="item-piece item-option">
                 <div class="box-body item-row item-content-row">
-                    <div class="item-row">
-                        <h4>我的简介</h4>
+
+                    <div class="item-row margin-bottom-8px" style="text-align:center;">
+                        <h4>图文介绍</h4>
                     </div>
+
                     <div class="item-row">
                         @if(!empty($data->introduction->content))
                             {!! $data->introduction->content or '' !!}
                         @else
-                            <small>暂无简介</small>
+                            <small>暂无介绍</small>
                         @endif
                     </div>
+
                 </div>
             </div>
             @endif

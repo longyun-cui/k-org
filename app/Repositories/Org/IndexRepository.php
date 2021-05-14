@@ -207,7 +207,6 @@ class IndexRepository {
         return view(env('TEMPLATE_ADMIN').'org.entrance.introduction.index')
             ->with(['data'=>$data,'sidebar_me_introduction_active'=>'active menu-open']);
     }
-
     // 【基本信息】返回-编辑-视图
     public function view_introduction_edit()
     {
@@ -244,6 +243,7 @@ class IndexRepository {
             else
             {
                 $item = K_Item::find($me->introduction_id);
+//                if(!$item) $item = new K_Item;
             }
 
             $bool = $item->fill($mine_data)->save();
@@ -260,7 +260,7 @@ class IndexRepository {
                 if(!empty($post_data["cover"]))
                 {
                     // 删除原文件
-                    $mine_original_file = $me->cover_pic;
+                    $mine_original_file = $item->cover_pic;
                     if(!empty($mine_original_file) && file_exists(storage_path('resource/'.$mine_original_file)))
                     {
                         unlink(storage_path('resource/'.$mine_original_file));
