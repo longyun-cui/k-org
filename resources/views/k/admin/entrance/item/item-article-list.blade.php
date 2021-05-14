@@ -50,10 +50,13 @@
                     </div>
                 </div>
 
-                <table class='table table-striped table-bordered- table-hover' id='datatable_ajax'>
+                <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -193,6 +196,22 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
+                        "width": "32px",
+                        "title": "选择",
+                        "data": "id",
+                        'orderable': true,
+                        render: function(data, type, row, meta) {
+                            return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
+                        }
+                    },
+                    {
+                        "width": "32px",
+                        "title": "序号",
+                        "data": null,
+                        "targets": 0,
+                        'orderable': false
+                    },
+                    {
                         "className": "font-12px",
                         "width": "48px",
                         "title": "ID",
@@ -223,7 +242,7 @@
                         }
                     },
                     {
-                        "width": "64px",
+                        "width": "48px",
                         "title": "类型",
                         "data": "item_type",
                         'orderable': false,
@@ -236,8 +255,8 @@
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "浏览数",
+                        "width": "40px",
+                        "title": "浏览",
                         "data": "visit_num",
                         "orderable": true,
                         render: function(data, type, row, meta) {
@@ -245,8 +264,8 @@
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "分享数",
+                        "width": "40px",
+                        "title": "分享",
                         "data": "share_num",
                         "orderable": true,
                         render: function(data, type, row, meta) {
@@ -255,12 +274,13 @@
                     },
                     {
                         "className": "font-12px",
-                        "width": "128px",
+                        "width": "112px",
                         "title": "创建时间",
                         "data": 'created_at',
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
@@ -275,12 +295,34 @@
                     },
                     {
                         "className": "font-12px",
-                        "width": "128px",
+                        "width": "112px",
                         "title": "修改时间",
                         "data": 'updated_at',
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
+                            var $date = new Date(data*1000);
+                            var $year = $date.getFullYear();
+                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
+                            var $day = ('00'+($date.getDate())).slice(-2);
+                            var $hour = ('00'+$date.getHours()).slice(-2);
+                            var $minute = ('00'+$date.getMinutes()).slice(-2);
+                            var $second = ('00'+$date.getSeconds()).slice(-2);
+//                            return $year+'-'+$month+'-'+$day;
+                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
+                        }
+                    },
+                    {
+                        "className": "font-12px",
+                        "width": "112px",
+                        "title": "发布时间",
+                        "data": 'published_at',
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+//                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
@@ -371,6 +413,12 @@
                     }
                 ],
                 "drawCallback": function (settings) {
+
+                    let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    this.api().column(1).nodes().each(function(cell, i) {
+                        cell.innerHTML =  startIndex + i + 1;
+                    });
+
                     ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
                     $("a.verify").click(function(event){
                         event.preventDefault();

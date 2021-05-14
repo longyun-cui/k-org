@@ -64,6 +64,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -268,14 +269,15 @@
                         'orderable': false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
+                            else if(data == 9) return '<small class="btn-xs bg-info">简介</small>';
                             else if(data == 1) return '<small class="btn-xs bg-primary">文章</small>';
                             else if(data == 11) return '<small class="btn-xs bg-olive">活动</small>';
                             else if(data == 88) return '<small class="btn-xs bg-purple">广告</small>';
-                            else return "有误";
+                            else return '<small class="btn-xs bg-black">Error</small>';
                         }
                     },
                     {
-                        "width": "32px",
+                        "width": "40px",
                         "title": "浏览",
                         "data": "visit_num",
                         "orderable": true,
@@ -284,7 +286,7 @@
                         }
                     },
                     {
-                        "width": "32px",
+                        "width": "40px",
                         "title": "分享",
                         "data": "share_num",
                         "orderable": true,
@@ -300,6 +302,7 @@
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
@@ -320,6 +323,28 @@
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
+                            var $date = new Date(data*1000);
+                            var $year = $date.getFullYear();
+                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
+                            var $day = ('00'+($date.getDate())).slice(-2);
+                            var $hour = ('00'+$date.getHours()).slice(-2);
+                            var $minute = ('00'+$date.getMinutes()).slice(-2);
+                            var $second = ('00'+$date.getSeconds()).slice(-2);
+//                            return $year+'-'+$month+'-'+$day;
+                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
+                        }
+                    },
+                    {
+                        "className": "font-12px",
+                        "width": "112px",
+                        "title": "发布时间",
+                        "data": 'published_at',
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+//                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);

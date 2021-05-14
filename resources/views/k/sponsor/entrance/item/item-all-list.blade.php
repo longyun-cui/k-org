@@ -50,10 +50,11 @@
                     </div>
                 </div>
 
-                <table class='table table-striped table-bordered- table-hover' id='datatable_ajax'>
+                <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -198,7 +199,7 @@
                         "width": "48px",
                         "title": "ID",
                         "data": "id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return data;
                         }
@@ -208,7 +209,7 @@
                         "width": "",
                         "title": "标题",
                         "data": "title",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
                         }
@@ -218,16 +219,16 @@
                         "width": "160px",
                         "title": "发布者",
                         "data": "owner_id",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.owner == null ? '未知' : '<a target="_blank" href="/admin/user/client?id='+row.owner.id+'">'+row.owner.username+'</a>';
                         }
                     },
                     {
-                        "width": "64px",
+                        "width": "48px",
                         "title": "类型",
                         "data": "item_type",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
                             else if(data == 1) return '<small class="btn-xs bg-primary">文章</small>';
@@ -237,30 +238,32 @@
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "浏览数",
+                        "width": "40px",
+                        "title": "浏览",
                         "data": "visit_num",
-                        'orderable': false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "分享数",
+                        "width": "40px",
+                        "title": "分享",
                         "data": "share_num",
-                        'orderable': false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "width": "128px",
+                        "className": "font-12px",
+                        "width": "112px",
                         "title": "创建时间",
-                        'data': 'created_at',
-                        'orderable': true,
+                        "data": 'created_at',
+                        "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
@@ -274,12 +277,35 @@
                         }
                     },
                     {
-                        "width": "128px",
+                        "className": "font-12px",
+                        "width": "112px",
                         "title": "修改时间",
-                        'data': 'updated_at',
-                        'orderable': true,
+                        "data": 'updated_at',
+                        "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
+                            var $date = new Date(data*1000);
+                            var $year = $date.getFullYear();
+                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
+                            var $day = ('00'+($date.getDate())).slice(-2);
+                            var $hour = ('00'+$date.getHours()).slice(-2);
+                            var $minute = ('00'+$date.getMinutes()).slice(-2);
+                            var $second = ('00'+$date.getSeconds()).slice(-2);
+//                            return $year+'-'+$month+'-'+$day;
+                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
+                        }
+                    },
+                    {
+                        "className": "font-12px",
+                        "width": "112px",
+                        "title": "发布时间",
+                        "data": 'published_at',
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+//                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
@@ -296,7 +322,7 @@
                         "width": "64px",
                         "title": "状态",
                         "data": "active",
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(data == 0)
@@ -321,7 +347,7 @@
                         "width": "260px",
                         "title": "操作",
                         "data": 'id',
-                        'orderable': false,
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.active == 0)
                             {

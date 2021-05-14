@@ -50,10 +50,11 @@
                     </div>
                 </div>
 
-                <table class='table table-striped table-bordered- table-hover' id='datatable_ajax'>
+                <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
                             <th>ID</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -225,7 +226,7 @@
                         }
                     },
                     {
-                        "width": "64px",
+                        "width": "48px",
                         "title": "类型",
                         "data": "item_type",
                         "orderable": false,
@@ -238,31 +239,32 @@
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "浏览数",
+                        "width": "40px",
+                        "title": "浏览",
                         "data": "visit_num",
-                        "orderable": false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "width": "48px",
-                        "title": "分享数",
+                        "width": "40px",
+                        "title": "分享",
                         "data": "share_num",
-                        "orderable": false,
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
                         "className": "font-12px",
-                        "width": "128px",
+                        "width": "112px",
                         "title": "创建时间",
-                        'data': 'created_at',
+                        "data": 'created_at',
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
@@ -277,12 +279,34 @@
                     },
                     {
                         "className": "font-12px",
-                        "width": "128px",
+                        "width": "112px",
                         "title": "修改时间",
-                        'data': 'updated_at',
+                        "data": 'updated_at',
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(!data) return '--';
+                            var $date = new Date(data*1000);
+                            var $year = $date.getFullYear();
+                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
+                            var $day = ('00'+($date.getDate())).slice(-2);
+                            var $hour = ('00'+$date.getHours()).slice(-2);
+                            var $minute = ('00'+$date.getMinutes()).slice(-2);
+                            var $second = ('00'+$date.getSeconds()).slice(-2);
+//                            return $year+'-'+$month+'-'+$day;
+                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
+//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
+                        }
+                    },
+                    {
+                        "className": "font-12px",
+                        "width": "112px",
+                        "title": "发布时间",
+                        "data": 'published_at',
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+//                            return data;
+                            if(!data) return '--';
                             var $date = new Date(data*1000);
                             var $year = $date.getFullYear();
                             var $month = ('00'+($date.getMonth()+1)).slice(-2);
