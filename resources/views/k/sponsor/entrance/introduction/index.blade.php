@@ -33,6 +33,21 @@
 
             <form class="form-horizontal form-bordered">
             <div class="box-body">
+
+                {{--标题--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">标题：</label>
+                    <div class="col-md-8 ">
+                        <div>{{ $data->title or '' }}</div>
+                    </div>
+                </div>
+                {{--描述--}}
+                <div class="form-group">
+                    <label class="control-label col-md-2">描述：</label>
+                    <div class="col-md-8 ">
+                        <div>{{ $data->description or '' }}</div>
+                    </div>
+                </div>
                 {{--图文详情--}}
                 <div class="form-group">
                     <label class="control-label col-md-2">图文详情：</label>
@@ -51,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             </form>
 
