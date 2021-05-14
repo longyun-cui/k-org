@@ -362,14 +362,6 @@
         {{--<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>--}}
         <div style="margin-top:8px;">
 
-            @if(!empty($data->introduction->content))
-            <a href="{{ url('/user/'.$data->id.'?type=introduction') }}" class="btn btn-default btn-block btn-sm" style="margin-bottom:8px;">
-                <i class="fa fa-file-image-o"></i>
-                <span class="">图文介绍</span>
-            </a>
-            @endif
-
-
             @if(!Auth::check())
                 <a href="javascript:void(0);" class="btn btn-danger btn-block follow-add follow-add-it" data-user-id="{{ $data->id }}">
                     <i class="fa fa-plus"></i>
@@ -389,6 +381,13 @@
                         </a>
                     @endif
                 @endif
+            @endif
+
+            @if(!empty($data->introduction->content))
+                <a href="{{ url('/user/'.$data->id.'?type=introduction') }}" class="btn btn-default btn-block btn-sm" style="margin-bottom:8px;">
+                    <i class="fa fa-file-image-o"></i>
+                    <span class="">图文介绍</span>
+                </a>
             @endif
 
         </div>
