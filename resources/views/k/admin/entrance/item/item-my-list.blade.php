@@ -251,7 +251,8 @@
                             else if(data == 1) return '<small class="btn-xs bg-primary">文章</small>';
                             else if(data == 11) return '<small class="btn-xs bg-olive">活动</small>';
                             else if(data == 88) return '<small class="btn-xs bg-purple">广告</small>';
-                            else return "有误";
+                            else if(data == 99) return '<small class="btn-xs bg-info">介绍</small>';
+                            else return '<small class="btn-xs bg-black">Error</small>';
                         }
                     },
                     {

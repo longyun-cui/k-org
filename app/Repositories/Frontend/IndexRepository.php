@@ -2,8 +2,6 @@
 namespace App\Repositories\Frontend;
 
 use App\User;
-use App\Models\Org\OrgOrganization;
-use App\Models\Pivot_User_Relation;
 
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
@@ -680,6 +678,7 @@ class IndexRepository {
             else if($user->user_type == 88)
             {
                 $user->load([
+                    'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
                     'pivot_org_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); }
                 ]);
             }
@@ -739,7 +738,7 @@ class IndexRepository {
 
             if($user_id != $me_id)
             {
-                $relation = Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                $relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
                 view()->share(['relation'=>$relation]);
             }
 

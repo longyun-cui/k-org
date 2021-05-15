@@ -49,7 +49,6 @@ class IndexRepository {
         return view(env('TEMPLATE_ADMIN').'sponsor.entrance.info.index')
             ->with(['data'=>$me,'sidebar_me_info_active'=>'active menu-open']);
     }
-
     // 【基本信息】返回-编辑-视图
     public function view_info_edit()
     {
@@ -200,7 +199,7 @@ class IndexRepository {
 
 
 
-    // 【基本信息】返回--视图
+    // 【图文介绍】返回--视图
     public function view_introduction_index()
     {
         $me = Auth::guard('sponsor')->user();
@@ -209,8 +208,7 @@ class IndexRepository {
         return view(env('TEMPLATE_ADMIN').'sponsor.entrance.introduction.index')
             ->with(['data'=>$data,'sidebar_me_introduction_active'=>'active menu-open']);
     }
-
-    // 【基本信息】返回-编辑-视图
+    // 【图文介绍】返回-编辑-视图
     public function view_introduction_edit()
     {
         $me = Auth::guard('sponsor')->user();
@@ -218,7 +216,7 @@ class IndexRepository {
         if(!$data) $data = [];
         return view(env('TEMPLATE_ADMIN').'sponsor.entrance.introduction.edit')->with(['data'=>$data]);
     }
-    // 【基本信息】保存-数据
+    // 【图文介绍】保存-数据
     public function operate_introduction_save($post_data)
     {
         $me = Auth::guard('sponsor')->user();
@@ -241,7 +239,7 @@ class IndexRepository {
                 $item = new K_Item;
                 $mine_data['owner_id'] = $me->id;
                 $mine_data['item_category'] = 1;
-                $mine_data['item_type'] = 9;
+                $mine_data['item_type'] = 99;
             }
             else
             {
@@ -1183,14 +1181,6 @@ class IndexRepository {
 
 
 
-
-
-
-
-
-
-
-
     // 【ITEM】返回-添加-视图
     public function view_item_item_create($post_data)
     {
@@ -1680,11 +1670,6 @@ class IndexRepository {
 
 
 
-
-
-
-
-
     /*
      * 业务系统
      */
@@ -1769,6 +1754,7 @@ class IndexRepository {
         $query = K_Item::select('*')
             ->with('owner')
             ->where(['item_category'=>1])
+            ->where('item_type','!=',99)
             ->where('owner_id',$me->id);
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");

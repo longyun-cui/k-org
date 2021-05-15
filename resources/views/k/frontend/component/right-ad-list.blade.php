@@ -22,27 +22,28 @@
         <div class="text-container">
 
             <div class="item-row">
+
                 <div class="item-row text-title-row multi-ellipsis-1">
                     <a href="{{ url('/item/'.$item->id) }}"><b>{{ $item->title or '' }}</b></a>
                 </div>
+
+                @if(!empty($item->description))
+                    <div class="item-row text-description-row margin-bottom-4px">
+                        <small class="color-red-">{{ $item->description or '' }}</small>
+                    </div>
+                @endif
+
                 <div class="item-row text-info-row text-muted">
                     <span class="info-tags text-danger">{{ $ad_tag or '该组织•贴片广告' }}</span>
                 </div>
 
-                @if($item->time_type == 1)
-                    <div class="text-description-row">
-                        {{--<div>--}}
-                        {{--<i class="fa fa-cny"></i> <span class="font-18px color-red"><b>{{ $item->custom->price or '' }}</b></span>--}}
-                        {{--</div>--}}
-                    </div>
-                @endif
-
-                <div class="item-row text-title-row multi-ellipsis-1 with-border-top _none" style="display:none;">
+                <div class="item-row text-title-row multi-ellipsis-1 with-border-top _none-" style="display:none;">
                     <a href="{{ url('/org/'.$item->id) }}" style="color:#ff7676;font-size:13px;">
                         <img src="{{ url(env('DOMAIN_CDN').'/'.$item->cover_pic) }}" class="title-portrait" alt="">
-                        <c>{{ $item->title or '' }}</c>
+                        <b>{{ $item->title or '' }}</b>
                     </a>
                 </div>
+
             </div>
 
             <div class="item-row text-box with-border-top text-center clearfix _none">

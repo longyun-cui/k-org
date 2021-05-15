@@ -572,17 +572,13 @@
 .text-box.with-border-bottom { border-bottom:1px solid #e6e6e6; }
 .text-row { width:100%; min-height:20px; line-height:20px; float:left; }
 .text-header-row { line-height:18px; font-size:14px; color:#444; }
-.text-title-row { min-height:24px; line-height:18px; font-size:16px; color:#444; }
+.text-title-row { min-height:24px; line-height:18px; color:#444; }
 .text-title-row a { line-height:22px; color:#444; }
 .text-title-row img { width:18px; height:18px; border-radius:20px; margin-top:-4px; margin-right:2px; }
 .text-title-row { width:calc(100% - 0px); }
 .text-time-row { margin-top:4px; margin-bottom:4px; }
 
-.text-description-row {
-    padding: 4px;
-    line-height: 20px;
-    background: #eee;
-}
+.text-description-row { padding:4px; border-radius:2px; line-height:20px; background:#f4f4f4; }
 
 
 .text-tool-row { font-size:12px; color:#aaa; }
