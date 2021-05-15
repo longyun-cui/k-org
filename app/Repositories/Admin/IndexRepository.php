@@ -2498,6 +2498,33 @@ class IndexRepository {
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
 
+        if(!empty($post_data['record_type']))
+        {
+            if($post_data['record_type'] == "0")
+            {
+            }
+            else if(in_array($post_data['record_type'],[1,2,3]))
+            {
+                $query->where('record_type',$post_data['record_type']);
+            }
+            else if($post_data['record_type'] == "Unknown")
+            {
+                $query->where('record_type',"Unknown");
+            }
+            else if($post_data['record_type'] == "Others")
+            {
+                $query->whereNotIn('open_device_type',[1,2,3]);
+            }
+            else
+            {
+                $query->where('record_type',$post_data['record_type']);
+            }
+        }
+        else
+        {
+//            $query->whereIn('record_type',[1,2,3]);
+        }
+
         if(!empty($post_data['open_device_type']))
         {
             if($post_data['open_device_type'] == "0")
@@ -2522,7 +2549,7 @@ class IndexRepository {
         }
         else
         {
-//            $query->whereIn('open_system',['Android','iPhone','iPad','Mac','Windows']);
+//            $query->whereIn('open_device_type',[1,2]);
         }
 
         if(!empty($post_data['open_system']))

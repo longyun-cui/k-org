@@ -40,6 +40,14 @@
 
                         <input type="text" class="form-control form-filter item-search-keyup" name="title" placeholder="标题" />
 
+                        <select class="form-control form-filter" name="record_type" style="width:96px;">
+                            <option value ="0">类型</option>
+                            <option value ="1">访问</option>
+                            <option value ="2">分享</option>
+                            <option value ="3">查询</option>
+                            <option value ="Others">其他</option>
+                        </select>
+
                         <select class="form-control form-filter" name="open_device_type" style="width:96px;">
                             <option value ="0">设备</option>
                             <option value ="1">移动端</option>
@@ -169,6 +177,7 @@
                     "data": function (d) {
                         d._token = $('meta[name="_token"]').attr('content');
                         d.title = $('input[name="title"]').val();
+                        d.record_type = $('select[name="record_type"]').val();
                         d.open_device_type = $('select[name="open_device_type"]').val();
                         d.open_system = $('select[name="open_system"]').val();
                         d.open_browser = $('select[name="open_browser"]').val();
@@ -233,7 +242,10 @@
                             {
                                 return '<small class="btn-xs bg-purple">查询</small>';
                             }
-                            else return "有误";
+                            else
+                            {
+                                return '<small class="btn-xs bg-black">Error</small>';
+                            }
 
                         }
                     },
@@ -254,15 +266,18 @@
                                 else if(row.page_module == 2) return '<small class="btn-xs bg-olive">U•介绍</small>';
                                 else if(row.page_module == 9) return '<small class="btn-xs bg-olive">U•文章</small>';
                                 else if(row.page_module == 11) return '<small class="btn-xs bg-olive">U•活动</small>';
-                                else return "user page error";
+                                else return '<small class="btn-xs bg-black">user page Error</small>';
                             }
                             else if(row.page_type == 3)
                             {
                                 if(row.page_module == 0) return 'item';
                                 else if(row.page_module == 1) return '<small class="btn-xs bg-purple">ITEM</small>';
-                                else return "item page error";
+                                else return '<small class="btn-xs bg-black">item page Error</small>';
                             }
-                            else return "有误";
+                            else
+                            {
+                                return '<small class="btn-xs bg-black">Error</small>';
+                            }
 
                         }
                     },
@@ -270,7 +285,7 @@
                         "className": "text-left",
                         "width": "",
                         "title": "页面",
-                        "data": "creator_id",
+                        "data": "id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.record_type == 3)
@@ -310,6 +325,10 @@
                                     return "item.id="+row.item_id+"，该内容已删除。";
                                 }
                             }
+                            else
+                            {
+                                return '<small class="btn-xs bg-black">page_type Error</small>';
+                            }
                         }
                     },
                     {
@@ -333,7 +352,7 @@
                         render: function(data, type, row, meta) {
                             if(data == 1) return '<small class="btn-xs bg-primary">移动端</small>';
                             else if(data == 2) return '<small class="btn-xs bg-olive">PC端</small>';
-                            else return '有误';
+                            else return '<small class="btn-xs bg-black">Error</small>';
                         }
                     },
                     {
@@ -384,10 +403,8 @@
                         "data": "ip",
                         "orderable": false,
                         render: function(data, type, row, meta) {
-
+//                            return data;
                             return '<a target="_blank" href="https://www.ip138.com/iplookup.asp?action=2&ip='+data+'">'+data+'</a>';
-
-                            return data;
                         }
                     },
                     {
