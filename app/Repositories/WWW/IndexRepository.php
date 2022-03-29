@@ -180,7 +180,7 @@ class IndexRepository {
         $return['getType'] = 'items';
         $return['page_type'] = 'root';
         $return['page'] = $page;
-        dd(1);
+        dd(0);
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_K_WWW').'entrance.root-1')->with($return);
