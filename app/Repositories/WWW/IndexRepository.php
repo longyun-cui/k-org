@@ -30,7 +30,6 @@ class IndexRepository {
     // 【K】【平台首页】
     public function view_root($post_data)
     {
-        dd(1);
         if(Auth::check())
         {
             $me = Auth::user();
@@ -181,6 +180,7 @@ class IndexRepository {
         $return['getType'] = 'items';
         $return['page_type'] = 'root';
         $return['page'] = $page;
+        dd(1);
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_K_WWW').'entrance.root-1')->with($return);
