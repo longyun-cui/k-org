@@ -104,7 +104,6 @@ class IndexRepository {
 
 
         $item_list = $item_query->orderByDesc('published_at')->paginate(20);
-//        dd(1);
 
         foreach ($item_list as $item)
         {
@@ -114,7 +113,8 @@ class IndexRepository {
             $item->img_tags = get_html_img($item->content);
 
 
-            if(@getimagesize(env('DOMAIN_CDN').'/'.$item->cover_pic))
+//            if(@getimagesize(env('DOMAIN_CDN').'/'.$item->cover_pic))
+            if(file_exists(env('DOMAIN_CDN').'/'.$item->cover_pic))
             {
                 $item->cover_picture = env('DOMAIN_CDN').'/'.$item->cover_pic;
             }
@@ -128,8 +128,6 @@ class IndexRepository {
         $return['item_list'] = $item_list;
 
         $return['user_list'] = $user_list;
-
-        dd(2);
 
 
 
@@ -181,7 +179,7 @@ class IndexRepository {
         $return['getType'] = 'items';
         $return['page_type'] = 'root';
         $return['page'] = $page;
-        dd(0);
+
 
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_K_WWW').'entrance.root-1')->with($return);
