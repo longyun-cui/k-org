@@ -104,17 +104,15 @@ class IndexRepository {
 
 
         $item_list = $item_query->orderByDesc('published_at')->paginate(20);
-        dd(1);
+//        dd(1);
 
         foreach ($item_list as $item)
         {
+            $item->custom = json_decode($item->custom);
             $item->custom_decode = json_decode($item->custom);
             $item->content_show = strip_tags($item->content);
             $item->img_tags = get_html_img($item->content);
 
-            $item->custom = json_decode($item->custom);
-            $item->content_show = strip_tags($item->content);
-            $item->img_tags = get_html_img($item->content);
 
             if(@getimagesize(env('DOMAIN_CDN').'/'.$item->cover_pic))
             {
@@ -130,6 +128,8 @@ class IndexRepository {
         $return['item_list'] = $item_list;
 
         $return['user_list'] = $user_list;
+
+        dd(2);
 
 
 
