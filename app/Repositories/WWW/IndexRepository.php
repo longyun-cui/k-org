@@ -104,6 +104,7 @@ class IndexRepository {
 
 
         $item_list = $item_query->orderByDesc('published_at')->paginate(20);
+        dd(1);
 
         foreach ($item_list as $item)
         {
