@@ -56,6 +56,14 @@ Route::group(['prefix' => 'common'], function () {
 
 
 /*
+ * 超级管理员
+ */
+Route::group(['domain' => 'super.'.env('DOMAIN_ROOT'), 'namespace' => 'Super'], function () {
+    require(__DIR__ . '/Super/route.php');
+});
+
+
+/*
  * 主页
  */
 Route::group(['namespace' => 'Common'], function () {
@@ -90,21 +98,10 @@ Route::group(['prefix' => 'sponsor', 'namespace' => 'Sponsor'], function () {
 
 
 /*
- * 主页
+ * 主页 Root Frontend
  */
-Route::group(['namespace' => 'Frontend'], function () {
-    require(__DIR__ . '/Frontend/route.php');
-});
-
-
-
-
-
-/*
- * Root Frontend
- */
-Route::group(['namespace' => 'Front'], function () {
-
+Route::group(['namespace' => 'WWW'], function () {
+    require(__DIR__ . '/WWW/route.php');
 });
 
 

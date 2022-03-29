@@ -41,7 +41,7 @@
                         <input type="text" class="form-control form-filter item-search-keyup" name="title" placeholder="标题" />
 
                         <select class="form-control form-filter" name="record_type" style="width:96px;">
-                            <option value ="0">类型</option>
+                            <option value ="0">操作</option>
                             <option value ="1">访问</option>
                             <option value ="2">分享</option>
                             <option value ="3">查询</option>
