@@ -30,6 +30,7 @@ class IndexRepository {
     // 【K】【平台首页】
     public function view_root($post_data)
     {
+        dd(1);
         if(Auth::check())
         {
             $me = Auth::user();
