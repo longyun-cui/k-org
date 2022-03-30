@@ -113,8 +113,8 @@ class IndexRepository {
             $item->img_tags = get_html_img($item->content);
 
 
-//            if(@getimagesize(env('DOMAIN_CDN').'/'.$item->cover_pic))
-            if(file_exists(env('DOMAIN_CDN').'/'.$item->cover_pic))
+//            if(!empty($item->cover_pic) && @getimagesize(env('DOMAIN_CDN').'/'.$item->cover_pic))
+            if(!empty($item->cover_pic) && file_exists(storage_resource_path($item->cover_pic)))
             {
                 $item->cover_picture = env('DOMAIN_CDN').'/'.$item->cover_pic;
             }
