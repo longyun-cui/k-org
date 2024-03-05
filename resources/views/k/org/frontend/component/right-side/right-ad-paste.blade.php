@@ -17,7 +17,7 @@
             </div>
         </figure>
 
-        <figure class="text-container clearfix">
+        <figure class="text-container clearfix padding-10px">
 
             <div class="text-box">
 

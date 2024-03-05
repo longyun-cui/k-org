@@ -2,9 +2,38 @@
 
 
 /*
- * 超级后台
+ * SUPER 超级管理员 - 默认
  */
+// 注册登录
 Route::group([], function () {
+
+
+    // 不存在的域名
+    Route::fallback(function(){
+        return response()->view(env('TEMPLATE_K_SUPER_FRONT').'errors.404');
+    });
+
+    Route::get('/', function () {
+        return view(env('TEMPLATE_K_SUPER_FRONT').'welcome');
+//        dd('super.default');
+    });
+
+
+});
+
+
+
+
+/*
+ * SUPER 超级管理员 - 管理员后台
+ */
+Route::group(['prefix'=>'admin'], function () {
+
+
+    // 不存在的域名
+    Route::fallback(function(){
+        return response()->view(env('TEMPLATE_K_SUPER_ADMIN').'errors.404');
+    });
 
 
     // 注册登录
@@ -21,6 +50,7 @@ Route::group([], function () {
     // 后台管理，需要登录
     Route::group(['middleware' => 'admin'], function () {
 
+
         $controller = "IndexController";
 
         Route::get('/sql-init', $controller.'@sql_init');
@@ -29,9 +59,6 @@ Route::group([], function () {
         Route::get('index', $controller.'@index');
 
 
-        Route::fallback(function(){
-            return response()->view(env('TEMPLATE_ADMIN').'admin.errors.404');
-        });
 
 
         /*
@@ -138,99 +165,6 @@ Route::group([], function () {
 
 
 
-        // site
-        Route::match(['get','post'], '/business/site-list', $controller.'@view_business_site_list');
-        Route::match(['get','post'], '/business/site-todo', $controller.'@view_business_site_todo_list');
-
-        Route::match(['get','post'], '/business/site-review', $controller.'@operate_business_site_review');
-        Route::match(['get','post'], '/business/site-review-bulk', $controller.'@operate_business_site_review_bulk');
-
-        Route::match(['get','post'], '/business/site-todo-delete', $controller.'@operate_business_site_todo_delete');
-        Route::match(['get','post'], '/business/site-todo-delete-bulk', $controller.'@operate_business_site_todo_delete_bulk');
-
-        Route::match(['get','post'], '/business/site-get', $controller.'@operate_business_site_get');
-        Route::match(['get','post'], '/business/site-delete', $controller.'@operate_business_site_delete');
-        Route::match(['get','post'], '/business/site-stop', $controller.'@operate_business_site_stop');
-        Route::match(['get','post'], '/business/site-start', $controller.'@operate_business_site_start');
-        Route::match(['get','post'], '/business/site-edit', $controller.'@operate_business_site_edit');
-
-
-
-
-        // work-order
-        Route::match(['get','post'], '/business/site/work-order-create', $controller.'@operate_business_site_work_order_create');
-        Route::match(['get','post'], '/business/site/work-order-edit', $controller.'@operate_business_site_work_order_edit');
-        Route::match(['get','post'], '/business/site/work-order-list', $controller.'@view_business_site_work_order_list');
-
-        Route::match(['get','post'], '/business/work-order-list', $controller.'@view_business_work_order_list');
-        Route::match(['get','post'], '/business/work-order-get', $controller.'@operate_business_work_order_get');
-        Route::match(['get','post'], '/business/work-order-push', $controller.'@operate_business_work_order_push');
-        Route::match(['get','post'], '/business/work-order-delete', $controller.'@operate_business_work_order_delete');
-
-
-
-
-        // keyword
-        Route::match(['get','post'], '/business/keyword-search', $controller.'@operate_keyword_search');
-        Route::match(['get','post'], '/business/keyword-recommend', $controller.'@operate_keyword_recommend');
-        Route::match(['get','post'], '/business/keyword-search-export', $controller.'@operate_keyword_search_export');
-
-        Route::match(['get','post'], '/business/keyword-list', $controller.'@view_business_keyword_list');
-        Route::match(['get','post'], '/business/keyword-today', $controller.'@view_business_keyword_today_list');
-        Route::match(['get','post'], '/business/keyword-today-newly', $controller.'@view_business_keyword_today_newly_list');
-        Route::match(['get','post'], '/business/keyword-anomaly', $controller.'@view_business_keyword_anomaly_list');
-        Route::match(['get','post'], '/business/keyword-todo', $controller.'@view_business_keyword_todo_list');
-        Route::match(['get','post'], '/business/keyword-detect-record', $controller.'@view_business_keyword_detect_record');
-
-
-        Route::match(['get','post'], '/business/keyword-review', $controller.'@operate_business_keyword_review');
-        Route::match(['get','post'], '/business/keyword-review-bulk', $controller.'@operate_business_keyword_review_bulk');
-
-        Route::match(['get','post'], '/business/keyword-todo-delete', $controller.'@operate_business_keyword_todo_delete');
-        Route::match(['get','post'], '/business/keyword-todo-delete-bulk', $controller.'@operate_business_keyword_todo_delete_bulk');
-
-        Route::match(['get','post'], '/business/keyword-get', $controller.'@operate_business_keyword_get');
-        Route::match(['get','post'], '/business/keyword-delete', $controller.'@operate_business_keyword_delete');
-        Route::match(['get','post'], '/business/keyword-delete-bulk', $controller.'@operate_business_keyword_delete_bulk');
-        Route::match(['get','post'], '/business/keyword-stop', $controller.'@operate_business_keyword_stop');
-        Route::match(['get','post'], '/business/keyword-start', $controller.'@operate_business_keyword_start');
-
-        Route::match(['get','post'], '/business/keyword-detect-create-rank', $controller.'@operate_business_keyword_detect_create_rank');
-        Route::match(['get','post'], '/business/keyword-detect-set-rank', $controller.'@operate_business_keyword_detect_set_rank');
-        Route::match(['get','post'], '/business/keyword-detect-set-rank-bulk', $controller.'@operate_business_keyword_detect_set_rank_bulk');
-
-
-        Route::match(['get','post'], '/business/download/', $controller.'@operate_download');
-        Route::match(['get','post'], '/business/download/keyword-today', $controller.'@operate_download_keyword_today');
-        Route::match(['get','post'], '/business/download/keyword-detect', $controller.'@operate_download_keyword_detect');
-
-
-
-
-        /*
-         * finance
-         */
-        Route::match(['get','post'], '/finance/overview', $controller.'@view_finance_overview');
-        Route::match(['get','post'], '/finance/overview-month', $controller.'@view_finance_overview_month');
-        Route::match(['get','post'], '/finance/recharge-record', $controller.'@view_finance_recharge_record');
-        Route::match(['get','post'], '/finance/expense-record', $controller.'@view_finance_expense_record');
-        Route::match(['get','post'], '/finance/expense-record-daily', $controller.'@view_finance_expense_record_daily');
-        Route::match(['get','post'], '/finance/freeze-record', $controller.'@view_finance_freeze_record');
-
-
-
-
-        /*
-         * notice
-         */
-        Route::match(['get','post'], '/notice/notice-create', $controller.'@operate_notice_notice_create');
-        Route::match(['get','post'], '/notice/notice-edit', $controller.'@operate_notice_notice_edit');
-
-        Route::match(['get','post'], '/notice/notice-list', $controller.'@view_notice_notice_list');
-        Route::match(['get','post'], '/notice/my-notice-list', $controller.'@view_notice_my_notice_list');
-        Route::match(['get','post'], '/notice/notice-get', $controller.'@operate_notice_notice_get');
-        Route::match(['get','post'], '/notice/notice-push', $controller.'@operate_notice_notice_push');
-        Route::match(['get','post'], '/notice/notice-delete', $controller.'@operate_notice_notice_delete');
 
 
 

@@ -4,6 +4,7 @@ namespace App\Repositories\WWW;
 use App\User;
 
 use App\Models\K\K_User;
+use App\Models\K\K_UserExt;
 use App\Models\K\K_Item;
 use App\Models\K\K_Communication;
 use App\Models\K\K_Pivot_User_Relation;
@@ -18,28 +19,66 @@ use QrCode;
 
 class IndexRepository {
 
+    private $evn;
+    private $auth_check;
+    private $me;
+    private $me_admin;
     private $model;
+    private $modelUser;
+    private $modelItem;
+    private $repo;
+    private $service;
+    private $view_blade_404;
+
     public function __construct()
     {
+        $this->modelUser = new K_User;
+        $this->modelItem = new K_Item;
+
+        $this->view_blade_404 = env('TEMPLATE_K_WWW').'errors.404';
+
         Blade::setEchoFormat('%s');
         Blade::setEchoFormat('e(%s)');
         Blade::setEchoFormat('nl2br(e(%s))');
     }
 
 
-    // 【K】【平台首页】
-    public function view_root($post_data)
+    // 登录情况
+    public function get_me()
     {
         if(Auth::check())
         {
-            $me = Auth::user();
+            $this->auth_check = 1;
+            $this->me = Auth::user();
+            view()->share('me',$this->me);
+        }
+        else $this->auth_check = 0;
+        view()->share('auth_check',$this->auth_check);
+    }
+
+
+
+    public function view_org_register()
+    {
+        $this->get_me();
+        return view(env('TEMPLATE_K_WWW').'entrance.auth.org-register');
+    }
+
+    // 【K】【平台首页】
+    public function view_root($post_data)
+    {
+        $this->get_me();
+
+        if($this->auth_check)
+        {
+            $me = $this->me;
             $me_id = $me->id;
             $record["creator_id"] = $me_id;
         }
         else $me_id = 0;
 
 
-        if(Auth::check())
+        if($this->auth_check)
         {
             $item_query = K_Item::with([
                     'owner',
@@ -150,26 +189,26 @@ class IndexRepository {
 
         if($type == 'root')
         {
-            $head_title = "首页 - 朝鲜族组织平台";
-            $sidebar_active = 'sidebar_menu_root_active';
+            $head_title = "朝鲜族组织平台";
+            $sidebar_active = 'menu_active_for_root';
             $page["module"] = 1;
         }
         else if($type == 'article')
         {
             $head_title = "文章 - 朝鲜族组织平台";
-            $sidebar_active = 'sidebar_menu_article_active';
+            $sidebar_active = 'menu_active_for_article';
             $page["module"] = 9;
         }
         else if($type == 'activity')
         {
             $head_title = "活动 - 朝鲜族组织平台";
-            $sidebar_active = 'sidebar_menu_activity_active';
+            $sidebar_active = 'menu_active_for_activity';
             $page["module"] = 11;
         }
         else
         {
             $head_title = "首页 - 朝鲜族组织平台";
-            $sidebar_active = 'sidebar_menu_root_active';
+            $sidebar_active = 'menu_active_for_root';
             $page["module"] = 1;
         }
 
@@ -228,9 +267,11 @@ class IndexRepository {
     }
 
 
-    // 【K】【平台首页】
+    // 【K】【平台首页】标签
     public function view_tag($post_data,$q='')
     {
+        $this->get_me();
+
         if(Auth::check())
         {
             $me = Auth::user();
@@ -367,83 +408,38 @@ class IndexRepository {
 
 
 
-    // 【K】【分享记录】
-    public function record_share($post_data)
-    {
-        if(Auth::check())
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-            $record["creator_id"] = $me_id;
-        }
-        else $me_id = 0;
-
-        $record_module = isset($post_data["record_module"]) ? $post_data["record_module"] : 0;
-        $page_type = isset($post_data["page_type"]) ? $post_data["page_type"] : 0;
-        $page_module = isset($post_data["page_module"]) ? $post_data["page_module"] : 0;
-        $page_num = isset($post_data["page_num"]) ? $post_data["page_num"] : 0;
-        $item_id = isset($post_data["item_id"]) ? $post_data["item_id"] : 0;
-        $user_id = isset($post_data["user_id"]) ? $post_data["user_id"] : 0;
-
-        // 插入记录表
-        $record["record_category"] = 1; // record_category=1 browse/share
-        $record["record_type"] = 2; // record_type=2 share
-        $record["record_module"] = $record_module; // record_module 1.微信好友|QQ好友 2.朋友圈|QQ空间
-        $record["page_type"] = $page_type; // page_type=1 default platform
-        $record["page_module"] = $page_module; // page_module=2 introduction
-        $record["page_num"] = $page_num;
-        $record["item_id"] = $item_id;
-        $record["object_id"] = $user_id;
-        $record["from"] = request('from',NULL);
-        $this->record($record);
-
-        if($page_type == 1)
-        {
-
-        }
-        else if($page_type == 2)
-        {
-            $user = K_User::find($user_id);
-            $user->timestamps = false;
-            $user->increment('share_num');
-        }
-        else if($page_type == 3)
-        {
-            $item = K_Item::find($item_id);
-            $item->timestamps = false;
-            $item->increment('share_num');
-
-            $user = K_User::find($item->owner_id);
-            $user->timestamps = false;
-            $user->increment('share_num');
-        }
-
-        return response_success([]);
-    }
 
 
 
 
     /*
-     * 用户基本信息
+     * 用户资料
      */
-    // 【基本信息】返回--视图
-    public function view_my_info_index()
+    // 【用户资料-基本信息】返回-主页-视图
+    public function view_my_profile_info_index()
     {
+        $this->get_me();
         $me = Auth::user();
-        return view(env('TEMPLATE_ADMIN').'entrance.my-info-index')->with(['info'=>$me]);
-    }
 
-    // 【基本信息】返回-编辑-视图
-    public function view_my_info_edit()
+        $return['data'] = $me;
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-profile.my-profile-info-index';
+        return view($view_blade)->with($return);
+    }
+    // 【用户资料-基本信息】返回-编辑-视图
+    public function view_my_profile_info_edit()
     {
+        $this->get_me();
         $me = Auth::user();
-        return view(env('TEMPLATE_ADMIN').'entrance.my-info-edit')->with(['info'=>$me]);
+
+        $return['data'] = $me;
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-profile.my-profile-info-edit';
+        return view($view_blade)->with($return);
     }
     // 【基本信息】保存-数据
-    public function operate_my_info_save($post_data)
+    public function operate_my_profile_info_save($post_data)
     {
-        $me = Auth::user();
+        $this->get_me();
+        $me = $this->me;
 
         // 启动数据库事务
         DB::beginTransaction();
@@ -455,8 +451,6 @@ class IndexRepository {
             }
 
             $mine_data = $post_data;
-            unset($mine_data['operate']);
-            unset($mine_data['operate_id']);
             $bool = $me->fill($mine_data)->save();
             if($bool)
             {
@@ -476,11 +470,11 @@ class IndexRepository {
                         $me->portrait_img = $result["local"];
                         $me->save();
                     }
-                    else throw new Exception("upload-portrait-img-file-fail");
+                    else throw new Exception("upload--portrait-img-file--fail");
                 }
 
             }
-            else throw new Exception("insert--item--fail");
+            else throw new Exception("update--user--fail");
 
             DB::commit();
             return response_success(['id'=>$me->id]);
@@ -494,6 +488,218 @@ class IndexRepository {
             return response_fail([],$msg);
         }
     }
+
+
+    // 【基本信息-图文详情】返回-主页-视图
+    public function view_my_profile_intro_index()
+    {
+        $this->get_me();
+        $me = Auth::user();
+
+        $return['data'] = $me;
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-profile.my-profile-intro-index';
+        return view($view_blade)->with($return);
+    }
+    // 【基本信息-图文详情】返回-编辑-视图
+    public function view_my_profile_intro_edit()
+    {
+        $this->get_me();
+        $me = $this->me;
+        $me->load('ext');
+
+        $return['data'] = $me;
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-profile.my-profile-intro-edit';
+        return view($view_blade)->with($return);
+    }
+    // 【基本信息-图文详情】保存-数据
+    public function operate_my_profile_intro_save($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        $ext = K_UserExt::where('user_id',$me->id)->first();
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if(!empty($post_data['custom']))
+            {
+                $post_data['custom'] = json_encode($post_data['custom']);
+            }
+
+            $mine_data = $post_data;
+            $bool = $ext->fill($mine_data)->save();
+            if($bool)
+            {
+            }
+            else throw new Exception("update--ext--fail");
+
+            DB::commit();
+            return response_success(['id'=>$me->id]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+
+
+
+    // 【基本信息-我的名片】返回-主页-视图
+    public function view_my_card_index()
+    {
+        $this->get_me();
+        $me = $this->me;
+        $user_id = $me->id;
+
+        $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
+
+        $user = K_User::select('*')
+            ->with([
+                'ext'
+            ])
+            ->withCount([
+//                'items as article_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>1]); },
+//                'items as activity_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>11]); },
+            ])
+            ->find($user_id);
+
+
+        $is_follow = 0;
+
+        if($this->auth_check)
+        {
+            $me = $this->me;
+            $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+
+
+            if($user_id != $me_id)
+            {
+                $relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                view()->share(['relation'=>$relation]);
+            }
+
+            $relation_with_me = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            if($relation_with_me &&  in_array($relation_with_me->relation_type,[21,41]))
+            {
+                $is_follow = 1;
+            }
+        }
+        else
+        {
+        }
+
+
+        $condition = request()->all();
+        $return['condition'] = $condition;
+        $return['data'] = $me;
+        $return['is_follow'] = $is_follow;
+        $return['menu_active_for_my_card'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-profile.my-card-index';
+        return view($view_blade)->with($return);
+    }
+    // 【基本信息-我的名片】返回-编辑-视图
+    public function view_my_card_edit()
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        $return['data'] = $me;
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-profile.my-card-edit';
+        return view($view_blade)->with($return);
+    }
+    // 【基本信息-我的名片】保存-数据
+    public function operate_my_card_save($post_data)
+    {
+        $mine_data = $post_data;
+        $this->get_me();
+        $me = $this->me;
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if(!empty($post_data['custom']))
+            {
+                $post_data['custom'] = json_encode($post_data['custom']);
+            }
+
+            unset($mine_data['operate']);
+            $mine_data = $post_data;
+            $bool = $me->fill($mine_data)->save();
+            if($bool)
+            {
+                // 头像
+                if(!empty($post_data["portrait"]))
+                {
+                    // 删除原文件
+                    $mine_original_file = $me->portrait_img;
+                    if(!empty($mine_original_file) && file_exists(storage_resource_path($mine_original_file)))
+                    {
+                        unlink(storage_resource_path($mine_original_file));
+                    }
+
+//                    $result = upload_img_storage($post_data["portrait"],'','root/common');
+                    $result = upload_img_storage($post_data["portrait"],'portrait_for_user_by_user_'.$me->id,'www/unique/portrait_for_user','');
+                    if($result["result"])
+                    {
+                        $me->portrait_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload--portrait_img--file--fail");
+                }
+
+                // 微信二维码
+                if(!empty($post_data["wx_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_wx_qr_code_img = $me->wx_qr_code_img;
+                    if(!empty($mine_wx_qr_code_img) && file_exists(storage_resource_path($mine_wx_qr_code_img)))
+                    {
+                        unlink(storage_resource_path($mine_wx_qr_code_img));
+                    }
+
+                    $result = upload_img_storage($post_data["wx_qr_code"],'','www/common');
+                    if($result["result"])
+                    {
+                        $me->wx_qr_code_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload--wx_qr_code--fail");
+                }
+
+            }
+            else throw new Exception("update--user--fail");
+
+            DB::commit();
+            return response_success(['id'=>$me->id]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -540,6 +746,8 @@ class IndexRepository {
     // 【K】【内容详情】
     public function view_item($post_data,$id=0)
     {
+        $this->get_me();
+        $me = $this->me;
 
         $item = K_Item::with(['owner'])->find($id);
         if($item)
@@ -648,6 +856,9 @@ class IndexRepository {
     // 【K】【用户】【主页】
     public function view_user($post_data,$id=0)
     {
+        $this->get_me();
+        $me = $this->me;
+
         $user_id = $id;
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
@@ -1141,9 +1352,11 @@ class IndexRepository {
     public function view_organization_list($post_data)
     {
 
-        if(Auth::check())
+        $this->get_me();
+
+        if($this->auth_check)
         {
-            $me = Auth::user();
+            $me = $this->me;
             $me_id = $me->id;
             $record["creator_id"] = $me_id;
 
@@ -1497,6 +1710,9 @@ class IndexRepository {
     // 【K】【我的】【关注】
     public function view_my_follow($post_data)
     {
+        $this->get_me();
+        $me = $this->me;
+
         if(Auth::check())
         {
             $me = Auth::user();
@@ -1525,34 +1741,44 @@ class IndexRepository {
         }
         else return response_error([],"请先登录！");
 
-        return view(env('TEMPLATE_K_WWW').'entrance.my-follow')
-            ->with([
-                'user_list'=>$user_list,
-                'sidebar_menu_my_follow_active'=>'active'
-            ]);
+        $return['user_list'] = $user_list;
+        $return['menu_active_for_my_follow'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-follow';
+        return view($view_blade)->with($return);
     }
     // 【K】【我的】【粉丝】
     public function view_my_fans($post_data)
     {
+        $this->get_me();
+        $me = $this->me;
+
         if(Auth::check())
         {
             $me = Auth::user();
             $me_id = $me->id;
 
-            $users = Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$me_id])->whereIn('relation_type',[21,71])->get();
-            foreach ($users as $user)
+            $user_list = K_Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$me_id])->whereIn('relation_type',[21,71])->get();
+            foreach ($user_list as $user)
             {
                 $user->relation_with_me = $user->relation_type;
             }
         }
         else return response_error([],"请先登录！");
 
-        return view('entrance.relation-fans')->with(['users'=>$users,'root_relation_fans_active'=>'active']);
+        $return['user_list'] = $user_list;
+        $return['menu_active_for_my_fans'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-fans';
+        return view($view_blade)->with($return);
     }
 
     // 【K】【我的】【收藏】
     public function view_my_favor($post_data)
     {
+        $this->get_me();
+        $me = $this->me;
+
         if(Auth::check())
         {
             $me = Auth::user();
@@ -1589,11 +1815,61 @@ class IndexRepository {
             $item->img_tags = get_html_img($item->content);
         }
 
-        return view(env('TEMPLATE_K_WWW').'entrance.my-favor')
-            ->with([
-                'item_list'=>$item_list,
-                'sidebar_menu_my_favor_active'=>'active'
-            ]);
+
+        $return['item_list'] = $item_list;
+        $return['menu_active_for_my_favor'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-favor';
+        return view($view_blade)->with($return);
+    }
+    // 【K】【我的】【收藏】
+    public function view_my_collection($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            // Method 1
+//            $query = K_User::with([
+//                'pivot_item'=>function($query) use($me_id) { $query->with([
+//                    'user',
+//                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+//                ])->wherePivot('type',1)->orderby('pivot_user_item.id','desc'); }
+//            ])->find($me_id);
+//            $items = $query->pivot_item;
+
+            $item_list = K_Pivot_User_Item::with([
+                'item'=>function($query) use($me_id) {
+                    $query->with([
+                        'owner',
+                        'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+                    ]);
+                }
+            ])
+                ->where('user_id',$me_id)
+                ->orderby('id','desc')
+                ->paginate(20);
+        }
+        else return response_error([],"请先登录！");
+//        dd($item_list->toArray());
+
+        foreach ($item_list as $item)
+        {
+            $item->custom_decode = json_decode($item->custom);
+            $item->content_show = strip_tags($item->content);
+            $item->img_tags = get_html_img($item->content);
+        }
+
+
+        $return['item_list'] = $item_list;
+        $return['menu_active_for_my_collection'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-favor';
+        return view($view_blade)->with($return);
     }
 
 
@@ -1602,6 +1878,8 @@ class IndexRepository {
     // 【K】【我的消息】
     public function view_my_notification($post_data)
     {
+        $this->get_me();
+
         if(Auth::check())
         {
             $me = Auth::user();
@@ -1713,7 +1991,7 @@ class IndexRepository {
 
 
     // 【待办事】
-    public function view_home_mine_todolist($post_data)
+    public function view_home_mine_todo_list($post_data)
     {
         if(Auth::check())
         {
@@ -2191,7 +2469,7 @@ class IndexRepository {
 
 
     // 返回【目录类型】视图
-    public function view_home_mine_item_edit_menutype($post_data)
+    public function view_home_mine_item_edit_menu_type($post_data)
     {
         $id = $post_data['id'];
         if(!$id) return view('home.404')->with(['error'=>'参数有误']);
@@ -2212,7 +2490,7 @@ class IndexRepository {
 
     }
     // 返回【时间线类型】视图
-    public function view_home_mine_item_edit_timeline($post_data)
+    public function view_home_mine_item_edit_time_line($post_data)
     {
         $id = $post_data['id'];
         if(!$id) return view('home.404')->with(['error'=>'参数有误']);
@@ -2239,7 +2517,7 @@ class IndexRepository {
 
 
     // 【目录类型】【存储】
-    public function home_mine_item_menutype_save($post_data)
+    public function home_mine_item_menu_type_save($post_data)
     {
         $messages = [
             'id.required' => '参数有误',
@@ -2358,7 +2636,7 @@ class IndexRepository {
         else return response_error([],"该内容不存在");
     }
     // 【时间点】【存储】
-    public function home_mine_item_timeline_save($post_data)
+    public function home_mine_item_time_line_save($post_data)
     {
         $messages = [
             'id.required' => '参数有误',
@@ -3517,7 +3795,12 @@ class IndexRepository {
 
 
 
-    // 记录访问
+
+
+
+
+
+    // 【K】【访问记录】
     public function record($post_data)
     {
         $record = new K_Record();
@@ -3538,10 +3821,59 @@ class IndexRepository {
         else return false;
     }
 
+    // 【K】【分享记录】
+    public function record_share($post_data)
+    {
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+        }
+        else $me_id = 0;
 
+        $record_module = isset($post_data["record_module"]) ? $post_data["record_module"] : 0;
+        $page_type = isset($post_data["page_type"]) ? $post_data["page_type"] : 0;
+        $page_module = isset($post_data["page_module"]) ? $post_data["page_module"] : 0;
+        $page_num = isset($post_data["page_num"]) ? $post_data["page_num"] : 0;
+        $item_id = isset($post_data["item_id"]) ? $post_data["item_id"] : 0;
+        $user_id = isset($post_data["user_id"]) ? $post_data["user_id"] : 0;
 
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 2; // record_type=2 share
+        $record["record_module"] = $record_module; // record_module 1.微信好友|QQ好友 2.朋友圈|QQ空间
+        $record["page_type"] = $page_type; // page_type=1 default platform
+        $record["page_module"] = $page_module; // page_module=2 introduction
+        $record["page_num"] = $page_num;
+        $record["item_id"] = $item_id;
+        $record["object_id"] = $user_id;
+        $record["from"] = request('from',NULL);
+        $this->record($record);
 
+        if($page_type == 1)
+        {
 
+        }
+        else if($page_type == 2)
+        {
+            $user = K_User::find($user_id);
+            $user->timestamps = false;
+            $user->increment('share_num');
+        }
+        else if($page_type == 3)
+        {
+            $item = K_Item::find($item_id);
+            $item->timestamps = false;
+            $item->increment('share_num');
+
+            $user = K_User::find($item->owner_id);
+            $user->timestamps = false;
+            $user->increment('share_num');
+        }
+
+        return response_success([]);
+    }
 
 
 }

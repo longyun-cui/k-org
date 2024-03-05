@@ -17,6 +17,16 @@
 .container { width:960px; padding-left:0; padding-right:0; }
 
 
+.main-section { position:relative; width:calc(100% - 240px); padding:0; }
+.side-section { position:relative; width:240px; padding:0; }
+
+.left-section { float:left; clear:left; }
+.right-section { float:right; clear:right; }
+
+.main-section.left-section { padding-right:8px; }
+.main-section.right-section { padding-left:8px; }
+
+
 .main-body-left-section { position:relative; width:calc(100% - 280px); padding:0; padding-right:8px; float:left; clear:left; }
 .main-body-right-section { position:relative; width:280px; padding:0; float:right; clear:right; }
 

@@ -13,13 +13,11 @@
 @section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
 
 
+
+
 @section('sidebar')
-
-    @include(env('TEMPLATE_DEFAULT').'frontend.component.sidebar-root')
-
+    @include(env('TEMPLATE_K_COMMON_FRONT').'component.sidebar-root')
 @endsection
-
-
 @section('header','')
 @section('description','')
 @section('content')
@@ -29,7 +27,8 @@
 
     <div class="container">
 
-        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 container-body-left bg-white">
+        {{--左侧--}}
+        <div class="main-body-section main-body-left-section section-wrapper">
 
             <div class="item-piece item-option">
                 <div class="box-body item-row item-content-row">
@@ -57,10 +56,14 @@
         </div>
 
 
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 hidden-xs hidden-sm container-body-right">
+        {{--右侧--}}
+        <div class="main-body-section main-body-right-section section-wrapper">
 
-            @include(env('TEMPLATE_DEFAULT').'frontend.component.right-root')
-            {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')--}}
+            @if($auth_check)
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
+            @else
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
+            @endif
 
         </div>
 

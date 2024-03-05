@@ -23,25 +23,26 @@ Route::group(['domain'=>env('DOMAIN_ROOT')], function(){
 
 
 
-Route::get('/', function () {
 
-    echo("【url()->full()】  --:--  ".url()->full().'<br>');
-    echo("【url()->current()】  --:--  ".url()->current().'<br>');
-    echo("【url()->previous()】  --:--  ".url()->previous().'<br>');
-    echo("【request()->url()】  --:--  ".request()->url().'<br>');
-    echo("【request()->path()】  --:--  ".request()->path().'<br>');
-    echo("【request()->getUri()】  --:--  ".request()->getUri().'<br>');
-    echo("【request()->getRequestUri()】  --:--  ".request()->getRequestUri().'<br>');
-    dd();
-
-    return view('welcome');
-});
+//Route::get('/', function () {
+//
+//    echo("【url()->full()】  --:--  ".url()->full().'<br>');
+//    echo("【url()->current()】  --:--  ".url()->current().'<br>');
+//    echo("【url()->previous()】  --:--  ".url()->previous().'<br>');
+//    echo("【request()->url()】  --:--  ".request()->url().'<br>');
+//    echo("【request()->path()】  --:--  ".request()->path().'<br>');
+//    echo("【request()->getUri()】  --:--  ".request()->getUri().'<br>');
+//    echo("【request()->getRequestUri()】  --:--  ".request()->getRequestUri().'<br>');
+//    dd();
+//
+//    return view('welcome');
+//});
 
 
 /*
  * Common 通用功能
  */
-Route::group(['prefix' => 'common'], function () {
+Route::group(['prefix'=>'common'], function () {
 
     $controller = "CommonController";
 
@@ -58,15 +59,33 @@ Route::group(['prefix' => 'common'], function () {
 /*
  * 超级管理员
  */
-Route::group(['domain' => 'super.'.env('DOMAIN_ROOT'), 'namespace' => 'Super'], function () {
+Route::group(['domain'=>'super.'.env('DOMAIN_ROOT'), 'namespace'=>'Super'], function () {
     require(__DIR__ . '/Super/route.php');
 });
 
 
 /*
+ * ORG
+ */
+Route::group(['domain'=>'org.'.env('DOMAIN_ROOT'), 'namespace'=>'Org'], function () {
+    require(__DIR__ . '/Org/route.php');
+});
+
+
+/*
+ * 主页 Root Frontend
+ */
+Route::group(['domain'=>'www.'.env('DOMAIN_ROOT'), 'namespace'=>'WWW'], function () {
+    require(__DIR__ . '/WWW/route.php');
+});
+//Route::group(['namespace'=>'WWW'], function () {
+//    require(__DIR__ . '/WWW/route.php');
+//});
+
+/*
  * 主页
  */
-Route::group(['namespace' => 'Common'], function () {
+Route::group(['namespace'=>'Common'], function () {
     require(__DIR__ . '/Common/route.php');
 });
 
@@ -76,32 +95,24 @@ Route::group(['namespace' => 'Common'], function () {
 /*
  * 管理员
  */
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    require(__DIR__ . '/Admin/route.php');
-});
+//Route::group(['prefix'=>'admin', 'namespace'=>'Admin'], function () {
+//    require(__DIR__ . '/Admin/route.php');
+//});
 
 
 /*
  * 组织
  */
-Route::group(['prefix' => 'org', 'namespace' => 'Org'], function () {
-    require(__DIR__ . '/Org/route.php');
-});
+//Route::group(['prefix'=>'org', 'namespace'=>'Org'], function () {
+//    require(__DIR__ . '/Org/route.php');
+//});
 
 
 /*
  * 赞助商
  */
-Route::group(['prefix' => 'sponsor', 'namespace' => 'Sponsor'], function () {
+Route::group(['prefix'=>'sponsor', 'namespace'=>'Sponsor'], function () {
     require(__DIR__ . '/Sponsor/route.php');
-});
-
-
-/*
- * 主页 Root Frontend
- */
-Route::group(['namespace' => 'WWW'], function () {
-    require(__DIR__ . '/WWW/route.php');
 });
 
 
@@ -121,7 +132,7 @@ Route::group(['namespace' => 'WWW'], function () {
 /*
  * Home Backend
  */
-Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
+Route::group(['prefix'=>'home', 'namespace'=>'Home'], function () {
 
     /*
      * 需要登录
@@ -137,7 +148,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
 
 
         // 【info】
-        Route::group(['prefix' => 'info'], function () {
+        Route::group(['prefix'=>'info'], function () {
 
             $controller = 'HomeController';
 
@@ -150,7 +161,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
 
 
         // 内容
-        Route::group(['prefix' => 'item'], function () {
+        Route::group(['prefix'=>'item'], function () {
 
             $controller = 'ItemController';
 
@@ -165,7 +176,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
 
 
             // 内容管理
-            Route::group(['prefix' => 'content'], function () {
+            Route::group(['prefix'=>'content'], function () {
 
                 $controller = 'ItemController';
 
@@ -185,7 +196,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
             });
 
             // 时间线类型
-            Route::group(['prefix' => 'point'], function () {
+            Route::group(['prefix'=>'point'], function () {
 
                 $controller = 'PointController';
 
@@ -205,7 +216,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
 
 
         // 作者
-        Route::group(['prefix' => 'course'], function () {
+        Route::group(['prefix'=>'course'], function () {
 
             $controller = 'CourseController';
 
@@ -218,7 +229,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
             Route::post('disable', $controller.'@disableAction');
 
             // 作者
-            Route::group(['prefix' => 'content'], function () {
+            Route::group(['prefix'=>'content'], function () {
 
                 $controller = 'CourseController';
 
@@ -235,7 +246,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
 
 
         // 收藏
-        Route::group(['prefix' => 'collect'], function () {
+        Route::group(['prefix'=>'collect'], function () {
 
             $controller = 'OtherController';
 
@@ -247,7 +258,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
         });
 
         // 点赞
-        Route::group(['prefix' => 'favor'], function () {
+        Route::group(['prefix'=>'favor'], function () {
 
             $controller = 'OtherController';
 
@@ -259,7 +270,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
         });
 
         // 消息
-        Route::group(['prefix' => 'notification'], function () {
+        Route::group(['prefix'=>'notification'], function () {
 
             $controller = 'NotificationController';
 
@@ -279,7 +290,7 @@ Route::group(['prefix' => 'home', 'namespace' => 'Home'], function () {
 /*
  * Org-Admin Backend
  */
-Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
+Route::group(['prefix'=>'org-admin', 'namespace'=>'OrgAdmin'], function () {
 
 
     /*
@@ -304,7 +315,7 @@ Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
 
 
         // 【info】
-        Route::group(['prefix' => 'info'], function () {
+        Route::group(['prefix'=>'info'], function () {
 
             $controller = 'HomeController';
 
@@ -317,7 +328,7 @@ Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
 
 
         // 内容
-        Route::group(['prefix' => 'item'], function () {
+        Route::group(['prefix'=>'item'], function () {
 
             $controller = 'ItemController';
 
@@ -340,7 +351,7 @@ Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
 
 
         // 收藏
-        Route::group(['prefix' => 'collect'], function () {
+        Route::group(['prefix'=>'collect'], function () {
 
             $controller = 'OtherController';
 
@@ -352,7 +363,7 @@ Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
         });
 
         // 点赞
-        Route::group(['prefix' => 'favor'], function () {
+        Route::group(['prefix'=>'favor'], function () {
 
             $controller = 'OtherController';
 
@@ -364,7 +375,7 @@ Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
         });
 
         // 消息
-        Route::group(['prefix' => 'notification'], function () {
+        Route::group(['prefix'=>'notification'], function () {
 
             $controller = 'NotificationController';
 
@@ -377,4 +388,3 @@ Route::group(['prefix' => 'org-admin', 'namespace' => 'OrgAdmin'], function () {
     });
 
 });
-

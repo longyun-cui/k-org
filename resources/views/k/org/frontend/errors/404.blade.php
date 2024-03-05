@@ -46,7 +46,7 @@
                             您可以
                         </p>
                         <br>
-                        <a href="/org" class="a"><i class="fa fa-home"></i> 返回首页</a>
+                        <a href="/" class="a"><i class="fa fa-home"></i> 返回首页</a>
                         <span>或</span>
                         <a href="javascript:location.reload();" class="a"><i class="fa fa-rotate-left"></i> 刷新重试</a>
                     </div>
@@ -104,7 +104,7 @@
             console.log(time);
 
             if (time <= 0) {
-                window.location.href = "{{ url('/org') }}";
+                window.location.href = "{{ url('/') }}";
             }
             else {
                 $("#time").text(time);

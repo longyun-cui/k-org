@@ -8,10 +8,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="shortcut icon" type="image/ico" href="{{ url('favicon.ico') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ url('favicon.png') }}">
-    <link rel="icon" sizes="16x16 32x32 64x64" href="{{ url('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="196x196" href="{{ url('favicon.png') }}">
+    <link rel="shortcut icon" type="image/ico" href="{{ env('FAVICON_K') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ env('FAVICON_K') }}">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="{{ env('FAVICON_K') }}">
+    <link rel="icon" type="image/png" sizes="196x196" href="{{ env('FAVICON_K') }}">
 
     <title>@yield('head_title')</title>
     <meta name="title" content="@yield('meta_title')" />
@@ -101,6 +101,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('/resource/common/css/frontend/index.css') }}">
     <link rel="stylesheet" href="{{ asset('/resource/others/css/frontend/index.css') }}">
 
+
+    {{--layout-style--}}
+    @include(env('TEMPLATE_K_WWW').'layout.layout-style')
 
     @yield('css')
     @yield('style')

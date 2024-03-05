@@ -19,7 +19,7 @@
         </figure>
         @endif
 
-        <div class="text-container">
+        <div class="text-container padding-10px">
 
             <div class="item-row">
 

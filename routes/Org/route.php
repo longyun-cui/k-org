@@ -7,6 +7,15 @@
 Route::group([], function () {
 
 
+    // 不存在的域名
+    Route::fallback(function() {
+        return response()->view(env('TEMPLATE_K_ORG_FRONT').'errors.404');
+    });
+    Route::get('/404', function () {
+        return view(env('TEMPLATE_K_ORG_FRONT').'errors.404');
+    });
+
+
     // 注册登录
     Route::group([], function () {
 
@@ -27,14 +36,6 @@ Route::group([], function () {
     // 后台管理，需要登录
     Route::group(['middleware' => ['org','org.notification']], function () {
 
-
-        Route::fallback(function() {
-            return response()->view(env('TEMPLATE_K_ORG_FRONT').'errors.404');
-        });
-
-        Route::get('/404', function () {
-            return view(env('TEMPLATE_K_ORG_FRONT').'errors.404');
-        });
 
 
         $controller = "OrgIndexController";

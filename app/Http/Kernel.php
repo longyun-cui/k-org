@@ -58,7 +58,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
-        'wechat.share' => \App\Http\Middleware\WechatShareMiddleware::class,
+        'wx.share' => \App\Http\Middleware\WXShareMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'org' => \App\Http\Middleware\OrgMiddleware::class,
         'org.notification' => \App\Http\Middleware\OrgNotificationMiddleware::class,

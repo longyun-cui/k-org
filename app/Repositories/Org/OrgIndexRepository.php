@@ -62,10 +62,13 @@ class OrgIndexRepository {
     }
 
 
+
+
     // 返回（后台）主页视图
     public function view_org_index()
     {
-        $me = Auth::guard("org")->user();
+        $this->get_me();
+        $me = $this->me;
         $me_id = $me->id;
 
 
@@ -99,7 +102,8 @@ class OrgIndexRepository {
     // 广告
     public function view_mine_my_advertising_list()
     {
-        $me = Auth::guard("org")->user();
+        $this->get_me();
+        $me = $this->me;
         $me_id = $me->id;
 
 

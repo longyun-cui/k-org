@@ -41,7 +41,7 @@ class OrgIndexController extends Controller
     // 【用户】用户-登录
     public function operate_login_user()
     {
-        if(!Auth::guard('org')->check()) // 未登录s
+        if(!Auth::guard('org')->check()) // 未登录
         {
             return Response(response_error([],"请先登录！"));
 //            $return["status"] = false;

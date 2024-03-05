@@ -1,4 +1,5 @@
-@extends(env('TEMPLATE_DEFAULT').'frontend.layout.layout')
+@extends(env('TEMPLATE_K_WWW').'layout.layout')
+
 
 @section('head_title','404 页面不存在或参数有误 - 朝鲜族组织平台')
 @section('meta_title')@endsection
@@ -7,12 +8,14 @@
 @section('meta_keywords')@endsection
 
 
+
+
 @section('header','')
 @section('description','')
 @section('content')
 <div class="container">
 
-    <div class="col-sm-12 col-md-12 container-body-left" style="width:100%;float:left;text-align:center;">
+    <div class="main-body-section main-body-left-section section-wrapper page-root" style="width:100%;float:left;text-align:center;">
 
         <div class="error-page">
 
@@ -61,7 +64,7 @@
 
     </div>
 
-    <div class="col-sm-12 col-md-3 hidden-xs hidden-sm container-body-right">
+    <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
         {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-root')--}}
         {{--@include(env('TEMPLATE_DEFAULT').'frontend.component.right-me')--}}
@@ -73,6 +76,8 @@
 @endsection
 
 
+
+
 @section('custom-style')
 <style>
     .a { padding:4px 8px; margin:4px 2px; border:1px solid #ccc; }
@@ -80,7 +85,9 @@
 @endsection
 
 
-@section('js')
+
+
+@section('custom-script')
 <script>
     $(function () {
         setTimeout(ChangeTime, 1200);

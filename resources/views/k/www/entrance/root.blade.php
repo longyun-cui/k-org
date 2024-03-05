@@ -18,7 +18,7 @@
 
 
 @section('sidebar')
-    @include(env('TEMPLATE_K_WWW').'component.sidebar.sidebar-root')
+    @include(env('TEMPLATE_K_COMMON_FRONT').'component.sidebar.sidebar-root')
 @endsection
 @section('header','')
 @section('description','')
@@ -28,19 +28,18 @@
     {{--左侧--}}
     <div class="main-body-section main-body-left-section section-wrapper page-item">
 
-        @include(env('TEMPLATE_K_WWW').'component.left-tag')
-
 
         <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="{{ $sidebar_menu_root_active or '' }}"><a href="/" data-toggle="tab-">首页</a></li>
-                <li class="{{ $sidebar_menu_activity_active or '' }}"><a href="/?type=activity" data-toggle="tab-">活动</a></li>
-                <li class="{{ $sidebar_menu_organization_list_active or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>
+            <ul class="nav nav-tabs _none">
+                <li class="{{ $menu_active_for_root or '' }}"><a href="/" data-toggle="tab-">首页</a></li>
+                <li class="{{ $menu_active_for_activity or '' }}"><a href="/?type=activity" data-toggle="tab-">只看活动</a></li>
+                <li class="{{ $menu_active_for_my_focus or '' }}"><a href="/?type=my-focus" data-toggle="tab-">我的关注</a></li>
+                <li class="{{ $menu_active_for_organization_list or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>
             </ul>
             <div class="tab-content" style="width:100%; padding:10px 0;float:left;">
                 <div class="active tab-pane" id="all">
                     @if(!empty($item_list) && count($item_list))
-                        @include(env('TEMPLATE_K_WWW').'component.item-list',['item_list'=>$item_list])
+                        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list',['item_list'=>$item_list])
                     @endif
                 </div>
                 {{--<div class="tab-pane" id="timeline">--}}
@@ -55,7 +54,7 @@
 
             <div class="container-box pull-left margin-bottom-16px">
                 @if(request('type') != 'activity')
-                    @include(env('TEMPLATE_K_WWW').'component.user-list',['user_list'=>$user_list])
+                    @include(env('TEMPLATE_K_COMMON_FRONT').'component.user-list',['user_list'=>$user_list])
                 @endif
             </div>
 
@@ -71,7 +70,7 @@
 
             <div class="container-box pull-left margin-bottom-16px">
                 @if(request('type') != 'activity')
-                    @include(env('TEMPLATE_K_WWW').'component.user-list',['user_list'=>$user_list])
+                    @include(env('TEMPLATE_K_COMMON_FRONT').'component.user-list',['user_list'=>$user_list])
                 @endif
             </div>
 
@@ -79,15 +78,25 @@
 
         {!! $item_list->links() !!}
 
+
     </div>
 
 
     {{--右侧--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
+        <div class="fixed-to-top">
 
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-root')
-        {{--@include(env('TEMPLATE_K_WWW').'component.right-side.right-me')--}}
 
+            @include(env('TEMPLATE_K_WWW').'component.tag-list')
+
+            @if($auth_check)
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
+            @else
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
+            @endif
+
+
+        </div>
     </div>
 
 </div>

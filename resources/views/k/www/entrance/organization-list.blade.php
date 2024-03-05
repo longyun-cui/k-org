@@ -16,7 +16,7 @@
 
 
 @section('sidebar')
-    @include(env('TEMPLATE_K_WWW').'component.sidebar.sidebar-root')
+    @include(env('TEMPLATE_K_COMMON_FRONT').'component.sidebar.sidebar-root')
 @endsection
 @section('header','')
 @section('description','')
@@ -25,17 +25,37 @@
 
     <div class="main-body-section main-body-left-section section-wrapper page-item">
 
-        @include(env('TEMPLATE_K_WWW').'component.left-tag')
+        {{--@include(env('TEMPLATE_K_WWW').'component.left-tag')--}}
 
-        @include(env('TEMPLATE_K_WWW').'component.user-list',['user_list'=>$user_list])
-        {!! $user_list->links() !!}
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="{{ $menu_active_for_root or '' }}"><a href="/" data-toggle="tab-">首页</a></li>
+                <li class="{{ $menu_active_for_activity or '' }}"><a href="/?type=activity" data-toggle="tab-">只看活动</a></li>
+                <li class="{{ $menu_active_for_my_focus or '' }}"><a href="/?type=my-focus" data-toggle="tab-">我的关注</a></li>
+                <li class="{{ $menu_active_for_organization_list or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>
+            </ul>
+            <div class="tab-content" style="width:100%; padding:10px 0;float:left;">
+                <div class="active tab-pane" id="all">
+                    @include(env('TEMPLATE_K_COMMON_FRONT').'component.user-list',['user_list'=>$user_list])
+                    {!! $user_list->links() !!}
+                </div>
+                {{--<div class="tab-pane" id="timeline">--}}
+                {{--</div>--}}
+
+                {{--<div class="tab-pane" id="settings">--}}
+                {{--</div>--}}
+            </div>
+        </div>
 
     </div>
 
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-root')
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-me')
+        @if($auth_check)
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
+        @else
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
+        @endif
 
     </div>
 
@@ -47,14 +67,6 @@
 
 @section('style')
 <style>
-    .box-footer a {color:#777;cursor:pointer;}
-    .box-footer a:hover {color:orange;cursor:pointer;}
-    .comment-container {border-top:2px solid #ddd;}
-    .comment-choice-container {border-top:2px solid #ddd;}
-    .comment-choice-container .form-group { margin-bottom:0;}
-    .comment-entity-container {border-top:2px solid #ddd;}
-    .comment-piece {border-bottom:1px solid #eee;}
-    .comment-piece:first-child {}
 </style>
 @endsection
 
@@ -63,12 +75,5 @@
 
 @section('script')
 <script>
-    $(function() {
-        $('article').readmore({
-            speed: 150,
-            moreLink: '<a href="#">展开更多</a>',
-            lessLink: '<a href="#">收起</a>'
-        });
-    });
 </script>
 @endsection

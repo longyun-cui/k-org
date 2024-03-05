@@ -74,7 +74,7 @@ $(function() {
             console.log('$(document).height() = ' + $(document).height());
             console.log($('.fixed-to-top').height());
             $('.fixed-to-top').height();
-            // $(".fixed-to-top").addClass('fixed');
+            $(".fixed-to-top").addClass('fixed');
         }
 
         if($(document).scrollTop() <= 60)

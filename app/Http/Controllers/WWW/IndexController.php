@@ -19,25 +19,41 @@ class IndexController extends Controller
     }
 
 
-    // 【K】【】
+
+    // 注册
+    public function operate_org_register()
+    {
+        if(request()->isMethod('get'))
+        {
+            return $this->repo->view_org_register();
+        }
+        else if(request()->isMethod('post'))
+        {
+            return $this->repo->register(request()->all());
+        }
+    }
+
+
+
+    // 【首页】
     public function view_root()
     {
         return $this->repo->view_root(request()->all());
     }
 
-    // 【K】【】
-    public function view_introduction()
-    {
-        return $this->repo->view_introduction();
-    }
-
-    // 【K】【】
+    // 【首页-标签】
     public function view_tag($q='')
     {
         return $this->repo->view_tag(request()->all(),$q);
     }
 
-    // 【K】【】
+    // 【】
+    public function view_introduction()
+    {
+        return $this->repo->view_introduction();
+    }
+
+    // 【】
     public function record_share()
     {
         return $this->repo->record_share(request()->all());
@@ -46,7 +62,7 @@ class IndexController extends Controller
 
 
 
-    // 【K】【】
+    // 【登录】跳转
     public function login_link()
     {
         $state  = url()->previous();
@@ -70,18 +86,52 @@ class IndexController extends Controller
 
 
 
-    // 【K】【基本信息】返回
-    public function view_my_info_index()
+
+    /*
+     * 用户资料
+     */
+
+    // 【用户资料-基本信息】主页
+    public function view_my_profile_info_index()
     {
-        return $this->repo->view_my_info_index();
+        return $this->repo->view_my_profile_info_index();
+    }
+    // 【用户资料-基本信息】编辑
+    public function operate_my_profile_info_edit()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_my_profile_info_edit();
+        else if (request()->isMethod('post')) return $this->repo->operate_my_profile_info_save(request()->all());
     }
 
-    // 【K】【基本信息】编辑
-    public function view_my_info_edit()
+
+    // 【用户资料-图文介绍】主页
+    public function view_my_profile_intro_index()
     {
-        if(request()->isMethod('get')) return $this->repo->view_my_info_edit();
-        else if (request()->isMethod('post')) return $this->repo->operate_my_info_save(request()->all());
+        return $this->repo->view_my_profile_intro_index();
     }
+    // 【用户资料-图文介绍】编辑
+    public function operate_my_profile_intro_edit()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_my_profile_intro_edit();
+        else if (request()->isMethod('post')) return $this->repo->operate_my_profile_intro_save(request()->all());
+    }
+
+
+    // 【用户资料-我的名片】主页
+    public function view_my_card_index()
+    {
+        return $this->repo->view_my_card_index();
+    }
+    // 【用户资料-我的名片】编辑
+    public function view_my_card_edit()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_my_card_edit();
+        else if (request()->isMethod('post')) return $this->repo->operate_my_card_save(request()->all());
+    }
+
+
+
+
 
 
 

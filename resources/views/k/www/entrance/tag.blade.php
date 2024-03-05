@@ -18,7 +18,7 @@
 
 
 @section('sidebar')
-    @include(env('TEMPLATE_K_WWW').'component.sidebar.sidebar-root')
+    @include(env('TEMPLATE_K_COMMON_FRONT').'component.sidebar.sidebar-root')
 @endsection
 @section('header','')
 @section('description','')
@@ -28,11 +28,11 @@
     {{--左侧--}}
     <div class="main-body-section main-body-left-section section-wrapper">
 
-        @include(env('TEMPLATE_K_WWW').'component.left-tag')
+        @include(env('TEMPLATE_K_WWW').'component.tag-list')
 
         <div class="container-box pull-left margin-bottom-16px">
             @if(request('type') != 'activity')
-                @include(env('TEMPLATE_K_WWW').'component.user-list',['user_list'=>$user_list])
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.user-list',['user_list'=>$user_list])
             @endif
         </div>
 
@@ -48,8 +48,11 @@
     {{--右侧--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right">
 
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-root')
-        {{--@include(env('TEMPLATE_K_WWW').'component.right-side.right-me')--}}
+        @if($auth_check)
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
+        @else
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
+        @endif
 
     </div>
 

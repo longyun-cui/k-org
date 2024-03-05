@@ -16,7 +16,7 @@
 
 
 @section('sidebar')
-    @include(env('TEMPLATE_K_WWW').'component.sidebar.sidebar-root')
+    @include(env('TEMPLATE_K_COMMON_FRONT').'component.sidebar.sidebar-root')
 @endsection
 @section('header','')
 @section('description','')
@@ -25,7 +25,7 @@
 
     <div class="main-body-section main-body-left-section section-wrapper page-item">
 
-        @include(env('TEMPLATE_K_WWW').'component.item-list-for-relation',['item_list'=>$item_list])
+        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list-for-relation',['item_list'=>$item_list])
         {!! $item_list->links() !!}
 
     </div>
@@ -33,8 +33,11 @@
 
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-root')
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-me')
+        @if($auth_check)
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
+        @else
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
+        @endif
 
     </div>
 
@@ -46,14 +49,6 @@
 
 @section('style')
 <style>
-    .box-footer a {color:#777;cursor:pointer;}
-    .box-footer a:hover {color:orange;cursor:pointer;}
-    .comment-container {border-top:2px solid #ddd;}
-    .comment-choice-container {border-top:2px solid #ddd;}
-    .comment-choice-container .form-group { margin-bottom:0;}
-    .comment-entity-container {border-top:2px solid #ddd;}
-    .comment-piece {border-bottom:1px solid #eee;}
-    .comment-piece:first-child {}
 </style>
 @endsection
 
@@ -62,11 +57,6 @@
 @section('script')
 <script>
     $(function() {
-        $('article').readmore({
-            speed: 150,
-            moreLink: '<a href="#">展开更多</a>',
-            lessLink: '<a href="#">收起</a>'
-        });
     });
 </script>
 @endsection

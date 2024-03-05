@@ -2,7 +2,7 @@
 
 
 @section('head_title')
-    {{ $head_title or '组织管理 - 朝鲜族生活社群 - 发现身边的朝鲜族社群组织' }}
+    {{ $head_title or 'ORG-首页 - 朝鲜族生活社群 - 发现身边的朝鲜族社群组织' }}
 @endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection
@@ -25,7 +25,7 @@
 @section('content')
 <div class="container">
 
-    <div class="main-body-section main-body-left-section section-wrapper page-item">
+    <div class="main-body-section main-section right-section section-wrapper page-item">
 
 
         <div class="nav-tabs-custom">
@@ -56,10 +56,13 @@
     </div>
 
 
-    <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
+    <div class="main-body-section side-section left-section section-wrapper pull-right hidden-xs hidden-sm">
 
+
+        <div class="fixed-to-top">
         @include(env('TEMPLATE_K_ORG_FRONT').'component.right-side.right-root')
         {{--@include(env('TEMPLATE_K_ORG_FRONT').'component.right-me')--}}
+        </div>
 
     </div>
 

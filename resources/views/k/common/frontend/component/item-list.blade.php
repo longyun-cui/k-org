@@ -221,7 +221,7 @@
                         </span>
                         {{ $item->owner->username or '' }}
                     </a>
-                    {{--                    <span class="text-muted disabled pull-right"><small>{{ date_show($item->updated_at->timestamp) }}</small></span>--}}
+                    {{--<span class="text-muted disabled pull-right"><small>{{ date_show($item->updated_at->timestamp) }}</small></span>--}}
                     <span class="text-muted disabled pull-right"><small>{{ date_show($item->published_at) }}</small></span>
                 </div>
             </div>

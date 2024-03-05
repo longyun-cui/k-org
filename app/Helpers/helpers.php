@@ -592,6 +592,69 @@ EOF;
     }
 }
 
+if (!function_exists('upload_img_storage'))
+{
+    function upload_img_storage($file, $filename = '', $saveFolder = 'research/common', $folderType = 'date')
+    {
+        $allowedExtensions = [
+            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF",
+        ];
+        $extension = $file->getClientOriginalExtension();
+
+        /*判断后缀是否合法*/
+        if (in_array(strtolower($extension), $allowedExtensions))
+        {
+            $image = Image::make($file);
+
+            /*保存图片*/
+            if($saveFolder === null) $saveFolder = 'research/common';
+            if($folderType == 'assign')
+            {
+                $upload_path = <<<EOF
+resource/$saveFolder/
+EOF;
+                $mysql_save_path = <<<EOF
+$saveFolder/
+EOF;
+            }
+            else
+            {
+                $date = date('Y-m-d');
+                $upload_path = <<<EOF
+resource/$saveFolder/$date/
+EOF;
+                $mysql_save_path = <<<EOF
+$saveFolder/$date/
+EOF;
+            }
+
+            $path = storage_path($upload_path);
+            if (!is_dir($path))
+            {
+                mkdir($path, 0777, true);
+            }
+            if($filename == '') $filename = uniqid() . time() . '.' . $extension;
+            else $filename = $filename . '.' . $extension;
+
+            $image->save($path . $filename);
+            $returnData = [
+                'result' => true,
+                'msg' => '上传成功',
+                'local' => $mysql_save_path . $filename,
+                'extension' => $extension,
+            ];
+        }
+        else
+        {
+            $returnData = [
+                'result' => false,
+                'msg' => '上传图片格式不正确',
+            ];
+        }
+        return $returnData;
+    }
+}
+
 if (!function_exists('upload_file_storage')) {
     function upload_file_storage($file, $saveFolder = 'common', $patch = 'research', $filename = '')
     {

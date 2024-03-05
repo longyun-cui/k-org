@@ -7,6 +7,22 @@
 Route::group([], function () {
 
 
+    // 不存在的域名
+    Route::fallback(function(){
+
+        if(Auth::check())
+        {
+            $this->auth_check = 1;
+            $this->me = Auth::user();
+            view()->share('me',$this->me);
+        }
+        else $this->auth_check = 0;
+        view()->share('auth_check',$this->auth_check);
+
+        return response()->view(env('TEMPLATE_K_WWW').'errors.404');
+    });
+
+
     // 注册登录
     Route::group([], function () {
 
@@ -26,8 +42,11 @@ Route::group([], function () {
     Route::match(['get', 'post'],'record/share', $controller."@record_share");
 
 
+
+
+
     /*
-     * weixin
+     * 微信
      */
     Route::group(['prefix' => 'weixin'], function () {
 
@@ -57,7 +76,7 @@ Route::group([], function () {
 
 
 
-    Route::group(['middleware' => ['wechat.share','notification']], function () {
+    Route::group(['middleware' => ['wx.share','notification']], function () {
 
         $controller = "IndexController";
 
@@ -94,6 +113,9 @@ Route::group([], function () {
 
             $controller = "IndexController";
 
+            Route::get('/org-register', $controller.'@operate_org_register');
+
+
             Route::get('/home/notification', $controller.'@view_home_notification');
 
             Route::group(['middleware' => 'notification'], function () {
@@ -102,7 +124,7 @@ Route::group([], function () {
 
                 Route::get('/home/mine/original', $controller.'@view_home_mine_original');
 
-                Route::get('/home/mine/todolist', $controller.'@view_home_mine_todolist');
+                Route::get('/home/mine/todo_list', $controller.'@view_home_mine_todolist');
                 Route::get('/home/mine/schedule', $controller.'@view_home_mine_schedule');
 
                 Route::get('/home/mine/collection', $controller.'@view_home_mine_collection');
@@ -130,6 +152,34 @@ Route::group([], function () {
                 Route::get('/my-favor', $controller.'@view_my_favor');
                 Route::get('/my-notification', $controller.'@view_my_notification');
 
+
+
+
+
+                /*s
+                 * 个人信息
+                 */
+                // 基本信息-基本资料
+                Route::get('/mine/my-profile-info-index', $controller.'@view_my_profile_info_index');
+                Route::match(['get','post'], '/mine/my-profile-info-edit', $controller.'@operate_my_profile_info_edit');
+                // 图文介绍
+                Route::get('/mine/my-profile-intro-index', $controller.'@view_my_profile_intro_index');
+                Route::match(['get','post'], '/mine/my-profile-intro-edit', $controller.'@operate_my_profile_intro_edit');
+                // 名片
+                Route::get('/mine/my-card-index', $controller.'@view_my_card_index');
+                Route::match(['get','post'], '/mine/my-card-edit', $controller.'@view_my_card_edit');
+
+                // 名片夹 & 我的关注 & 我的粉丝
+                Route::get('/mine/my-cards-case', $controller.'@view_my_cards_case');
+                Route::get('/mine/my-follow', $controller.'@view_my_follow');
+                Route::get('/mine/my-fans', $controller.'@view_my_fans');
+
+                // 收藏 & 点赞
+                Route::get('/mine/my-collection', $controller.'@view_my_collection');
+                Route::get('/mine/my-favor', $controller.'@view_my_favor');
+                //
+                Route::get('/mine/my-notification', $controller.'@view_my_notification');
+
             });
 
         });
@@ -140,6 +190,7 @@ Route::group([], function () {
     Route::group(['middleware' => ['login']], function () {
 
         $controller = "IndexController";
+
 
         // 获取日程
         Route::post('ajax/get/schedule', $controller.'@ajax_get_schedule');
