@@ -369,7 +369,7 @@
 <div class="item-piece item-option margin-top-4px- padding-16px">
     <div class="">
 
-        <div class="item-row margin-bottom-4px text-center">
+        <div class="item-row margin-bottom-4px text-center _none">
             <h4>{{ $data->ext->title or '我的介绍' }}</h4>
         </div>
 

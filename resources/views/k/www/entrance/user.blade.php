@@ -35,7 +35,7 @@
 <div class="container">
 
     {{--右侧-用户名片--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right _none-">
+    <div class="main-body-section main-body-right-section section-wrapper pull-right _none">
 
         @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-user', ['data'=>$data])
         {{--@include(env('TEMPLATE_K_COMMON_FRONT').'component.right-user-menu', ['data'=>$data])--}}
@@ -113,7 +113,7 @@
             {{--</div>--}}
 
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs _none-">
+                <ul class="nav nav-tabs _none">
                     <li class="{{ $menu_active_for_item_all or '' }}">
                         <a href="{{ url('/user/'.$data->id) }}" data-toggle="tab-">全部内容</a>
                         {{--<a href="{{ url('/user/'.$data->id) }}" data-toggle="tab-">全部内容 {{ $data->item_count or 0 }}</a>--}}
@@ -201,7 +201,7 @@
 
 
     {{--右侧-广告等--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right _none">
+    <div class="main-body-section main-body-left-section section-wrapper pull-left margin-top-4px _none-">
 
 
         {{--[IF]我是组织--}}
