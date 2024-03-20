@@ -346,7 +346,7 @@
                     {
                         "title": "状态",
                         "data": "active",
-                        "width": "8px",
+                        "width": "80px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
