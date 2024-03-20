@@ -245,7 +245,7 @@
                     {
                         "title": "标题",
                         "data": "title",
-                        "className": "",
+                        "className": "text-left",
                         "width": "",
                         "orderable": false,
                         render: function(data, type, row, meta) {
