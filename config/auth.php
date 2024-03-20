@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\K\K_User;
+
 return [
 
     /*
@@ -41,6 +43,11 @@ return [
             'provider' => 'web',
         ],
 
+        'super' => [
+            'driver' => 'session',
+            'provider' => 'supers',
+        ],
+
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -54,11 +61,6 @@ return [
         'org' => [
             'driver' => 'session',
             'provider' => 'org',
-        ],
-
-        'sponsor' => [
-            'driver' => 'session',
-            'provider' => 'sponsor',
         ],
 
         'org_admin' => [
@@ -95,6 +97,11 @@ return [
             'model' => App\Models\K\K_User::class,
         ],
 
+        'supers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\K\K_User::class,
+        ],
+
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\K\K_User::class,
@@ -110,14 +117,9 @@ return [
             'model' => App\Models\K\K_User::class,
         ],
 
-        'sponsor' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\K\K_User::class,
-        ],
-
         'org_admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Org\OrgAdministrator::class,
+            'model' => App\Models\K\K_User::class,
         ],
 
         // 'users' => [

@@ -13,10 +13,9 @@ Route::group([], function () {
         return response()->view(env('TEMPLATE_K_SUPER_FRONT').'errors.404');
     });
 
-    Route::get('/', function () {
-        return view(env('TEMPLATE_K_SUPER_FRONT').'welcome');
-//        dd('super.default');
-    });
+    $controller = "SuperIndexController";
+
+    Route::get('/', $controller.'@view_index');
 
 
 });
@@ -39,7 +38,7 @@ Route::group(['prefix'=>'admin'], function () {
     // 注册登录
     Route::group([], function () {
 
-        $controller = "AuthController";
+        $controller = "SuperAuthController";
 
         Route::match(['get','post'], 'login', $controller.'@login');
         Route::match(['get','post'], 'logout', $controller.'@logout');
@@ -48,15 +47,14 @@ Route::group(['prefix'=>'admin'], function () {
 
 
     // 后台管理，需要登录
-    Route::group(['middleware' => 'admin'], function () {
+    Route::group(['middleware' => 'k.super.login:turn'], function () {
 
 
-        $controller = "IndexController";
+        $controller = "SuperAdminController";
 
         Route::get('/sql-init', $controller.'@sql_init');
 
-        Route::get('/', $controller.'@index');
-        Route::get('index', $controller.'@index');
+        Route::get('/', $controller.'@view_admin_index');
 
 
 
@@ -80,14 +78,13 @@ Route::group(['prefix'=>'admin'], function () {
         Route::match(['get','post'], '/user/user-create', $controller.'@operate_user_user_create');
         Route::match(['get','post'], '/user/user-edit', $controller.'@operate_user_user_edit');
 
-        Route::match(['get','post'], '/user/user-all-list', $controller.'@view_user_all_list');
-        Route::match(['get','post'], '/user/user-org-list', $controller.'@view_user_org_list');
-        Route::match(['get','post'], '/user/user-sponsor-list', $controller.'@view_user_sponsor_list');
-        Route::match(['get','post'], '/user/user-individual-list', $controller.'@view_user_individual_list');
+        Route::match(['get','post'], '/user/user-list', $controller.'@view_user_list');
+        Route::match(['get','post'], '/user/user-list-for-individual', $controller.'@view_user_list_for_individual');
+        Route::match(['get','post'], '/user/user-list-for-org', $controller.'@view_user_list_for_org');
 
-        Route::match(['get','post'], '/user/user-login', $controller.'@operate_user_user_login');
-        Route::match(['get','post'], '/user/org-login', $controller.'@operate_user_org_login');
-        Route::match(['get','post'], '/user/sponsor-login', $controller.'@operate_user_sponsor_login');
+        Route::match(['get','post'], '/user/user-login', $controller.'@operate_user_login');
+        Route::match(['get','post'], '/user/user-login-for-individual', $controller.'@operate_user_login_for_individual');
+        Route::match(['get','post'], '/user/user-login-for-org', $controller.'@operate_user_login_for_org');
 
         Route::match(['get','post'], '/user/org-delete', $controller.'@operate_user_org_delete');
 
@@ -127,27 +124,6 @@ Route::group(['prefix'=>'admin'], function () {
         Route::match(['get','post'], '/item/item-admin-enable', $controller.'@operate_item_admin_enable');
 
 
-
-
-
-        Route::match(['get','post'], '/user/agent-list', $controller.'@view_user_agent_list');
-        Route::match(['get','post'], '/user/client-list', $controller.'@view_user_client_list');
-
-        Route::match(['get','post'], '/user/client-login', $controller.'@operate_user_client_login');
-
-        Route::match(['get','post'], '/user/agent', $controller.'@view_user_agent');
-        Route::match(['get','post'], '/user/client', $controller.'@view_user_client');
-
-        Route::match(['get','post'], '/user/agent/client-list', $controller.'@view_user_agent_client_list');
-        Route::match(['get','post'], '/user/client/keyword-list', $controller.'@view_user_client_keyword_list');
-
-        Route::match(['get','post'], '/user/agent-recharge', $controller.'@operate_user_agent_recharge');
-        Route::match(['get','post'], '/user/agent-recharge-limit-close', $controller.'@operate_user_agent_recharge_limit_close');
-        Route::match(['get','post'], '/user/agent-recharge-limit-open', $controller.'@operate_user_agent_recharge_limit_open');
-        Route::match(['get','post'], '/user/agent-sub-agent-close', $controller.'@operate_user_agent_sub_agent_close');
-        Route::match(['get','post'], '/user/agent-sub-agent-open', $controller.'@operate_user_agent_sub_agent_open');
-
-        Route::match(['get','post'], '/user/client-delete', $controller.'@operate_user_client_delete');
 
 
 

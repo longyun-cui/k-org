@@ -13,7 +13,7 @@ use App\Repositories\Common\CommonRepository;
 use Response, Auth, Validator, DB, Exception;
 use QrCode;
 
-class AuthRepository {
+class SuperAuthRepository {
 
     private $model;
     public function __construct()

@@ -10,7 +10,7 @@
                 <img src="/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::guard('admin')->user()->username }}</p>
+                <p>{{ $me->username or 'username' }}</p>
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -35,24 +35,19 @@
             {{--用户管理--}}
             <li class="header">机构管理</li>
 
-            <li class="treeview {{ $sidebar_user_all_list_active or '' }}">
-                <a href="{{ url('/admin/user/user-all-list') }}">
+            <li class="treeview {{ $menu_active_by_user_list or '' }}">
+                <a href="{{ url('/admin/user/user-list') }}">
                     <i class="fa fa-user"></i><span>全部用户</span>
                 </a>
             </li>
-            <li class="treeview {{ $sidebar_user_org_list_active or '' }}">
-                <a href="{{ url('/admin/user/user-org-list') }}">
-                    <i class="fa fa-user"></i><span>社群组织</span>
-                </a>
-            </li>
-            <li class="treeview {{ $sidebar_user_sponsor_list_active or '' }}">
-                <a href="{{ url('/admin/user/user-sponsor-list') }}">
-                    <i class="fa fa-user"></i><span>赞助商</span>
-                </a>
-            </li>
-            <li class="treeview {{ $sidebar_user_individual_list_active or '' }}">
-                <a href="{{ url('/admin/user/user-individual-list') }}">
+            <li class="treeview {{ $menu_active_by_user_list_for_individual or '' }}">
+                <a href="{{ url('/admin/user/user-list-for-individual') }}">
                     <i class="fa fa-user"></i><span>个人用户</span>
+                </a>
+            </li>
+            <li class="treeview {{ $menu_active_by_user_list_for_org or '' }}">
+                <a href="{{ url('/admin/user/user-list-for-org') }}">
+                    <i class="fa fa-user"></i><span>社群组织</span>
                 </a>
             </li>
 

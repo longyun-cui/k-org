@@ -58,6 +58,12 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
+
+        'k.user.login' => \App\Http\Middleware\K\KUserLoginMiddleware::class,
+        'k.super.login' => \App\Http\Middleware\K\KSuperLoginMiddleware::class,
+        'k.admin.login' => \App\Http\Middleware\K\KAdminLoginMiddleware::class,
+
+
         'wx.share' => \App\Http\Middleware\WXShareMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'org' => \App\Http\Middleware\OrgMiddleware::class,

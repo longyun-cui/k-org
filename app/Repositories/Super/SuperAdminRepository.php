@@ -7,29 +7,73 @@ use App\Models\K\K_Record;
 
 use App\Repositories\Common\CommonRepository;
 
-use Response, Auth, Validator, DB, Exception;
+use Response, Auth, Validator, DB, Exception, Cache, Blade, Carbon;
 use QrCode, Excel;
 
-class IndexRepository {
+class SuperAdminRepository {
 
-    private $model;
-    private $repo;
+    private $env;
+    private $auth_check;
+    private $me;
+    private $me_admin;
+    private $modelUser;
+    private $modelItem;
+    private $view_blade_403;
+    private $view_blade_404;
+
     public function __construct()
     {
-        $this->model = new K_User;
+        $this->modelUser = new K_User;
+        $this->modelItem = new K_Item;
+
+        $this->view_blade_403 = env('TEMPLATE_K_SUPER_ADMIN').'entrance.errors.403';
+        $this->view_blade_404 = env('TEMPLATE_K_SUPER_ADMIN').'entrance.errors.404';
+
+        Blade::setEchoFormat('%s');
+        Blade::setEchoFormat('e(%s)');
+        Blade::setEchoFormat('nl2br(e(%s))');
+
+        if(isMobileEquipment()) $is_mobile_equipment = 1;
+        else $is_mobile_equipment = 0;
+        view()->share('is_mobile_equipment',$is_mobile_equipment);
     }
+
+
+    // 登录情况
+    public function get_me()
+    {
+        if(Auth::guard("super")->check())
+        {
+            $this->auth_check = 1;
+            $this->me = Auth::guard("super")->user();
+            $me = $this->me;
+            view()->share('me',$me);
+        }
+        else $this->auth_check = 0;
+
+        view()->share('auth_check',$this->auth_check);
+
+        if(isMobileEquipment()) $is_mobile_equipment = 1;
+        else $is_mobile_equipment = 0;
+        view()->share('is_mobile_equipment',$is_mobile_equipment);
+    }
+
+
+
 
     // 返回（后台）主页视图
     public function view_admin_index()
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
 
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'index')
-            ->with([
-                'index_data'=>[],
-                'consumption_data'=>[],
-                'insufficient_clients'=>[]
-            ]);
+        $view_data['index_data'] = [];
+        $view_data['consumption_data'] = [];
+        $view_data['insufficient_clients'] = [];
+
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'index';
+
+        return view($view_blade)->with($view_data);
     }
 
 
@@ -262,13 +306,32 @@ class IndexRepository {
 
 
     // 【K】【用户】【全部机构】返回-列表-视图
-    public function view_user_all_list($post_data)
+    public function view_user_list($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-all-list')
-            ->with(['sidebar_user_all_list_active'=>'active menu-open']);
+        // 类型1 数字型
+        if(!empty($post_data['product_type']))
+        {
+            if(is_numeric($post_data['product_type']) && $post_data['product_type'] > 0) $view_data['product_type'] = $post_data['product_type'];
+            else $view_data['product_type'] = -1;
+        }
+        else $view_data['product_type'] = -1;
+
+        // 类型2 字符型
+        $view_data['user_type'] = -1;
+        if(isset($post_data['user_type']))
+        {
+            if(in_array($post_data['user_type'],config('k.common.super.user_type_only_key')))
+            {
+                $view_data['user_type'] = $post_data['user_type'];
+            }
+        }
+
+        $view_data['menu_active_by_user_list'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list';
+        return view($view_blade)->with($view_data);
     }
     // 【K】【用户】【全部机构】返回-列表-数据
-    public function get_user_all_list_datatable($post_data)
+    public function get_user_list_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
         $query = K_User::select('*')->where(['user_category'=>1]);
@@ -283,93 +346,14 @@ class IndexRepository {
 
         if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
-
-        if(isset($post_data['order']))
+        // 用户类型
+        if(isset($post_data['user_type']))
         {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
+            if(!in_array($post_data['user_type'],['-1','0']))
+            {
+                $query->where('user_type', $post_data['user_type']);
+            }
         }
-        else $query->orderBy("id", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-
-    // 【K】【用户】【组织】返回-列表-视图
-    public function view_user_org_list($post_data)
-    {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-org-list')
-            ->with(['sidebar_user_org_list_active'=>'active menu-open']);
-    }
-    // 【K】【用户】【组织】返回-列表-数据
-    public function get_user_org_list_datatable($post_data)
-    {
-        $me = Auth::guard("admin")->user();
-        $query = K_User::select('*')->where(['active'=>1,'user_category'=>1,'user_type'=>11]);
-
-        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("id", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-
-    // 【K】【用户】【赞助商】返回-列表-视图
-    public function view_user_sponsor_list($post_data)
-    {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-sponsor-list')
-            ->with(['sidebar_user_sponsor_list_active'=>'active menu-open']);
-    }
-    // 【用户】【赞助商】返回-列表-数据
-    public function get_user_sponsor_list_datatable($post_data)
-    {
-        $me = Auth::guard("admin")->user();
-        $query = K_User::select('*')->where(['active'=>1,'user_category'=>1,'user_type'=>88]);
-
-        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
 
         $total = $query->count();
 
@@ -402,13 +386,14 @@ class IndexRepository {
 
 
     // 【K】【用户】【个人用户】返回-列表-视图
-    public function view_user_individual_list($post_data)
+    public function view_user_list_for_individual($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-individual-list')
-            ->with(['sidebar_user_individual_list_active'=>'active menu-open']);
+        $view_data['menu_active_by_user_list_for_individual'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-for-individual';
+        return view($view_blade)->with($view_data);
     }
     // 【K】【用户】【个人用户】返回-列表-数据
-    public function get_user_individual_list_datatable($post_data)
+    public function get_user_list_for_individual_datatable($post_data)
     {
         $me = Auth::guard("admin")->user();
         $query = K_User::select('*')
@@ -436,6 +421,51 @@ class IndexRepository {
 
         if($limit == -1) $list = $query->get();
         else $list = $query->skip($skip)->take($limit)->get();
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+
+    // 【K】【用户】【组织】返回-列表-视图
+    public function view_user_list_for_org($post_data)
+    {
+        $view_data['menu_active_by_user_list_for_org'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-for-org';
+        return view($view_blade)->with($view_data);
+    }
+    // 【K】【用户】【组织】返回-列表-数据
+    public function get_user_list_for_org_datatable($post_data)
+    {
+        $me = Auth::guard("admin")->user();
+        $query = K_User::select('*')->where(['active'=>1,'user_category'=>1,'user_type'=>11]);
+
+        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("id", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
 
         foreach ($list as $k => $v)
         {

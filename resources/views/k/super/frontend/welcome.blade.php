@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Super.Welcome
+                    K-ORG.Super
                 </div>
 
                 <div class="links">

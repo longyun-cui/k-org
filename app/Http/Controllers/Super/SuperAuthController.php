@@ -8,16 +8,18 @@ use App\Http\Controllers\Controller;
 use App\Models\K\K_User;
 use App\Models\K\K_Administrator;
 
+use App\Repositories\Super\SuperAuthRepository;
+
 use Response, Auth, Validator, DB, Exception;
 
 
-class AuthController extends Controller
+class SuperAuthController extends Controller
 {
     //
     private $repo;
     public function __construct()
     {
-//        $this->repo = new AuthRepository;
+//        $this->repo = new SuperAuthRepository;
     }
 
     // 登陆
@@ -49,7 +51,7 @@ class AuthController extends Controller
                     $password = request()->get('password');
                     if(password_check($password,$admin->password))
                     {
-                        Auth::guard('admin')->login($admin,true);
+                        Auth::guard('super')->login($admin,true);
                         return response_success();
                     }
                     else return response_error([],'账户or密码不正确');
@@ -63,7 +65,7 @@ class AuthController extends Controller
     // 退出
     public function logout()
     {
-        Auth::guard('admin')->logout();
+        Auth::guard('super')->logout();
         return redirect('/admin/login');
     }
 

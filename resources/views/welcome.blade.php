@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Courses
+                    K-ORG
                 </div>
 
                 <div class="links">

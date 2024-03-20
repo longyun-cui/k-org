@@ -5,7 +5,7 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a href="/admin"><b>{{ config('common.name') }}</b> 朝鲜族组织活动平台</a>
+        <a href="/admin"><b>{{ config('common.name') }}</b> 朝鲜族社群组织活动平台</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">

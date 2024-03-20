@@ -170,25 +170,25 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            @if(Auth::guard('admin')->user()->portrait_img)
-                                <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::guard('admin')->user()->portrait_img) }}" class="user-image" alt="User Image">
+                            @if($me->portrait_img)
+                                <img src="{{ url(env('DOMAIN_CDN').'/'.$me->portrait_img) }}" class="user-image" alt="User Image">
                             @else
                                 <img src="/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             @endif
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{ Auth::guard('admin')->user()->username }}</span>
+                            <span class="hidden-xs">{{ $me->username or 'username' }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                @if(Auth::guard('admin')->user()->portrait_img)
-                                    <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::guard('admin')->user()->portrait_img) }}" class="img-circle" alt="User Image">
+                                @if($me->portrait_img)
+                                    <img src="{{ url(env('DOMAIN_CDN').'/'.$me->portrait_img) }}" class="img-circle" alt="User Image">
                                 @else
                                     <img src="/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                 @endif
 
                                 <p>
-                                    {{ Auth::guard('admin')->user()->username }} - 管理员
+                                    {{ $me->username or '' }} - 管理员
                                     <small>Member since Nov. 2012</small>
                                 </p>
                             </li>

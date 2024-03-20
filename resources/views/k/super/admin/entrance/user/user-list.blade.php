@@ -1,11 +1,11 @@
 @extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
 
 
-@section('head_title','【A】赞助商列表')
+@section('head_title','全部用户')
 
 
 @section('header','')
-@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
+@section('description','SUPER - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
@@ -19,13 +19,13 @@
         <div class="box box-info">
 
             <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">赞助商列表</h3>
+                <h3 class="box-title">全部用户列表</h3>
 
                 <div class="caption pull-right">
                     <i class="icon-pin font-blue"></i>
                     <span class="caption-subject font-blue sbold uppercase"></span>
                     <a href="{{ url('/admin/user/user-create') }}">
-                        <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa fa-plus"></i> 添加组织/赞助商</button>
+                        <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa fa-plus"></i> 添加机构</button>
                     </a>
                 </div>
 
@@ -39,13 +39,24 @@
                 </div>
             </div>
 
-            <div class="box-body datatable-body" id="item-main-body">
+            <div class="box-body datatable-body item-main-body" id="item-main-body">
 
 
                 <div class="row col-md-12 datatable-search-row">
                     <div class="input-group">
 
-                        <input type="text" class="form-control form-filter item-search-keyup" name="username" placeholder="代理商" />
+                        <input type="text" class="form-control form-filter item-search-keyup" name="username" placeholder="用户名" />
+
+                        <select class="form-control form-filter" name="user_type" style="width:96px;">
+                            <option value="-1">全部</option>
+                            <option value="1" @if($user_type == 1) selected="selected" @endif>个人用户</option>
+                            <option value="11" @if($user_type == 11) selected="selected" @endif>社群组织</option>
+
+{{--                            @foreach(config('k.common.super.user_type') as $k => $v)--}}
+{{--                                <option value="{{ $k }}" @if($k == $user_type) selected="selected" @endif>{{ $v }}</option>--}}
+{{--                                --}}{{--<option value="{{ $k }}">{{ $v }}</option>--}}
+{{--                            @endforeach--}}
+                        </select>
 
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
                             <i class="fa fa-search"></i> 搜索
@@ -62,18 +73,6 @@
                 <table class='table table-striped- table-bordered- table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
-                            <th>ID</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -251,21 +250,13 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/user/user-sponsor-list') }}",
+                    'url': "{{ url('/admin/user/user-list') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
                         d._token = $('meta[name="_token"]').attr('content');
                         d.username = $('input[name="username"]').val();
-//                        d.nickname 	= $('input[name="nickname"]').val();
-//                        d.certificate_type_id = $('select[name="certificate_type_id"]').val();
-//                        d.certificate_state = $('select[name="certificate_state"]').val();
-//                        d.admin_name = $('input[name="admin_name"]').val();
-//
-//                        d.created_at_from = $('input[name="created_at_from"]').val();
-//                        d.created_at_to = $('input[name="created_at_to"]').val();
-//                        d.updated_at_from = $('input[name="updated_at_from"]').val();
-//                        d.updated_at_to = $('input[name="updated_at_to"]').val();
+                        d.user_type = $('select[name="user_type"]').val();
 
                     },
                 },
@@ -274,7 +265,7 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
-                        "width": "48px",
+                        "width": "50px",
                         "title": "ID",
                         "data": "id",
                         "orderable": true,
@@ -283,19 +274,9 @@
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "",
-                        "title": "赞助商",
-                        "data": "id",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/user/'+data+'">'+row.username+'</a>';
-                        }
-                    },
-                    {
-                        "width": "72px",
                         "title": "用户类型",
                         "data": 'user_type',
+                        "width": "80px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
@@ -306,8 +287,18 @@
                         }
                     },
                     {
+                        "title": "名称",
+                        "data": "id",
                         "className": "text-left",
-                        "width": "96px",
+                        "width": "",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return '<a target="_blank" href="/user/'+data+'">'+row.username+'</a>';
+                        }
+                    },
+                    {
+                        "className": "",
+                        "width": "100px",
                         "title": "手机号",
                         "data": "mobile",
                         "orderable": false,
@@ -316,22 +307,22 @@
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "128px",
                         "title": "负责人",
                         "data": "id",
+                        "className": "text-left",
+                        "width": "128px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.principal) {
-                                return '<a target="_blank" href="/admin/user/agent?id='+data+'">'+row.principal.username+'</a>';
+                                return '<a target="_blank" href="/user/'+data+'">'+row.principal.username+'</a>';
                             }
                             else return '--';
                         }
                     },
                     {
-                        "width": "72px",
                         "title": "成员数",
                         "data": "id",
+                        "width": "60px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.member_count && row.member_count > 0)
@@ -342,10 +333,10 @@
                         }
                     },
                     {
-                        "width": "72px",
                         "title": "粉丝数",
-                        "data": "fund_total",
-                        "orderable": true,
+                        "data": "id",
+                        "width": "60px",
+                        "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.fans_count && row.fans_count > 0)
                             {
@@ -355,27 +346,50 @@
                         }
                     },
                     {
-                        "width": "72px",
                         "title": "浏览数",
                         "data": "visit_num",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "width": "72px",
                         "title": "分享数",
                         "data": "share_num",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
+//                    {
+//                        "data": 'menu_id',
+//                        "orderable": false,
+//                        render: function(data, type, row, meta) {
+////                            return row.menu == null ? '未分类' : row.menu.title;
+//                            if(row.menu == null) return '<small class="label btn-info">未分类</small>';
+//                            else {
+//                                return '<a href="/org-admin/item/menu?id='+row.menu.encode_id+'">'+row.menu.title+'</a>';
+//                            }
+//                        }
+//                    },
+//                    {
+//                        "data": 'id',
+//                        "orderable": false,
+//                        render: function(data, type, row, meta) {
+//                            return row.menu == null ? '未分类' : row.menu.title;
+////                            var html = '';
+////                            $.each(data,function( key, val ) {
+////                                html += '<a href="/org-admin/item/menu?id='+this.id+'">'+this.title+'</a><br>';
+////                            });
+////                            return html;
+//                        }
+//                    },
                     {
-                        "width": "128px",
                         "title": "创建时间",
-                        "data": "created_at",
+                        "data": 'created_at',
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -398,12 +412,17 @@
                         }
                     },
                     {
-                        "width": "64px",
                         "title": "状态",
                         "data": "active",
+                        "width": "60px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
+                            if(row.deleted_at != null)
+                            {
+                                return '<small class="btn-xs bg-black">已删除</small>';
+                            }
+
                             if(row.user_status == 1)
                             {
                                 return '<small class="btn-xs btn-success">正常</small>';
@@ -415,78 +434,74 @@
                         }
                     },
                     {
-                        "width": "300px",
                         "title": "操作",
                         "data": "id",
+                        "width": "300px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.user_status == 1)
                             {
-                                $html_0 =
-                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>'+
-                                    '';
+                                $html_able =
+                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>';
                             }
                             else
                             {
-                                $html_0 =
-                                    '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>'+
-                                    '';
+                                $html_able = '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>';
+                            }
+
+                            if(row.user_type == 1)
+                            {
+                                $html_edit = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>';
+                            }
+                            else
+                            {
+                                $html_edit = '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>';
                             }
 
                             var html =
+                                $html_able+
+//                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
 //                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
-                                $html_0+
-                                '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>'+
+                                $html_edit+
                                 '<a class="btn btn-xs bg-maroon item-change-password-show" data-id="'+data+'">修改密码</a>'+
                                 '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
                                 '<a class="btn btn-xs bg-olive item-login-submit" data-id="'+data+'">登录</a>'+
                                 '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
-//                                '<a class="btn btn-xs item-download-qr-code-submit" data-id="'+data+'">下载二维码</a>'+
                                 '';
                             return html;
                         }
                     }
                 ],
                 "drawCallback": function (settings) {
-                    ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
-                    $("a.verify").click(function(event){
-                        event.preventDefault();
-                        var node = $(this);
-                        var tr = node.closest('tr');
-                        var nickname = tr.find('span.nickname').text();
-                        var cert_name = tr.find('span.certificate_type_name').text();
-                        var action = node.attr('data-action');
-                        var certificate_id = node.attr('data-id');
-                        var action_name = node.text();
 
-                        var tpl = "{{trans('labels.crc.verify_user_certificate_tpl')}}";
-                        layer.open({
-                            'title': '警告',
-                            content: tpl
-                                .replace('@action_name', action_name)
-                                .replace('@nickname', nickname)
-                                .replace('@certificate_type_name', cert_name),
-                            btn: ['Yes', 'No'],
-                            yes: function(index) {
-                                layer.close(index);
-                                $.post(
-                                    '/admin/medsci/certificate/user/verify',
-                                    {
-                                        action: action,
-                                        id: certificate_id,
-                                        _token: '{{csrf_token()}}'
-                                    },
-                                    function(json){
-                                        if(json['response_code'] == 'success') {
-                                            layer.msg('操作成功!', {time: 3500});
-                                            ajax_datatable.ajax.reload();
-                                        } else {
-                                            layer.alert(json['response_data'], {time: 10000});
-                                        }
-                                    }, 'json');
-                            }
-                        });
-                    });
+                    // let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    // this.api().column(1).nodes().each(function(cell, i) {
+                    //     cell.innerHTML =  startIndex + i + 1;
+                    // });
+
+                    var $obj = new Object();
+                    if($('input[name="user-id"]').val())  $obj.user_id = $('input[name="user-id"]').val();
+                    if($('input[name="username"]').val())  $obj.username = $('input[name="username"]').val();
+                    if($('select[name="user_type"]').val() != "-1")  $obj.user_type = $('select[name="user_type"]').val();
+
+                    var $page_length = this.api().context[0]._iDisplayLength; // 当前每页显示多少
+                    if($page_length != 50) $obj.length = $page_length;
+                    var $page_start = this.api().context[0]._iDisplayStart; // 当前页开始
+                    var $pagination = ($page_start / $page_length) + 1; //得到页数值 比页码小1
+                    if($pagination > 1) $obj.page = $pagination;
+
+
+                    if(JSON.stringify($obj) != "{}")
+                    {
+                        var $url = url_build('',$obj);
+                        history.replaceState({page: 1}, "", $url);
+                    }
+                    else
+                    {
+                        $url = "{{ url('/item/order-list-for-all') }}";
+                        if(window.location.search) history.replaceState({page: 1}, "", $url);
+                    }
+
                 },
                 "language": { url: '/common/dataTableI18n' },
             });
@@ -515,5 +530,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-script')
+@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-script')
 @endsection

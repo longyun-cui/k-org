@@ -1,11 +1,11 @@
 @extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
 
 
-@section('head_title','【S】全部用户')
+@section('head_title','组织列表')
 
 
 @section('header','')
-@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
+@section('description','SUPER - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
@@ -19,13 +19,13 @@
         <div class="box box-info">
 
             <div class="box-header with-border" style="margin:16px 0;">
-                <h3 class="box-title">全部用户列表</h3>
+                <h3 class="box-title">组织列表</h3>
 
                 <div class="caption pull-right">
                     <i class="icon-pin font-blue"></i>
                     <span class="caption-subject font-blue sbold uppercase"></span>
                     <a href="{{ url('/admin/user/user-create') }}">
-                        <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa fa-plus"></i> 添加机构</button>
+                        <button type="button" onclick="" class="btn btn-success pull-right"><i class="fa fa-plus"></i> 添加组织/赞助商</button>
                     </a>
                 </div>
 
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="box-body datatable-body item-main-body" id="item-main-body">
+            <div class="box-body datatable-body" id="item-main-body">
 
 
                 <div class="row col-md-12 datatable-search-row">
@@ -251,7 +251,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/user/user-all-list') }}",
+                    'url': "{{ url('/admin/user/user-org-list') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
@@ -274,7 +274,7 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
-                        "width": "48px",
+                        "width":"48px",
                         "title": "ID",
                         "data": "id",
                         "orderable": true,
@@ -284,8 +284,8 @@
                     },
                     {
                         "className": "text-left",
-                        "width": "",
-                        "title": "名称",
+                        "width":"",
+                        "title": "组织名称",
                         "data": "id",
                         "orderable": false,
                         render: function(data, type, row, meta) {
@@ -317,7 +317,7 @@
                     },
                     {
                         "className": "text-left",
-                        "width": "128px",
+                        "width":"128px",
                         "title": "负责人",
                         "data": "id",
                         "orderable": false,
@@ -329,7 +329,7 @@
                         }
                     },
                     {
-                        "width": "72px",
+                        "width":"72px",
                         "title": "成员数",
                         "data": "id",
                         "orderable": false,
@@ -342,10 +342,10 @@
                         }
                     },
                     {
-                        "width": "72px",
+                        "width":"72px",
                         "title": "粉丝数",
-                        "data": "id",
-                        "orderable": false,
+                        "data": "fund_total",
+                        "orderable": true,
                         render: function(data, type, row, meta) {
                             if(row.fans_count && row.fans_count > 0)
                             {
@@ -372,31 +372,8 @@
                             return data;
                         }
                     },
-//                    {
-//                        "data": 'menu_id',
-//                        "orderable": false,
-//                        render: function(data, type, row, meta) {
-////                            return row.menu == null ? '未分类' : row.menu.title;
-//                            if(row.menu == null) return '<small class="label btn-info">未分类</small>';
-//                            else {
-//                                return '<a href="/org-admin/item/menu?id='+row.menu.encode_id+'">'+row.menu.title+'</a>';
-//                            }
-//                        }
-//                    },
-//                    {
-//                        "data": 'id',
-//                        "orderable": false,
-//                        render: function(data, type, row, meta) {
-//                            return row.menu == null ? '未分类' : row.menu.title;
-////                            var html = '';
-////                            $.each(data,function( key, val ) {
-////                                html += '<a href="/org-admin/item/menu?id='+this.id+'">'+this.title+'</a><br>';
-////                            });
-////                            return html;
-//                        }
-//                    },
                     {
-                        "width": "128px",
+                        "width":"128px",
                         "title": "创建时间",
                         "data": 'created_at',
                         "orderable": true,
@@ -427,11 +404,6 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
-                            if(row.deleted_at != null)
-                            {
-                                return '<small class="btn-xs bg-black">已删除</small>';
-                            }
-
                             if(row.user_status == 1)
                             {
                                 return '<small class="btn-xs btn-success">正常</small>';
@@ -450,28 +422,23 @@
                         render: function(data, type, row, meta) {
                             if(row.user_status == 1)
                             {
-                                $html_able =
-                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>';
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>'+
+                                    '';
                             }
                             else
                             {
-                                $html_able = '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>';
-                            }
-
-                            if(row.user_type == 1)
-                            {
-                                $html_edit = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>';
-                            }
-                            else
-                            {
-                                $html_edit = '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>';
+                                $html_0 =
+                                    '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>'+
+                                    '';
                             }
 
                             var html =
-                                $html_able+
 //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
+//                                '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
 //                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
-                                $html_edit+
+                                $html_0+
+                                '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>'+
                                 '<a class="btn btn-xs bg-maroon item-change-password-show" data-id="'+data+'">修改密码</a>'+
                                 '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
                                 '<a class="btn btn-xs bg-olive item-login-submit" data-id="'+data+'">登录</a>'+

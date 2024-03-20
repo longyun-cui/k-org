@@ -8,23 +8,24 @@ use App\Http\Controllers\Controller;
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
 
-use App\Repositories\Super\IndexRepository;
+use App\Repositories\Super\SuperAdminRepository;
 
-use Response, Auth, Validator, DB, Exception;
-use QrCode;
+use Response, Auth, Validator, DB, Exception, Cache, Blade, Carbon;
+use QrCode, Excel;
 
-class IndexController extends Controller
+class SuperAdminController extends Controller
 {
     //
     private $repo;
+
     public function __construct()
     {
-        $this->repo = new IndexRepository;
+        $this->repo = new SuperAdminRepository;
     }
 
 
     // 返回【主页】视图
-    public function index()
+    public function view_admin_index()
     {
         return $this->repo->view_admin_index();
     }
@@ -108,41 +109,33 @@ class IndexController extends Controller
         return $this->repo->operate_user_change_password(request()->all());
     }
 
-    // 【代理商】SELECT2
-    public function operate_business_select2_agent()
-    {
-        return $this->repo->operate_business_select2_agent(request()->all());
-    }
+
 
 
     // 【用户】[组织]返回-列表-视图
-    public function view_user_all_list()
+    public function view_user_list()
     {
-        if(request()->isMethod('get')) return $this->repo->view_user_all_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_user_all_list_datatable(request()->all());
-    }
-    // 【用户】[组织]返回-列表-视图
-    public function view_user_org_list()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_user_org_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_user_org_list_datatable(request()->all());
-    }
-    // 【用户】【赞助商】返回-列表-视图
-    public function view_user_sponsor_list()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_user_sponsor_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_user_sponsor_list_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_user_list(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_user_list_datatable(request()->all());
     }
     // 【用户】返回-个人用户列表-视图
     public function view_user_individual_list()
     {
-        if(request()->isMethod('get')) return $this->repo->view_user_individual_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_user_individual_list_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_user_list_for_individual(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_user_list_for_individual_datatable(request()->all());
+    }
+    // 【用户】[组织]返回-列表-视图
+    public function view_user_org_list()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_user_list_for_org(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_user_list_for_org_datatable(request()->all());
     }
 
 
+
+
     // 【用户】登录
-    public function operate_user_user_login()
+    public function operate_user_login()
     {
         $user_id = request()->get('id');
         $user = K_User::where('id',$user_id)->first();
@@ -172,7 +165,7 @@ class IndexController extends Controller
         return response_success($return);
     }
     // 【用户】登录-组织
-    public function operate_user_org_login()
+    public function operate_user_login_for_org()
     {
         $org_id = request()->get('id');
         $org = K_User::where('id',$org_id)->first();
