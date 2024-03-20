@@ -67,6 +67,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/4.2.2/css/swiper.min.css">--}}
     <link rel="stylesheet" href="{{ asset('/lib/css/swiper-4.2.2.min.css') }}">
 
+    {{--<link rel="stylesheet" href="https://cdn.bootcss.com/lightcase/2.5.0/css/lightcase.min.css">--}}
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/lightcase-2.5.0.min.css') }}">
+
+    {{--<link rel="stylesheet" href="https://cdn.bootcss.com/select2/4.0.5/css/select2.min.css">--}}
+    <link rel="stylesheet" href="{{ asset('/lib/css/select2-4.0.5.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('/common/css/common.css') }}" media="all" />
     {{--<link rel="stylesheet" href="{{ asset('/common/css/frontend/index.css') }}" media="all" />--}}
     <link rel="stylesheet" href="{{ asset('/common/css/backend/index.css') }}" media="all" />
@@ -171,15 +177,29 @@ desired effect
 {{--<script src="https://cdn.bootcss.com/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>--}}
 <script src="{{ asset('/lib/js/bootstrap-switch-3.3.4.min.js') }}"></script>
 
+{{--<script src="https://cdn.bootcss.com/lightcase/2.5.0/js/lightcase.min.js"></script>--}}
+<script src="{{ asset('/resource/component/js/lightcase-2.5.0.min.js') }}"></script>
+
 {{--<script src="https://cdn.bootcss.com/Swiper/4.2.2/js/swiper.min.js"></script>--}}
 <script src="{{ asset('/lib/js/swiper-4.2.2.min.js') }}"></script>
+
+{{--<script src="https://cdn.bootcss.com/select2/4.0.5/js/select2.min.js"></script>--}}
+<script src="{{ asset('/resource/component/js/select2-4.0.5.min.js') }}"></script>
+
+{{--<script src="{{ asset('/resource/component/js/echarts-3.7.2.min.js') }}"></script>--}}
+<script src="{{ asset('/resource/component/js/echarts-5.4.1.min.js') }}"></script>
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 
 
 <script src="{{ asset('/js/admin/index.js') }}"></script>
 
+
+{{--layout-script--}}
+@include(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout-script')
+
 @yield('js')
+@yield('script')
 @yield('custom-js')
 @yield('custom-script')
 

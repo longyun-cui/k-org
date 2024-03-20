@@ -1,7 +1,7 @@
 @extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
 
 
-@section('head_title','【A】文章列表')
+@section('head_title','文章列表')
 
 
 @section('header','')
@@ -172,7 +172,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/item/item-article-list') }}",
+                    'url': "{{ url('/admin/item/item-list-for-article') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
@@ -486,5 +486,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-script')
+@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-script')
 @endsection

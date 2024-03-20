@@ -251,7 +251,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/user/user-org-list') }}",
+                    'url': "{{ url('/admin/user/user-list-for-org') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
@@ -516,5 +516,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-script')
+@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-script')
 @endsection

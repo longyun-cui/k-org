@@ -51,11 +51,6 @@
                             <option value="-1">全部</option>
                             <option value="1" @if($user_type == 1) selected="selected" @endif>个人用户</option>
                             <option value="11" @if($user_type == 11) selected="selected" @endif>社群组织</option>
-
-{{--                            @foreach(config('k.common.super.user_type') as $k => $v)--}}
-{{--                                <option value="{{ $k }}" @if($k == $user_type) selected="selected" @endif>{{ $v }}</option>--}}
-{{--                                --}}{{--<option value="{{ $k }}">{{ $v }}</option>--}}
-{{--                            @endforeach--}}
                         </select>
 
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
@@ -153,87 +148,6 @@
         </div>
     </div>
 </div>
-
-
-<div class="modal fade" id="modal-body">
-    <div class="col-md-8 col-md-offset-2" id="edit-ctn" style="margin-top:64px;margin-bottom:64px;background:#fff;">
-
-        <div class="row">
-            <div class="col-md-12">
-                <!-- BEGIN PORTLET-->
-                <div class="box- box-info- form-container">
-
-                    <div class="box-header with-border" style="margin:16px 0;">
-                        <h3 class="box-title">代理商充值</h3>
-                        <div class="box-tools pull-right">
-                        </div>
-                    </div>
-
-                    <form action="" method="post" class="form-horizontal form-bordered" id="form-edit-modal">
-                    <div class="box-body">
-
-                        {{csrf_field()}}
-                        <input type="hidden" name="operate" value="recharge" readonly>
-                        <input type="hidden" name="id" value="0" readonly>
-
-                        {{--类别--}}
-
-
-                        {{--用户ID--}}
-                        <div class="form-group">
-                            <label class="control-label col-md-2">用户ID</label>
-                            <div class="col-md-8 control-label" style="text-align:left;">
-                                <span class="recharge-user-id"></span>
-                            </div>
-                        </div>
-                        {{--用户名--}}
-                        <div class="form-group">
-                            <label class="control-label col-md-2">用户名</label>
-                            <div class="col-md-8 control-label" style="text-align:left;">
-                                <span class="recharge-username"></span>
-                            </div>
-                        </div>
-                        {{--真实姓名--}}
-                        <div class="form-group">
-                            <label class="control-label col-md-2">充值金额</label>
-                            <div class="col-md-8 ">
-                                <input type="text" class="form-control" name="recharge-amount" placeholder="充值金额" value="">
-                            </div>
-                        </div>
-                        {{--备注--}}
-                        <div class="form-group">
-                            <label class="control-label col-md-2">备注</label>
-                            <div class="col-md-8 ">
-                                {{--<input type="text" class="form-control" name="description" placeholder="描述" value="">--}}
-                                <textarea class="form-control" name="description" rows="3" cols="100%"></textarea>
-                            </div>
-                        </div>
-                        {{--说明--}}
-                        <div class="form-group">
-                            <label class="control-label col-md-2">说明</label>
-                            <div class="col-md-8 control-label" style="text-align:left;">
-                                <span class="">正数为充值，负数为退款，退款金额不能超过资金余额。</span>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    </form>
-
-                    <div class="box-footer">
-                        <div class="row">
-                            <div class="col-md-8 col-md-offset-2">
-                                <button type="button" class="btn btn-success" id="item-recharge-submit"><i class="fa fa-check"></i> 提交</button>
-                                <button type="button" class="btn btn-default" id="item-recharge-cancel">取消</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END PORTLET-->
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 
@@ -257,7 +171,6 @@
                         d._token = $('meta[name="_token"]').attr('content');
                         d.username = $('input[name="username"]').val();
                         d.user_type = $('select[name="user_type"]').val();
-
                     },
                 },
                 "pagingType": "simple_numbers",
@@ -265,9 +178,9 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
-                        "width": "50px",
                         "title": "ID",
                         "data": "id",
+                        "width": "50px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
@@ -498,7 +411,7 @@
                     }
                     else
                     {
-                        $url = "{{ url('/item/order-list-for-all') }}";
+                        $url = "{{ url('/user/user-list') }}";
                         if(window.location.search) history.replaceState({page: 1}, "", $url);
                     }
 

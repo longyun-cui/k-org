@@ -119,13 +119,13 @@ class SuperAdminController extends Controller
         else if(request()->isMethod('post')) return $this->repo->get_user_list_datatable(request()->all());
     }
     // 【用户】返回-个人用户列表-视图
-    public function view_user_individual_list()
+    public function view_user_list_for_individual()
     {
         if(request()->isMethod('get')) return $this->repo->view_user_list_for_individual(request()->all());
         else if(request()->isMethod('post')) return $this->repo->get_user_list_for_individual_datatable(request()->all());
     }
     // 【用户】[组织]返回-列表-视图
-    public function view_user_org_list()
+    public function view_user_list_for_org()
     {
         if(request()->isMethod('get')) return $this->repo->view_user_list_for_org(request()->all());
         else if(request()->isMethod('post')) return $this->repo->get_user_list_for_org_datatable(request()->all());
@@ -235,35 +235,35 @@ class SuperAdminController extends Controller
         else if(request()->isMethod('post')) return $this->repo->get_item_item_datatable(request()->all());
     }
     // 【K】【内容】返回-全部内容-列表-视图
-    public function view_item_all_list()
+    public function view_item_list_for_all()
     {
-        if(request()->isMethod('get')) return $this->repo->view_item_all_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_item_all_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_item_list_for_all(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_item_list_for_all_datatable(request()->all());
     }
     // 【K】【内容】返回-列表-视图
-    public function view_item_article_list()
+    public function view_item_list_for_article()
     {
-        if(request()->isMethod('get')) return $this->repo->view_item_article_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_item_article_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_item_list_for_article(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_item_list_for_article_datatable(request()->all());
     }
     // 【K】【内容】返回-列表-视图
-    public function view_item_activity_list()
+    public function view_item_list_for_activity()
     {
-        if(request()->isMethod('get')) return $this->repo->view_item_activity_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_item_activity_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_item_list_for_activity(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_item_list_for_activity_datatable(request()->all());
     }
     // 【K】【内容】返回-列表-视图
-    public function view_item_advertising_list()
+    public function view_item_list_for_advertising()
     {
-        if(request()->isMethod('get')) return $this->repo->view_item_advertising_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_item_advertising_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_item_list_for_advertising(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_item_list_for_advertising_datatable(request()->all());
     }
 
     // 【K】【内容】返回-全部内容-列表-视图
-    public function view_item_my_list()
+    public function view_item_list_for_mine()
     {
-        if(request()->isMethod('get')) return $this->repo->view_item_my_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_item_my_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_item_list_for_mine(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_item_list_for_mine_datatable(request()->all());
     }
 
 

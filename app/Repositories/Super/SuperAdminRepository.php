@@ -308,23 +308,28 @@ class SuperAdminRepository {
     // 【K】【用户】【全部机构】返回-列表-视图
     public function view_user_list($post_data)
     {
-        // 类型1 数字型
-        if(!empty($post_data['product_type']))
-        {
-            if(is_numeric($post_data['product_type']) && $post_data['product_type'] > 0) $view_data['product_type'] = $post_data['product_type'];
-            else $view_data['product_type'] = -1;
-        }
-        else $view_data['product_type'] = -1;
+        $this->get_me();
+        $me = $this->me;
 
-        // 类型2 字符型
+        // 类型1 数字型
         $view_data['user_type'] = -1;
-        if(isset($post_data['user_type']))
+        if(!empty($post_data['user_type']))
         {
-            if(in_array($post_data['user_type'],config('k.common.super.user_type_only_key')))
+            if(is_numeric($post_data['user_type']) && $post_data['user_type'] > 0)
             {
                 $view_data['user_type'] = $post_data['user_type'];
             }
         }
+
+        // 类型2 字符型
+        $view_data['user_type'] = -1;
+//        if(isset($post_data['user_type']))
+//        {
+//            if(in_array($post_data['user_type'],config('k.common.super.user_type_only_key')))
+//            {
+//                $view_data['user_type'] = $post_data['user_type'];
+//            }
+//        }
 
         $view_data['menu_active_by_user_list'] = 'active menu-open';
         $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list';
@@ -333,7 +338,9 @@ class SuperAdminRepository {
     // 【K】【用户】【全部机构】返回-列表-数据
     public function get_user_list_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_User::select('*')->where(['user_category'=>1]);
 //            ->whereHas('fund', function ($query1) { $query1->where('totalfunds', '>=', 1000); } )
 //            ->with('ep','parent','fund')
@@ -388,6 +395,9 @@ class SuperAdminRepository {
     // 【K】【用户】【个人用户】返回-列表-视图
     public function view_user_list_for_individual($post_data)
     {
+        $this->get_me();
+        $me = $this->me;
+
         $view_data['menu_active_by_user_list_for_individual'] = 'active menu-open';
         $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-for-individual';
         return view($view_blade)->with($view_data);
@@ -395,7 +405,9 @@ class SuperAdminRepository {
     // 【K】【用户】【个人用户】返回-列表-数据
     public function get_user_list_for_individual_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_User::select('*')
             ->where(['active'=>1,'user_category'=>1,'user_type'=>1]);
 
@@ -434,6 +446,9 @@ class SuperAdminRepository {
     // 【K】【用户】【组织】返回-列表-视图
     public function view_user_list_for_org($post_data)
     {
+        $this->get_me();
+        $me = $this->me;
+
         $view_data['menu_active_by_user_list_for_org'] = 'active menu-open';
         $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-for-org';
         return view($view_blade)->with($view_data);
@@ -441,7 +456,9 @@ class SuperAdminRepository {
     // 【K】【用户】【组织】返回-列表-数据
     public function get_user_list_for_org_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_User::select('*')->where(['active'=>1,'user_category'=>1,'user_type'=>11]);
 
         if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
@@ -865,6 +882,10 @@ class SuperAdminRepository {
 
 
 
+
+
+
+
     // 【K】【内容】返回-列表-视图
     public function view_item_item_list($post_data)
     {
@@ -916,23 +937,55 @@ class SuperAdminRepository {
 
 
     // 【K】【内容】【全部】返回-列表-视图
-    public function view_item_all_list($post_data)
+    public function view_item_list_for_all($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-all-list')
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_all_list_active'=>'active'
-            ]);
+        $this->get_me();
+        $me = $this->me;
+
+        // 类型1 数字型
+        $view_data['item_type'] = -1;
+        if(!empty($post_data['item_type']))
+        {
+            if(is_numeric($post_data['item_type']) && $post_data['item_type'] > 0) $view_data['item_type'] = $post_data['item_type'];
+            else $view_data['item_type'] = -1;
+        }
+        else $view_data['item_type'] = -1;
+
+        // 类型2 字符型
+//        $view_data['item_type'] = -1;
+//        if(isset($post_data['item_type']))
+//        {
+//            if(in_array($post_data['item_type'],config('k.common.super.item_type_only_key')))
+//            {
+//                $view_data['item_type'] = $post_data['item_type'];
+//            }
+//        }
+
+        $view_data['menu_active_by_item_list_for_all'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-all';
+        return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【全部】返回-列表-数据
-    public function get_item_all_datatable($post_data)
+    public function get_item_list_for_all_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_Item::select('*')
             ->with('owner')
             ->where('owner_id','>=',1);
 
         if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
+
+
+        // 内容类型
+        if(isset($post_data['item_type']))
+        {
+            if(!in_array($post_data['item_type'],['-1','0']))
+            {
+                $query->where('item_type', $post_data['item_type']);
+            }
+        }
 
         $total = $query->count();
 
@@ -957,8 +1010,8 @@ class SuperAdminRepository {
 
         foreach ($list as $k => $v)
         {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
+//            $list[$k]->encode_id = encode($v->id);
+//            $list[$k]->description = replace_blank($v->description);
 
             if($v->owner_id == $me->id) $list[$k]->is_me = 1;
             else $list[$k]->is_me = 0;
@@ -969,18 +1022,21 @@ class SuperAdminRepository {
 
 
     // 【K】【内容】【文章】返回-列表-视图
-    public function view_item_article_list($post_data)
+    public function view_item_list_for_article($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-article-list')
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_article_list_active'=>'active'
-            ]);
+        $this->get_me();
+        $me = $this->me;
+
+        $view_data['menu_active_by_item_list_for_article'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-article';
+        return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【文章】返回-列表-数据
-    public function get_item_article_datatable($post_data)
+    public function get_item_list_for_article_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_Item::select('*')
             ->with('owner')
             ->where(['item_category'=>1,'item_type'=>1]);
@@ -1010,8 +1066,8 @@ class SuperAdminRepository {
 
         foreach ($list as $k => $v)
         {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
+//            $list[$k]->encode_id = encode($v->id);
+//            $list[$k]->description = replace_blank($v->description);
 
             if($v->owner_id == $me->id) $list[$k]->is_me = 1;
             else $list[$k]->is_me = 0;
@@ -1022,18 +1078,21 @@ class SuperAdminRepository {
 
 
     // 【K】【内容】【活动】返回-列表-视图
-    public function view_item_activity_list($post_data)
+    public function view_item_list_for_activity($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-activity-list')
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_activity_list_active'=>'active'
-            ]);
+        $this->get_me();
+        $me = $this->me;
+
+        $view_data['menu_active_by_item_list_for_activity'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-activity';
+        return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【活动】返回-列表-数据
-    public function get_item_activity_datatable($post_data)
+    public function get_item_list_for_activity_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_Item::select('*')
             ->with('owner')
             ->where(['item_category'=>1,'item_type'=>11]);
@@ -1063,8 +1122,8 @@ class SuperAdminRepository {
 
         foreach ($list as $k => $v)
         {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
+//            $list[$k]->encode_id = encode($v->id);
+//            $list[$k]->description = replace_blank($v->description);
 
             if($v->owner_id == $me->id) $list[$k]->is_me = 1;
             else $list[$k]->is_me = 0;
@@ -1075,18 +1134,21 @@ class SuperAdminRepository {
 
 
     // 【K】【内容】【广告】返回-列表-视图
-    public function view_item_advertising_list($post_data)
+    public function view_item_list_for_advertising($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-advertising-list')
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_advertising_list_active'=>'active'
-            ]);
+        $this->get_me();
+        $me = $this->me;
+
+        $view_data['menu_active_by_item_list_for_advertising'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-advertising';
+        return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【广告】返回-列表-数据
-    public function get_item_advertising_datatable($post_data)
+    public function get_item_list_for_advertising_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_Item::select('*')
             ->with('owner')
             ->where(['item_category'=>1,'item_type'=>88]);
@@ -1116,8 +1178,8 @@ class SuperAdminRepository {
 
         foreach ($list as $k => $v)
         {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
+//            $list[$k]->encode_id = encode($v->id);
+//            $list[$k]->description = replace_blank($v->description);
 
             if($v->owner_id == $me->id) $list[$k]->is_me = 1;
             else $list[$k]->is_me = 0;
@@ -1128,18 +1190,21 @@ class SuperAdminRepository {
 
 
     // 【K】【内容】【全部】返回-列表-视图
-    public function view_item_my_list($post_data)
+    public function view_item_list_for_mine($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-my-list')
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_my_list_active'=>'active'
-            ]);
+        $this->get_me();
+        $me = $this->me;
+
+        $view_data['menu_active_by_item_list_for_mine'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-mine';
+        return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【全部】返回-列表-数据
-    public function get_item_my_datatable($post_data)
+    public function get_item_list_for_mine_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
+
         $query = K_Item::select('*')
             ->with('owner')
             ->where('owner_id','=',1);
@@ -2025,6 +2090,11 @@ class SuperAdminRepository {
         }
 
     }
+
+
+
+
+
 
 
 

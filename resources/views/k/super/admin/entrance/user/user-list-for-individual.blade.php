@@ -246,7 +246,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/user/user-individual-list') }}",
+                    'url': "{{ url('/admin/user/user-list-for-individual') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
@@ -456,5 +456,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-script')
+@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-script')
 @endsection

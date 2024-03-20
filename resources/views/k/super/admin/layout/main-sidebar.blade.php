@@ -57,28 +57,28 @@
             {{--内容管理--}}
             <li class="header">内容管理</li>
 
-            <li class="treeview {{ $sidebar_item_all_list_active or '' }} ">
-                <a href="{{ url('/admin/item/item-all-list') }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_all or '' }} ">
+                <a href="{{ url('/admin/item/item-list-for-all') }}">
                     <i class="fa fa-file-text text-green"></i><span>全部内容</span>
                 </a>
             </li>
-            <li class="treeview {{ $sidebar_item_article_list_active or '' }}">
-                <a href="{{ url('/admin/item/item-article-list') }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_article or '' }}">
+                <a href="{{ url('/admin/item/item-list-for-article') }}">
                     <i class="fa fa-file-text text-green"></i><span>文章</span>
                 </a>
             </li>
-            <li class="treeview {{ $sidebar_item_activity_list_active or '' }}">
-                <a href="{{ url('/admin/item/item-activity-list') }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_activity or '' }}">
+                <a href="{{ url('/admin/item/item-list-for-activity') }}">
                     <i class="fa fa-file-text text-green"></i><span>活动</span>
                 </a>
             </li>
-            <li class="treeview {{ $sidebar_item_advertising_list_active or '' }}">
-                <a href="{{ url('/admin/item/item-advertising-list') }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_advertising or '' }}">
+                <a href="{{ url('/admin/item/item-list-for-advertising') }}">
                     <i class="fa fa-file-text text-green"></i><span>广告</span>
                 </a>
             </li>
-            <li class="treeview {{ $sidebar_item_my_list_active or '' }}">
-                <a href="{{ url('/admin/item/item-my-list') }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_mine or '' }}">
+                <a href="{{ url('/admin/item/item-list-for-mine') }}">
                     <i class="fa fa-file-text text-green"></i><span>我的</span>
                 </a>
             </li>
@@ -221,7 +221,7 @@
             <li class="header">平台</li>
 
             <li class="treeview">
-                <a href="{{ url('/') }}" target="_blank">
+                <a href="{{ url(env('DOMAIN_WWW')) }}" target="_blank">
                     <i class="fa fa-cube text-default"></i> <span>平台首页</span>
                 </a>
             </li>
@@ -239,7 +239,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="treeview">
-                        <a href="{{ url('/') }}" target="_blank">
+                        <a href="{{ url(env('DOMAIN_WWW')) }}" target="_blank">
                             <i class="fa fa-cube text-default"></i> <span>平台首页</span>
                         </a>
                     </li>

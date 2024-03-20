@@ -1,11 +1,11 @@
 @extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
 
 
-@section('head_title','【A】全部内容')
+@section('head_title','全部内容')
 
 
 @section('header','')
-@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
+@section('description','SUPER - 朝鲜族组织活动平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>
@@ -40,6 +40,13 @@
 
                         <input type="text" class="form-control form-filter item-search-keyup" name="title" placeholder="标题" />
 
+                        <select class="form-control form-filter" name="item_type" style="width:96px;">
+                            <option value="-1">全部</option>
+                            <option value="1" @if($item_type == 1) selected="selected" @endif>文章</option>
+                            <option value="11" @if($item_type == 11) selected="selected" @endif>活动</option>
+                            <option value="88" @if($item_type == 88) selected="selected" @endif>广告</option>
+                        </select>
+
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
                             <i class="fa fa-search"></i> 搜索
                         </button>
@@ -53,19 +60,6 @@
                 <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
-                            <th>ID</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -193,22 +187,14 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/item/item-all-list') }}",
+                    'url': "{{ url('/admin/item/item-list-for-all') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
                         d._token = $('meta[name="_token"]').attr('content');
+                        d.title = $('input[name="title"]').val();
                         d.keyword = $('input[name="keyword"]').val();
-                        d.website = $('input[name="website"]').val();
-//                        d.nickname 	= $('input[name="nickname"]').val();
-//                        d.certificate_type_id = $('select[name="certificate_type_id"]').val();
-//                        d.certificate_state = $('select[name="certificate_state"]').val();
-//                        d.admin_name = $('input[name="admin_name"]').val();
-//
-//                        d.created_at_from = $('input[name="created_at_from"]').val();
-//                        d.created_at_to = $('input[name="created_at_to"]').val();
-//                        d.updated_at_from = $('input[name="updated_at_from"]').val();
-//                        d.updated_at_to = $('input[name="updated_at_to"]').val();
+                        d.item_type = $('select[name="item_type"]').val();
 
                     },
                 },
@@ -233,39 +219,19 @@
                         'orderable': false
                     },
                     {
-                        "className": "font-12px",
-                        "width": "48px",
                         "title": "ID",
                         "data": "id",
+                        "className": "",
+                        "width": "50px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "",
-                        "title": "标题",
-                        "data": "title",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
-                        }
-                    },
-                    {
-                        "className": "text-left",
-                        "width": "160px",
-                        "title": "发布者",
-                        "data": "owner_id",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            return row.owner == null ? '未知' : '<a target="_blank" href="/user/'+row.owner.id+'">'+row.owner.username+'</a>';
-                        }
-                    },
-                    {
-                        "width": "48px",
                         "title": "类型",
                         "data": "item_type",
+                        "width": "48px",
                         'orderable': false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
@@ -277,28 +243,48 @@
                         }
                     },
                     {
-                        "width": "40px",
+                        "title": "标题",
+                        "data": "title",
+                        "className": "",
+                        "width": "",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
+                        }
+                    },
+                    {
+                        "title": "发布者",
+                        "data": "owner_id",
+                        "className": "",
+                        "width": "100px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return row.owner == null ? '未知' : '<a target="_blank" href="/user/'+row.owner.id+'">'+row.owner.username+'</a>';
+                        }
+                    },
+                    {
                         "title": "浏览",
                         "data": "visit_num",
+                        "width": "40px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "width": "40px",
                         "title": "分享",
                         "data": "share_num",
+                        "width": "40px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "className": "font-12px",
-                        "width": "112px",
                         "title": "创建时间",
                         "data": 'created_at',
+                        "className": "",
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -316,10 +302,10 @@
                         }
                     },
                     {
-                        "className": "font-12px",
-                        "width": "112px",
                         "title": "修改时间",
                         "data": 'updated_at',
+                        "className": "",
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -337,10 +323,10 @@
                         }
                     },
                     {
-                        "className": "font-12px",
-                        "width": "112px",
                         "title": "发布时间",
                         "data": 'published_at',
+                        "className": "",
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -358,9 +344,9 @@
                         }
                     },
                     {
-                        "width": "64px",
                         "title": "状态",
                         "data": "active",
+                        "width": "8px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -395,9 +381,9 @@
                         }
                     },
                     {
-                        "width": "288px",
                         "title": "操作",
                         "data": 'id',
+                        "width": "280px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
 
@@ -442,45 +428,30 @@
                         cell.innerHTML =  startIndex + i + 1;
                     });
 
-                    ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
-                    $("a.verify").click(function(event){
-                        event.preventDefault();
-                        var node = $(this);
-                        var tr = node.closest('tr');
-                        var nickname = tr.find('span.nickname').text();
-                        var cert_name = tr.find('span.certificate_type_name').text();
-                        var action = node.attr('data-action');
-                        var certificate_id = node.attr('data-id');
-                        var action_name = node.text();
+                    var $obj = new Object();
+                    if($('input[name="item-id"]').val())  $obj.item_id = $('input[name="item-id"]').val();
+                    if($('input[name="title"]').val())  $obj.title = $('input[name="title"]').val();
+                    if($('input[name="keyword"]').val())  $obj.keyword = $('input[name="keyword"]').val();
+                    if($('select[name="item_type"]').val() != "-1")  $obj.item_type = $('select[name="item_type"]').val();
 
-                        var tpl = "{{trans('labels.crc.verify_user_certificate_tpl')}}";
-                        layer.open({
-                            'title': '警告',
-                            content: tpl
-                                .replace('@action_name', action_name)
-                                .replace('@nickname', nickname)
-                                .replace('@certificate_type_name', cert_name),
-                            btn: ['Yes', 'No'],
-                            yes: function(index) {
-                                layer.close(index);
-                                $.post(
-                                    '/admin/medsci/certificate/user/verify',
-                                    {
-                                        action: action,
-                                        id: certificate_id,
-                                        _token: '{{csrf_token()}}'
-                                    },
-                                    function(json){
-                                        if(json['response_code'] == 'success') {
-                                            layer.msg('操作成功!', {time: 3500});
-                                            ajax_datatable.ajax.reload();
-                                        } else {
-                                            layer.alert(json['response_data'], {time: 10000});
-                                        }
-                                    }, 'json');
-                            }
-                        });
-                    });
+                    var $page_length = this.api().context[0]._iDisplayLength; // 当前每页显示多少
+                    if($page_length != 20) $obj.length = $page_length;
+                    var $page_start = this.api().context[0]._iDisplayStart; // 当前页开始
+                    var $pagination = ($page_start / $page_length) + 1; //得到页数值 比页码小1
+                    if($pagination > 1) $obj.page = $pagination;
+
+
+                    if(JSON.stringify($obj) != "{}")
+                    {
+                        var $url = url_build('',$obj);
+                        history.replaceState({page: 1}, "", $url);
+                    }
+                    else
+                    {
+                        $url = "{{ url('/item/order-list-for-all') }}";
+                        if(window.location.search) history.replaceState({page: 1}, "", $url);
+                    }
+
                 },
                 "language": { url: '/common/dataTableI18n' },
             });
@@ -509,5 +480,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-script')
+@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-script')
 @endsection
