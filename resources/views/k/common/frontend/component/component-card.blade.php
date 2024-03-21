@@ -264,7 +264,7 @@
                             <i class="fa fa-edit"></i>
                             <span class="">编辑名片</span>
                         </a>
-                        <a href="{{ url('/mine/my-profile-intro-edit') }}" class="btn btn-block btn-sm btn-primary" data-user-id="{{ $data->id }}">
+                        <a href="{{ url('/mine/my-profile-intro-edit') }}" class="btn btn-block btn-sm btn-primary _none" data-user-id="{{ $data->id }}">
                             <i class="fa fa-edit"></i>
                             <span class="">编辑介绍</span>
                         </a>
