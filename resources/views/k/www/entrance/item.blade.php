@@ -34,8 +34,8 @@
 
     {{--右侧-作者-用户名片--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right">
-        {{--@include(env('TEMPLATE_K_WWW').'component.right-side.right-user', ['data'=>$item->owner])--}}
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-user', ['data'=>$user])
+        {{--@include(env('TEMPLATE_K_WWW').'component.component-user', ['data'=>$item->owner])--}}
+        @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-user', ['data'=>$user])
     </div>
 
 
@@ -47,14 +47,14 @@
                 {{--<strong>Ta的贴片广告</strong>--}}
             {{--</div>--}}
         {{--@endif--}}
-        @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-ad-paste', ['item'=>$user->ad])
+        @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-ad-paste', ['item'=>$user->ad])
 
         @if(count($user->pivot_sponsor_list))
         <div class="item-row margin-top-16px margin-bottom-2px pull-right">
             <strong>Ta的赞助商</strong>
         </div>
         @endif
-        @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-sponsor', ['sponsor_list'=>$user->pivot_sponsor_list])
+        @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-sponsor', ['sponsor_list'=>$user->pivot_sponsor_list])
 
     </div>
 

@@ -17,7 +17,7 @@ use App\Repositories\Common\CommonRepository;
 use Response, Auth, Validator, DB, Exception, Blade;
 use QrCode;
 
-class IndexRepository {
+class WWWIndexRepository {
 
     private $evn;
     private $auth_check;
@@ -65,7 +65,7 @@ class IndexRepository {
     }
 
     // 【K】【平台首页】
-    public function view_root($post_data)
+    public function view_index($post_data)
     {
         $this->get_me();
 
@@ -223,7 +223,7 @@ class IndexRepository {
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_K_WWW').'entrance.root-1')->with($return);
 //        else return view('entrance.root')->with($return);
-        else return view(env('TEMPLATE_K_WWW').'entrance.root')->with($return);
+        else return view(env('TEMPLATE_K_WWW').'entrance.index')->with($return);
     }
 
     // 【K】【平台介绍】
@@ -678,6 +678,14 @@ class IndexRepository {
 
             }
             else throw new Exception("update--user--fail");
+
+            $ext = K_UserExt::where('user_id',$me->id)->first();
+            $mine_data = $post_data;
+            $bool = $ext->fill($mine_data)->save();
+            if($bool)
+            {
+            }
+            else throw new Exception("update--ext--fail");
 
             DB::commit();
             return response_success(['id'=>$me->id]);

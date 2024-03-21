@@ -21,7 +21,7 @@
     <div class="main-body-section main-body-left-section section-wrapper page-root">
         <div class="container-box pull-left margin-bottom-4px">
 
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.left-side.left-card', ['data'=>$data])
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-card', ['data'=>$data])
 
             {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:4px;background:#fff;">--}}
             {{--<i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->name or '' }}</b>--}}
@@ -70,9 +70,9 @@
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
         @if($auth_check)
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-me')
         @else
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-root')
         @endif
 
     </div>

@@ -35,7 +35,7 @@ Route::group([], function () {
 
 
 
-    $controller = "IndexController";
+    $controller = "WWWIndexController";
 
     Route::match(['get', 'post'],'login-link', $controller."@login_link");
 
@@ -78,10 +78,10 @@ Route::group([], function () {
 
     Route::group(['middleware' => ['wx.share','notification']], function () {
 
-        $controller = "IndexController";
+        $controller = "WWWIndexController";
 
-        Route::get('/', $controller.'@view_root');
-        Route::get('/root-1', $controller.'@view_root');
+        Route::get('/', $controller.'@view_index');
+        Route::get('/root-1', $controller.'@view_index');
 
         Route::get('/introduction', $controller.'@view_introduction');
 
@@ -111,7 +111,7 @@ Route::group([], function () {
 
         Route::group(['middleware' => ['login.turn']], function () {
 
-            $controller = "IndexController";
+            $controller = "WWWIndexController";
 
             Route::get('/org-register', $controller.'@operate_org_register');
 
@@ -120,7 +120,7 @@ Route::group([], function () {
 
             Route::group(['middleware' => 'notification'], function () {
 
-                $controller = "IndexController";
+                $controller = "WWWIndexController";
 
                 Route::get('/home/mine/original', $controller.'@view_home_mine_original');
 
@@ -189,7 +189,7 @@ Route::group([], function () {
 
     Route::group(['middleware' => ['login']], function () {
 
-        $controller = "IndexController";
+        $controller = "WWWIndexController";
 
 
         // 获取日程

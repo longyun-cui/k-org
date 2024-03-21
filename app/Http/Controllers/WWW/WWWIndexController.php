@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Repositories\WWW\IndexRepository;
+use App\Repositories\WWW\WWWIndexRepository;
 
 
-class IndexController extends Controller
+class WWWIndexController extends Controller
 {
     //
     private $repo;
     public function __construct()
     {
-        $this->repo = new IndexRepository;
+        $this->repo = new WWWIndexRepository;
     }
 
 
@@ -36,9 +36,9 @@ class IndexController extends Controller
 
 
     // 【首页】
-    public function view_root()
+    public function view_index()
     {
-        return $this->repo->view_root(request()->all());
+        return $this->repo->view_index(request()->all());
     }
 
     // 【首页-标签】

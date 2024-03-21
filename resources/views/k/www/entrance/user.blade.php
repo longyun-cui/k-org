@@ -35,10 +35,10 @@
 <div class="container">
 
     {{--右侧-用户名片--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right _none">
+    <div class="main-body-section main-body-right-section section-wrapper pull-right _none-">
 
-        @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-user', ['data'=>$data])
-        {{--@include(env('TEMPLATE_K_COMMON_FRONT').'component.right-user-menu', ['data'=>$data])--}}
+        @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-user', ['data'=>$data])
+        {{--@include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-user', ['data'=>$data])--}}
 
     </div>
 
@@ -46,7 +46,7 @@
     <div class="main-body-section main-body-left-section section-wrapper page-root">
         <div class="container-box pull-left margin-bottom-4px">
 
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.left-side.left-card', ['data'=>$data])
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-card', ['data'=>$data])
 
             {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:4px;background:#fff;">--}}
             {{--<i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->name or '' }}</b>--}}
@@ -212,14 +212,14 @@
                 <div class="item-row margin-top-8px pull-right _none">
                     <strong>广告</strong>
                 </div>
-                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-ad-paste', ['item'=>$data->ad])
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.ad-paste', ['item'=>$data->ad])
             @endif
 
             @if(count($data->pivot_sponsor_list))
                 <div class="item-row margin-top-8px pull-right _none">
                     <strong>我的赞助商</strong>
                 </div>
-                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])
             @endif
 
         @endif
@@ -233,7 +233,7 @@
                 <div class="item-row margin-top-8px pull-right _none">
                     {{--<strong>赞助的组织</strong>--}}
                 </div>
-                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-org', ['org_list'=>$data->pivot_org_list])
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-org', ['org_list'=>$data->pivot_org_list])
             @endif
 
             {{--我的广告--}}
@@ -241,7 +241,7 @@
                 <div class="item-row margin-top-8px pull-right _none">
                     <strong>广告</strong>
                 </div>
-                @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
             @endif
 
         @endif

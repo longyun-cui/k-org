@@ -12,13 +12,13 @@
         </div>
 
         {{--头像--}}
-        <div class="widget-user-image">
-            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" class="img-circle" alt="User Image">
+        <div class="widget-user-image" style="border-radius:50%;">
+            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" class="img-circle" alt="User Image" style="border-radius:50%;">
         </div>
 
 
         {{--主要信息--}}
-        <div class="margin-bottom-12px">
+        <div class="margin-top-8px margin-bottom-12px">
 
             {{--姓名--}}
             <h3 class="profile-username text-center">
@@ -32,12 +32,17 @@
             {{--辅助信息--}}
             {{--公司--}}
             @if(!empty($data->company))
-                <p class="text-muted text-center"><b>{{ $data->company or '暂无' }}</b></p>
+                <p class="text-muted text-center">
+                    <b>{{ $data->company or '暂无' }}</b>
+                    @if(!empty($data->position))
+                    - <b>{{ $data->position or '暂无' }}</b>
+                    @endif
+                </p>
             @endif
             {{--职位--}}
-            @if(!empty($data->position))
-                <p class="text-muted text-center"><b>{{ $data->position or '暂无' }}</b></p>
-            @endif
+{{--            @if(!empty($data->position))--}}
+{{--                <p class="text-muted text-center"><b>{{ $data->position or '暂无' }}</b></p>--}}
+{{--            @endif--}}
             {{--商业说明--}}
             @if(!empty($data->description))
                 <p class="text-muted text-center margin-bottom-4px">
@@ -184,6 +189,37 @@
                         <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
                     </li>
                 @endif
+
+                    {{--联系人姓名--}}
+                    @if(!empty($data->linkman_name))
+                        <li class="list-group-item">
+                            <i class="fa fa-user text-primary"></i>
+                            <span class="text-muted">{{ $data->linkman_name or '暂无' }}</span>
+                        </li>
+                    @endif
+                    {{--联系人电话--}}
+                    @if(!empty($data->linkman_phone))
+                        <li class="list-group-item">
+                            <i class="fa fa-phone text-primary"></i>
+                            <span class="text-muted">
+                        <a href="tel:{{ $data->linkman_phone or '' }}">
+                            <strong>{{ $data->linkman_phone or '暂无' }}</strong>
+                        </a>
+                    </span>
+                        </li>
+                    @endif
+                    {{--联系人微信--}}
+                    @if(!empty($data->linkman_wechat_id))
+                        <li class="list-group-item">
+                            <i class="fa fa-weixin text-primary"></i>
+                            <span class="text-muted">{{ $data->linkman_wechat_id or '暂无' }}</span>
+                            @if(!empty($data->linkman_wechat_qr_code_img))
+                                <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wechat_qr_code_img) }}">
+                                    <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
+                                </a>
+                            @endif
+                        </li>
+                    @endif
                 {{--<li class="list-group-item">--}}
                     {{--<b>Followers</b> <a class="pull-right">1,322</a>--}}
                 {{--</li>--}}

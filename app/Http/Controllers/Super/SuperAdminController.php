@@ -140,29 +140,28 @@ class SuperAdminController extends Controller
         $user_id = request()->get('id');
         $user = K_User::where('id',$user_id)->first();
 
+        if($user->user_type == 11) Auth::guard('org')->login($user,true);
+        else if($user->user_type == 88) Auth::guard('sponsor')->login($user,true);
+        else Auth::guard('user')->login($user,true);
 
-        if($user->user_type == 11)
+        if(request()->isMethod('get'))
         {
-            Auth::guard('org')->login($user,true);
-//            return redirect(env('DOMAIN_ORG'));
+            if($user_id == 10000)
+            {
+                return redirect('/org');
+            }
+
+            if($user->user_type == 11) return redirect(env('DOMAIN_ORG'));
+            else if($user->user_type == 88) return redirect(env('DOMAIN_ORG'));
+            else return redirect(env('DOMAIN_WWW'));
+
         }
-        else if($user->user_type == 88)
+        else if (request()->isMethod('post'))
         {
-            Auth::guard('sponsor')->login($user,true);
-        }
-        else
-        {
-            Auth::login($user,true);
-            return redirect(env('DOMAIN_WWW'));
+            $return['user'] = $user;
+            return response_success($return);
         }
 
-        if(request()->isMethod('get') && $user_id == 10000)
-        {
-            return redirect('/org');
-        }
-
-        $return['user'] = $user;
-        return response_success($return);
     }
     // 【用户】登录-组织
     public function operate_user_login_for_org()
@@ -171,15 +170,6 @@ class SuperAdminController extends Controller
         $org = K_User::where('id',$org_id)->first();
         Auth::login($org,true);
         Auth::guard('org')->login($org,true);
-        return response_success();
-    }
-    // 【用户】登录-赞助商
-    public function operate_user_sponsor_login()
-    {
-        $sponsor_id = request()->get('id');
-        $sponsor = K_User::where('id',$sponsor_id)->first();
-        Auth::login($sponsor_id,true);
-        Auth::guard('sponsor')->login($sponsor,true);
         return response_success();
     }
 

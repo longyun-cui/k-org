@@ -29,10 +29,10 @@
 
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li class="{{ $menu_active_for_root or '' }}"><a href="/" data-toggle="tab-">首页</a></li>
-                <li class="{{ $menu_active_for_activity or '' }}"><a href="/?type=activity" data-toggle="tab-">只看活动</a></li>
-                <li class="{{ $menu_active_for_my_focus or '' }}"><a href="/?type=my-focus" data-toggle="tab-">我的关注</a></li>
-                <li class="{{ $menu_active_for_organization_list or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>
+{{--                <li class="{{ $menu_active_for_root or '' }}"><a href="/" data-toggle="tab-">首页</a></li>--}}
+{{--                <li class="{{ $menu_active_for_activity or '' }}"><a href="/?type=activity" data-toggle="tab-">只看活动</a></li>--}}
+{{--                <li class="{{ $menu_active_for_my_focus or '' }}"><a href="/?type=my-focus" data-toggle="tab-">我的关注</a></li>--}}
+{{--                <li class="{{ $menu_active_for_organization_list or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>--}}
             </ul>
             <div class="tab-content" style="width:100%; padding:10px 0;float:left;">
                 <div class="active tab-pane" id="all">
@@ -51,11 +51,11 @@
 
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
-        @if($auth_check)
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
-        @else
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
-        @endif
+{{--        @if($auth_check)--}}
+{{--            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-me')--}}
+{{--        @else--}}
+{{--            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-root')--}}
+{{--        @endif--}}
 
     </div>
 

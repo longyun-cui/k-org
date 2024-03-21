@@ -258,14 +258,14 @@
                     _token: $('meta[name="_token"]').attr('content'),
                     id:that.attr('data-id')
                 },
-                function(data){
+                function(data) {
                     if(!data.success) layer.msg(data.msg);
                     else
                     {
                         console.log(data);
 //                        window.open('/');
                         var temp_window=window.open();
-                        if(data.data.user.user_type == 1) temp_window.location="{{ env('DOMAIN_ORG') }}";
+                        if(data.data.user.user_type == 1) temp_window.location="{{ env('DOMAIN_WWW') }}";
                         else if(data.data.user.user_type == 11) temp_window.location="{{ env('DOMAIN_ORG') }}";
                         else if(data.data.user.user_type == 88) temp_window.location="{{ env('DOMAIN_ORG') }}";
 

@@ -72,7 +72,8 @@
                         <div class="form-group">
                             <label class="control-label- col-md-2">商业描述</label>
                             <div class="col-md-12 ">
-                                <textarea class="form-control" name="business_description" rows="3" cols="" placeholder="商业描述">{{ $data->business_description or '' }}</textarea>
+{{--                                <textarea class="form-control" name="business_description" rows="3" cols="" placeholder="商业描述">{{ $data->business_description or '' }}</textarea>--}}
+                                <input type="text" class="form-control" name="business_description" placeholder="商业描述" value="{{ $data->business_description or '' }}">
                             </div>
                         </div>
                         {{--地址--}}
@@ -90,19 +91,19 @@
                             </div>
                         </div>
                         {{--邮箱--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">联系邮箱</label>
-                            <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="email" placeholder="邮箱" value="{{ $data->email or '' }}">
-                            </div>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label class="control-label- col-md-2">联系邮箱</label>--}}
+{{--                            <div class="col-md-12 ">--}}
+{{--                                <input type="text" class="form-control" name="email" placeholder="邮箱" value="{{ $data->email or '' }}">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         {{--QQ--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">QQ</label>
-                            <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="QQ_number" placeholder="QQ" value="{{ $data->QQ_number or '' }}">
-                            </div>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label class="control-label- col-md-2">QQ</label>--}}
+{{--                            <div class="col-md-12 ">--}}
+{{--                                <input type="text" class="form-control" name="QQ_number" placeholder="QQ" value="{{ $data->QQ_number or '' }}">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         {{--微信号--}}
                         <div class="form-group">
                             <label class="control-label- col-md-2">微信号</label>
@@ -139,19 +140,19 @@
                             </div>
                         </div>
                         {{--微博名称--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">微博名称</label>
-                            <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="wb_name" placeholder="微博名称" value="{{ $data->weibo_name or '' }}">
-                            </div>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label class="control-label- col-md-2">微博名称</label>--}}
+{{--                            <div class="col-md-12 ">--}}
+{{--                                <input type="text" class="form-control" name="wb_name" placeholder="微博名称" value="{{ $data->weibo_name or '' }}">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         {{--微博地址--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">微博地址</label>
-                            <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="wb_address" placeholder="微博地址，请携带http或https" value="{{ $data->weibo_address or '' }}">
-                            </div>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <label class="control-label- col-md-2">微博地址</label>--}}
+{{--                            <div class="col-md-12 ">--}}
+{{--                                <input type="text" class="form-control" name="wb_address" placeholder="微博地址，请携带http或https" value="{{ $data->weibo_address or '' }}">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         {{--网站--}}
                         <div class="form-group">
                             <label class="control-label- col-md-2">网站</label>
@@ -160,11 +161,30 @@
                             </div>
                         </div>
                         {{--描述--}}
-                        <div class="form-group _none">
-                            <label class="control-label- col-md-2">描述</label>
+                        <div class="form-group">
+                            <label class="control-label- col-md-2">个人签名</label>
                             <div class="col-md-12 ">
-                                {{--<input type="text" class="form-control" name="description" placeholder="描述" value="{{ $data->description or '' }}">--}}
-                                <textarea class="form-control" name="description" rows="3" cols="" placeholder="描述">{{ $data->description or '' }}</textarea>
+                                <input type="text" class="form-control" name="description" placeholder="个人签名" value="{{ $data->description or '' }}">
+{{--                                <textarea class="form-control" name="description" rows="3" cols="" placeholder="个人签名">{{ $data->description or '' }}</textarea>--}}
+                            </div>
+                        </div>
+
+                        {{--图文介绍--}}
+                        <div class="form-group">
+                            <label class="control-label- col-md-3">图文介绍</label>
+                            <div class="col-md-12 ">
+                                <div>
+                                @include('UEditor::head')
+                                <!-- 加载编辑器的容器 -->
+                                    <script id="container" name="content" type="text/plain">{!! $data->ext->content or '' !!}</script>
+                                    <!-- 实例化编辑器 -->
+                                    <script type="text/javascript">
+                                        var ue = UE.getEditor('container');
+                                        ue.ready(function() {
+                                            ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');  // 此处为支持laravel5 csrf ,根据实际情况修改,目的就是设置 _token 值.
+                                        });
+                                    </script>
+                                </div>
                             </div>
                         </div>
 
@@ -216,9 +236,9 @@
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
         @if($auth_check)
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-me')
         @else
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
+            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-root')
         @endif
 
     </div>
@@ -253,7 +273,8 @@
                     {
                         layer.msg(data.msg);
 //                        location.href = "/my-info/index";
-                        location.href = "/mine/my-card-index";
+//                         location.href = "/mine/my-card-index";
+                        location.href = "/user/{{ $me->id }}";
                     }
                 }
             };
