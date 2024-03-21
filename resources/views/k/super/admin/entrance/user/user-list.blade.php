@@ -206,7 +206,7 @@
                         "width": "",
                         "orderable": false,
                         render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/user/'+data+'">'+row.username+'</a>';
+                            return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+data+'">'+row.username+'</a>';
                         }
                     },
                     {

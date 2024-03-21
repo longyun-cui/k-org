@@ -70,9 +70,9 @@ $(function() {
 
         if($(document).scrollTop() > 60)
         {
-            console.log('$(window).height() = ' + $(window).height());
-            console.log('$(document).height() = ' + $(document).height());
-            console.log($('.fixed-to-top').height());
+            // console.log('$(window).height() = ' + $(window).height());
+            // console.log('$(document).height() = ' + $(document).height());
+            // console.log($('.fixed-to-top').height());
             $('.fixed-to-top').height();
             $(".fixed-to-top").addClass('fixed');
         }
@@ -87,8 +87,8 @@ $(function() {
             // console.log("滚动条已经到达底部为" + $(document).scrollTop());
         }
 
-        console.log('$(document).scrollTop() = ' + $(document).scrollTop());
-        console.log('$("#content-container").scrollTop() = ' + $('#content-container').scrollTop());
+        // console.log('$(document).scrollTop() = ' + $(document).scrollTop());
+        // console.log('$("#content-container").scrollTop() = ' + $('#content-container').scrollTop());
     });
 
 

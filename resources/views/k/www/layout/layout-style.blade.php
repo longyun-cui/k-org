@@ -1,5 +1,17 @@
 <style>
 
+    article.readmore-content + a {
+        position: relative;
+        float:left;
+        width:80px;
+        padding:8px 8px 4px;
+        margin-top:-40px;
+        margin-left:calc(50% - 40px);
+        text-align:center;
+        border-right:4px;
+        background:#eee;
+    }
+
     .main-header i {
         width:16px;
         vertical-align:middle;

@@ -7,6 +7,14 @@
 //            lessLink: '<a href="#">收起</a>'
 //        });
 
+        $('.readmore-content').readmore({
+            speed: 500,
+            lessLink: '<a href="#">收起</a>',
+            moreLink: '<a href="#">展开更多</a>',
+            collapsedHeight: 240,
+            embedCSS: false
+        });
+
         $('.lightcase-image').lightcase({
             maxWidth: 9999,
             maxHeight: 9999
@@ -23,7 +31,7 @@
                 }
             })
         };
-//        setInterval(lazy_load,1000);
+       setInterval(lazy_load,1000);
 
     });
 </script>

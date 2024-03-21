@@ -37,7 +37,7 @@
     {{--右侧-用户名片--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right _none-">
 
-        @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-user', ['data'=>$data])
+{{--        @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-user', ['data'=>$data])--}}
         {{--@include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-user', ['data'=>$data])--}}
 
     </div>
@@ -52,11 +52,11 @@
             {{--<i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->name or '' }}</b>--}}
             {{--</div>--}}
 
-            <div class="box-body visible-xs visible-sm" style="margin-bottom:16px;background:#fff;">
-                <div class="margin">访问：{{ $data->visit_num or 0 }}</div>
-                <div class="margin">文章：{{ $data->article_count or 0 }}</div>
-                <div class="margin">活动：{{ $data->activity_count or 0 }}</div>
-            </div>
+{{--            <div class="box-body visible-xs visible-sm" style="margin-bottom:16px;background:#fff;">--}}
+{{--                <div class="margin">访问：{{ $data->visit_num or 0 }}</div>--}}
+{{--                <div class="margin">文章：{{ $data->article_count or 0 }}</div>--}}
+{{--                <div class="margin">活动：{{ $data->activity_count or 0 }}</div>--}}
+{{--            </div>--}}
 
 
             @if(!in_array(request('type'),['org','introduction']))
@@ -78,7 +78,7 @@
                             @if(!empty($data->introduction->content))
                                 {!! $data->introduction->content or '' !!}
                             @else
-                                <small>暂无简介</small>
+                                <small>暂无简介3</small>
                             @endif
                         </div>
                     </div>
@@ -112,6 +112,7 @@
                 {{--<strong>Ta的内容</strong>--}}
             {{--</div>--}}
 
+            @if(!empty($item_list) && count($item_list))
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs _none">
                     <li class="{{ $menu_active_for_item_all or '' }}">
@@ -144,6 +145,7 @@
                     {{--<div class="tab-pane" id="timeline">--}}
                     {{--</div>--}}
 
+                    @if(!empty($data->ext->content) || !empty($data->ext->description))
                     <div class="active tab-pane" id="introduction">
                         @if(request('type') == 'introduction')
                             <div class="item-piece item-option item-wrapper">
@@ -173,12 +175,12 @@
                                         {{--@if(!empty($data->introduction->content))--}}
                                             {{--{!! $data->introduction->content or '' !!}--}}
                                         {{--@else--}}
-                                            {{--<small>暂无介绍</small>--}}
+                                            {{--<small>暂无介绍2</small>--}}
                                         {{--@endif--}}
                                         @if(!empty($data->ext->content))
                                             {!! $data->ext->content or '' !!}
                                         @else
-                                            <small>暂无介绍</small>
+                                            <small>暂无介绍1</small>
                                         @endif
                                     </div>
 
@@ -186,8 +188,11 @@
                             </div>
                         @endif
                     </div>
+                    @endif
+
                 </div>
             </div>
+            @endif
 
         @endif
 
@@ -212,7 +217,7 @@
                 <div class="item-row margin-top-8px pull-right _none">
                     <strong>广告</strong>
                 </div>
-                @include(env('TEMPLATE_K_COMMON_FRONT').'component.ad-paste', ['item'=>$data->ad])
+                @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-ad-paste', ['item'=>$data->ad])
             @endif
 
             @if(count($data->pivot_sponsor_list))
@@ -264,5 +269,7 @@
 
 @section('custom-script')
 <script>
+    $(function() {
+    });
 </script>
 @endsection

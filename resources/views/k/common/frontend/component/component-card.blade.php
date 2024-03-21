@@ -401,8 +401,8 @@
 </div>
 
 
-{{--@if(!empty($data->ext->content))--}}
-<div class="item-piece item-option margin-top-4px- padding-16px">
+@if(!empty($data->ext->content) || !empty($data->ext->description))
+<article class="readmore-content item-piece item-option margin-top-4px- padding-16px">
     <div class="">
 
         <div class="item-row margin-bottom-4px text-center _none">
@@ -428,8 +428,9 @@
         @endif
 
     </div>
-</div>
-{{--@endif--}}
+</article>
+{{--<a href="#" class="readmore-js-toggle">Read More</a>--}}
+@endif
 
 
 <style>

@@ -153,17 +153,17 @@
                             <!-- Menu Body -->
                             <li class="user-body ">
                                 <div class="row">
-                                    <div class="col-xs-4 text-center">
+                                    <div class="col-xs-4 text-center _none">
                                         <a href="{{ url('/user/'.$me->id) }}">
                                             <i class="fa fa-home text-red"></i> 主页
                                         </a>
                                     </div>
-                                    <div class="col-xs-4 text-center">
+                                    <div class="col-xs-6 text-center">
                                         <a href="{{ url('/my-follow') }}">
                                             <i class="fa fa-user text-red"></i> 关注
                                         </a>
                                     </div>
-                                    <div class="col-xs-4 text-center">
+                                    <div class="col-xs-6 text-center">
                                         <a href="{{ url('/my-fans') }}">
                                             <i class="fa fa-user text-red"></i> 粉丝
                                         </a>
@@ -172,17 +172,17 @@
                             </li>
                             <li class="user-body ">
                                 <div class="row">
-                                    <div class="col-xs-4 text-center">
+                                    <div class="col-xs-4 text-center _none">
                                         <a href="{{ url('/user/'.$me->id) }}">
                                             <i class="fa fa-home text-red"></i> 主页
                                         </a>
                                     </div>
-                                    <div class="col-xs-4 text-center">
+                                    <div class="col-xs-6 text-center">
                                         <a href="{{ url('/my-favor') }}">
                                             <i class="fa fa-heart text-red"></i> 点赞
                                         </a>
                                     </div>
-                                    <div class="col-xs-4 text-center">
+                                    <div class="col-xs-6 text-center">
                                         <a href="{{ url('/my-collection') }}">
                                             <i class="fa fa-star text-red"></i> 收藏
                                         </a>
@@ -190,7 +190,7 @@
                                 </div>
                             </li>
                             {{--个人资料 & 我的介绍--}}
-                            <li class="user-footer _none-">
+                            <li class="user-footer _none">
                                 <div class="pull-left">
                                     <a href="{{ url('/mine/my-profile-info-index') }}" class="btn btn-default btn-flat">
                                         <i class="fa fa-info"></i>
@@ -207,7 +207,7 @@
                             {{--退出--}}
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ url('/user/'.$me->id) }}" target="_blank" class="btn btn-default btn-flat">
+                                    <a href="{{ url('/user/'.$me->id) }}" class="btn btn-default btn-flat">
                                         <i class="fa fa-info"></i>
                                         <span>我的主页</span>
                                     </a>

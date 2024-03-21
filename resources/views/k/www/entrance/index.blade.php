@@ -12,7 +12,7 @@
 
 @section('wx_share_title')朝鲜族组织平台@endsection
 @section('wx_share_desc')发现身边的朝鲜族社群组织@endsection
-@section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
+@section('wx_share_imgUrl'){{ url('/k-www.jpg') }}@endsection
 
 
 
@@ -89,11 +89,11 @@
 
             @include(env('TEMPLATE_K_WWW').'component.tag-list')
 
-            @if($auth_check)
-                @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-me')
-            @else
-                @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-root')
-            @endif
+{{--            @if($auth_check)--}}
+{{--                @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-me')--}}
+{{--            @else--}}
+{{--                @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-root')--}}
+{{--            @endif--}}
 
 
         </div>
