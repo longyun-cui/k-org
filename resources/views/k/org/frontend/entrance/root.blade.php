@@ -2,7 +2,7 @@
 
 
 @section('head_title')
-    {{ $head_title or 'ORG-首页 - 朝鲜族生活社群 - 发现身边的朝鲜族社群组织' }}
+    {{ $head_title or 'ORG组织 - 朝鲜族生活社群 - 发现身边的朝鲜族社群组织' }}
 @endsection
 @section('meta_title')@endsection
 @section('meta_author')@endsection

@@ -13,12 +13,12 @@
         <div class="navbar-custom-menu" style="height:50px;line-height:50px;float:left;">
             <a href="{{ url('/') }}">
                 <span class="logo-big hidden-xs">
-                    <img src="/favicon_transparent.png" class="img-icon" alt="Image">
+                    <img src="/custom/k/k-org.jpg" class="img-icon" alt="Image">
                     <b class="hidden-xs">朝鲜族社群组织平台</b>
                 </span>
                 <span class="logo-big visible-xs">
-                    <img src="/favicon_transparent.png" class="img-icon" alt="Image">
-                    <b class="">首页</b>
+                    <img src="/custom/k/k-org.jpg" class="img-icon" alt="Image">
+                    <b class="">朝鲜族社群组织平台</b>
                 </span>
             </a>
         </div>

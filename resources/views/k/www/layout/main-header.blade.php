@@ -14,11 +14,11 @@
             <a href="{{ url('/') }}">
                 <span class="logo-big hidden-xs">
 {{--                    <img src="/favicon_transparent.png" class="img-icon" alt="Image">--}}
-                    <img src="/custom/k/k-org.jpg" class="img-icon" alt="Image">
+                    <img src="/custom/k/k-www.jpg" class="img-icon" alt="Image">
                     <b class="hidden-xs" style="vertical-align: middle;">朝鲜族社群组织平台</b>
                 </span>
                 <span class="logo-big visible-xs">
-                    <img src="/custom/k/k-org.jpg" class="img-icon" alt="Image">
+                    <img src="/custom/k/k-www.jpg" class="img-icon" alt="Image">
                     <b class="" style="vertical-align:middle;">朝鲜族社群组织平台</b>
                 </span>
                 <span class="visible-xs">
