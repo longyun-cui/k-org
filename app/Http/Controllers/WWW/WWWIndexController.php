@@ -161,10 +161,15 @@ class WWWIndexController extends Controller
     }
 
 
-    // 【我的粉丝】
+    // 【我的点赞】
     public function view_my_favor()
     {
         return $this->repo->view_my_favor(request()->all());
+    }
+    // 【我的收藏】
+    public function view_my_collection()
+    {
+        return $this->repo->view_my_collection(request()->all());
     }
 
 
@@ -398,11 +403,11 @@ class WWWIndexController extends Controller
     }
 
     // 【待办事】
-    public function item_add_todolist()
+    public function item_add_todo_list()
     {
         return $this->repo->item_add_this(request()->all(),31);
     }
-    public function item_remove_todolist()
+    public function item_remove_todo_list()
     {
         return $this->repo->item_remove_this(request()->all(),31);
     }

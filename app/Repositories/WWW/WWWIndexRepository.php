@@ -1810,6 +1810,7 @@ class WWWIndexRepository {
                 }
             ])
                 ->where('user_id',$me_id)
+                ->where('relation_type',1)
                 ->orderby('id','desc')
                 ->paginate(20);
         }
@@ -1822,12 +1823,12 @@ class WWWIndexRepository {
 //            $item->custom_decode = json_decode($item->custom);
 //            $item->content_show = strip_tags($item->content);
 //            $item->img_tags = get_html_img($item->content);
+
             $item_list[$key] = $value->item;
         }
 
 
         $return['item_list'] = $item_list;
-        dd($item_list->toArray());
         $return['menu_active_for_my_favor'] = 'active';
 
         $view_blade = env('TEMPLATE_K_WWW').'entrance.my-favor';
@@ -1853,7 +1854,7 @@ class WWWIndexRepository {
 //            ])->find($me_id);
 //            $items = $query->pivot_item;
 
-            $item_list = K_Pivot_User_Item::with([
+            $pivot_item_relation_list = K_Pivot_User_Item::with([
                 'item'=>function($query) use($me_id) {
                     $query->with([
                         'owner',
@@ -1862,24 +1863,28 @@ class WWWIndexRepository {
                 }
             ])
                 ->where('user_id',$me_id)
+                ->where('relation_type',21)
                 ->orderby('id','desc')
                 ->paginate(20);
         }
         else return response_error([],"请先登录！");
 //        dd($item_list->toArray());
 
-        foreach ($item_list as $item)
+        $item_list = $pivot_item_relation_list;
+        foreach ($item_list as $key => $value)
         {
-            $item->custom_decode = json_decode($item->custom);
-            $item->content_show = strip_tags($item->content);
-            $item->img_tags = get_html_img($item->content);
+//            $item->custom_decode = json_decode($item->custom);
+//            $item->content_show = strip_tags($item->content);
+//            $item->img_tags = get_html_img($item->content);
+
+            $item_list[$key] = $value->item;
         }
 
 
         $return['item_list'] = $item_list;
         $return['menu_active_for_my_collection'] = 'active';
 
-        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-favor';
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-collection';
         return view($view_blade)->with($return);
     }
 

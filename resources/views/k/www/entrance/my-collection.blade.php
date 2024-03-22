@@ -25,7 +25,8 @@
 
     <div class="main-body-section main-body-left-section section-wrapper page-item">
 
-        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list-for-relation',['item_list'=>$item_list])
+{{--        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list-for-relation',['item_list'=>$item_list])--}}
+        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list',['item_list'=>$item_list])
         {!! $item_list->links() !!}
 
     </div>
