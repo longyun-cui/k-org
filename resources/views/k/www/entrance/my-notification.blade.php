@@ -38,8 +38,11 @@
     {{--右侧--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
-        @include(env('TEMPLATE_K_WWW').'component.right-side.right-root')
-        {{--@include(env('TEMPLATE_K_WWW').'component.right-side.right-me')--}}
+{{--        @if($auth_check)--}}
+{{--            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-me')--}}
+{{--        @else--}}
+{{--            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-root')--}}
+{{--        @endif--}}
 
     </div>
 

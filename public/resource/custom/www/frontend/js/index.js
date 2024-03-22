@@ -365,46 +365,40 @@ jQuery( function ($) {
         var $that = $(this);
         var $item_option = $(this).parents('.item-option');
 
-        layer.msg('移出"收藏"？', {
-            time: 0
-            ,btn: ['确定', '取消']
-            ,yes: function(index){
-                $.post(
-                    "/item/item-remove-collection",
-                    {
-                        _token: $('meta[name="_token"]').attr('content'),
-                        item_id: $item_option.attr('data-item-id'),
-                        type: 21
-                    },
-                    function(data){
-                        if(!data.success) layer.msg(data.msg);
-                        else
-                        {
-                            layer.closeAll();
-                            // var index = parent.layer.getFrameIndex(window.name);
-                            // parent.layer.close(index);
-                            layer.msg("移出成功");
+        $.post(
+            "/item/item-remove-collection",
+            {
+                _token: $('meta[name="_token"]').attr('content'),
+                item_id: $item_option.attr('data-item-id'),
+                type: 21
+            },
+            function(data){
+                if(!data.success) layer.msg(data.msg);
+                else
+                {
+                    layer.closeAll();
+                    // var index = parent.layer.getFrameIndex(window.name);
+                    // parent.layer.close(index);
+                    layer.msg("移出成功");
 
-                            $that.addClass('add-this-collection').removeClass('remove-this-collection');
-                            $that.find('i').addClass('fa-star-o').removeClass('fa-star text-red');
+                    $that.addClass('add-this-collection').removeClass('remove-this-collection');
+                    $that.find('i').addClass('fa-star-o').removeClass('fa-star text-red');
 
-                            var btn = $that.parents('.operate-btn');
-                            var num = parseInt(btn.attr('data-num'));
-                            num = num - 1;
-                            btn.attr('data-num',num);
-                            if(num == 0) num = '';
-                            btn.find('.num').html(num);
+                    var btn = $that.parents('.operate-btn');
+                    var num = parseInt(btn.attr('data-num'));
+                    num = num - 1;
+                    btn.attr('data-num',num);
+                    if(num == 0) num = '';
+                    btn.find('.num').html(num);
 
-                            // var html = '<span class="collect-this"><i class="fa fa-star-o"> '+num+'</span>';
-                            // btn.html(html);
+                    // var html = '<span class="collect-this"><i class="fa fa-star-o"> '+num+'</span>';
+                    // btn.html(html);
 
-                            // $item_option.html(data.data.html);
-                        }
-                    },
-                    'json'
-                );
-            }
-        });
+                    // $item_option.html(data.data.html);
+                }
+            },
+            'json'
+        );
 
     });
 

@@ -160,12 +160,14 @@
                                     </div>
                                     <div class="col-xs-6 text-center">
                                         <a href="{{ url('/my-follow') }}">
-                                            <i class="fa fa-user text-red"></i> 关注
+{{--                                            <i class="fa fa-user text-red"></i> --}}
+                                            关注
                                         </a>
                                     </div>
                                     <div class="col-xs-6 text-center">
                                         <a href="{{ url('/my-fans') }}">
-                                            <i class="fa fa-user text-red"></i> 粉丝
+{{--                                            <i class="fa fa-user text-red"></i> --}}
+                                            粉丝
                                         </a>
                                     </div>
                                 </div>

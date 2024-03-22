@@ -1,6 +1,6 @@
 @foreach($item_list as $i)
 @if(!empty($i->item))
-<div class="a-piece item-piece item-option radius-4px {{ $getType or 'items' }}"
+<div class="item-piece item-option item-wrapper border-color-1 radius-4px {{ $getType or 'items' }}"
      data-item="{{ $i->item->id or 0}}"
      data-id="{{ $i->item->id or 0 }}"
      data-item-id="{{ $i->item->id or 0 }}"

@@ -177,6 +177,7 @@ Route::group([], function () {
                 // 收藏 & 点赞
                 Route::get('/mine/my-collection', $controller.'@view_my_collection');
                 Route::get('/mine/my-favor', $controller.'@view_my_favor');
+                Route::get('/mine/my-like', $controller.'@view_my_favor');
                 //
                 Route::get('/mine/my-notification', $controller.'@view_my_notification');
 
@@ -195,35 +196,39 @@ Route::group([], function () {
         // 获取日程
         Route::post('ajax/get/schedule', $controller.'@ajax_get_schedule');
 
-        // 收藏
-        Route::post('item/add/collection', $controller.'@item_add_collection');
-        Route::post('item/remove/collection', $controller.'@item_remove_collection');
-
-        // 删除
-        Route::post('item/delete', $controller.'@item_delete');
-
-        // 转发
-        Route::post('item/forward', $controller.'@item_forward');
 
         // 点赞
-        Route::post('item/add/favor', $controller.'@item_add_favor');
-        Route::post('item/remove/favor', $controller.'@item_remove_favor');
+        Route::post('item/item-add-favor', $controller.'@item_add_favor');
+        Route::post('item/item-remove-favor', $controller.'@item_remove_favor');
+
+        // 收藏
+        Route::post('item/item-add-collection', $controller.'@item_add_collection');
+        Route::post('item/item-remove-collection', $controller.'@item_remove_collection');
+
+        // 删除
+        Route::post('item/item-delete', $controller.'@item_delete');
+
+        // 转发
+        Route::post('item/item-forward', $controller.'@item_forward');
 
         // 待办事
-        Route::post('item/add/todolist', $controller.'@item_add_todolist');
-        Route::post('item/remove/todolist', $controller.'@item_remove_todolist');
+        Route::post('item/item-add-todo_list', $controller.'@item_add_todo_list');
+        Route::post('item/item-remove-todo_list', $controller.'@item_remove_todo_list');
 
         // 日程
-        Route::post('item/add/schedule', $controller.'@item_add_schedule');
-        Route::post('item/remove/schedule', $controller.'@item_remove_schedule');
+        Route::post('item/item-add-schedule', $controller.'@item_add_schedule');
+        Route::post('item/item-remove-schedule', $controller.'@item_remove_schedule');
 
 
+        // 评论 & 回复
         Route::post('item/comment/save', $controller.'@item_comment_save');
         Route::post('item/reply/save', $controller.'@item_reply_save');
 
+        // 评论点赞
         Route::post('item/comment/favor/save', $controller.'@item_comment_favor_save');
         Route::post('item/comment/favor/cancel', $controller.'@item_comment_favor_cancel');
 
+        //
         Route::post('user/relation/add', $controller.'@user_relation_add');
         Route::post('user/relation/remove', $controller.'@user_relation_remove');
 

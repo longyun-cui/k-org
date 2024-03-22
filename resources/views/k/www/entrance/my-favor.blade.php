@@ -26,7 +26,8 @@
     {{--左侧--}}
     <div class="main-body-section main-body-left-section section-wrapper page-item">
 
-        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list-for-relation',['item_list'=>$item_list])
+{{--        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list-for-relation',['item_list'=>$item_list])--}}
+        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list',['item_list'=>$item_list])
         {!! $item_list->links() !!}
 
     </div>
@@ -35,11 +36,11 @@
     {{--右侧--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
 
-        @if($auth_check)
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-me')
-        @else
-            @include(env('TEMPLATE_K_COMMON_FRONT').'component.right-side.right-root')
-        @endif
+{{--        @if($auth_check)--}}
+{{--            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-me')--}}
+{{--        @else--}}
+{{--            @include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-root')--}}
+{{--        @endif--}}
 
     </div>
 

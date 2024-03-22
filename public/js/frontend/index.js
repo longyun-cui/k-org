@@ -362,40 +362,41 @@ jQuery( function ($) {
             time: 0
             ,btn: ['确定', '取消']
             ,yes: function(index){
-                $.post(
-                    "/item/remove/collection",
-                    {
-                        _token: $('meta[name="_token"]').attr('content'),
-                        item_id: item_option.attr('data-item'),
-                        type: 1
-                    },
-                    function(data){
-                        if(!data.success) layer.msg(data.msg);
-                        else
-                        {
-                            layer.closeAll();
-                            layer.msg("移出收藏成功");
-                            that.addClass('add-this-collection').removeClass('remove-this-collection');
-                            that.html('<i class="fa fa-star-o"></i> 收藏');
-
-                            // var index = parent.layer.getFrameIndex(window.name);
-                            // parent.layer.close(index);
-                            //
-                            // var btn = that.parents('.collect-btn');
-                            // var num = parseInt(btn.attr('data-num'));
-                            // num = num - 1;
-                            // btn.attr('data-num',num);
-                            // if(num == 0) num = '';
-                            // var html = '<span class="collect-this"><i class="fa fa-heart-o"> '+num+'</span>';
-                            // btn.html(html);
-                            //
-                            // // item_option.html(data.data.html);
-                        }
-                    },
-                    'json'
-                );
             }
         });
+
+        $.post(
+            "/item/remove/collection",
+            {
+                _token: $('meta[name="_token"]').attr('content'),
+                item_id: item_option.attr('data-item'),
+                type: 1
+            },
+            function(data){
+                if(!data.success) layer.msg(data.msg);
+                else
+                {
+                    layer.closeAll();
+                    layer.msg("移出收藏成功");
+                    that.addClass('add-this-collection').removeClass('remove-this-collection');
+                    that.html('<i class="fa fa-star-o"></i> 收藏');
+
+                    // var index = parent.layer.getFrameIndex(window.name);
+                    // parent.layer.close(index);
+                    //
+                    // var btn = that.parents('.collect-btn');
+                    // var num = parseInt(btn.attr('data-num'));
+                    // num = num - 1;
+                    // btn.attr('data-num',num);
+                    // if(num == 0) num = '';
+                    // var html = '<span class="collect-this"><i class="fa fa-heart-o"> '+num+'</span>';
+                    // btn.html(html);
+                    //
+                    // // item_option.html(data.data.html);
+                }
+            },
+            'json'
+        );
 
     });
 
@@ -403,7 +404,7 @@ jQuery( function ($) {
 
 
     // 添加待办事
-    $(".main-body").off("click",".add-this-todolist").on('click', ".add-this-todolist", function() {
+    $(".main-body").off("click",".add-this-todo_list").on('click', ".add-this-todo_list", function() {
         var that = $(this);
         var item_option = $(this).parents('.item-option');
 
@@ -412,7 +413,7 @@ jQuery( function ($) {
             ,btn: ['确定', '取消']
             ,yes: function(index){
                 $.post(
-                    "/item/add/todolist",
+                    "/item/item-add-todo_list",
                     {
                         _token: $('meta[name="_token"]').attr('content'),
                         item_id: item_option.attr('data-item'),
@@ -424,7 +425,7 @@ jQuery( function ($) {
                         {
                             layer.closeAll();
                             layer.msg("添加待办事成功");
-                            that.addClass('remove-this-todolist').removeClass('add-this-todolist');
+                            that.addClass('remove-this-todo_list').removeClass('add-this-todo_list');
                             that.html('<i class="fa fa-check-square-o text-red"></i> 移出待办事');
                         }
                     },
@@ -444,7 +445,7 @@ jQuery( function ($) {
             ,btn: ['确定', '取消']
             ,yes: function(index){
                 $.post(
-                    "/item/remove/todolist",
+                    "/item/item-remove-todo_list",
                     {
                         _token: $('meta[name="_token"]').attr('content'),
                         item_id: item_option.attr('data-item'),
@@ -456,7 +457,7 @@ jQuery( function ($) {
                         {
                             layer.closeAll();
                             layer.msg("移出待办事成功");
-                            that.addClass('add-this-todolist').removeClass('remove-this-todolist');
+                            that.addClass('add-this-todo_list').removeClass('remove-this-todo_list');
                             that.html('<i class="fa fa-check-square-o"></i> 添加到待办事');
                         }
                     },

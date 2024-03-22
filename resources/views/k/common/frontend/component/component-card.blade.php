@@ -268,6 +268,16 @@
                             <i class="fa fa-edit"></i>
                             <span class="">编辑介绍</span>
                         </a>
+{{--                        <label for="myCheckbox">切换开关</label>--}}
+{{--                        <input type="checkbox" id="myCheckbox" /> 在平台展示名片--}}
+{{--                        <input type="radio" name="myRadio" id="option1" />--}}
+{{--                        <input type="radio" name="myRadio" id="option2" />--}}
+
+                        <div style="margin-top:8px;">
+                            <input type="checkbox" id="myCheckbox" />
+                            在平台中展示名片
+{{--                            <input type="checkbox" name="test">--}}
+                        </div>
                     @endif
                 @endif
 

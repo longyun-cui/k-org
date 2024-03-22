@@ -1801,7 +1801,7 @@ class WWWIndexRepository {
 //            ])->find($me_id);
 //            $items = $query->pivot_item;
 
-            $item_list = K_Pivot_User_Item::with([
+            $pivot_item_relation_list = K_Pivot_User_Item::with([
                 'item'=>function($query) use($me_id) {
                     $query->with([
                         'owner',
@@ -1816,15 +1816,18 @@ class WWWIndexRepository {
         else return response_error([],"请先登录！");
 //        dd($item_list->toArray());
 
-        foreach ($item_list as $item)
+        $item_list = $pivot_item_relation_list;
+        foreach ($pivot_item_relation_list as $key => $value)
         {
-            $item->custom_decode = json_decode($item->custom);
-            $item->content_show = strip_tags($item->content);
-            $item->img_tags = get_html_img($item->content);
+//            $item->custom_decode = json_decode($item->custom);
+//            $item->content_show = strip_tags($item->content);
+//            $item->img_tags = get_html_img($item->content);
+            $item_list[$key] = $value->item;
         }
 
 
         $return['item_list'] = $item_list;
+        dd($item_list->toArray());
         $return['menu_active_for_my_favor'] = 'active';
 
         $view_blade = env('TEMPLATE_K_WWW').'entrance.my-favor';

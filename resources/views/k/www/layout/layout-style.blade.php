@@ -12,6 +12,38 @@
         background:#eee;
     }
 
+
+    #switch {
+        position: relative;
+        width: 60px;
+        height: 34px;
+        background-color: #e7e7e7;
+        border-radius: 34px;
+        transition: background-color 0.3s;
+    }
+
+    #switch.on {
+        background-color: #4caf50;
+    }
+
+    #switch .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #fff;
+        transition: .4s;
+        border-radius: 34px;
+    }
+
+    #switch:hover .slider {
+        background-color: #ccc;
+    }
+
+
+
     .main-header i {
         width:16px;
         vertical-align:middle;
