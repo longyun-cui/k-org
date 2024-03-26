@@ -1,4 +1,4 @@
-<div class="right-piece- box-body bg-white margin-bottom-4px section-user radius-2px">
+<div class="right-piece- box-body bg-white margin-bottom-4px- section-user radius-2px">
 
 
     <div class="box box-widget widget-user" style="margin-bottom:0px;box-shadow:0 0;">
@@ -412,10 +412,10 @@
 
 
 @if(!empty($data->ext->content) || !empty($data->ext->description))
-<article class="readmore-content item-piece item-option margin-top-4px- padding-16px">
+<article class="readmore-content item-piece item-option margin-top-4px- padding-12px">
     <div class="">
 
-        <div class="item-row margin-bottom-4px text-center _none">
+        <div class="item-row margin-bottom-4px- text-center _none">
             <h4>{{ $data->ext->title or '我的介绍' }}</h4>
         </div>
 

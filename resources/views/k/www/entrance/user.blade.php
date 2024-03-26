@@ -36,7 +36,7 @@
 <div class="container">
 
     {{--右侧-用户名片--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right _none-">
+    <div class="main-body-section main-body-right-section section-wrapper pull-right _none">
 
 {{--        @include(env('TEMPLATE_K_COMMON_FRONT').'component.component-user', ['data'=>$data])--}}
         {{--@include(env('TEMPLATE_K_COMMON_FRONT').'component.menu-for-user', ['data'=>$data])--}}
