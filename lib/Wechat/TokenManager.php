@@ -24,34 +24,34 @@ class TokenManager
         $url = 'http://'.$_SERVER["HTTP_HOST"].request()->getRequestUri();
 
 
-//        if(Cache::has(self::cache_key))
-//        {
-//            $cache = Cache::get(self::cache_key);
-//
-//            $appID = $cache['app_id'];
-//            $ticket = $cache['ticket'];
-//            $nonce_str = $cache['nonce_str'];
-//            $timestamp = $cache['timestamp'];
-//            $cache = 'cache';
-//            if((time() - $timestamp) > 3540)
-//            {
-//                self::init();
-//                $appID = self::$app_id;
-//                $ticket = self::getTicket();
-//                $nonce_str = self::getNonceStr();
-//                $timestamp = time();
-//                $cache = 'overtime init';
-//
-//                $cache_config['app_id'] = $appID;
-//                $cache_config['ticket'] = $ticket;
-//                $cache_config['nonce_str'] = $nonce_str;
-//                $cache_config['timestamp'] = $timestamp;
-//
-//                Cache::forget(self::cache_key);
-//                Cache::put(self::cache_key, $cache_config, 59); //59 minutes
-//            }
-//        }
-//        else
+        if(Cache::has(self::cache_key))
+        {
+            $cache = Cache::get(self::cache_key);
+
+            $appID = $cache['app_id'];
+            $ticket = $cache['ticket'];
+            $nonce_str = $cache['nonce_str'];
+            $timestamp = $cache['timestamp'];
+            $cache = 'cache';
+            if((time() - $timestamp) > 3540)
+            {
+                self::init();
+                $appID = self::$app_id;
+                $ticket = self::getTicket();
+                $nonce_str = self::getNonceStr();
+                $timestamp = time();
+                $cache = 'overtime init';
+
+                $cache_config['app_id'] = $appID;
+                $cache_config['ticket'] = $ticket;
+                $cache_config['nonce_str'] = $nonce_str;
+                $cache_config['timestamp'] = $timestamp;
+
+                Cache::forget(self::cache_key);
+                Cache::put(self::cache_key, $cache_config, 59); //59 minutes
+            }
+        }
+        else
         {
             self::init();
             $appID = self::$app_id;
