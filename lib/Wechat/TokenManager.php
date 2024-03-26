@@ -116,8 +116,8 @@ class TokenManager
     public static function init()
     {
         if (empty(self::$app_id) or empty(self::$secret) or empty(self::$token)) {
-            self::$app_id = env('WECHAT_LOOKWIT_APPID');
-            self::$secret = env('WECHAT_LOOKWIT_SECRET');
+            self::$app_id = env('WX_LOOKWIT_APPID');
+            self::$secret = env('WX_LOOKWIT_SECRET');
         }
     }
 
