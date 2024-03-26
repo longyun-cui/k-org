@@ -11,7 +11,7 @@ class TokenManager
     private static $instance;
     const token_url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=@app_id&secret=@secret';
     const ticket_url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=@access_token&type=jsapi';
-    const cache_key = 'lookwit_wechat_config';
+    const cache_key = 'k_org_wx_config';
 
     private function __construct()
     {
@@ -116,8 +116,8 @@ class TokenManager
     public static function init()
     {
         if (empty(self::$app_id) or empty(self::$secret) or empty(self::$token)) {
-            self::$app_id = env('WECHAT_LOOKWIT_APPID');
-            self::$secret = env('WECHAT_LOOKWIT_SECRET');
+            self::$app_id = env('WECHAT_WEBSITE_K_APPID');
+            self::$secret = env('WECHAT_WEBSITE_K_SECRET');
         }
     }
 
