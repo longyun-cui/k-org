@@ -1,8 +1,7 @@
 <script>
 
     var wx_config = {!! $wx_config or '' !!};
-
-    console.log(wx_config.cache);
+    // console.log(wx_config.cache);
 
     var timestamp = Date.parse(new Date());
     var time = Date.parse(new Date());
@@ -13,7 +12,7 @@
     {
 //        var link = window.location.href;
         var link = location.href.split('#')[0];
-        console.log(link);
+        // console.log(link);
 
         if(typeof wx != "undefined") wxFn();
 

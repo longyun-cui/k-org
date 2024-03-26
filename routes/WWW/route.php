@@ -113,7 +113,8 @@ Route::group([], function () {
 
             $controller = "WWWIndexController";
 
-            Route::get('/org-register', $controller.'@operate_org_register');
+            // 注册社群组织
+            Route::match(['get','post'], '/org-register', $controller.'@operate_org_register');
 
 
             Route::get('/home/notification', $controller.'@view_home_notification');

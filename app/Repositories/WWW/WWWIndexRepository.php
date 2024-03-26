@@ -58,11 +58,88 @@ class WWWIndexRepository {
 
 
 
+    // 注册新
     public function view_org_register()
     {
         $this->get_me();
-        return view(env('TEMPLATE_K_WWW').'entrance.auth.org-register');
+        return view(env('TEMPLATE_K_WWW').'entrance.org-register');
     }
+    // 注册用户
+    public function operate_org_register_save($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+
+
+        $messages = [
+//            'captcha.required' => '请输入验证码',
+//            'captcha.captcha' => '验证码有误',
+            'user_type.required' => 'user_type.required.',
+            'username.required' => '请填写名称！',
+            'mobile.required' => '请输入手机！',
+            'mobile.unique' => '手机已存在，请更换手机！',
+//            'password.required' => '请输入密码！',
+//            'password_confirm.required' => '请确认密码！',
+        ];
+        $v = Validator::make($post_data, [
+//            'captcha' => 'required|captcha',
+            'user_type' => 'required',
+            'username' => 'required',
+            'mobile' => 'required|unique:user',
+//            'password' => 'required',
+//            'password_confirm' => 'required'
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error(['error_type'=>$messages->keys()[0]],$messages->first());
+        }
+
+
+        $user_type = $post_data['user_type'];
+        $username = $post_data['username'];
+        $mobile = $post_data['mobile'];
+        if(!isMobile($mobile)) return response_error(['error_type'=>'mobile'],'非法手机号！');
+//        $password = $post_data['password'];
+//        $password_confirm = $post_data['password_confirm'];
+//        if($password == $password_confirm)
+//        {
+//        }
+//        else return response_error(['error_type'=>'password_confirm'],'确认密码不一致！');
+            DB::beginTransaction();
+            try
+            {
+                // 注册超级管理员
+                $user = new K_User;
+                $user_create['creator_id'] = $me_id;
+                $user_create['user_category'] = 1;
+                $user_create['user_type'] = $user_type;
+                $user_create['username'] = $username;
+                $user_create['mobile'] = $mobile;
+//                $user_create['password'] = password_encode($password);
+                $user_create['portrait_img'] = 'unique/portrait/user2.jpg';
+                $bool = $user->fill($user_create)->save();
+                if($bool)
+                {
+                }
+                else throw new Exception("insert--user--failed");
+
+                DB::commit();
+                return response_success([],'注册成功！');
+            }
+            catch (Exception $e)
+            {
+                DB::rollback();
+                $msg = '注册失败，请重试！';
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
+                return response_fail([],$msg);
+            }
+    }
+
+
+
 
     // 【K】【平台首页】
     public function view_index($post_data)

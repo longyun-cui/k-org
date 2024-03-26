@@ -31,6 +31,16 @@
                 {{--<span class="glyphicon glyphicon-user form-control-feedback"></span>--}}
             {{--</div>--}}
 
+            <div class="form-group has-feedback-">
+                <div class="radio">
+                    <input type="radio" name="user_type" value="11" checked="checked"> 组织
+                </div>
+                <div class="radio">
+                    <input type="radio" name="user_type" value="88"> 赞助商
+                </div>
+
+            </div>
+
             <div class="form-group has-feedback">
                 <input type="text" class="form-control" name="username" placeholder="组织名称">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>

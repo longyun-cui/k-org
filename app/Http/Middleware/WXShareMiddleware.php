@@ -16,6 +16,11 @@ class WXShareMiddleware
             $wx_config = json_encode(TokenManager::getConfig());
             view()->share('wx_config', $wx_config);
         }
+        else
+        {
+            $wx_config = json_encode([]);
+            view()->share('wx_config', $wx_config);
+        }
 
         return $next($request);
     }

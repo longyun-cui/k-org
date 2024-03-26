@@ -169,13 +169,13 @@ desired effect
 
 {{--<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>--}}
 {{--<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>--}}
-<script src="{{ asset('/lib/js/bootstrap-datetimepicker-4.17.47.min.js') }}"></script>
-<script src="{{ asset('/lib/js/bootstrap-datetimepicker.zh-CN.js') }}" charset="UTF-8"></script>
-<script src="{{ asset('/lib/js/bootstrap-datepicker-1.9.0.min.js') }}"></script>
-<script src="{{ asset('/lib/js/bootstrap-datepicker-1.9.0.zh-CN.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/bootstrap-datetimepicker-4.17.47.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/bootstrap-datetimepicker.zh-CN.js') }}" charset="UTF-8"></script>
+<script src="{{ asset('/resource/component/js/bootstrap-datepicker-1.9.0.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/bootstrap-datepicker-1.9.0.zh-CN.min.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>--}}
-<script src="{{ asset('/lib/js/bootstrap-switch-3.3.4.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/bootstrap-switch-3.3.4.min.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/lightcase/2.5.0/js/lightcase.min.js"></script>--}}
 <script src="{{ asset('/resource/component/js/lightcase-2.5.0.min.js') }}"></script>
@@ -192,7 +192,8 @@ desired effect
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 
 
-<script src="{{ asset('/js/admin/index.js') }}"></script>
+<script src="{{ asset('/resource/common/js/area_data.js') }}"></script>
+<script src="{{ asset('/resource/common/js/area_select.js') }}"></script>
 
 
 {{--layout-script--}}

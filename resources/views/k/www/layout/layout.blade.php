@@ -90,8 +90,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('/resource/component/css/timeline-3.6.6.min.css') }}">
 
 
-    <link rel="stylesheet" href="{{ asset('/resource/common/css/animate/wicked.css') }}">
-    <link rel="stylesheet" href="{{ asset('/resource/common/css/animate/hover.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('/resource/common/css/animate/wicked.css') }}">--}}
+{{--    <link rel="stylesheet" href="{{ asset('/resource/common/css/animate/hover.css') }}">--}}
 
     <link rel="stylesheet" href="{{ asset('/resource/common/css/AdminLTE/index.css') }}">
     <link rel="stylesheet" href="{{ asset('/resource/common/css/common.css') }}">
@@ -239,12 +239,17 @@ desired effect
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 {{--<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>--}}
 {{--<script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>--}}
+
 @include(env('TEMPLATE_K_WWW').'layout.wx-script')
 
 
 <script src="{{ asset('/resource/common/js/common.js') }}"></script>
 <script src="{{ asset('/resource/custom/www/frontend/js/index.js') }}"></script>
 {{--<script src="{{  asset('js/frontend/index.js') }}"></script>--}}
+
+
+<script src="{{ asset('/resource/common/js/area_data.js') }}"></script>
+<script src="{{ asset('/resource/common/js/area_select.js') }}"></script>
 
 @include(env('TEMPLATE_K_WWW').'layout.layout-script')
 

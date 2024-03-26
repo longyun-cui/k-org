@@ -12,8 +12,8 @@ class K_User extends Authenticatable
     protected $table = "user";
 
     protected $fillable = [
-        'active', 'status', 'user_active', 'user_status', 'user_category', 'user_group', 'user_type', 'category', 'group', 'type',
-        'parent_id', 'p_id',
+        'active', 'status', 'user_active', 'user_status', 'user_category', 'user_type', 'user_group', 'category', 'group', 'type',
+        'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'p_id', 'parent_id',
         'name', 'username', 'nickname', 'true_name', 'description', 'portrait_img', 'tag',
         'mobile', 'telephone', 'email', 'password',
         'wx_unionid',

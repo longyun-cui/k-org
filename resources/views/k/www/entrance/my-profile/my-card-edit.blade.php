@@ -44,50 +44,76 @@
                         <div class="form-group _none">
                             <label class="control-label- col-md-2">昵称</label>
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="name" placeholder="请输入用户名" value="{{ $data->username or '' }}">
+                                <input type="text" class="form-control" name="username" placeholder="请输入用户名" value="{{ $data->username or '' }}">
                             </div>
                         </div>
+                        {{--选择所在城市--}}
+                        <div class="form-group area_select_box">
+                            <label class="control-label- col-md-12">所在城市</label>
+                            <div class="col-md-4 ">
+                                <select name="area_province" class="form-control form-filter area_select_province" id="area_province">
+                                    <option value="">请选择省</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 ">
+                                <select name="area_city" class="form-control form-filter area_select_city" id="area_city">
+                                    <option value="">请先选择省</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 ">
+                                <select name="area_district" class="form-control form-filter area_select_district" id="area_district">
+                                    <option value="">请先选择市</option>
+                                </select>
+                            </div>
+                        </div>
+
                         {{--真实姓名--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-6">姓名(名片展示)</label>
+                        <div class="form-group has-feedback">
+{{--                            <label class="control-label- col-md-6">姓名(名片展示)</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="true_name" placeholder="真实姓名" value="{{ $data->true_name or '' }}">
+                                <span class="form-control-feedback fa fa-user"> 姓名</span>
                             </div>
                         </div>
                         {{--真实姓名--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">单位名称</label>
+                        <div class="form-group has-feedback">
+{{--                            <label class="control-label- col-md-2">单位名称</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="company" placeholder="单位名称" value="{{ $data->company or '' }}">
+                                <span class="form-control-feedback fa fa-"> 公司</span>
                             </div>
                         </div>
                         {{--职位--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">职位</label>
+                        <div class="form-group has-feedback">
+{{--                            <label class="control-label- col-md-2">职位</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="position" placeholder="职位" value="{{ $data->position or '' }}">
+                                <span class="form-control-feedback fa fa-"> 职位</span>
                             </div>
                         </div>
                         {{--商业描述--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">商业描述</label>
+                        <div class="form-group has-feedback">
+{{--                            <label class="control-label- col-md-2">商业描述</label>--}}
                             <div class="col-md-12 ">
 {{--                                <textarea class="form-control" name="business_description" rows="3" cols="" placeholder="商业描述">{{ $data->business_description or '' }}</textarea>--}}
                                 <input type="text" class="form-control" name="business_description" placeholder="商业描述" value="{{ $data->business_description or '' }}">
+                                <span class="form-control-feedback fa fa-"> 商业描述</span>
                             </div>
                         </div>
                         {{--地址--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">联系地址</label>
+                        <div class="form-group has-feedback">
+{{--                            <label class="control-label- col-md-2">联系地址</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="contact_address" placeholder="联系地址" value="{{ $data->contact_address or '' }}">
+                                <span class="form-control-feedback fa fa-location-arrow"> 联系地址</span>
                             </div>
                         </div>
                         {{--电话--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">联系电话</label>
+                        <div class="form-group has-feedback">
+{{--                            <label class="control-label- col-md-2">联系电话</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="contact_phone" placeholder="联系电话" value="{{ $data->contact_phone or '' }}">
+                                <span class="form-control-feedback fa fa-phone"> 联系电话</span>
                             </div>
                         </div>
                         {{--邮箱--}}
@@ -105,16 +131,17 @@
 {{--                            </div>--}}
 {{--                        </div>--}}
                         {{--微信号--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">微信号</label>
+                        <div class="form-group has-feedback">
+{{--                            <label class="control-label- col-md-2">微信号</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="wx_id" placeholder="微信号" value="{{ $data->wx_id or '' }}">
+                                <span class="form-control-feedback fa fa-weixin"> 微信号</span>
                             </div>
                         </div>
                         {{--微信二维码--}}
                         <div class="form-group">
                             <label class="control-label- col-md-2">微信二维码</label>
-                            <div class="col-md-12 fileinput-group">
+                            <div class="col-md-6 fileinput-group">
 
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail">

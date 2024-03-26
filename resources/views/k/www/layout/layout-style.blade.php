@@ -13,6 +13,17 @@
     }
 
 
+    .form-horizontal .has-feedback .form-control-feedback {
+        right:15px;
+        width:auto;
+        padding-right:8px;
+        color:#999;
+    }
+    .has-feedback .form-control {
+        padding-right: 80px;
+    }
+
+
     #switch {
         position: relative;
         width: 60px;

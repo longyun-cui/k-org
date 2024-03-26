@@ -50,8 +50,9 @@
                 </li>
                 @endif
 
-                {{--<!-- Notifications Menu -->--}}
-                <li class="dropdown tasks-menu ">
+
+                {{--<!-- Menu -->--}}
+                <li class="dropdown tasks-menu _none">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-list" style="width:16px;vertical-align:middle;"></i>
                         {{--<span class="label label-warning">10</span>--}}
@@ -131,6 +132,7 @@
                     </ul>
                 </li>
 
+
                 {{--<!-- User Account Menu -->--}}
                 @if($auth_check)
                 <li class="dropdown user user-menu">
@@ -141,7 +143,7 @@
                             <span class="user-text hidden-xs">{{ $me->username }}</span>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu _none">
                             <!-- The user image in the menu -->
                             <li class="user-header">
                                     <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-circle" alt="User Image">
@@ -244,6 +246,86 @@
                                 </div>
                             </li>
                         </ul>
+                        <ul class="dropdown-menu">
+                        {{--<li class="header">You have 10 notifications</li>--}}
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu" style="max-height:480px;">
+                                <li>
+                                    <a href="{{ url('/') }}">
+                                        <i class="fa fa-home text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>首页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/?type=activity') }}">
+                                        <i class="fa fa-clock-o text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>活动</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/organization-list') }}">
+                                        <i class="fa fa-list-ul text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>组织机构</span>
+                                    </a>
+                                </li>
+                                @if($auth_check)
+                                    <li class="_none">
+                                        <a href="{{ url('/home') }}">
+                                            <i class="fa fa-home text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                            <span>{{ $me->username }}</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ url('/user/'.$me->id) }}">
+                                            <i class="fa fa-info-circle text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                            <span>我的名片</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ url('/mine/my-follow') }}">
+                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                            <span>我的关注</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/mine/my-fans') }}">
+                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                            <span>我的粉丝</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/mine/my-favor') }}">
+                                            <i class="fa fa-heart text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                            <span>我的点赞</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/mine/my-collection') }}">
+                                            <i class="fa fa-star text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                            <span>我的收藏</span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ url('/logout') }}">
+                                            <i class="fa fa-sign-out text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                            <span>退出</span>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ url('/login-link') }}">
+                                            <i class="fa fa-sign-in"></i>
+                                            <span>登录</span>
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                        {{--<li class="footer"><a href="#">View all</a></li>--}}
+                    </ul>
                     </li>
                     @endif
 

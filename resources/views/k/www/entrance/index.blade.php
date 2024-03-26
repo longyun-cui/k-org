@@ -29,26 +29,26 @@
     <div class="main-body-section main-body-left-section section-wrapper page-item">
 
 
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs _none">
-                <li class="{{ $menu_active_for_root or '' }}"><a href="/" data-toggle="tab-">首页</a></li>
-                <li class="{{ $menu_active_for_activity or '' }}"><a href="/?type=activity" data-toggle="tab-">只看活动</a></li>
-                <li class="{{ $menu_active_for_my_focus or '' }}"><a href="/?type=my-focus" data-toggle="tab-">我的关注</a></li>
-                <li class="{{ $menu_active_for_organization_list or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>
-            </ul>
-            <div class="tab-content" style="width:100%; padding:10px 0;float:left;">
-                <div class="active tab-pane" id="all">
-                    @if(!empty($item_list) && count($item_list))
-                        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list',['item_list'=>$item_list])
-                    @endif
-                </div>
+{{--        <div class="nav-tabs-custom">--}}
+{{--            <ul class="nav nav-tabs _none">--}}
+{{--                <li class="{{ $menu_active_for_root or '' }}"><a href="/" data-toggle="tab-">首页</a></li>--}}
+{{--                <li class="{{ $menu_active_for_activity or '' }}"><a href="/?type=activity" data-toggle="tab-">只看活动</a></li>--}}
+{{--                <li class="{{ $menu_active_for_my_focus or '' }}"><a href="/?type=my-focus" data-toggle="tab-">我的关注</a></li>--}}
+{{--                <li class="{{ $menu_active_for_organization_list or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>--}}
+{{--            </ul>--}}
+{{--            <div class="tab-content" style="width:100%; padding:10px 0;float:left;">--}}
+{{--                <div class="active tab-pane" id="all">--}}
+{{--                    @if(!empty($item_list) && count($item_list))--}}
+{{--                        @include(env('TEMPLATE_K_COMMON_FRONT').'component.item-list',['item_list'=>$item_list])--}}
+{{--                    @endif--}}
+{{--                </div>--}}
                 {{--<div class="tab-pane" id="timeline">--}}
                 {{--</div>--}}
 
                 {{--<div class="tab-pane" id="settings">--}}
                 {{--</div>--}}
-            </div>
-        </div>
+{{--            </div>--}}
+{{--        </div>--}}
 
         @if($page_type == 'tag')
 

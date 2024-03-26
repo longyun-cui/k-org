@@ -94,7 +94,7 @@ table.dataTable .text-bottom { vertical-align: bottom; }
 .page-frontend .form-container .box-footer { padding:8px 0; }
 
 
-.fileinput-group .thumbnail { width:200px; min-height:80px; max-height:120px; margin-bottom:8px; }
+.fileinput-group .thumbnail { width:120px; min-height:80px; max-height:120px; margin-bottom:8px; }
 
 .fileinput-group .btn-tool-group { width:auto; padding:0 0; }
 .fileinput-group .btn-tool-group span { margin-right:8px; float:left; }

@@ -53,6 +53,20 @@
                             <option value="11" @if($user_type == 11) selected="selected" @endif>社群组织</option>
                         </select>
 
+
+                        <span class="area_select_box">
+                            <select name="" class="form-control form-filter area_select_province" id="Province-">
+                                <option value="">请选择省</option>
+                            </select>
+                            <select name="" class="form-control form-filter area_select_city" id="City-">
+                                <option value="">请先选择省</option>
+                            </select>
+                            <select name="" class="form-control form-filter area_select_district" id="District-">
+                                <option value="">请先选择市</option>
+                            </select>
+                        </span>
+
+
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
                             <i class="fa fa-search"></i> 搜索
                         </button>
@@ -64,7 +78,7 @@
                 </div>
 
 
-                <!-- datatable start -->
+                <div class="tableArea">
                 <table class='table table-striped- table-bordered- table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
@@ -73,7 +87,9 @@
                     <tbody>
                     </tbody>
                 </table>
-                <!-- datatable end -->
+                </div>
+
+
             </div>
 
             <div class="box-footer">
@@ -149,6 +165,35 @@
     </div>
 </div>
 @endsection
+
+
+
+
+@section('custom-css')
+@endsection
+@section('custom-style')
+    <style>
+        .tableArea table { min-width:1280px; }
+        /*.tableArea table { width:100% !important; min-width:1380px; }*/
+        /*.tableArea table tr th, .tableArea table tr td { white-space:nowrap; }*/
+
+        .datatable-search-row .input-group .date-picker-btn { width:30px; }
+        .table-hover>tbody>tr:hover td { background-color: #bbccff; }
+
+        .select2-container { height:100%; border-radius:0; float:left; }
+        .select2-container .select2-selection--single { border-radius:0; }
+        .bg-fee-2 { background:#C3FAF7; }
+        .bg-fee { background:#8FEBE5; }
+        .bg-deduction { background:#C3FAF7; }
+        .bg-income { background:#8FEBE5; }
+        .bg-route { background:#FFEBE5; }
+        .bg-finance { background:#E2FCAB; }
+        .bg-empty { background:#F6C5FC; }
+        .bg-journey { background:#F5F9B4; }
+    </style>
+@endsection
+
+
 
 
 @section('custom-script')

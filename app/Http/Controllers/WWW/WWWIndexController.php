@@ -29,7 +29,7 @@ class WWWIndexController extends Controller
         }
         else if(request()->isMethod('post'))
         {
-            return $this->repo->register(request()->all());
+            return $this->repo->operate_org_register_save(request()->all());
         }
     }
 
