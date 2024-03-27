@@ -20,8 +20,8 @@ class TurnToLoginMiddleware
     {
         if(!Auth::check()) // 未登录
         {
-            $url = urlencode(url()->full());
-            $state  = url()->previous();
+            $state = urlencode(url()->full());
+//            $state  = url()->previous();
 
             if(is_weixin())
             {
