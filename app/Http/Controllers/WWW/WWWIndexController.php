@@ -68,8 +68,8 @@ class WWWIndexController extends Controller
         $state  = url()->previous();
         if(is_weixin())
         {
-            $app_id = env('WECHAT_SOFT_ORG_APPID');
-            $app_secret = env('WECHAT_SOFT_ORG_SECRET');
+            $app_id = env('WECHAT_LOOKWIT_APPID');
+            $app_secret = env('WECHAT_LOOKWIT_SECRET');
             $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http%3A%2F%2Fwww.k-org.cn%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
             return redirect($url);
 
