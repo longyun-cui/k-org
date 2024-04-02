@@ -27,7 +27,7 @@ class SuperIndexController extends Controller
     // 返回【主页】视图
     public function view_index()
     {
-        return view(env('TEMPLATE_K_SUPER_FRONT').'welcome');
+        return view(env('TEMPLATE_K_SUPER').'welcome');
     }
 
 

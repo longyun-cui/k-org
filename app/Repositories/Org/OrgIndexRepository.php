@@ -15,7 +15,7 @@ use QrCode, Excel;
 
 class OrgIndexRepository {
 
-    private $evn;
+    private $env;
     private $auth_check;
     private $me;
     private $me_admin;
@@ -23,14 +23,15 @@ class OrgIndexRepository {
     private $modelUser;
     private $modelItem;
     private $repo;
+    private $view_blade_root;
     private $view_blade_404;
     public function __construct()
     {
         $this->modelUser = new K_User;
         $this->modelItem = new K_Item;
 
-        $this->view_template_front = env('TEMPLATE_K_ORG_FRONT');
-        $this->view_blade_404 = env('TEMPLATE_K_ORG_FRONT').'errors.404';
+        $this->view_blade_root = env('TEMPLATE_K_ORG');
+        $this->view_blade_404 = env('TEMPLATE_K_ORG').'errors.404';
 
         Blade::setEchoFormat('%s');
         Blade::setEchoFormat('e(%s)');
@@ -65,12 +66,11 @@ class OrgIndexRepository {
 
 
     // 返回（后台）主页视图
-    public function view_org_index()
+    public function view_index()
     {
         $this->get_me();
         $me = $this->me;
         $me_id = $me->id;
-
 
         $item_query = K_Item::with([
                 'owner',
@@ -95,8 +95,19 @@ class OrgIndexRepository {
 
         $return['item_list'] = $item_list;
 
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.root';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.index';
         return view($view_blade)->with($return);
+    }
+
+    // 返回（后台）主页视图
+    public function view_404()
+    {
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+
+        $view_blade = env('TEMPLATE_K_ORG').'errors.404';
+        return view($view_blade);
     }
 
     // 广告
@@ -128,7 +139,7 @@ class OrgIndexRepository {
 
         $return['item_list'] = $item_list;
 
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.my-advertising';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-advertising';
         return view($view_blade)->with($return);
     }
 
@@ -152,7 +163,7 @@ class OrgIndexRepository {
         $me = $this->me;
         $return['info'] = $me;
         $return['data'] = $me;
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.my-info.my-info-index';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-info.my-info-index';
         return view($view_blade)->with($return);
     }
     // 【基本信息】返回-编辑-视图
@@ -162,7 +173,7 @@ class OrgIndexRepository {
         $me = $this->me;
         $return['info'] = $me;
         $return['data'] = $me;
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.my-info.my-info-edit';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-info.my-info-edit';
         return view($view_blade)->with($return);
     }
     // 【基本信息】保存数据
@@ -196,7 +207,7 @@ class OrgIndexRepository {
                         unlink(storage_resource_path($mine_portrait_img));
                     }
 
-                    $result = upload_img_storage($post_data["portrait"],'portrait_for_user_by_user_'.$me->id,'www/unique/portrait_for_user','');
+                    $result = upload_img_storage($post_data["portrait"],'portrait_for_user_by_user_'.$me->id,'k/unique/portrait_for_user','');
                     if($result["result"])
                     {
                         $me->portrait_img = $result["local"];
@@ -232,7 +243,7 @@ class OrgIndexRepository {
         $return['info'] = $me;
         $return['data'] = $me;
         $return['data'] = $me;
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.my-info.my-info-introduction-index';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-info.my-info-introduction-index';
         return view($view_blade)->with($return);
     }
     // 【基本信息-图文介绍】返回-编辑-视图
@@ -244,7 +255,7 @@ class OrgIndexRepository {
 
         $return['info'] = $me;
         $return['data'] = $me;
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.my-info.my-info-introduction-edit';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-info.my-info-introduction-edit';
         return view($view_blade)->with($return);
     }
     // 【基本信息-图文介绍】保存数据
@@ -292,7 +303,7 @@ class OrgIndexRepository {
     {
         $this->get_me();
         $me = $this->me;
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.my-info.my-info-password-reset';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-info.my-info-password-reset';
         return view($view_blade)->with(['data'=>$me]);
     }
     // 【基本信息-密码】保存数据
@@ -667,6 +678,185 @@ class OrgIndexRepository {
     }
 
 
+
+
+
+
+
+
+
+    // 【基本信息-我的名片】返回-主页-视图
+    public function view_my_card_index()
+    {
+        $this->get_me();
+        $me = $this->me;
+        $user_id = $me->id;
+
+        $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
+
+        $user = K_User::select('*')
+            ->with([
+                'ext'
+            ])
+            ->withCount([
+//                'items as article_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>1]); },
+//                'items as activity_count' => function($query) { $query->where(['item_status'=>1,'item_category'=>1,'item_type'=>11]); },
+            ])
+            ->find($user_id);
+
+
+        $is_follow = 0;
+
+        if($this->auth_check)
+        {
+            $me = $this->me;
+            $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+
+
+            if($user_id != $me_id)
+            {
+                $relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                view()->share(['relation'=>$relation]);
+            }
+
+            $relation_with_me = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            if($relation_with_me &&  in_array($relation_with_me->relation_type,[21,41]))
+            {
+                $is_follow = 1;
+            }
+        }
+        else
+        {
+        }
+
+
+        $condition = request()->all();
+        $return['condition'] = $condition;
+        $return['data'] = $me;
+        $return['is_follow'] = $is_follow;
+        $return['menu_active_for_my_card'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-profile.my-card-index';
+        return view($view_blade)->with($return);
+    }
+    // 【基本信息-我的名片】返回-编辑-视图
+    public function view_my_card_edit()
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        $return['data'] = $me;
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-profile.my-card-edit';
+        return view($view_blade)->with($return);
+    }
+    // 【基本信息-我的名片】保存-数据
+    public function operate_my_card_save($post_data)
+    {
+        $mine_data = $post_data;
+        $this->get_me();
+        $me = $this->me;
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if(!empty($post_data['custom']))
+            {
+                $post_data['custom'] = json_encode($post_data['custom']);
+            }
+
+            unset($mine_data['operate']);
+            $mine_data = $post_data;
+            $bool = $me->fill($mine_data)->save();
+            if($bool)
+            {
+                // 头像
+                if(!empty($post_data["portrait"]))
+                {
+                    // 删除原文件
+                    $mine_original_file = $me->portrait_img;
+                    if(!empty($mine_original_file) && file_exists(storage_resource_path($mine_original_file)))
+                    {
+                        unlink(storage_resource_path($mine_original_file));
+                    }
+
+//                    $result = upload_img_storage($post_data["portrait"],'','root/common');
+                    $result = upload_img_storage($post_data["portrait"],'portrait_for_user_by_user_'.$me->id,'k/unique/portrait_for_user','');
+                    if($result["result"])
+                    {
+                        $me->portrait_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload--portrait_img--file--fail");
+                }
+
+                // 微信二维码
+                if(!empty($post_data["wx_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_wx_qr_code_img = $me->wx_qr_code_img;
+                    if(!empty($mine_wx_qr_code_img) && file_exists(storage_resource_path($mine_wx_qr_code_img)))
+                    {
+                        unlink(storage_resource_path($mine_wx_qr_code_img));
+                    }
+
+                    $result = upload_img_storage($post_data["wx_qr_code"],'','k/common');
+                    if($result["result"])
+                    {
+                        $me->wx_qr_code_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload--wx_qr_code--fail");
+                }
+
+                // 联系人微信二维码
+                if(!empty($post_data["linkman_wx_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_wx_qr_code_img = $me->wx_qr_code_img;
+                    if(!empty($mine_wx_qr_code_img) && file_exists(storage_resource_path($mine_wx_qr_code_img)))
+                    {
+                        unlink(storage_resource_path($mine_wx_qr_code_img));
+                    }
+
+                    $result = upload_img_storage($post_data["linkman_wx_qr_code"],'','k/common');
+                    if($result["result"])
+                    {
+                        $me->linkman_wx_qr_code_img = $result["local"];
+                        $me->save();
+                    }
+                    else throw new Exception("upload--wx_qr_code--fail");
+                }
+
+            }
+            else throw new Exception("update--user--fail");
+
+            $ext = K_UserExt::where('user_id',$me->id)->first();
+            $mine_data = $post_data;
+            $bool = $ext->fill($mine_data)->save();
+            if($bool)
+            {
+            }
+            else throw new Exception("update--ext--fail");
+
+            DB::commit();
+            return response_success(['id'=>$me->id]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+
+
+
+
     // 【select2】
     public function operate_business_select2_user($post_data)
     {
@@ -722,7 +912,7 @@ class OrgIndexRepository {
         $return['user_list'] = $user_list;
         $return['menu_active_for_my_fans_list'] = 'active';
 
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.my-follow-list';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.my-follow-list';
         return view($view_blade)->with($return);
     }
     // 【用户】【user-list】【我的赞助商】
@@ -1782,7 +1972,7 @@ class OrgIndexRepository {
     public function view_mine_item_item_create($post_data)
     {
         $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_K_ORG_FRONT').'errors.404');
+        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_K_ORG').'errors.404');
 
         $item_category = 'item';
         $item_type = 'item';
@@ -1835,18 +2025,18 @@ class OrgIndexRepository {
         $return['list_text'] = $list_text;
         $return['list_link'] = $list_link;
 
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.item.item-edit';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.item.item-edit';
         return view($view_blade)->with($return);
     }
     // 【ITEM】返回-编辑-视图
     public function view_mine_item_item_edit($post_data)
     {
         $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_K_ORG_FRONT').'errors.404');
+        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_K_ORG').'errors.404');
 
         $item_id = $post_data["item-id"];
         $mine = K_Item::with(['user'])->find($item_id);
-        if(!$mine) return view(env('TEMPLATE_K_ORG_FRONT').'errors.404');
+        if(!$mine) return view(env('TEMPLATE_K_ORG').'errors.404');
 
 
         $item_type = 'item';
@@ -1892,7 +2082,7 @@ class OrgIndexRepository {
         $return['list_text'] = $list_text;
         $return['list_link'] = $list_link;
 
-        $view_blade = env('TEMPLATE_K_ORG_FRONT').'entrance.item.item-edit';
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.item.item-edit';
 
         if($item_id == 0)
         {

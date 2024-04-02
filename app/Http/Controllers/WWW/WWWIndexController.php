@@ -130,6 +130,16 @@ class WWWIndexController extends Controller
     }
 
 
+    public function operate_mine_my_card_show()
+    {
+        return $this->repo->operate_mine_my_card_show(request()->all(),21);
+    }
+    public function operate_mine_my_card_hide()
+    {
+        return $this->repo->operate_mine_my_card_hide(request()->all(),21);
+    }
+
+
 
 
 

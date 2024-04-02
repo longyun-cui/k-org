@@ -19,7 +19,7 @@ use QrCode;
 
 class WWWIndexRepository {
 
-    private $evn;
+    private $env;
     private $auth_check;
     private $me;
     private $me_admin;
@@ -306,6 +306,7 @@ class WWWIndexRepository {
     // 【K】【平台介绍】
     public function view_introduction()
     {
+        $this->get_me();
         if(Auth::check())
         {
             $me = Auth::user();
@@ -340,7 +341,7 @@ class WWWIndexRepository {
         $path = request()->path();
         if($path == "root-1") return view(env('TEMPLATE_K_WWW').'entrance.root-1')->with($return);
 //        else return view('entrance.root')->with($return);
-        else return view(env('c').'entrance.root-introduction')->with($return);
+        else return view(env('TEMPLATE_K_WWW').'entrance.introduction')->with($return);
     }
 
 
@@ -779,6 +780,95 @@ class WWWIndexRepository {
 
 
 
+    // 【名片】启用
+    public function operate_mine_my_card_show($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+//            'item_id.required' => 'item_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+//            'item_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'my-card-show') return response_error([],"参数【operate】有误！");
+
+        $this->get_me();
+        $me = $this->me;
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $me->user_show = 1;
+            $me->timestamps = false;
+            $bool = $me->save();
+            if(!$bool) throw new Exception("update--user--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+    // 【项目】管理员-禁用
+    public function operate_mine_my_card_hide($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+//            'item_id.required' => 'item_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+//            'item_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'my-card-hide') return response_error([],"参数【operate】有误！");
+
+        $this->get_me();
+        $me = $this->me;
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $me->user_show = 0;
+            $me->timestamps = false;
+            $bool = $me->save();
+            if(!$bool) throw new Exception("update--user--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
 
 
 

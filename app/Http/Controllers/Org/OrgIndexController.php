@@ -24,9 +24,15 @@ class OrgIndexController extends Controller
 
 
     // 返回【主页】视图
-    public function index()
+    public function view_index()
     {
-        return $this->repo->view_org_index();
+        return $this->repo->view_index();
+    }
+
+    // 返回【主页】视图
+    public function view_404()
+    {
+        return $this->repo->view_404();
     }
 
     //
@@ -148,11 +154,19 @@ class OrgIndexController extends Controller
 
 
 
+    // 【基本信息】编辑
+    public function operate_my_card_edit()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_my_card_edit();
+        else if (request()->isMethod('post')) return $this->repo->operate_my_card_save(request()->all());
+    }
+
+
+
+
     /*
      * 用户系统
      */
-
-
     // 【用户】【成员】返回-列表
     public function view_mine_user_my_member_list()
     {

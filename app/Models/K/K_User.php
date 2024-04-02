@@ -22,7 +22,7 @@ class K_User extends Authenticatable
         'wx_id', 'wx_qr_code_img',
         'wb_name', 'wb_address',
         'website',
-        'address',
+        'address', 'area_province', 'area_city', 'area_district',
         'contact_phone', 'contact_email', 'contact_wx_id', 'contact_wx_qr_code_img', 'contact_address',
         'linkman', 'linkman_name', 'linkman_phone', 'linkman_wx_id', 'linkman_wx_qr_code_img',
         'company', 'department', 'position', 'business_description',

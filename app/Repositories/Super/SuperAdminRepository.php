@@ -26,8 +26,8 @@ class SuperAdminRepository {
         $this->modelUser = new K_User;
         $this->modelItem = new K_Item;
 
-        $this->view_blade_403 = env('TEMPLATE_K_SUPER_ADMIN').'entrance.errors.403';
-        $this->view_blade_404 = env('TEMPLATE_K_SUPER_ADMIN').'entrance.errors.404';
+        $this->view_blade_403 = env('TEMPLATE_K_SUPER__ADMIN').'entrance.errors.403';
+        $this->view_blade_404 = env('TEMPLATE_K_SUPER__ADMIN').'entrance.errors.404';
 
         Blade::setEchoFormat('%s');
         Blade::setEchoFormat('e(%s)');
@@ -71,7 +71,7 @@ class SuperAdminRepository {
         $view_data['consumption_data'] = [];
         $view_data['insufficient_clients'] = [];
 
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'index';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.index';
 
         return view($view_blade)->with($view_data);
     }
@@ -86,14 +86,14 @@ class SuperAdminRepository {
     public function view_info_index()
     {
         $me = Auth::guard('admin')->user();
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.info.index')->with(['data'=>$me]);
+        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.info.index')->with(['data'=>$me]);
     }
 
     // 【基本信息】返回-编辑-视图
     public function view_info_edit()
     {
         $me = Auth::guard('admin')->user();
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.info.edit')->with(['data'=>$me]);
+        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.info.edit')->with(['data'=>$me]);
     }
     // 【基本信息】保存数据
     public function operate_info_save($post_data)
@@ -154,7 +154,7 @@ class SuperAdminRepository {
     public function view_info_password_reset()
     {
         $me = Auth::guard('admin')->user();
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.info.password-reset')->with(['data'=>$me]);
+        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.info.password-reset')->with(['data'=>$me]);
     }
     // 【密码】保存数据
     public function operate_info_password_reset_save($post_data)
@@ -332,7 +332,7 @@ class SuperAdminRepository {
 //        }
 
         $view_data['menu_active_by_user_list'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.user.user-list';
         return view($view_blade)->with($view_data);
     }
     // 【K】【用户】【全部机构】返回-列表-数据
@@ -399,7 +399,7 @@ class SuperAdminRepository {
         $me = $this->me;
 
         $view_data['menu_active_by_user_list_for_individual'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-for-individual';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.user.user-list-for-individual';
         return view($view_blade)->with($view_data);
     }
     // 【K】【用户】【个人用户】返回-列表-数据
@@ -450,7 +450,7 @@ class SuperAdminRepository {
         $me = $this->me;
 
         $view_data['menu_active_by_user_list_for_org'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-list-for-org';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.user.user-list-for-org';
         return view($view_blade)->with($view_data);
     }
     // 【K】【用户】【组织】返回-列表-数据
@@ -499,14 +499,14 @@ class SuperAdminRepository {
     public function view_user_user_create()
     {
         $me = Auth::guard('admin')->user();
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-edit';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.user.user-edit';
         return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0]);
     }
     // 【K】【用户】【组织】返回-编辑-视图
     public function view_user_user_edit()
     {
         $id = request("id",0);
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.user.user-edit';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.user.user-edit';
 
         if($id == 0)
         {
@@ -889,7 +889,7 @@ class SuperAdminRepository {
     // 【K】【内容】返回-列表-视图
     public function view_item_item_list($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list')
+        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list')
             ->with([
                 'sidebar_item_active'=>'active',
                 'sidebar_item_item_list_active'=>'active'
@@ -962,7 +962,7 @@ class SuperAdminRepository {
 //        }
 
         $view_data['menu_active_by_item_list_for_all'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-all';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-for-all';
         return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【全部】返回-列表-数据
@@ -1028,7 +1028,7 @@ class SuperAdminRepository {
         $me = $this->me;
 
         $view_data['menu_active_by_item_list_for_article'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-article';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-for-article';
         return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【文章】返回-列表-数据
@@ -1084,7 +1084,7 @@ class SuperAdminRepository {
         $me = $this->me;
 
         $view_data['menu_active_by_item_list_for_activity'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-activity';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-for-activity';
         return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【活动】返回-列表-数据
@@ -1140,7 +1140,7 @@ class SuperAdminRepository {
         $me = $this->me;
 
         $view_data['menu_active_by_item_list_for_advertising'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-advertising';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-for-advertising';
         return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【广告】返回-列表-数据
@@ -1196,7 +1196,7 @@ class SuperAdminRepository {
         $me = $this->me;
 
         $view_data['menu_active_by_item_list_for_mine'] = 'active menu-open';
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-for-mine';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-for-mine';
         return view($view_blade)->with($view_data);
     }
     // 【K】【内容】【全部】返回-列表-数据
@@ -1248,7 +1248,7 @@ class SuperAdminRepository {
     public function view_item_item_create($post_data)
     {
         $me = Auth::guard('admin')->user();
-        if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_K_SUPER_ADMIN').'errors.404');
+        if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_K_SUPER__ADMIN').'errors.404');
 
         $item_type = 'item';
         $item_type_text = '内容';
@@ -1256,7 +1256,7 @@ class SuperAdminRepository {
         $list_text = $item_type_text.'列表';
         $list_link = '/admin/item/item-my-list';
 
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-edit';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-edit';
         return view($view_blade)->with([
             'operate'=>'create',
             'operate_id'=>0,
@@ -1272,11 +1272,11 @@ class SuperAdminRepository {
     public function view_item_item_edit($post_data)
     {
         $me = Auth::guard('admin')->user();
-        if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_K_SUPER_ADMIN').'errors.404');
+        if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_K_SUPER__ADMIN').'errors.404');
 
         $id = $post_data["id"];
         $mine = K_Item::with(['owner'])->find($id);
-        if(!$mine) return view(env('TEMPLATE_K_SUPER_ADMIN').'errors.404');
+        if(!$mine) return view(env('TEMPLATE_K_SUPER__ADMIN').'errors.404');
 
 
         $item_type = 'item';
@@ -1318,7 +1318,7 @@ class SuperAdminRepository {
             $list_link = '/admin/item/item-advertising-list';
         }
 
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-edit';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-edit';
 
         if($id == 0)
         {
@@ -2274,7 +2274,7 @@ class SuperAdminRepository {
         $view_data["shared_root_scale"] = $shared_root_scale;
         $view_data["sidebar_statistic_active"] = 'active';
 
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.statistic.statistic-index';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-index';
         return view($view_blade)->with($view_data);
     }
     // 【】流量统计
@@ -2459,7 +2459,7 @@ class SuperAdminRepository {
         $view_data["shared_all_scale"] = $shared_all_scale;
         $view_data["shared_root_scale"] = $shared_root_scale;
 
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.statistic.statistic-user';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-user';
         return view($view_blade)->with($view_data);
     }
     // 【】流量统计
@@ -2576,7 +2576,7 @@ class SuperAdminRepository {
         $view_data["shared_data"] = $shared_data;
         $view_data["shared_data_scale"] = $shared_data_scale;
 
-        $view_blade = env('TEMPLATE_K_SUPER_ADMIN').'entrance.statistic.statistic-item';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-item';
         return view($view_blade)->with($view_data);
     }
 
@@ -2584,7 +2584,7 @@ class SuperAdminRepository {
     // 【K】【内容】【全部】返回-列表-视图
     public function view_statistic_all_list($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.statistic.statistic-all-list')
+        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-all-list')
             ->with([
                 'sidebar_statistic_all_list_active'=>'active'
             ]);
