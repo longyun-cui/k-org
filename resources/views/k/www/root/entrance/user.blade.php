@@ -13,13 +13,13 @@
     @endif
 @endsection
 
-@section('meta_title')朝鲜族社群组织活动平台@endsection
+@section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
 @section('meta_description')发现身边的朝鲜族社群组织活动@endsection
 @section('meta_keywords')朝鲜族,朝鲜族社群,朝鲜族组织,朝鲜族活动@endsection
 
 
-@section('wx_share_title'){{ $data->username or '朝鲜族平台' }}@endsection
+@section('wx_share_title'){{ $data->username or '朝鲜族社群平台' }}@endsection
 @section('wx_share_desc')欢迎加入我们@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}@endsection
 
