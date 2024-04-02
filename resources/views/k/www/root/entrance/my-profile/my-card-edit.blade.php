@@ -72,21 +72,21 @@
                         <div class="form-group has-feedback">
 {{--                            <label class="control-label- col-md-6">姓名(名片展示)</label>--}}
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="true_name" placeholder="真实姓名" value="{{ $data->true_name or '' }}">
+                                <input type="text" class="form-control" name="username" placeholder="姓名" value="{{ $data->username or '' }}">
                                 <span class="form-control-feedback fa fa-user"> 姓名</span>
                             </div>
                         </div>
-                        {{--描述--}}
+                        {{--签名--}}
                         <div class="form-group has-feedback">
 {{--                            <label class="control-label- col-md-2">个人签名</label>--}}
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="description" placeholder="个人签名" value="{{ $data->description or '' }}">
+                                <input type="text" class="form-control" name="description" placeholder="签名" value="{{ $data->description or '' }}">
 {{--                                <textarea class="form-control" name="description" rows="3" cols="" placeholder="个人签名">{{ $data->description or '' }}</textarea>--}}
-                                <span class="form-control-feedback fa fa-file-text-o"> 个人签名</span>
+                                <span class="form-control-feedback fa fa-file-text-o"> 签名</span>
                             </div>
                         </div>
                         {{--真实姓名--}}
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback _none">
 {{--                            <label class="control-label- col-md-2">单位名称</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="company" placeholder="单位名称" value="{{ $data->company or '' }}">
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         {{--职位--}}
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback _none">
 {{--                            <label class="control-label- col-md-2">职位</label>--}}
                             <div class="col-md-12 ">
                                 <input type="text" class="form-control" name="position" placeholder="职位" value="{{ $data->position or '' }}">
@@ -114,16 +114,16 @@
                         <div class="form-group has-feedback">
 {{--                            <label class="control-label- col-md-2">联系地址</label>--}}
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="contact_address" placeholder="联系地址" value="{{ $data->contact_address or '' }}">
-                                <span class="form-control-feedback fa fa-location-arrow"> 联系地址</span>
+                                <input type="text" class="form-control" name="contact_address" placeholder="地址" value="{{ $data->contact_address or '' }}">
+                                <span class="form-control-feedback fa fa-location-arrow"> 地址</span>
                             </div>
                         </div>
                         {{--电话--}}
                         <div class="form-group has-feedback">
 {{--                            <label class="control-label- col-md-2">联系电话</label>--}}
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="contact_phone" placeholder="联系电话" value="{{ $data->contact_phone or '' }}">
-                                <span class="form-control-feedback fa fa-phone"> 联系电话</span>
+                                <input type="text" class="form-control" name="contact_phone" placeholder="电话" value="{{ $data->contact_phone or '' }}">
+                                <span class="form-control-feedback fa fa-phone"> 电话</span>
                             </div>
                         </div>
                         {{--邮箱--}}
@@ -144,8 +144,8 @@
                         <div class="form-group has-feedback">
 {{--                            <label class="control-label- col-md-2">微信号</label>--}}
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="wx_id" placeholder="微信号" value="{{ $data->wx_id or '' }}">
-                                <span class="form-control-feedback fa fa-weixin"> 微信号</span>
+                                <input type="text" class="form-control" name="wx_id" placeholder="微信" value="{{ $data->wx_id or '' }}">
+                                <span class="form-control-feedback fa fa-weixin"> 微信</span>
                             </div>
                         </div>
                         {{--微信二维码--}}
