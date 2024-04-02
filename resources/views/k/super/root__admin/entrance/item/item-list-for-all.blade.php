@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
+@extends(env('TEMPLATE_K_SUPER__ADMIN').'layout.layout')
 
 
 @section('head_title','全部内容')
@@ -480,5 +480,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-script')
+@include(env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-script')
 @endsection

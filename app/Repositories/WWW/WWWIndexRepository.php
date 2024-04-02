@@ -170,7 +170,9 @@ class WWWIndexRepository {
                     'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
-                ->where('user_type',11)
+                ->where(function($query){
+                    $query->where('user_type',11)->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+                })
                 ->where('user_status',1)
                 ->where('active',1)
                 ->orderByDesc('id')
@@ -187,7 +189,9 @@ class WWWIndexRepository {
                     'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
-                ->where('user_type',11)
+                ->where(function($query) {
+                    $query->where('user_type',11)->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+                })
                 ->where('user_status',1)
                 ->where('active',1)
                 ->orderByDesc('id')
