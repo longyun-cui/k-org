@@ -173,8 +173,8 @@ class WWWIndexRepository {
                 ->where(function($query){
                     $query->where('user_type',11)->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
                 })
-                ->where('user_status',1)
-                ->where('active',1)
+                ->where(['user_status'=>1,'active'=>1])
+                ->orderBy('user_type')
                 ->orderByDesc('id')
                 ->get();
 //                ->paginate(20);
@@ -192,8 +192,8 @@ class WWWIndexRepository {
                 ->where(function($query) {
                     $query->where('user_type',11)->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
                 })
-                ->where('user_status',1)
-                ->where('active',1)
+                ->where(['user_status'=>1,'active'=>1])
+                ->orderBy('user_type')
                 ->orderByDesc('id')
                 ->get();
 //                ->paginate(20);
@@ -270,25 +270,25 @@ class WWWIndexRepository {
 
         if($type == 'root')
         {
-            $head_title = "朝鲜族组织平台";
+            $head_title = "朝鲜族社群平台";
             $sidebar_active = 'menu_active_for_root';
             $page["module"] = 1;
         }
         else if($type == 'article')
         {
-            $head_title = "文章 - 朝鲜族组织平台";
+            $head_title = "文章 - 朝鲜族社群平台";
             $sidebar_active = 'menu_active_for_article';
             $page["module"] = 9;
         }
         else if($type == 'activity')
         {
-            $head_title = "活动 - 朝鲜族组织平台";
+            $head_title = "活动 - 朝鲜族社群平台";
             $sidebar_active = 'menu_active_for_activity';
             $page["module"] = 11;
         }
         else
         {
-            $head_title = "首页 - 朝鲜族组织平台";
+            $head_title = "朝鲜族社群平台";
             $sidebar_active = 'menu_active_for_root';
             $page["module"] = 1;
         }
@@ -375,8 +375,7 @@ class WWWIndexRepository {
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
                 ->where('user_type',11)
-                ->where('user_status',1)
-                ->where('active',1);
+                ->where(['user_status'=>1,'active'=>1]);
 
             if($q) $user_query->where('tag','like',"%$q%");
 
@@ -399,8 +398,7 @@ class WWWIndexRepository {
                     'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
                 ])
                 ->where('user_type',11)
-                ->where('user_status',1)
-                ->where('active',1);
+                ->where(['user_status'=>1,'active'=>1]);
 
             if($q) $user_query->where('tag','like',"%$q%");
 
@@ -478,7 +476,7 @@ class WWWIndexRepository {
         $return[$sidebar_active] = 'active';
         $return['getType'] = 'items';
         $return['page_type'] = 'tag';
-        $return['head_title'] = "#{$q} - 朝鲜族组织平台";
+        $return['head_title'] = "#{$q} - 朝鲜族社群平台";
         $return['page'] = $page;
 
         $path = request()->path();
