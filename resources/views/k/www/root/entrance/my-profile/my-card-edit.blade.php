@@ -50,20 +50,32 @@
                         </div>
                         {{--选择所在城市--}}
                         <div class="form-group area_select_box">
-                            <label class="control-label- col-md-12">所在城市</label>
+                            <label class="control-label- col-md-12"><sup class="text-red">*</sup> 所在城市</label>
                             <div class="col-md-4 ">
                                 <select name="area_province" class="form-control form-filter area_select_province" id="area_province">
-                                    <option value="">请选择省</option>
+                                    @if(!empty($data->area_province))
+                                        <option value="{{ $data->area_province or '' }}">{{ $data->area_province or '' }}</option>
+                                    @else
+                                        <option value="">请选择省</option>
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-4 ">
                                 <select name="area_city" class="form-control form-filter area_select_city" id="area_city">
-                                    <option value="">请先选择省</option>
+                                    @if(!empty($data->area_city))
+                                        <option value="{{ $data->area_city or '' }}">{{ $data->area_city or '' }}</option>
+                                    @else
+                                        <option value="">请先选择省</option>
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-4 ">
                                 <select name="area_district" class="form-control form-filter area_select_district" id="area_district">
-                                    <option value="">请先选择市</option>
+                                    @if(!empty($data->area_district))
+                                        <option value="{{ $data->area_district or '' }}">{{ $data->area_district or '' }}</option>
+                                    @else
+                                        <option value="">请先选择市</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -85,12 +97,12 @@
                                 <span class="form-control-feedback fa fa-file-text-o"> 签名</span>
                             </div>
                         </div>
-                        {{--真实姓名--}}
+                        {{--单位--}}
                         <div class="form-group has-feedback _none">
-{{--                            <label class="control-label- col-md-2">单位名称</label>--}}
+{{--                            <label class="control-label- col-md-2">单位</label>--}}
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="company" placeholder="单位名称" value="{{ $data->company or '' }}">
-                                <span class="form-control-feedback fa fa-"> 公司</span>
+                                <input type="text" class="form-control" name="company" placeholder="单位" value="{{ $data->company or '' }}">
+                                <span class="form-control-feedback fa fa-"> 单位</span>
                             </div>
                         </div>
                         {{--职位--}}
