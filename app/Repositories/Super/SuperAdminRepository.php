@@ -1271,7 +1271,8 @@ class SuperAdminRepository {
     // 【ITEM】返回-编辑-视图
     public function view_item_item_edit($post_data)
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_K_SUPER__ADMIN').'errors.404');
 
         $id = $post_data["id"];

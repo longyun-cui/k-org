@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
+@extends(env('TEMPLATE_K_SUPER__ADMIN').'layout.layout')
 
 
 @section('head_title')
@@ -84,7 +84,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">描述</label>
                     <div class="col-md-8 ">
-                        <textarea class="form-control" name="description" rows="3" placeholder="描述">{{$data->description or ''}}</textarea>
+                        <textarea class="form-control" name="description" rows="3" placeholder="描述">{!! $data->description or '' !!}</textarea>
                     </div>
                 </div>
 
