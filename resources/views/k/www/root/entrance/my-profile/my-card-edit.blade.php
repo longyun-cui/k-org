@@ -211,6 +211,35 @@
                             </div>
                         </div>
 
+                        {{--头像--}}
+                        <div class="form-group">
+                            <label class="control-label- col-md-2">头像</label>
+                            <div class="col-md-12 fileinput-group">
+
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail">
+                                        @if(!empty($data->portrait_img))
+                                            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" alt="" />
+                                        @endif
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail">
+                                    </div>
+                                    <div class="btn-tool-group">
+                                        <span class="btn-file">
+                                            <button class="btn btn-sm btn-primary fileinput-new">选择图片</button>
+                                            <button class="btn btn-sm btn-warning fileinput-exists">更改</button>
+                                            <input type="file" name="portrait" />
+                                        </span>
+                                        <span class="">
+                                            <button class="btn btn-sm btn-danger fileinput-exists" data-dismiss="fileinput">移除</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="titleImageError" style="color: #a94442"></div>
+
+                            </div>
+                        </div>
+
                         {{--图文介绍--}}
                         <div class="form-group">
                             <label class="control-label- col-md-3">图文介绍</label>
@@ -227,35 +256,6 @@
                                         });
                                     </script>
                                 </div>
-                            </div>
-                        </div>
-
-                        {{--头像--}}
-                        <div class="form-group">
-                            <label class="control-label- col-md-2">头像</label>
-                            <div class="col-md-12 fileinput-group">
-
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail">
-                                        @if(!empty($data->portrait_img))
-                                            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" alt="" />
-                                        @endif
-                                    </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail">
-                                    </div>
-                                    <div class="btn-tool-group">
-                            <span class="btn-file">
-                                <button class="btn btn-sm btn-primary fileinput-new">选择图片</button>
-                                <button class="btn btn-sm btn-warning fileinput-exists">更改</button>
-                                <input type="file" name="portrait" />
-                            </span>
-                                        <span class="">
-                                <button class="btn btn-sm btn-danger fileinput-exists" data-dismiss="fileinput">移除</button>
-                            </span>
-                                    </div>
-                                </div>
-                                <div id="titleImageError" style="color: #a94442"></div>
-
                             </div>
                         </div>
 
