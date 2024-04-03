@@ -27,7 +27,7 @@
 <div class="container">
 
     {{--左侧--}}
-    <div class="main-body-section main-body-left-section section-wrapper page-item">
+    <div class="main-body-section main-body-center-section section-wrapper page-item">
 
 
 {{--        <div class="nav-tabs-custom">--}}
@@ -84,7 +84,7 @@
 
 
     {{--右侧--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
+    <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm _none">
         <div class="fixed-to-top">
 
 

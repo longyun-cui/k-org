@@ -95,9 +95,7 @@
 
 
     {{--左侧-内容--}}
-    <div class="main-body-section main-body-left-section section-wrapper">
-
-
+    <div class="main-body-section main-body-center-section section-wrapper">
 
         @if(request('type') != 'introduction')
             @if(!empty($item_list) && count($item_list))

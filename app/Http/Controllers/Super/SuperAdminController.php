@@ -335,10 +335,10 @@ class SuperAdminController extends Controller
         return $this->repo->view_statistic_item(request()->all());
     }
     // 【K】【内容】返回-全部内容-列表-视图
-    public function view_statistic_all_list()
+    public function view_statistic_list()
     {
-        if(request()->isMethod('get')) return $this->repo->view_statistic_all_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_statistic_all_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_statistic_list(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_statistic_list_datatable(request()->all());
     }
 
 

@@ -1,11 +1,11 @@
-@extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
+@extends(env('TEMPLATE_K_SUPER__ADMIN').'layout.layout')
 
 
-@section('head_title','【A】流量统计')
+@section('head_title','流量统计')
 
 
 @section('header','')
-@section('description','管理员后台系统 - 朝鲜族组织活动平台 - 如未科技')
+@section('description','SUPER - 朝鲜族社群平台 - 如未科技')
 @section('breadcrumb')
     <li><a href="{{url('/admin')}}"><i class="fa fa-home"></i>首页</a></li>
     <li><a href="#"><i class="fa "></i>Here</a></li>

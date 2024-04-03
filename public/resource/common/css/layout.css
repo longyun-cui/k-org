@@ -27,6 +27,7 @@
 .main-section.right-section { padding-left:8px; }
 
 
+.main-body-center-section { position:relative; width:calc(100% - 280px); padding:0; margin:auto; border-radius:4px; }
 .main-body-left-section { position:relative; width:calc(100% - 280px); padding:0; padding-right:8px; border-radius:4px; float:left; clear:left; }
 .main-body-right-section { position:relative; width:280px; padding:0; float:right; clear:right; }
 

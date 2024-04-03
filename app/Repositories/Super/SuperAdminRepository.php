@@ -2109,7 +2109,8 @@ class SuperAdminRepository {
     // 【】流量统计
     public function view_statistic_index()
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         $me_id = $me->id;
 
         $this_month = date('Y-m');
@@ -2590,17 +2591,21 @@ class SuperAdminRepository {
 
 
     // 【K】【内容】【全部】返回-列表-视图
-    public function view_statistic_all_list($post_data)
+    public function view_statistic_list($post_data)
     {
-        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-all-list')
+        $this->get_me();
+        $me = $this->me;
+
+        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-list')
             ->with([
-                'sidebar_statistic_all_list_active'=>'active'
+                'sidebar_statistic_list_active'=>'active'
             ]);
     }
     // 【K】【内容】【全部】返回-列表-数据
-    public function get_statistic_all_datatable($post_data)
+    public function get_statistic_list_datatable($post_data)
     {
-        $me = Auth::guard("admin")->user();
+        $this->get_me();
+        $me = $this->me;
         $query = K_Record::select('*')
             ->with(['creator','object','item']);
 
