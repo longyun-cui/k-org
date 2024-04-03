@@ -383,7 +383,7 @@
 
 
 @if(!empty($data->ext->content) || !empty($data->ext->description))
-<div class=" item-piece item-option margin-top-4px padding-12px border-bottom-0" style="border-bottom:0;">
+<div class=" item-piece item-option margin-top-4px padding-16px border-bottom-0" style="border-bottom:0;">
     <article class="readmore-content item-piece item-option padding-0 border-bottom-0" style="border-bottom:0;">
 
         <div class="item-row margin-bottom-4px- text-center _none">
