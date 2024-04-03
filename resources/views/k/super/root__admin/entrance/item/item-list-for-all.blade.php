@@ -57,6 +57,7 @@
                     </div>
                 </div>
 
+                <div class="tableArea">
                 <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
@@ -65,6 +66,7 @@
                     <tbody>
                     </tbody>
                 </table>
+                </div>
 
             </div>
 
@@ -174,6 +176,20 @@
 @endsection
 
 
+
+
+@section('custom-css')
+@endsection
+@section('custom-style')
+    <style>
+        .tableArea table { width:100% !important; min-width:1280px; }
+        .tableArea table tr th, .tableArea table tr td { white-space:nowrap; }
+    </style>
+@endsection
+
+
+
+
 @section('custom-script')
 <script>
     var TableDatatablesAjax = function () {
@@ -202,27 +218,27 @@
                 "order": [],
                 "orderCellsTop": true,
                 "columns": [
-                    {
-                        "width": "32px",
-                        "title": "选择",
-                        "data": "id",
-                        'orderable': true,
-                        render: function(data, type, row, meta) {
-                            return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
-                        }
-                    },
-                    {
-                        "width": "32px",
-                        "title": "序号",
-                        "data": null,
-                        "targets": 0,
-                        'orderable': false
-                    },
+                    // {
+                    //     "title": "选择",
+                    //     "data": "id",
+                    //     "width": "40px",
+                    //     'orderable': true,
+                    //     render: function(data, type, row, meta) {
+                    //         return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
+                    //     }
+                    // },
+                    // {
+                    //     "title": "序号",
+                    //     "data": null,
+                    //     "width": "40px",
+                    //     "targets": 0,
+                    //     'orderable': false
+                    // },
                     {
                         "title": "ID",
                         "data": "id",
                         "className": "",
-                        "width": "50px",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
@@ -231,7 +247,7 @@
                     {
                         "title": "类型",
                         "data": "item_type",
-                        "width": "48px",
+                        "width": "80px",
                         'orderable': false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
@@ -265,7 +281,7 @@
                     {
                         "title": "浏览",
                         "data": "visit_num",
-                        "width": "40px",
+                        "width": "80px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
@@ -274,7 +290,7 @@
                     {
                         "title": "分享",
                         "data": "share_num",
-                        "width": "40px",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
@@ -284,7 +300,7 @@
                         "title": "创建时间",
                         "data": 'created_at',
                         "className": "",
-                        "width": "108px",
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -305,7 +321,7 @@
                         "title": "修改时间",
                         "data": 'updated_at',
                         "className": "",
-                        "width": "108px",
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -326,7 +342,7 @@
                         "title": "发布时间",
                         "data": 'published_at',
                         "className": "",
-                        "width": "108px",
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -423,10 +439,10 @@
                 ],
                 "drawCallback": function (settings) {
 
-                    let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
-                    this.api().column(1).nodes().each(function(cell, i) {
-                        cell.innerHTML =  startIndex + i + 1;
-                    });
+                    // let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    // this.api().column(1).nodes().each(function(cell, i) {
+                    //     cell.innerHTML =  startIndex + i + 1;
+                    // });
 
                     var $obj = new Object();
                     if($('input[name="item-id"]').val())  $obj.item_id = $('input[name="item-id"]').val();
