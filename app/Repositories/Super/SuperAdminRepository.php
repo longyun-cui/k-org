@@ -498,13 +498,18 @@ class SuperAdminRepository {
     // 【K】【用户】【组织】返回-添加-视图
     public function view_user_user_create()
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
+
         $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.user.user-edit';
         return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0]);
     }
     // 【K】【用户】【组织】返回-编辑-视图
     public function view_user_user_edit()
     {
+        $this->get_me();
+        $me = $this->me;
+
         $id = request("id",0);
         $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.user.user-edit';
 
@@ -548,7 +553,9 @@ class SuperAdminRepository {
         }
 
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
+
         if(!in_array($me->user_category,[0])) return response_error([],"你没有操作权限！");
 
 

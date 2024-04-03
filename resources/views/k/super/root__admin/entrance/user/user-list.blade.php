@@ -255,13 +255,23 @@
                         }
                     },
                     {
-                        "className": "",
-                        "width": "100px",
                         "title": "手机号",
                         "data": "mobile",
+                        "className": "",
+                        "width": "100px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return data;
+                        }
+                    },
+                    {
+                        "title": "城市",
+                        "data": "id",
+                        "className": "",
+                        "width": "160px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return row.area_province + '-' + row.area_city + '-' + row.area_district;
                         }
                     },
                     {

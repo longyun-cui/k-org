@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
+@extends(env('TEMPLATE_K_SUPER__ADMIN').'layout.layout')
 
 @section('create-text') 添加机构 @endsection
 @section('edit-text') 编辑机构 @endsection
@@ -73,6 +73,39 @@
                     </div>
                 </div>
 
+                {{--选择所在城市--}}
+                <div class="form-group area_select_box">
+                    <label class="control-label col-md-2"><sup class="text-red">*</sup> 所在城市</label>
+                    <div class="col-md-8 ">
+                        <div class="col-md-4 ">
+                            <select name="area_province" class="form-control form-filter area_select_province" id="area_province">
+                                @if(!empty($data->area_province))
+                                    <option value="{{ $data->area_province or '' }}">{{ $data->area_province or '' }}</option>
+                                @else
+                                    <option value="">请选择省</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-md-4 ">
+                            <select name="area_city" class="form-control form-filter area_select_city" id="area_city">
+                                @if(!empty($data->area_city))
+                                    <option value="{{ $data->area_city or '' }}">{{ $data->area_city or '' }}</option>
+                                @else
+                                    <option value="">请先选择省</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-md-4 ">
+                            <select name="area_district" class="form-control form-filter area_select_district" id="area_district">
+                                @if(!empty($data->area_district))
+                                    <option value="{{ $data->area_district or '' }}">{{ $data->area_district or '' }}</option>
+                                @else
+                                    <option value="">请先选择市</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                 {{--登录手机--}}
                 <div class="form-group">
@@ -120,9 +153,9 @@
                 </div>
                 {{--微信号--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">微信号</label>
+                    <label class="control-label col-md-2">微信</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="wechat_id" placeholder="微信号" value="{{ $data->wechat_id or '' }}">
+                        <input type="text" class="form-control" name="wechat_id" placeholder="微信" value="{{ $data->wechat_id or '' }}">
                     </div>
                 </div>
                 {{--微信二维码--}}
@@ -185,9 +218,9 @@
 
                 {{--联系人--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">【联系人】</label>
+                    <label class="control-label col-md-2">【联系人】姓名</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman_name" placeholder="联系人" value="{{ $data->linkman_name or '' }}">
+                        <input type="text" class="form-control" name="linkman_name" placeholder="联系人姓名" value="{{ $data->linkman_name or '' }}">
                     </div>
                 </div>
                 {{--联系人电话--}}
@@ -199,9 +232,9 @@
                 </div>
                 {{--联系人微信ID--}}
                 <div class="form-group">
-                    <label class="control-label col-md-2">【联系人】微信号</label>
+                    <label class="control-label col-md-2">【联系人】微信</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman_wechat_id" placeholder="联系人微信号" value="{{ $data->linkman_wechat_id or '' }}">
+                        <input type="text" class="form-control" name="linkman_wechat_id" placeholder="联系人微信" value="{{ $data->linkman_wechat_id or '' }}">
                     </div>
                 </div>
                 {{--联系人微信二维码--}}
@@ -414,7 +447,7 @@
                     else
                     {
                         layer.msg(data.msg);
-                        location.href = "{{ url('/admin/user/user-all-list') }}";
+                        location.href = "{{ url('/admin/user/user-list') }}";
                     }
                 }
             };
