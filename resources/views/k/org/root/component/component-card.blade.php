@@ -31,19 +31,20 @@
 
             {{--辅助信息--}}
             {{--公司--}}
-            @if(!empty($data->company))
-                <p class="text-muted text-center">
-                    <b>{{ $data->company or '暂无' }}</b>
-                    @if(!empty($data->position))
-                    - <b>{{ $data->position or '暂无' }}</b>
-                    @endif
-                </p>
-            @endif
+{{--            @if(!empty($data->company))--}}
+{{--                <p class="text-muted text-center">--}}
+{{--                    <b>{{ $data->company or '暂无' }}</b>--}}
+{{--                    @if(!empty($data->position))--}}
+{{--                    - <b>{{ $data->position or '暂无' }}</b>--}}
+{{--                    @endif--}}
+{{--                </p>--}}
+{{--            @endif--}}
             {{--职位--}}
 {{--            @if(!empty($data->position))--}}
 {{--                <p class="text-muted text-center"><b>{{ $data->position or '暂无' }}</b></p>--}}
 {{--            @endif--}}
-            {{--商业说明--}}
+            {{--描述--}}
+
             @if(!empty($data->description))
                 <p class="text-muted text-center margin-bottom-4px">
                     <small>{{ $data->description or '暂无' }}</small>
