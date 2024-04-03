@@ -48,11 +48,11 @@
     {{--右侧--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right">
 
-        @if($auth_check)
-            @include(env('TEMPLATE_K_COMMON').'component.right-side.right-me')
-        @else
-            @include(env('TEMPLATE_K_COMMON').'component.right-side.right-root')
-        @endif
+{{--        @if($auth_check)--}}
+{{--            @include(env('TEMPLATE_K_COMMON').'component.right-side.right-me')--}}
+{{--        @else--}}
+{{--            @include(env('TEMPLATE_K_COMMON').'component.right-side.right-root')--}}
+{{--        @endif--}}
 
     </div>
 

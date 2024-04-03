@@ -362,50 +362,59 @@ class WWWIndexRepository {
         }
         else $me_id = 0;
 
+        $user_query = K_User::select('*')
+            ->with([
+                'ad',
+//                'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
+            ])
+            ->withCount([
+                'fans_list as fans_count' => function($query) { $query->where([]); },
+                'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+                'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+            ])
+            ->where('user_type',11)
+            ->where(['user_status'=>1,'active'=>1]);
+
+
+        $item_query = K_Item::select('*')->with(['owner']);
+
         if(Auth::check())
         {
-            $user_query = K_User::select('*')
-                ->with([
-                    'ad',
+            $user_query->with([
                     'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
-                ])
-                ->withCount([
-                    'fans_list as fans_count' => function($query) { $query->where([]); },
-                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
-                ])
-                ->where('user_type',11)
-                ->where(['user_status'=>1,'active'=>1]);
-
-            if($q) $user_query->where('tag','like',"%$q%");
-
-            $user_list = $user_query->orderByDesc('id')->paginate(20);
-
-            $item_query = K_Item::select('*')
-                ->with([
-                    'owner',
-                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
                 ]);
+
+            $item_query->with([
+                'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+            ]);
+//            $item_query = K_Item::select('*')
+//                ->with([
+//                    'owner',
+//                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
+//                ]);
         }
         else
         {
-            $user_query = K_User::select('*')
-                ->with([
-                    'ad',
-                ])
-                ->withCount([
-                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
-                ])
-                ->where('user_type',11)
-                ->where(['user_status'=>1,'active'=>1]);
+//            $user_query = K_User::select('*')
+//                ->with([
+//                    'ad',
+//                ])
+//                ->withCount([
+//                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+//                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+//                ])
+//                ->where('user_type',11)
+//                ->where(['user_status'=>1,'active'=>1]);
+//
+//            if($q) $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%");
+//
+//            $user_list = $user_query->orderBy('user_type')->orderByDesc('id')->paginate(20);
 
-            if($q) $user_query->where('tag','like',"%$q%");
-
-            $user_list = $user_query->orderByDesc('id')->paginate(20);
-
-            $item_query = K_Item::select('*')->with(['owner']);
         }
+
+        if($q) $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%");
+
+        $user_list = $user_query->orderBy('user_type')->orderByDesc('id')->paginate(20);
 
         $return['user_list'] = $user_list;
 
