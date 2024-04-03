@@ -76,8 +76,8 @@
                                 </li>
                                 <li>
                                     <a href="{{ url('/organization-list') }}">
-                                        <i class="fa fa-list-ul text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                        <span>组织机构</span>
+                                        <i class="fa fa-users text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>用户</span>
                                     </a>
                                 </li>
                                 @if($auth_check)
@@ -155,7 +155,7 @@
                                 </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body _none">
+                        <li class="user-body _none-">
                             <div class="row">
                                 <div class="col-xs-4 text-center _none">
                                     <a href="{{ url('/user/'.$me->id) }}">
@@ -164,19 +164,17 @@
                                 </div>
                                 <div class="col-xs-6 text-center">
                                     <a href="{{ url('/my-follow') }}">
-{{--                                            <i class="fa fa-user text-red"></i> --}}
-                                        关注
+                                        <i class="fa fa-user text-red"></i> 关注
                                     </a>
                                 </div>
                                 <div class="col-xs-6 text-center">
                                     <a href="{{ url('/my-fans') }}">
-{{--                                            <i class="fa fa-user text-red"></i> --}}
-                                        粉丝
+                                        <i class="fa fa-user text-red"></i> 粉丝
                                     </a>
                                 </div>
                             </div>
                         </li>
-                        <li class="user-body _none">
+                        <li class="user-body _none-">
                             <div class="row">
                                 <div class="col-xs-4 text-center _none">
                                     <a href="{{ url('/user/'.$me->id) }}">

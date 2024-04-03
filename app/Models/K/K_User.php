@@ -122,35 +122,35 @@ class K_User extends Authenticatable
     function pivot_user()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_user','user_1_id','user_2_id')
-            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
+            ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
 
     // 与我相关的内容
     function pivot_relation()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','mine_user_id','relation_user_id')
-            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
+            ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
 
     // 与我相关的内容
     function pivot_sponsor_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','mine_user_id','relation_user_id')
-            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
+            ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
 
     // 与我相关的内容
     function pivot_org_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')
-            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
+            ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
 
     // 与我相关的内容
     function pivot_follow_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')
-            ->withPivot(['active','relation_active','type','relation_type'])->withTimestamps();
+            ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
 
 

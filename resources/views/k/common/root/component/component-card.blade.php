@@ -153,13 +153,6 @@
                         @endif
                     </li>
                 @endif
-                {{--地址--}}
-                @if(!empty($data->contact_address))
-                    <li class="list-group-item">
-                        <i class="fa fa-map-marker text-primary"></i>
-                        <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
-                    </li>
-                @endif
 
                 {{--联系人姓名--}}
                 @if(!empty($data->linkman_name))
@@ -189,6 +182,13 @@
                                 <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
                             </a>
                         @endif
+                    </li>
+                @endif
+                {{--地址--}}
+                @if(!empty($data->contact_address))
+                    <li class="list-group-item">
+                        <i class="fa fa-map-marker text-primary"></i>
+                        <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
                     </li>
                 @endif
                 {{--<li class="list-group-item">--}}
