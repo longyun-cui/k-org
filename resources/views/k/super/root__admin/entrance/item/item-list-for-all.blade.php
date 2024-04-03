@@ -256,7 +256,7 @@
                         "title": "发布者",
                         "data": "owner_id",
                         "className": "",
-                        "width": "100px",
+                        "width": "120px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.owner == null ? '未知' : '<a target="_blank" href="/user/'+row.owner.id+'">'+row.owner.username+'</a>';
@@ -284,7 +284,7 @@
                         "title": "创建时间",
                         "data": 'created_at',
                         "className": "",
-                        "width": "120px",
+                        "width": "108px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -305,7 +305,7 @@
                         "title": "修改时间",
                         "data": 'updated_at',
                         "className": "",
-                        "width": "120px",
+                        "width": "108px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -326,7 +326,7 @@
                         "title": "发布时间",
                         "data": 'published_at',
                         "className": "",
-                        "width": "120px",
+                        "width": "108px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
