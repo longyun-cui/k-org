@@ -97,15 +97,6 @@
     {{--左侧-内容--}}
     <div class="main-body-section main-body-left-section section-wrapper">
 
-        {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:4px;background:#fff;">--}}
-            {{--<i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->name or '' }}</b>--}}
-        {{--</div>--}}
-
-        {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:16px;background:#fff;">--}}
-            {{--<div class="margin">访问：{{ $data->visit_num or 0 }}</div>--}}
-            {{--<div class="margin">文章：{{ $data->article_count or 0 }}</div>--}}
-            {{--<div class="margin">活动：{{ $data->activity_count or 0 }}</div>--}}
-        {{--</div>--}}
 
 
         @if(request('type') != 'introduction')
@@ -114,91 +105,6 @@
                 {!! $item_list->links() !!}
             @endif
         @endif
-
-
-        @if(!in_array(request('type'),['org','introduction-']))
-            {{--<div class="item-row margin-bottom-4px pull-right visible-xs">--}}
-                {{--<strong>Ta的内容</strong>--}}
-            {{--</div>--}}
-
-            @if(!empty($item_list) && count($item_list))
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs _none">
-                    <li class="{{ $menu_active_for_item_all or '' }}">
-                        <a href="{{ url('/user/'.$data->id) }}" data-toggle="tab-">全部内容</a>
-                        {{--<a href="{{ url('/user/'.$data->id) }}" data-toggle="tab-">全部内容 {{ $data->item_count or 0 }}</a>--}}
-                    </li>
-                    <li class="{{ $menu_active_for_item_article or '' }}">
-                        <a href={{ url('/user/'.$data->id.'?type=article') }} data-toggle="tab-">文章</a>
-                        {{--<a href={{ url('/user/'.$data->id.'?type=article') }} data-toggle="tab-">文章 {{ $data->article_count or 0 }}</a>--}}
-                    </li>
-                    <li class="{{ $menu_active_for_item_activity or '' }}">
-                        <a href={{ url('/user/'.$data->id.'?type=activity') }} data-toggle="tab-">活动</a>
-                        {{--<a href={{ url('/user/'.$data->id.'?type=activity') }} data-toggle="tab-">活动 {{ $data->activity_count or 0 }}</a>--}}
-                    </li>
-                    <li class="{{ $menu_active_for_introduction or '' }}">
-                        <a href={{ url('/user/'.$data->id.'?type=introduction') }} data-toggle="introduction">图文介绍</a>
-                    </li>
-                </ul>
-                <div class="tab-content" style="width:100%; padding:10px 0;float:left;">
-                    <div class="active tab-pane" id="all">
-
-                    </div>
-
-                    {{--<div class="tab-pane" id="timeline">--}}
-                    {{--</div>--}}
-
-                    @if(!empty($data->ext->content) || !empty($data->ext->description))
-                    <div class="active tab-pane" id="introduction">
-                        @if(request('type') == 'introduction')
-                            <div class="item-piece item-option item-wrapper">
-                                <div class="box-body item-row item-content-row">
-
-                                    {{--<div class="item-row margin-bottom-8px" style="text-align:center;">--}}
-                                        {{--<h4>{{ $data->introduction->title or '图文介绍' }}</h4>--}}
-                                    {{--</div>--}}
-
-                                    {{--@if(!empty($data->introduction->description))--}}
-                                        {{--<div class="item-row margin-bottom-8px">--}}
-                                            {{--<div class="text-row text-description-row text-muted">--}}
-                                                {{--{{ $data->introduction->description or '暂无描述' }}--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--@endif--}}
-
-                                    @if(!empty($data->ext->description))
-                                        <div class="item-row item-description-row with-background margin-bottom-16px">
-                                            <div class="text-row text-description-row text-muted">
-                                                {{ $data->ext->description or '暂无描述' }}
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    <div class="item-row">
-                                        {{--@if(!empty($data->introduction->content))--}}
-                                            {{--{!! $data->introduction->content or '' !!}--}}
-                                        {{--@else--}}
-                                            {{--<small>暂无介绍2</small>--}}
-                                        {{--@endif--}}
-                                        @if(!empty($data->ext->content))
-                                            {!! $data->ext->content or '' !!}
-                                        @else
-                                            <small>暂无介绍1</small>
-                                        @endif
-                                    </div>
-
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                    @endif
-
-                </div>
-            </div>
-            @endif
-
-        @endif
-
 
 
         @if($data->user_type == 88 && request('type') == 'org')
