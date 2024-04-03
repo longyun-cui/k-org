@@ -108,6 +108,14 @@
         {{--</div>--}}
 
 
+        @if(request('type') != 'introduction')
+            @if(!empty($item_list) && count($item_list))
+                @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
+                {!! $item_list->links() !!}
+            @endif
+        @endif
+
+
         @if(!in_array(request('type'),['org','introduction-']))
             {{--<div class="item-row margin-bottom-4px pull-right visible-xs">--}}
                 {{--<strong>Ta的内容</strong>--}}
@@ -135,12 +143,6 @@
                 <div class="tab-content" style="width:100%; padding:10px 0;float:left;">
                     <div class="active tab-pane" id="all">
 
-                        @if(request('type') != 'introduction')
-                        @if(!empty($item_list) && count($item_list))
-                            @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
-                            {!! $item_list->links() !!}
-                        @endif
-                        @endif
                     </div>
 
                     {{--<div class="tab-pane" id="timeline">--}}
