@@ -354,9 +354,9 @@ class WWWIndexRepository {
     {
         $this->get_me();
 
-        if(Auth::check())
+        if($this->auth_check)
         {
-            $me = Auth::user();
+            $me = $this->me;
             $me_id = $me->id;
             $record["creator_id"] = $me_id;
         }
@@ -387,29 +387,9 @@ class WWWIndexRepository {
             $item_query->with([
                 'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
             ]);
-//            $item_query = K_Item::select('*')
-//                ->with([
-//                    'owner',
-//                    'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
-//                ]);
         }
         else
         {
-//            $user_query = K_User::select('*')
-//                ->with([
-//                    'ad',
-//                ])
-//                ->withCount([
-//                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-//                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
-//                ])
-//                ->where('user_type',11)
-//                ->where(['user_status'=>1,'active'=>1]);
-//
-//            if($q) $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%");
-//
-//            $user_list = $user_query->orderBy('user_type')->orderByDesc('id')->paginate(20);
-
         }
 
         if($q) $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%");
