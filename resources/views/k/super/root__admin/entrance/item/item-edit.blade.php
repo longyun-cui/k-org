@@ -353,7 +353,7 @@
                     else
                     {
                         layer.msg(data.msg);
-                        location.href = "{{ url('/admin/item/item-all-list') }}";
+                        location.href = "{{ url('/admin/item/item-list-for-all') }}";
                     }
                 }
             };
