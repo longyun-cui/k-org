@@ -52,7 +52,7 @@
 
 
                 {{--<!-- Menu -->--}}
-                <li class="dropdown tasks-menu _none">
+                <li class="dropdown _none-">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-list" style="width:16px;vertical-align:middle;"></i>
                         {{--<span class="label label-warning">10</span>--}}
@@ -119,7 +119,7 @@
                                         </a>
                                     </li>
                                 @else
-                                    <li>
+                                    <li class="_none">
                                         <a href="{{ url('/login-link') }}">
                                             <i class="fa fa-sign-in"></i>
                                             <span>登录</span>
@@ -145,17 +145,17 @@
                     </a>
 
 
-                    <ul class="dropdown-menu _none">
+                    <ul class="dropdown-menu _none-">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                                <img src="{{ url(env('DOMAIN_CDN').'/'.Auth::user()->portrait_img) }}" class="img-circle" alt="User Image">
+                                <img src="{{ url(env('DOMAIN_CDN').'/'.$me->portrait_img) }}" class="img-circle" alt="User Image">
                                 <p>
-                                    {{ Auth::user()->username }}
-{{--                                        <small>Member since Nov. 2020</small>--}}
+                                    {{ $me->username }}
+                                    <small>{{ $me->description or '' }}</small>
                                 </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body ">
+                        <li class="user-body _none">
                             <div class="row">
                                 <div class="col-xs-4 text-center _none">
                                     <a href="{{ url('/user/'.$me->id) }}">
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="user-body ">
+                        <li class="user-body _none">
                             <div class="row">
                                 <div class="col-xs-4 text-center _none">
                                     <a href="{{ url('/user/'.$me->id) }}">
@@ -250,7 +250,7 @@
                     </ul>
 
 
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu _none">
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu" style="max-height:480px;">

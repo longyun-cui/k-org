@@ -173,7 +173,7 @@
 @endsection
 @section('custom-style')
     <style>
-        .tableArea table { min-width:1280px; }
+        .tableArea table { min-width:1360px; }
         /*.tableArea table { width:100% !important; min-width:1380px; }*/
         /*.tableArea table tr th, .tableArea table tr td { white-space:nowrap; }*/
 
