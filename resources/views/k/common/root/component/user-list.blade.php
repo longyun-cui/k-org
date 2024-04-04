@@ -27,10 +27,10 @@
 
                         @if($u->id != Auth::user()->id)
                             @if(count($u->fans_list->whereIn('relation_type', [21,41])) > 0)
-                                <span class="tool-inn tool-info follow-remove follow-remove-it" role="button"><i class="fa fa-check"></i> 已关注</span>
+                                <span class="tool-inn tool-info follow-remove follow-remove-it" role="button"><i class="fa fa-check"></i> 已收藏</span>
                                 {{--<span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-minus"></i> 取消关注</span>--}}
                             @else
-                                <span class="tool-inn tool-info follow-add follow-add-it" role="button"><i class="fa fa-plus"></i> 关注</span>
+                                <span class="tool-inn tool-info follow-add follow-add-it" role="button"><i class="fa fa-plus"></i> 收藏名片</span>
                             @endif
                         @endif
 
@@ -65,6 +65,12 @@
                     @endif
 
                 </div>
+
+                @if(!empty($u->description))
+                    <div class="item-row item-info-row">
+                        <b style="font-size:14px;color:#444;">{{ $u->description or '' }}</b>
+                    </div>
+                @endif
 
                 <div class="item-row item-info-row">
                     <span>粉丝 {{ $u->fans_num }}</span>
@@ -156,12 +162,6 @@
                         <span class="text-muted">{{ $u->contact_address or '' }}</span>
                     </div>
                 @endif
-
-                {{--@if(!empty($u->description))--}}
-                <div class="item-row item-info-row">
-                    {{ $u->description or '暂无简介' }}
-                </div>
-                {{--@endif--}}
 
             </div>
 

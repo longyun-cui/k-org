@@ -31,14 +31,14 @@
 
             {{--辅助信息--}}
             {{--公司--}}
-            @if(!empty($data->company))
-                <p class="text-muted text-center">
-                    <b>{{ $data->company or '暂无' }}</b>
-                    @if(!empty($data->position))
-                    - <b>{{ $data->position or '暂无' }}</b>
-                    @endif
-                </p>
-            @endif
+{{--            @if(!empty($data->company))--}}
+{{--                <p class="text-muted text-center">--}}
+{{--                    <b>{{ $data->company or '暂无' }}</b>--}}
+{{--                    @if(!empty($data->position))--}}
+{{--                    - <b>{{ $data->position or '暂无' }}</b>--}}
+{{--                    @endif--}}
+{{--                </p>--}}
+{{--            @endif--}}
             {{--职位--}}
 {{--            @if(!empty($data->position))--}}
 {{--                <p class="text-muted text-center"><b>{{ $data->position or '暂无' }}</b></p>--}}
@@ -46,7 +46,7 @@
             {{--商业说明--}}
             @if(!empty($data->description))
                 <p class="text-muted text-center margin-bottom-4px">
-                    <small>{{ $data->description or '暂无' }}</small>
+                    <b>{{ $data->description or '暂无' }}</b>
                 </p>
             @endif
 
@@ -220,7 +220,7 @@
                     @if(Auth::user()->id != $data->id)
                         @if(!empty($is_follow) && $is_follow)
                             <a href="javascript:void(0);" class="btn btn-danger btn-block follow-remove follow-remove-it" data-user-id="{{ $data->id }}">
-                                <i class="fa fa-star"></i>
+                                <i class="fa fa-check"></i>
                                 <span class="">已收藏</span>
                             </a>
                         @else
