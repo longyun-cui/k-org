@@ -73,6 +73,17 @@ class SuperAdminController extends Controller
     }
 
 
+
+
+    // 【用户】SELECT2 USER
+    public function operate_select2_user()
+    {
+        return $this->repo->operate_select2_user(request()->all());
+    }
+
+
+
+
     /*
      * 用户基本信息
      */
@@ -192,15 +203,47 @@ class SuperAdminController extends Controller
 
 
 
-    // 【内容】禁用
+    // 【用户】禁用
     public function operate_user_admin_disable()
     {
         return $this->repo->operate_user_admin_disable(request()->all());
     }
-    // 【内容】解禁
+    // 【用户】解禁
     public function operate_user_admin_enable()
     {
         return $this->repo->operate_user_admin_enable(request()->all());
+    }
+
+
+    // 【用户】修改-文本-text-信息
+    public function operate_user_info_text_set()
+    {
+        return $this->repo->operate_user_info_text_set(request()->all());
+    }
+    // 【用户】修改-时间-time-信息
+    public function operate_user_info_time_set()
+    {
+        return $this->repo->operate_user_info_time_set(request()->all());
+    }
+    // 【用户】修改-选项-option-信息
+    public function operate_user_info_option_set()
+    {
+        return $this->repo->operate_user_info_option_set(request()->all());
+    }
+    // 【用户】添加-附件-attachment-信息
+    public function operate_user_info_attachment_set()
+    {
+        return $this->repo->operate_user_info_attachment_set(request()->all());
+    }
+    // 【用户】删除-附件-attachment-信息
+    public function operate_user_info_attachment_delete()
+    {
+        return $this->repo->operate_user_info_attachment_delete(request()->all());
+    }
+    // 【用户】获取-附件-attachment-信息
+    public function operate_user_get_attachment_html()
+    {
+        return $this->repo->operate_user_get_attachment_html(request()->all());
     }
 
 

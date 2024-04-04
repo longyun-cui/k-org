@@ -96,6 +96,15 @@ class WWWIndexController extends Controller
 
 
 
+    // 【用户】SELECT2 Leader 负责人
+    public function operate_select2_user()
+    {
+        return $this->repo->operate_select2_user(request()->all());
+    }
+
+
+
+
 
     /*
      * 用户资料

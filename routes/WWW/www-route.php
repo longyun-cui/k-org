@@ -160,7 +160,7 @@ Route::group([], function () {
 
 
 
-                /*s
+                /*
                  * 个人信息
                  */
                 // 基本信息-基本资料
@@ -187,6 +187,13 @@ Route::group([], function () {
                 Route::post('/mine/my-org-login', $controller.'@operate_my_org_login');
 
                 Route::get('/mine/my-notification', $controller.'@view_my_notification');
+
+
+                /*
+                 * select2
+                 */
+                Route::get('/mine/select2_user', $controller.'@operate_select2_user');
+
 
             });
 

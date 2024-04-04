@@ -207,7 +207,7 @@ class WWWIndexRepository {
         else return response_error([],"该用户不存在！");
 
 
-        $relation = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$org_id,'relation_user_id'=>$me->id,])->first();
+        $relation = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$org_id,'relation_user_id'=>$me->id])->first();
         if($relation)
         {
             if(in_array($relation->relation_type,[0,1,11]))
@@ -563,6 +563,67 @@ class WWWIndexRepository {
 
 
 
+    /*
+     * select2
+     */
+    //
+    public function operate_select2_user($post_data)
+    {
+        if(empty($post_data['keyword']))
+        {
+            $query =K_User::select(['id','username as text'])
+                ->where(['user_status'=>1]);
+        }
+        else
+        {
+            $keyword = "%{$post_data['keyword']}%";
+            $query =K_User::select(['id','username as text'])->where('username','like',"%$keyword%")
+                ->where(['user_status'=>1]);
+        }
+
+        if(!empty($post_data['type']))
+        {
+            $type = $post_data['type'];
+            if($type == 'all')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1,11,88]);
+            }
+            else if($type == 'principal')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1]);
+            }
+            else if($type == 'individual')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1]);
+            }
+            else if($type == 'association')
+            {
+//                $query->where(['user_type'=>11]);
+                $query->whereIn('user_type',[11]);
+            }
+            else if($type == 'enterprise')
+            {
+//                $query->where(['user_type'=>88]);
+                $query->whereIn('user_type',[88]);
+            }
+            else
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1,11,88]);
+            }
+        }
+        else
+        {
+        }
+
+        $list = $query->orderBy('id','desc')->get()->toArray();
+        $unSpecified = ['id'=>0,'text'=>'[未指定]'];
+        array_unshift($list,$unSpecified);
+        return $list;
+    }
 
 
 

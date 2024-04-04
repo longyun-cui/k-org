@@ -71,6 +71,14 @@ Route::group(['prefix'=>'admin'], function () {
 
 
         /*
+         * select2
+         */
+        Route::match(['get','post'], '/select2_user', $controller.'@operate_select2_user');
+
+
+
+
+        /*
          * user
          */
         Route::match(['get','post'], '/user/select2_user', $controller.'@operate_user_select2_user');
@@ -93,6 +101,13 @@ Route::group(['prefix'=>'admin'], function () {
 
 
         Route::match(['get','post'], '/user/change-password', $controller.'@operate_user_change_password');
+
+        // 编辑-信息
+        Route::post('/user/user-info-text-set', $controller.'@operate_user_info_text_set');
+        Route::post('/user/user-info-time-set', $controller.'@operate_user_info_time_set');
+        Route::post('/user/user-info-radio-set', $controller.'@operate_user_info_option_set');
+        Route::post('/user/user-info-select-set', $controller.'@operate_user_info_option_set');
+        Route::post('/user/user-info-select2-set', $controller.'@operate_user_info_option_set');
 
 
 

@@ -4,6 +4,7 @@ namespace App\Repositories\Super;
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
 use App\Models\K\K_Record;
+use App\Models\K\K_Pivot_User_Relation;
 
 use App\Repositories\Common\CommonRepository;
 
@@ -56,6 +57,70 @@ class SuperAdminRepository {
         if(isMobileEquipment()) $is_mobile_equipment = 1;
         else $is_mobile_equipment = 0;
         view()->share('is_mobile_equipment',$is_mobile_equipment);
+    }
+
+
+
+    /*
+     * select2
+     */
+    //
+    public function operate_select2_user($post_data)
+    {
+        if(empty($post_data['keyword']))
+        {
+            $query =K_User::select(['id','username as text'])
+                ->where(['user_status'=>1]);
+        }
+        else
+        {
+            $keyword = "%{$post_data['keyword']}%";
+            $query =K_User::select(['id','username as text'])->where('username','like',"%$keyword%")
+                ->where(['user_status'=>1]);
+        }
+
+        if(!empty($post_data['type']))
+        {
+            $type = $post_data['type'];
+            if($type == 'all')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1,11,88]);
+            }
+            else if($type == 'principal')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1]);
+            }
+            else if($type == 'individual')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1]);
+            }
+            else if($type == 'association')
+            {
+//                $query->where(['user_type'=>11]);
+                $query->whereIn('user_type',[11]);
+            }
+            else if($type == 'enterprise')
+            {
+//                $query->where(['user_type'=>88]);
+                $query->whereIn('user_type',[88]);
+            }
+            else
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1,11,88]);
+            }
+        }
+        else
+        {
+        }
+
+        $list = $query->orderBy('id','desc')->get()->toArray();
+        $unSpecified = ['id'=>0,'text'=>'[未指定]'];
+        array_unshift($list,$unSpecified);
+        return $list;
     }
 
 
@@ -886,6 +951,598 @@ class SuperAdminRepository {
             return response_fail([],$msg);
         }
 
+    }
+
+
+    // 【用户管理】【文本-信息】设置-文本-类型
+    public function operate_user_info_text_set($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'user_id.required' => 'user_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'user-info-text-set') return response_error([],"参数[operate]有误！");
+        $id = $post_data["user_id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数[ID]有误！");
+
+        $item = K_User::withTrashed()->find($id);
+        if(!$item) return response_error([],"该【用户】不存在，刷新页面重试！");
+
+        $this->get_me();
+        $me = $this->me;
+//        if($item->owner_id != $me->id) return response_error([],"该内容不是你的，你不能操作！");
+
+        $operate_type = $post_data["operate_type"];
+        $column_key = $post_data["column_key"];
+        $column_value = $post_data["column_value"];
+
+        $before = $item->$column_key;
+
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+//            $item->timestamps = false;
+            $item->$column_key = $column_value;
+            $bool = $item->save();
+            if(!$bool) throw new Exception("user--update--fail");
+            else
+            {
+                // 需要记录(本人修改已发布 || 他人修改)
+                if($me->id == $item->creator_id && $item->is_published == 0 && false)
+                {
+                }
+                else
+                {
+                    $record = new K_Record;
+
+                    $record_data["ip"] = Get_IP();
+                    $record_data["record_object"] = 21;
+                    $record_data["record_category"] = 11;
+                    $record_data["record_type"] = 1;
+                    $record_data["creator_id"] = $me->id;
+                    $record_data["item_id"] = $id;
+                    $record_data["operate_object"] = 41;
+                    $record_data["operate_category"] = 1;
+
+                    if($operate_type == "add") $record_data["operate_type"] = 1;
+                    else if($operate_type == "edit") $record_data["operate_type"] = 11;
+
+                    $record_data["column_name"] = $column_key;
+                    $record_data["before"] = $before;
+                    $record_data["after"] = $column_value;
+
+                    $bool_1 = $record->fill($record_data)->save();
+                    if($bool_1)
+                    {
+                    }
+                    else throw new Exception("insert--record--fail");
+                }
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【用户管理】【时间-信息】修改-时间-类型
+    public function operate_user_info_time_set($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'user_id.required' => 'user_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'user-info-time-set') return response_error([],"参数[operate]有误！");
+        $id = $post_data["user_id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数[ID]有误！");
+
+        $item = K_User::withTrashed()->find($id);
+        if(!$item) return response_error([],"该【用户】不存在，刷新页面重试！");
+
+        $this->get_me();
+        $me = $this->me;
+//        if($item->owner_id != $me->id) return response_error([],"该内容不是你的，你不能操作！");
+
+        $operate_type = $post_data["operate_type"];
+        $column_key = $post_data["column_key"];
+        $column_value = $post_data["column_value"];
+        $time_type = $post_data["time_type"];
+
+        $before = $item->$column_key;
+
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $item->$column_key = strtotime($column_value);
+            $bool = $item->save();
+            if(!$bool) throw new Exception("user--update--fail");
+            else
+            {
+                // 需要记录(本人修改已发布 || 他人修改)
+                if($me->id == $item->creator_id && $item->is_published == 0 && false)
+                {
+                }
+                else
+                {
+                    $record = new K_Record;
+
+                    $record_data["ip"] = Get_IP();
+                    $record_data["record_object"] = 21;
+                    $record_data["record_category"] = 11;
+                    $record_data["record_type"] = 1;
+                    $record_data["creator_id"] = $me->id;
+                    $record_data["item_id"] = $id;
+                    $record_data["operate_object"] = 41;
+                    $record_data["operate_category"] = 1;
+
+                    if($operate_type == "add") $record_data["operate_type"] = 1;
+                    else if($operate_type == "edit") $record_data["operate_type"] = 11;
+
+                    $record_data["column_type"] = $time_type;
+                    $record_data["column_name"] = $column_key;
+                    $record_data["before"] = $before;
+                    $record_data["after"] = strtotime($column_value);
+
+                    $bool_1 = $record->fill($record_data)->save();
+                    if($bool_1)
+                    {
+                    }
+                    else throw new Exception("insert--record--fail");
+                }
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【用户管理】【选项-信息】修改-radio-select-[option]-类型
+    public function operate_user_info_option_set($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'user_id.required' => 'user_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'user-info-option-set') return response_error([],"参数[operate]有误！");
+        $id = $post_data["user_id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数[ID]有误！");
+
+        $item = K_User::withTrashed()->find($id);
+        if(!$item) return response_error([],"该【用户】不存在，刷新页面重试！");
+
+        $this->get_me();
+        $me = $this->me;
+//        if($item->owner_id != $me->id) return response_error([],"该内容不是你的，你不能操作！");
+
+        $operate_type = $post_data["operate_type"];
+        $column_key = $post_data["column_key"];
+        $column_value = $post_data["column_value"];
+
+        $before = $item->$column_key;
+
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+//            $item->timestamps = false;
+            $item->$column_key = $column_value;
+            $bool = $item->save();
+            if(!$bool) throw new Exception("user--update--fail");
+            else
+            {
+                if($column_key == 'principal_id')
+                {
+
+                    $relation_old = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$id,'relation_user_id'=>$before])->first();
+                    if($relation_old)
+                    {
+//                        if(in_array($relation_old->relation_type,[0,1,11]))
+//                        {
+//                        }
+//                        else throw new Exception("relation_type--error");
+
+                        $bool = $relation_old->delete();  // 普通删除
+                        if(!$bool) throw new Exception("K_Pivot_User_Relation--delete--fail");
+                    }
+                    else
+                    {
+                    }
+
+
+                    $relation_new = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$id,'relation_user_id'=>$column_value])->first();
+                    if($relation_new)
+                    {
+//                        if(in_array($relation_new->relation_type,[0,1,11]))
+//                        {
+//                        }
+//                        else throw new Exception("relation_type--error");
+
+                        $relation_new->relation_type = 1;
+                        $bool_1 = $relation_new->save();
+                        if($bool_1)
+                        {
+                        }
+                        else throw new Exception("update--K_Pivot_User_Relation--failed");
+                    }
+                    else
+                    {
+                        $new_relation = new K_Pivot_User_Relation;
+                        $new_relation->relation_category = 11;
+                        $new_relation->relation_type = 1;
+                        $new_relation->mine_user_id = $id;
+                        $new_relation->relation_user_id = $column_value;
+                        $bool_2 = $new_relation->save();
+                        if($bool_2)
+                        {
+                        }
+                        else throw new Exception("insert--K_Pivot_User_Relation--failed");
+                    }
+                }
+
+//                // 需要记录(本人修改已发布 || 他人修改)
+//                if($me->id == $item->creator_id && $item->is_published == 0 && false)
+//                {
+//                }
+//                else
+//                {
+//                    $record = new K_Record;
+//
+//                    $record_data["ip"] = Get_IP();
+//                    $record_data["record_object"] = 21;
+//                    $record_data["record_category"] = 11;
+//                    $record_data["record_type"] = 1;
+//                    $record_data["creator_id"] = $me->id;
+//                    $record_data["item_id"] = $id;
+//                    $record_data["operate_object"] = 41;
+//                    $record_data["operate_category"] = 1;
+//
+//                    if($operate_type == "add") $record_data["operate_type"] = 1;
+//                    else if($operate_type == "edit") $record_data["operate_type"] = 11;
+//
+//                    $record_data["column_name"] = $column_key;
+//                    $record_data["before"] = $before;
+//                    $record_data["after"] = $column_value;
+//
+//                    if(in_array($column_key,['leader_id']))
+//                    {
+//                        $record_data["before_id"] = $before;
+//                        $record_data["after_id"] = $column_value;
+//                    }
+//
+//
+//                    $bool_1 = $record->fill($record_data)->save();
+//                    if($bool_1)
+//                    {
+//                    }
+//                    else throw new Exception("insert--record--fail");
+//                }
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【用户管理】【附件】添加
+    public function operate_user_info_attachment_set($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'item_id.required' => 'item_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'item_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'department-attachment-set') return response_error([],"参数[operate]有误！");
+        $item_id = $post_data["item_id"];
+        if(intval($item_id) !== 0 && !$item_id) return response_error([],"参数[ID]有误！");
+
+        $item = K_User::withTrashed()->find($item_id);
+        if(!$item) return response_error([],"该【用户】不存在，刷新页面重试！");
+
+        $this->get_me();
+        $me = $this->me;
+//        if($item->owner_id != $me->id) return response_error([],"该内容不是你的，你不能操作！");
+        if(!in_array($me->user_type,[0,1,11,19])) return response_error([],"你没有操作权限！");
+
+//        $operate_type = $post_data["operate_type"];
+//        $column_key = $post_data["column_key"];
+//        $column_value = $post_data["column_value"];
+
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+
+            // 多图
+            $multiple_images = [];
+            if(!empty($post_data["multiple_images"][0]))
+            {
+                // 添加图片
+                foreach ($post_data["multiple_images"] as $n => $f)
+                {
+                    if(!empty($f))
+                    {
+                        $result = upload_img_storage($f,'','dk/attachment','');
+                        if($result["result"])
+                        {
+                            $attachment = new K_Attachment;
+
+                            $attachment_data["operate_object"] = 41;
+                            $attachment_data['item_id'] = $item_id;
+                            $attachment_data['attachment_name'] = $post_data["attachment_name"];
+                            $attachment_data['attachment_src'] = $result["local"];
+                            $bool = $attachment->fill($attachment_data)->save();
+                            if($bool)
+                            {
+                                $record = new K_Record;
+
+                                $record_data["ip"] = Get_IP();
+                                $record_data["record_object"] = 21;
+                                $record_data["record_category"] = 11;
+                                $record_data["record_type"] = 1;
+                                $record_data["creator_id"] = $me->id;
+                                $record_data["item_id"] = $item_id;
+                                $record_data["operate_object"] = 41;
+                                $record_data["operate_category"] = 71;
+                                $record_data["operate_type"] = 1;
+
+                                $record_data["column_name"] = 'attachment';
+                                $record_data["after"] = $attachment_data['attachment_src'];
+
+                                $bool_1 = $record->fill($record_data)->save();
+                                if($bool_1)
+                                {
+                                }
+                                else throw new Exception("insert--record--fail");
+                            }
+                            else throw new Exception("insert--attachment--fail");
+                        }
+                        else throw new Exception("upload--attachment--file--fail");
+                    }
+                }
+            }
+
+
+            // 单图
+            if(!empty($post_data["attachment_file"]))
+            {
+                $attachment = new K_Attachment;
+
+//                $result = upload_storage($post_data["portrait"]);
+//                $result = upload_storage($post_data["portrait"], null, null, 'assign');
+                $result = upload_img_storage($post_data["attachment_file"],'','dk/attachment','');
+                if($result["result"])
+                {
+                    $attachment_data["operate_object"] = 41;
+                    $attachment_data['item_id'] = $item_id;
+                    $attachment_data['attachment_name'] = $post_data["attachment_name"];
+                    $attachment_data['attachment_src'] = $result["local"];
+                    $bool = $attachment->fill($attachment_data)->save();
+                    if($bool)
+                    {
+                        $record = new K_Record;
+
+                        $record_data["ip"] = Get_IP();
+                        $record_data["record_object"] = 21;
+                        $record_data["record_category"] = 11;
+                        $record_data["record_type"] = 1;
+                        $record_data["creator_id"] = $me->id;
+                        $record_data["item_id"] = $item_id;
+                        $record_data["operate_object"] = 41;
+                        $record_data["operate_category"] = 71;
+                        $record_data["operate_type"] = 1;
+
+                        $record_data["column_name"] = 'attachment';
+                        $record_data["after"] = $attachment_data['attachment_src'];
+
+                        $bool_1 = $record->fill($record_data)->save();
+                        if($bool_1)
+                        {
+                        }
+                        else throw new Exception("insert--record--fail");
+                    }
+                    else throw new Exception("insert--attachment--fail");
+                }
+                else throw new Exception("upload--attachment--file--fail");
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【用户管理】【附件】删除
+    public function operate_user_info_attachment_delete($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'item_id.required' => 'item_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'item_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'department-attachment-delete') return response_error([],"参数【operate】有误！");
+        $item_id = $post_data["item_id"];
+        if(intval($item_id) !== 0 && !$item_id) return response_error([],"参数【ID】有误！");
+
+        $item = K_Attachment::withTrashed()->find($item_id);
+        if(!$item) return response_error([],"该【附件】不存在，刷新页面重试！");
+
+        $this->get_me();
+        $me = $this->me;
+
+        // 判断用户操作权限
+        if(!in_array($me->user_type,[0,1,9,11,19])) return response_error([],"你没有操作权限！");
+//        if($me->user_type == 19 && ($item->item_active != 0 || $item->creator_id != $me->id)) return response_error([],"你没有操作权限！");
+//        if($item->creator_id != $me->id) return response_error([],"你没有该内容的操作权限！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $item->timestamps = false;
+            $bool = $item->delete();  // 普通删除
+            if($bool)
+            {
+                $record = new K_Record;
+
+                $record_data["ip"] = Get_IP();
+                $record_data["record_object"] = 21;
+                $record_data["record_category"] = 11;
+                $record_data["record_type"] = 1;
+                $record_data["creator_id"] = $me->id;
+                $record_data["item_id"] = $item->item_id;
+                $record_data["operate_object"] = 41;
+                $record_data["operate_category"] = 71;
+                $record_data["operate_type"] = 91;
+
+                $record_data["column_name"] = 'attachment';
+                $record_data["before"] = $item->attachment_src;
+
+                $bool_1 = $record->fill($record_data)->save();
+                if($bool_1)
+                {
+                }
+                else throw new Exception("insert--record--fail");
+            }
+            else throw new Exception("attachment--delete--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【用户管理】【附件】获取
+    public function operate_user_get_attachment_html($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'item_id.required' => 'item_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'item_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'item-get') return response_error([],"参数[operate]有误！");
+        $id = $post_data["item_id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数[ID]有误！");
+
+        $item = K_User::with([
+            'attachment_list' => function($query) { $query->where(['record_object'=>21, 'operate_object'=>41]); }
+        ])->withTrashed()->find($id);
+        if(!$item) return response_error([],"该【用户】不存在，刷新页面重试！");
+
+        $this->get_me();
+        $me = $this->me;
+//        if($item->owner_id != $me->id) return response_error([],"该内容不是你的，你不能操作！");
+
+
+        $view_blade = env('TEMPLATE_DK_ADMIN').'entrance.item.item-assign-html-for-attachment';
+        $html = view($view_blade)->with(['item_list'=>$item->attachment_list])->__toString();
+
+        return response_success(['html'=>$html],"");
     }
 
 
