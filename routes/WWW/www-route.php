@@ -183,6 +183,9 @@ Route::group([], function () {
                 Route::get('/mine/my-favor', $controller.'@view_my_favor');
                 Route::get('/mine/my-like', $controller.'@view_my_favor');
                 //
+                Route::get('/mine/my-organization', $controller.'@view_my_organization');
+                Route::post('/mine/my-org-login', $controller.'@operate_my_org_login');
+
                 Route::get('/mine/my-notification', $controller.'@view_my_notification');
 
             });

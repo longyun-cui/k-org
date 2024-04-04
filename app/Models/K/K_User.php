@@ -13,7 +13,7 @@ class K_User extends Authenticatable
 
     protected $fillable = [
         'active', 'status', 'user_active', 'user_status', 'user_category', 'user_type', 'user_group', 'category', 'group', 'type',
-        'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'p_id', 'parent_id',
+        'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'p_id', 'parent_id', 'principal_id',
         'name', 'username', 'nickname', 'true_name', 'description', 'portrait_img', 'tag',
         'mobile', 'telephone', 'email', 'password',
         'wx_unionid',
@@ -40,23 +40,25 @@ class K_User extends Authenticatable
 
 
 
-    // 所属代理商
+    // ext
     function ext()
     {
         return $this->hasOne('App\Models\K\K_UserExt','user_id','id');
     }
 
-    // 所属代理商
+    // 所属父节点
     function parent()
     {
         return $this->belongsTo('App\Models\K\K_User','parent_id','id');
     }
 
-    // 名下代理商
+    // 名下子节点
     function children()
     {
         return $this->hasMany('App\Models\K\K_User','parent_id','id');
     }
+
+
 
     // 成员
     function members()
@@ -145,6 +147,7 @@ class K_User extends Authenticatable
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')
             ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
+
 
     // 与我相关的内容
     function pivot_follow_list()

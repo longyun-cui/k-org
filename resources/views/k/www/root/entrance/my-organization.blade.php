@@ -1,7 +1,7 @@
 @extends(env('TEMPLATE_K_WWW').'layout.layout')
 
 
-@section('head_title')我的粉丝 - 朝鲜族社群平台@endsection
+@section('head_title')我的社群组织 - 朝鲜族社群平台@endsection
 
 @section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
@@ -27,8 +27,8 @@
     {{--左侧--}}
     <div class="main-body-section main-body-center-section section-wrapper page-item">
 
-        @include(env('TEMPLATE_K_COMMON').'component.user-list-for-relation',['user_list'=>$user_list])
-        {{--{!! $user_list->links() !!}--}}
+        @include(env('TEMPLATE_K_COMMON').'component.user-list-for-mine',['user_list'=>$user_list])
+        {!! $user_list->links() !!}
 
     </div>
 
@@ -60,5 +60,34 @@
 
 @section('script')
 <script>
+    $(function() {
+        // 监听 'ifUnchecked' 事件
+        $('.user-login-to-org-submit').on('click', function(event){
+            var $that = $(this);
+            var $org_id = $that.attr('data-id');
+            console.log($org_id);
+
+
+            $.post(
+                "/mine/my-org-login",
+                {
+                    _token: $('meta[name="_token"]').attr('content'),
+                    operate: "my-org-login",
+                    org_id: $org_id
+                },
+                function(data){
+                    if(!data.success) layer.msg(data.msg);
+                    else
+                    {
+                        layer.closeAll();
+                        var temp_window=window.open();
+                        temp_window.location="{{ env('DOMAIN_ORG') }}";
+                    }
+                },
+                'json'
+            );
+
+        });
+    });
 </script>
 @endsection

@@ -20,7 +20,7 @@ class WWWIndexController extends Controller
 
 
 
-    // 注册
+    // 注册组织
     public function operate_org_register()
     {
         if(request()->isMethod('get'))
@@ -31,6 +31,16 @@ class WWWIndexController extends Controller
         {
             return $this->repo->operate_org_register_save(request()->all());
         }
+    }
+    // 我的组织
+    public function view_my_organization()
+    {
+        return $this->repo->view_my_organization(request()->all());
+    }
+    // 登录我的组织
+    public function operate_my_org_login()
+    {
+        return $this->repo->operate_my_org_login(request()->all());
     }
 
 
@@ -132,12 +142,20 @@ class WWWIndexController extends Controller
 
     public function operate_mine_my_card_show()
     {
-        return $this->repo->operate_mine_my_card_show(request()->all(),21);
+        return $this->repo->operate_mine_my_card_show(request()->all());
     }
     public function operate_mine_my_card_hide()
     {
-        return $this->repo->operate_mine_my_card_hide(request()->all(),21);
+        return $this->repo->operate_mine_my_card_hide(request()->all());
     }
+
+
+
+
+
+
+
+
 
 
 

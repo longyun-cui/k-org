@@ -58,13 +58,13 @@ class WWWIndexRepository {
 
 
 
-    // 注册新
+    // 注册新组织
     public function view_org_register()
     {
         $this->get_me();
         return view(env('TEMPLATE_K_WWW').'entrance.org-register');
     }
-    // 注册用户
+    // 注册新组织
     public function operate_org_register_save($post_data)
     {
         $this->get_me();
@@ -110,18 +110,37 @@ class WWWIndexRepository {
             DB::beginTransaction();
             try
             {
-                // 注册超级管理员
+                // 注册
                 $user = new K_User;
                 $user_create['creator_id'] = $me_id;
+                $user_create['principal_id'] = $me_id;
                 $user_create['user_category'] = 1;
                 $user_create['user_type'] = $user_type;
                 $user_create['username'] = $username;
                 $user_create['mobile'] = $mobile;
 //                $user_create['password'] = password_encode($password);
-                $user_create['portrait_img'] = 'unique/portrait/user2.jpg';
+//                $user_create['portrait_img'] = 'unique/portrait/user2.jpg';
                 $bool = $user->fill($user_create)->save();
                 if($bool)
                 {
+                    $me_relation = new K_Pivot_User_Relation;
+                    $me_relation->relation_category = 11;
+                    $me_relation->relation_type = 0;
+                    $me_relation->mine_user_id = $user->id;
+                    $me_relation->relation_user_id = $me_id;
+                    $bool_2 = $me_relation->save();
+                    if($bool_2)
+                    {
+                        $portrait_path = "k/unique/portrait_for_user/".date('Y-m-d');
+                        if (!is_dir(storage_resource_path($portrait_path)))
+                        {
+                            mkdir(storage_resource_path($portrait_path), 0777, true);
+                        }
+                        copy(storage_resource_path("materials/portrait/user0.jpeg"), storage_resource_path($portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg"));
+                        $user->portrait_img = $portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg";
+                        $user->save();
+                    }
+                    else throw new Exception("insert--K_Pivot_User_Relation--failed");
                 }
                 else throw new Exception("insert--user--failed");
 
@@ -137,11 +156,80 @@ class WWWIndexRepository {
                 return response_fail([],$msg);
             }
     }
+    // 我的社群组织
+    public function view_my_organization($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        if($this->auth_check)
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $user_list = K_Pivot_User_Relation::with([
+                'mine_user'=>function($query) {
+                },
+            ])
+                ->where(['relation_user_id'=>$me_id])
+                ->whereIn('relation_category',[11])
+                ->whereIn('relation_type',[0,1,11])
+                ->orderby('id','desc')
+                ->paginate(20);
+
+            foreach ($user_list as $user)
+            {
+                $user->relation_with_me = $user->relation_type;
+            }
+
+        }
+        else return response_error([],"请先登录！");
+//        dd($user_list);
+
+        $return['user_list'] = $user_list;
+        $return['menu_active_for_my_follow'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-organization';
+        return view($view_blade)->with($return);
+    }
+    // 登录我的社群组织
+    public function operate_my_org_login($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        $org_id = request()->get('org_id');
+        $org = K_User::where('id',$org_id)->first();
+        if($org)
+        {
+            if(!in_array($org->user_type,[11,88])) return response_error([],"该用户类型有误！");
+        }
+        else return response_error([],"该用户不存在！");
+
+
+        $relation = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$org_id,'relation_user_id'=>$me->id,])->first();
+        if($relation)
+        {
+            if(in_array($relation->relation_type,[0,1,11]))
+            {
+                Auth::guard('org')->login($org,true);
+                Auth::guard('org_admin')->login($me,true);
+                $return['org'] = $org;
+                return response_success($return);
+            }
+            else
+            {
+                return response_error([],"该用户成员！");
+            }
+        }
+        else return response_error([],"该用户不是你的！");
+
+    }
 
 
 
 
-    // 【K】【平台首页】
+    // 【平台首页】
     public function view_index($post_data)
     {
         $this->get_me();
@@ -307,7 +395,7 @@ class WWWIndexRepository {
         else return view(env('TEMPLATE_K_WWW').'entrance.index')->with($return);
     }
 
-    // 【K】【平台介绍】
+    // 【平台介绍】
     public function view_introduction()
     {
         $this->get_me();
@@ -347,9 +435,8 @@ class WWWIndexRepository {
 //        else return view('entrance.root')->with($return);
         else return view(env('TEMPLATE_K_WWW').'entrance.introduction')->with($return);
     }
-
-
-    // 【K】【平台首页】标签
+    
+    // 【平台首页】标签
     public function view_tag($post_data,$q='')
     {
         $this->get_me();
@@ -870,10 +957,17 @@ class WWWIndexRepository {
 
 
 
+
+
+
+
+
+
+
     /*
      * 用户基本信息
      */
-    // 【K】【内容列表】
+    // 【内容列表】
     public function view_item_list($post_data)
     {
         if(Auth::check())
@@ -909,7 +1003,7 @@ class WWWIndexRepository {
         return view(env('TEMPLATE_K_WWW').'entrance.item-list')->with($return);
     }
 
-    // 【K】【内容详情】
+    // 【内容详情】
     public function view_item($post_data,$id=0)
     {
         $this->get_me();
@@ -1019,7 +1113,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】【用户】【主页】
+    // 【用户】【主页】
     public function view_user($post_data,$id=0)
     {
         $this->get_me();
@@ -1317,7 +1411,7 @@ class WWWIndexRepository {
         return view('entrance.user-original')->with(['data'=>$user,'items'=>$items,'user_original_active'=>'active']);
     }
 
-    // 【K】【Ta关注的人】
+    // 【Ta关注的人】
     public function view_user_follow($post_data,$id=0)
     {
         $Ta = User::withCount('items')->find($id);
@@ -1360,7 +1454,7 @@ class WWWIndexRepository {
 
         return view('entrance.user-follow')->with(['data'=>$Ta,'users'=>$pivot_users,'user_relation_follow_active'=>'active']);
     }
-    // 【K】【关注Ta的人】
+    // 【关注Ta的人】
     public function view_user_fans($post_data,$id=0)
     {
         $Ta = User::withCount('items')->find($id);
@@ -1404,7 +1498,7 @@ class WWWIndexRepository {
         return view('entrance.user-fans')->with(['data'=>$Ta,'users'=>$pivot_users,'user_relation_fans_active'=>'active']);
     }
 
-    // 【K】【机构介绍页】
+    // 【机构介绍页】
     public function view_user_introduction($post_data,$id=0)
     {
 //        $user_encode = $id;
@@ -1514,7 +1608,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】【组织列表】
+    // 【组织列表】
     public function view_organization_list($post_data)
     {
 
@@ -1681,7 +1775,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】【添加关注】
+    // 【添加关注】
     public function user_relation_add($post_data)
     {
         $messages = [
@@ -1772,7 +1866,7 @@ class WWWIndexRepository {
         }
         else return response_error([],"请先登录！");
     }
-    // 【K】【取消关注】
+    // 【取消关注】
     public function user_relation_remove($post_data)
     {
         $messages = [
@@ -1873,7 +1967,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】【我的】【关注】
+    // 【我的】【关注】
     public function view_my_follow($post_data)
     {
         $this->get_me();
@@ -1913,7 +2007,7 @@ class WWWIndexRepository {
         $view_blade = env('TEMPLATE_K_WWW').'entrance.my-follow';
         return view($view_blade)->with($return);
     }
-    // 【K】【我的】【粉丝】
+    // 【我的】【粉丝】
     public function view_my_fans($post_data)
     {
         $this->get_me();
@@ -1939,7 +2033,7 @@ class WWWIndexRepository {
         return view($view_blade)->with($return);
     }
 
-    // 【K】【我的】【收藏】
+    // 【我的】【收藏】
     public function view_my_favor($post_data)
     {
         $this->get_me();
@@ -1992,7 +2086,7 @@ class WWWIndexRepository {
         $view_blade = env('TEMPLATE_K_WWW').'entrance.my-favor';
         return view($view_blade)->with($return);
     }
-    // 【K】【我的】【收藏】
+    // 【我的】【收藏】
     public function view_my_collection($post_data)
     {
         $this->get_me();
@@ -2049,7 +2143,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】【我的消息】
+    // 【我的消息】
     public function view_my_notification($post_data)
     {
         $this->get_me();
@@ -2952,7 +3046,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】【ITEM】【添加】【点赞&收藏 | +待办事 | +日程】
+    // 【ITEM】【添加】【点赞&收藏 | +待办事 | +日程】
     public function item_add_this($post_data,$type=0)
     {
         if(Auth::check())
@@ -3093,7 +3187,7 @@ class WWWIndexRepository {
         }
         else return response_error([],'请先登录！');
     }
-    // 【K】【ITEM】【移除】【点赞&收藏 | +待办事 | +日程】
+    // 【ITEM】【移除】【点赞&收藏 | +待办事 | +日程】
     public function item_remove_this($post_data,$type=0)
     {
         if(Auth::check())
@@ -3284,7 +3378,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】添加评论
+    // 添加评论
     public function item_comment_save($post_data)
     {
         $messages = [
@@ -3366,7 +3460,7 @@ class WWWIndexRepository {
         else return response_error([],"请先登录！");
 
     }
-    // 【K】获取评论
+    // 获取评论
     public function item_comment_get($post_data)
     {
         $messages = [
@@ -3506,7 +3600,7 @@ class WWWIndexRepository {
         return response_success($return);
 
     }
-    // 【K】用户评论
+    // 用户评论
     public function item_comment_get_html($post_data)
     {
         $messages = [
@@ -3537,7 +3631,7 @@ class WWWIndexRepository {
     }
 
 
-    // 【K】添加回复
+    // 添加回复
     public function item_reply_save($post_data)
     {
         $messages = [
@@ -3660,7 +3754,7 @@ class WWWIndexRepository {
         else return response_error([],"请先登录！");
 
     }
-    // 【K】获取回复
+    // 获取回复
     public function item_reply_get($post_data)
     {
         $messages = [
@@ -3734,7 +3828,7 @@ class WWWIndexRepository {
     }
 
 
-    // 【K】评论点赞
+    // 评论点赞
     public function item_comment_favor_save($post_data)
     {
         $messages = [
@@ -3835,7 +3929,7 @@ class WWWIndexRepository {
         else return response_error([],"请先登录！");
 
     }
-    // 【K】评论取消赞
+    // 评论取消赞
     public function item_comment_favor_cancel($post_data)
     {
         $messages = [
@@ -3974,7 +4068,7 @@ class WWWIndexRepository {
 
 
 
-    // 【K】【访问记录】
+    // 【访问记录】
     public function record($post_data)
     {
         $record = new K_Record();
@@ -3995,7 +4089,7 @@ class WWWIndexRepository {
         else return false;
     }
 
-    // 【K】【分享记录】
+    // 【分享记录】
     public function record_share($post_data)
     {
         if(Auth::check())

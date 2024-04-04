@@ -44,7 +44,7 @@
     </div>
 
 
-    <div class="main-body-section main-body-left-section section-wrapper page-root">
+    <div class="main-body-section main-body-center-section section-wrapper page-root">
         <div class="container-box pull-left margin-bottom-4px">
 
             @include(env('TEMPLATE_K_COMMON').'component.component-card', ['data'=>$data])

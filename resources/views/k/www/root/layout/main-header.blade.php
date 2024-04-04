@@ -89,24 +89,31 @@
                                     </li>
 
                                     <li>
+                                        <a href="{{ url('/mine/my-organization') }}">
+                                            <i class="fa fa-sitemap text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                            <span>我的社群组织</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="_none">
                                         <a href="{{ url('/mine/my-follow') }}">
                                             <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
                                             <span>我的关注</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="_none">
                                         <a href="{{ url('/mine/my-fans') }}">
                                             <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
                                             <span>我的粉丝</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="_none">
                                         <a href="{{ url('/mine/my-favor') }}">
                                             <i class="fa fa-heart text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
                                             <span>我的点赞</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="_none">
                                         <a href="{{ url('/mine/my-collection') }}">
                                             <i class="fa fa-star text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
                                             <span>我的收藏</span>
@@ -164,12 +171,12 @@
                                 </div>
                                 <div class="col-xs-6 text-center">
                                     <a href="{{ url('/my-follow') }}">
-                                        <i class="fa fa-user text-red"></i> 关注
+                                        <i class="fa fa-user text-red"></i> 关注 {{ $me->follow_num or '' }}
                                     </a>
                                 </div>
                                 <div class="col-xs-6 text-center">
                                     <a href="{{ url('/my-fans') }}">
-                                        <i class="fa fa-user text-red"></i> 粉丝
+                                        <i class="fa fa-user text-red"></i> 粉丝 {{ $me->fans_num or '' }}
                                     </a>
                                 </div>
                             </div>

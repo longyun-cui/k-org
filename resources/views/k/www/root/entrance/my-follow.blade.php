@@ -1,18 +1,17 @@
 @extends(env('TEMPLATE_K_WWW').'layout.layout')
 
 
-@section('head_title','我的关注 - 朝鲜族组织平台')
-@section('meta_title')@endsection
+@section('head_title')我的关注 - 朝鲜族社群平台@endsection
+
+@section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
-@section('meta_description')@endsection
-@section('meta_keywords')@endsection
+@section('meta_description')发现身边的朝鲜族社群组织活动@endsection
+@section('meta_keywords')朝鲜族,朝鲜族社群,朝鲜族组织,朝鲜族活动@endsection
 
 
-
-
-@section('wx_share_title')组织列表@endsection
-@section('wx_share_desc')朝鲜族社群组织活动分享平台@endsection
-@section('wx_share_imgUrl'){{ url('/k-org.cn.png') }}@endsection
+@section('wx_share_title')朝鲜族社群平台@endsection
+@section('wx_share_desc')发现身边的朝鲜族社群组织活动@endsection
+@section('wx_share_imgUrl'){{ url('/custom/k/k-www.jpg') }}@endsection
 
 
 
@@ -26,7 +25,7 @@
 <div class="container">
 
     {{--左侧--}}
-    <div class="main-body-section main-body-left-section section-wrapper page-item">
+    <div class="main-body-section main-body-center-section section-wrapper page-item">
 
         @include(env('TEMPLATE_K_COMMON').'component.user-list-for-relation',['user_list'=>$user_list])
         {!! $user_list->links() !!}
