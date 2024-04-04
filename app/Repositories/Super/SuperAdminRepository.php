@@ -341,7 +341,9 @@ class SuperAdminRepository {
         $this->get_me();
         $me = $this->me;
 
-        $query = K_User::select('*')->where(['user_category'=>1]);
+        $query = K_User::select('*')
+            ->with(['principal_er'])
+            ->where(['user_category'=>1]);
 //            ->whereHas('fund', function ($query1) { $query1->where('totalfunds', '>=', 1000); } )
 //            ->with('ep','parent','fund')
 //            ->withCount([

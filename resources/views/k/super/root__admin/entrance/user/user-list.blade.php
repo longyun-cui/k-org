@@ -239,8 +239,8 @@
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
                             else if(data == 1) return '<small class="btn-xs bg-primary">个人用户</small>';
-                            else if(data == 11) return '<small class="btn-xs bg-olive">组织</small>';
-                            else if(data == 88) return '<small class="btn-xs bg-purple">赞助商</small>';
+                            else if(data == 11) return '<small class="btn-xs bg-olive">社群</small>';
+                            else if(data == 88) return '<small class="btn-xs bg-purple">企业</small>';
                             else return "有误";
                         }
                     },
@@ -276,13 +276,31 @@
                     },
                     {
                         "title": "负责人",
-                        "data": "id",
-                        "className": "text-left",
+                        "data": "principal_id",
+                        "className": "",
                         "width": "128px",
                         "orderable": false,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-select2-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','负责人');
+                                $(nTd).attr('data-key','principal_id').attr('data-value',data);
+                                if(row.principal_er == null) $(nTd).attr('data-option-name','未指定');
+                                else {
+                                    $(nTd).attr('data-option-name',row.principal_er.username);
+                                }
+                                $(nTd).attr('data-column-name','负责人');
+                                if(row.project_id) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+
+
+
+                            }
+                        },
                         render: function(data, type, row, meta) {
-                            if(row.principal) {
-                                return '<a target="_blank" href="/user/'+data+'">'+row.principal.username+'</a>';
+                            if(row.principal_er) {
+                                return '<a target="_blank" href="/user/'+data+'">'+row.principal_er.username+'</a>';
                             }
                             else return '--';
                         }

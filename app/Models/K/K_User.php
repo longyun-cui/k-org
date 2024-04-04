@@ -46,6 +46,13 @@ class K_User extends Authenticatable
         return $this->hasOne('App\Models\K\K_UserExt','user_id','id');
     }
 
+    // 负责人
+    function principal_er()
+    {
+        return $this->belongsTo('App\Models\K\K_User','principal_id','id');
+    }
+
+
     // 所属父节点
     function parent()
     {

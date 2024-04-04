@@ -194,6 +194,8 @@
                     {
                         layer.msg(data.msg);
                         $("#form-admin-register").find('input').val('');
+
+                        location.href = "/mine/my-organization";
                     }
 
 //                    $('input[name=captcha]').val('');
