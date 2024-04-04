@@ -185,7 +185,7 @@
                     </li>
                 @endif
                 {{--地址--}}
-                @if(!empty($data->contact_address))
+                @if(!empty($u->area_province) || !empty($u->contact_address))
                     <li class="list-group-item">
                         <i class="fa fa-map-marker text-primary"></i>
                         <span class="text-muted">{{ $data->area_province or '' }}</span>
