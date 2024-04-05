@@ -9,7 +9,7 @@ class K_Item extends Model
     //
     protected $table = "item";
     protected $fillable = [
-        'active', 'status', 'item_active', 'item_status', 'item_category', 'item_type', 'category', 'type', 'sort',
+        'active', 'status', 'category', 'type', 'form', 'sort', 'item_active', 'item_status', 'item_category', 'item_type',
         'owner_active',
         'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'p_id', 'parent_id',
         'org_id', 'admin_id',

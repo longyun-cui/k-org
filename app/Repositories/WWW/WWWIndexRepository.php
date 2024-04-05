@@ -243,56 +243,53 @@ class WWWIndexRepository {
         else $me_id = 0;
 
 
+        $item_query = K_Item::with(['owner']);
+
+        $user_query = K_User::select('*')
+            ->with([
+//                'ad',
+            ])
+            ->withCount([
+//                'fans_list as fans_count' => function($query) { $query->where([]); },
+//                'item_list as item_count' => function($query) { $query->where([]); },
+//                'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+//                'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+            ])
+            ->where(function($query) {
+                $query->where('user_type',11)->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+            })
+            ->where(['user_status'=>1,'active'=>1])
+            ->orderBy('user_type')
+            ->orderByDesc('id');
+
+
         if($this->auth_check)
         {
-            $item_query = K_Item::with([
-                    'owner',
+            $item_query->with([
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
                 ]);
 
-            $user_list = K_User::with([
-                    'ad',
+            $user_query->with([
                     'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
-                ])->withCount([
-                    'fans_list as fans_count' => function($query) { $query->where([]); },
-                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
-                ])
-                ->where(function($query){
-                    $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
-                })
-                ->where(['user_status'=>1,'active'=>1])
-                ->orderBy('user_type')
-                ->orderByDesc('id')
-                ->get();
-//                ->paginate(20);
+                ]);
         }
         else
         {
-            $item_query = K_Item::with(['owner']);
 
-            $user_list = K_User::with([
-                    'ad',
-                ])->withCount([
-                    'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
-                    'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
-                ])
-                ->where(function($query) {
-                    $query->where('user_type',11)->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
-                })
-                ->where(['user_status'=>1,'active'=>1])
-                ->orderBy('user_type')
-                ->orderByDesc('id')
-                ->get();
-//                ->paginate(20);
         }
 
+//        $user_list = $user_query->paginate(20);
+        $user_list = $user_query->get();
+
+
         $item_query->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1,'is_published'=>1]);
+
+
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
         if($type == 'root')
         {
-            $item_query->whereIn('item_type',[1,11]);
+            $item_query->whereIn('item_type',[1,11,88]);
             $record["page_module"] = 1; // page_module=1 default index
         }
         else if($type == 'article')

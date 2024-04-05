@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_K_ORG_FRONT').'layout.layout')
+@extends(env('TEMPLATE_K_ORG').'layout.layout')
 
 
 @section('head_title')
@@ -16,7 +16,7 @@
 <div class="container">
 
     {{--左侧--}}
-    <div class="main-body-section main-body-left-section section-wrapper page-item">
+    <div class="main-body-section main-body-center-section section-wrapper page-item">
         <div class="main-body-left-container bg-white">
 
             <div class="box box-info form-container">
@@ -40,7 +40,7 @@
 
 
                     {{--类别--}}
-                    <div class="form-group form-category _none">
+                    <div class="form-group form-category">
                         <label class="control-label- col-md-9">类别</label>
                         <div class="col-md-12">
                             <div class="btn-group">
@@ -48,71 +48,87 @@
                                 <button type="button" class="btn">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="item_category-" value="1" checked="checked"> 文章
+                                            @if($operate == 'create' || ($operate == 'edit' && $data->item_type == 1))
+                                                <input type="radio" name="item_type" value="1" checked="checked"> 文章
+                                            @else
+                                                <input type="radio" name="item_type" value="1"> 文章
+                                            @endif
+
                                         </label>
                                     </div>
                                 </button>
                                 <button type="button" class="btn">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="item_category-" value="11" checked="checked"> 活动
+                                            @if($operate == 'edit' && $data->item_type == 11)
+                                                <input type="radio" name="item_type" value="11" checked="checked"> 活动
+                                            @else
+                                                <input type="radio" name="item_type" value="11"> 活动
+                                            @endif
                                         </label>
                                     </div>
                                 </button>
                                 <button type="button" class="btn">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="item_category-" value="88" checked="checked"> 广告
+                                            @if($operate == 'edit' && $data->item_type == 88)
+                                                <input type="radio" name="item_type" value="88" checked="checked"> 广告
+                                            @else
+                                                <input type="radio" name="item_type" value="88"> 广告
+                                            @endif
                                         </label>
                                     </div>
                                 </button>
 
                             </div>
+                        </div>
+                    </div>
+
+                    {{--活动时间--}}
+                    <div class="form-group activity-box" @if($operate_item_type != "activity") style="display:none;" @endif>
+{{--                        <label class="control-label- col-md-9">活动时间</label>--}}
+                        <div class="col-md-12 ">
+                            <div class="col-sm-6 col-md-6 padding-0 has-feedback">
+                                <input type="text" class="form-control" name="start" placeholder="开始时间"
+                                       @if(!empty($data->start_time)) value="{{ date("Y-m-d H:i",$data->start_time) }}" @endif
+                                >
+                                <span class="form-control-feedback fa fa-clock-o"> 开始时间</span>
+                            </div>
+                            <div class="col-sm-6 col-md-6 padding-0 has-feedback">
+                                <input type="text" class="form-control" name="end" placeholder="结束时间"
+                                       @if(!empty($data->end_time)) value="{{ date("Y-m-d H:i",$data->end_time) }}" @endif
+                                >
+                                <span class="form-control-feedback fa fa-clock-o"> 结束时间</span>
+                            </div>
+                        </div>
+                    </div>
+                    {{--活动地点--}}
+                    <div class="form-group has-feedback activity-box" @if($operate_item_type != "activity") style="display:none;" @endif>
+{{--                        <label class="control-label- col-md-9">活动地点</label>--}}
+                        <div class="col-md-12 ">
+                            <input type="text" class="form-control" name="address" placeholder="活动地点" value="{{ $data->address or '' }}">
+                            <span class="form-control-feedback fa fa-location-arrow"> 活动地点</span>
                         </div>
                     </div>
 
 
                     {{--标题--}}
-                    <div class="form-group">
-                        <label class="control-label- col-md-9"><sup class="text-red">*</sup> 标题</label>
+                    <div class="form-group has-feedback">
+{{--                        <label class="control-label- col-md-9"><sup class="text-red">*</sup> 标题</label>--}}
                         <div class="col-md-12 ">
                             <input type="text" class="form-control" name="title" placeholder="标题" value="{{ $data->title or '' }}">
+                            <span class="form-control-feedback fa fa-file-text-o"> 标题</span>
                         </div>
                     </div>
 
                     {{--描述--}}
-                    <div class="form-group">
-                        <label class="control-label- col-md-9">描述</label>
+                    <div class="form-group has-feedback">
+{{--                        <label class="control-label- col-md-9">描述</label>--}}
                         <div class="col-md-12 ">
                             <textarea class="form-control" name="description" rows="3" placeholder="描述">{{$data->description or ''}}</textarea>
+                            <span class="form-control-feedback fa fa-file-text"> 描述</span>
                         </div>
                     </div>
-
-                    {{--活动时间--}}
-                    @if($operate_item_type == "activity")
-                    <div class="form-group">
-                        <label class="control-label- col-md-9">活动时间</label>
-                        <div class="col-md-12 ">
-                            <div class="col-sm-6 col-md-6 padding-0">
-                                <input type="text" class="form-control" name="start" placeholder="开始时间"
-                                       @if(!empty($data->start_time)) value="{{ date("Y-m-d H:i",$data->start_time) }}" @endif
-                                >
-                            </div>
-                            <div class="col-sm-6 col-md-6 padding-0">
-                                <input type="text" class="form-control" name="end" placeholder="结束时间"
-                                       @if(!empty($data->end_time)) value="{{ date("Y-m-d H:i",$data->end_time) }}" @endif
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    {{--活动地点--}}
-                    <div class="form-group">
-                        <label class="control-label- col-md-9">活动地点</label>
-                        <div class="col-md-12 ">
-                            <input type="text" class="form-control" name="address" placeholder="地点" value="{{ $data->address or '' }}">
-                        </div>
-                    </div>
-                    @endif
 
                     {{--链接地址--}}
                     <div class="form-group _none">
@@ -260,14 +276,14 @@
                                     <button type="button" class="btn">
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="active" value="0" checked="checked"> 暂不启用
+                                                <input type="radio" name="active-" value="0"> 暂不启用
                                             </label>
                                         </div>
                                     </button>
                                     <button type="button" class="btn">
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="active" value="1"> 启用
+                                                <input type="radio" name="active-" value="1" checked="checked"> 启用
                                             </label>
                                         </div>
                                     </button>
@@ -294,9 +310,9 @@
 
 
     {{--右侧--}}
-    <div class="main-body-section main-body-right-section section-wrapper hidden-xs">
-        @include(env('TEMPLATE_K_ORG_FRONT').'component.right-side.right-root')
-    </div>
+{{--    <div class="main-body-section main-body-right-section section-wrapper hidden-xs">--}}
+{{--        @include(env('TEMPLATE_K_ORG_FRONT').'component.right-side.right-root')--}}
+{{--    </div>--}}
 
 </div>
 @endsection
@@ -307,6 +323,12 @@
 @section('custom-css')
 {{--<link rel="stylesheet" href="https://cdn.bootcss.com/select2/4.0.5/css/select2.min.css">--}}
 <link rel="stylesheet" href="{{ asset('/lib/css/select2-4.0.5.min.css') }}">
+@endsection
+@section('custom-style')
+    <style>
+        .activity-box {}
+        .form-horizontal .has-feedback.padding-0 .form-control-feedback { right:0; }
+    </style>
 @endsection
 
 
@@ -325,7 +347,7 @@
 
 
         // 【选择时间】
-        $("#form-edit-item").on('click', "input[name=time_type]", function() {
+        $("#form-edit-item").on('click', "input[name=item_type]", function() {
             // checkbox
 //            if($(this).is(':checked')) {
 //                $('.time-show').show();
@@ -334,10 +356,10 @@
 //            }
             // radio
             var $value = $(this).val();
-            if($value == 1) {
-                $('.time-show').show();
+            if($value == 11) {
+                $('.activity-box').show();
             } else {
-                $('.time-show').hide();
+                $('.activity-box').hide();
             }
         });
 
@@ -354,7 +376,7 @@
         // 添加or编辑
         $("#edit-item-submit").on('click', function() {
             var options = {
-                url: "{{ url('/org/mine/item/item-edit') }}",
+                url: "{{ url('/mine/item/item-create') }}",
                 type: "post",
                 dataType: "json",
                 // target: "#div2",
@@ -363,7 +385,7 @@
                     else
                     {
                         layer.msg(data.msg);
-                        location.href = "{{ url('/org/') }}";
+                        location.href = "{{ url('/') }}";
                     }
                 }
             };
@@ -372,7 +394,7 @@
 
         $('#menus').select2({
             ajax: {
-                url: "{{url('/org/item/select2_menus')}}",
+                url: "{{url('/mine/item/select2_menus')}}",
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {

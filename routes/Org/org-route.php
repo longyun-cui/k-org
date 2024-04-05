@@ -132,20 +132,6 @@ Route::group([], function () {
         Route::match(['get','post'], '/item/item-advertising-list', $controller.'@show_item_advertising_list');
 
 
-        // item
-        Route::match(['get','post'], '/item/item-create', $controller.'@operate_item_item_create');
-        Route::match(['get','post'], '/item/item-edit', $controller.'@operate_item_item_edit');
-        // item-article
-        Route::match(['get','post'], '/item/article-create', $controller.'@operate_item_article_create');
-        Route::match(['get','post'], '/item/article-edit', $controller.'@operate_item_article_edit');
-        // item-activity
-        Route::match(['get','post'], '/item/activity-create', $controller.'@operate_item_activity_create');
-        Route::match(['get','post'], '/item/activity-edit', $controller.'@operate_item_activity_edit');
-        // item-advertising
-        Route::match(['get','post'], '/item/advertising-create', $controller.'@operate_item_advertising_create');
-        Route::match(['get','post'], '/item/advertising-edit', $controller.'@operate_item_advertising_edit');
-
-
         Route::match(['get','post'], '/item/item-get', $controller.'@operate_item_item_get');
         Route::match(['get','post'], '/item/item-delete', $controller.'@operate_item_item_delete');
         Route::match(['get','post'], '/item/item-publish', $controller.'@operate_item_item_publish');
@@ -172,7 +158,7 @@ Route::group([], function () {
          * notification
          */
         // notification-list
-        Route::match(['get','post'], '/notification/notification-all-list', $controller.'@show_notification_all_list');
+        Route::match(['get','post'], '/mine/my-notification', $controller.'@show_mine_my_notification');
 
 
 

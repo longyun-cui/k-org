@@ -330,58 +330,6 @@ class OrgIndexController extends Controller
     }
 
 
-    // 【ITEM】添加
-    public function operate_item_item_create()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_item_create(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-    // 【ITEM】编辑
-    public function operate_item_item_edit()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_item_edit(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-
-    // 【ITEM】添加
-    public function operate_item_article_create()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_article_create(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-    // 【ITEM】编辑
-    public function operate_item_article_edit()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_article_edit(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-
-    // 【ITEM】添加
-    public function operate_item_activity_create()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_activity_create(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-    // 【ITEM】编辑
-    public function operate_item_activity_edit()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_activity_edit(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-
-    // 【ITEM】添加
-    public function operate_item_advertising_create()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_advertising_create(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-    // 【ITEM】编辑
-    public function operate_item_advertising_edit()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_advertising_edit(request()->all());
-        else if (request()->isMethod('post')) return $this->repo->operate_item_item_save(request()->all());
-    }
-
 
 
     /*

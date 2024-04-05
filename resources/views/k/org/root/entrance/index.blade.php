@@ -33,9 +33,16 @@
 
     </div>
 
+    <div class="main-body-section main-section section-wrapper left-section page-item">
+
+        <div class="container-box pull-left margin-bottom-16px">
+            @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
+        </div>
+
+    </div>
+
 
     <div class="main-body-section side-section section-wrapper right-section pull-right hidden-xs hidden-sm">
-
 
         <div class="fixed-to-top">
             {{--@include(env('TEMPLATE_K_ORG').'component.right-side.right-root')--}}

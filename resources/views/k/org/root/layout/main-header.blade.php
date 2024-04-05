@@ -5,7 +5,7 @@
     <nav class="navbar navbar-static-top" role="navigation" style="margin-left:0;background-color:#1a2226;">
 
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle visible-xs @yield('sidebar-toggle')" data-toggle="offcanvas" role="button">
+        <a href="#" class="sidebar-toggle visible-xs @yield('sidebar-toggle') _none" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
@@ -18,7 +18,7 @@
                 </span>
                 <span class="logo-big visible-xs">
                     <img src="/custom/k/k-org.jpg" class="img-icon" alt="Image">
-                    <b class="">朝鲜族社群组织平台</b>
+                    <b class="">朝鲜族社群平台</b>
                 </span>
             </a>
         </div>
@@ -45,8 +45,14 @@
             <ul class="nav navbar-nav hidden-xs- hidden-sm-">
 
 
+                <li class="">
+                    <a  href="{{ url('/mine/item/item-create') }}">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </li>
+
                 {{--添加内容--}}
-                <li class="dropdown tasks-menu add-menu">
+                <li class="dropdown add-menu _none">
                     <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-plus"></i>
@@ -92,7 +98,7 @@
 
                 @if(!empty($auth_check) && $auth_check)
                 <li class="">
-                    <a  href="{{ url('/my-notification') }}" data-type="notification">
+                    <a  href="{{ url('/mine/my-notification') }}" data-type="notification">
                         <i class="fa fa-envelope-o"></i>
 
                         <span class="label label-success">@if(!empty($notification_count)){{ $notification_count or '' }}@endif</span>
@@ -164,7 +170,7 @@
                                         <span>活动</span>
                                     </a>
                                 </li>
-                                @if($auth_check)
+                                @if(!empty($auth_check) && $auth_check)
                                     <li class="_none">
                                         <a href="{{ url('/home') }}">
                                             <i class="fa fa-home text-default" style="width:16px;margin-right:8px;text-align:right;"></i>

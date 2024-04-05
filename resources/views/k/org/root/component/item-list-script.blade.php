@@ -37,15 +37,15 @@
         // 【数据分析】
         $("#item-main-body").on('click', ".item-statistic-submit", function() {
             var that = $(this);
-            window.open("/admin/statistic/statistic-item?id="+that.attr('data-id'));
-//            window.location.href = "/admin/statistic/statistic-item?id="+that.attr('data-id');
+            window.open("/statistic/statistic-item?id="+that.attr('data-id'));
+//            window.location.href = "/statistic/statistic-item?id="+that.attr('data-id');
         });
 
         // 【编辑】
         $(".main-body").on('click', ".item-edit-this", function() {
             var $this = $(this);
             var $item_option = $this.parents('.item-option');
-            window.location.href = "/item/item-edit?item-id="+$item_option.attr('data-item-id');
+            window.location.href = "/mine/item/item-edit?item-id="+$item_option.attr('data-item-id');
         });
 
         // 【删除】
@@ -58,7 +58,7 @@
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
                     $.post(
-                        "{{ url('/item/item-delete') }}",
+                        "{{ url('/mine/item/item-delete') }}",
                         {
                             _token: $('meta[name="_token"]').attr('content'),
                             operate: "item-delete",
@@ -89,7 +89,7 @@
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
                     $.post(
-                        "{{ url('/item/item-restore') }}",
+                        "{{ url('/mine/item/item-restore') }}",
                         {
                             _token: $('meta[name="_token"]').attr('content'),
                             operate: "item-restore",
@@ -120,7 +120,7 @@
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
                     $.post(
-                        "{{ url('/item/item-delete-permanently') }}",
+                        "{{ url('/mine/item/item-delete-permanently') }}",
                         {
                             _token: $('meta[name="_token"]').attr('content'),
                             operate: "item-delete-permanently",
@@ -150,7 +150,7 @@
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
                     $.post(
-                        "{{ url('/org/mine/item/item-publish') }}",
+                        "{{ url('/mine/item/item-publish') }}",
                         {
                             _token: $('meta[name="_token"]').attr('content'),
                             operate: "item-publish",

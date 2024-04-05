@@ -45,6 +45,10 @@
                     {{--基本信息--}}
                     <div class="item-info-row">
 
+                        <a href="{{ url('/user/'.$item->owner->id) }}">
+                            {{ $item->owner->username or '' }}
+                        </a>
+
                         {{--是否发布--}}
                         @if($item->is_published == 0)
                             <lable class="info-tags bg-yellow">
@@ -65,15 +69,12 @@
                             {{--<img src="/common/images/bg/background-image.png" data-src="{{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}" alt="">--}}
                         </span>
                         </a>
-                        <a href="{{ url('/user/'.$item->owner->id) }}">
-                            {{ $item->owner->username or '' }}
-                        </a>
 {{--                        <span class=""> • {{ date_show($item->updated_at->timestamp) }}</span>--}}
 
                         {{--待发布--}}
                         @if($item->is_published == 0)
                         <span class=""> • </span>
-                        <a href="{{ url('/org/mine/item/item-edit?item-id='.$item->id) }}">编辑</a>
+                        <a href="{{ url('/mine/item/item-edit?item-id='.$item->id) }}">编辑</a>
                         <span class=""> • </span>
                         <a href="javascript:void(0)" class="item-publish-this">发布</a>
                         @endif

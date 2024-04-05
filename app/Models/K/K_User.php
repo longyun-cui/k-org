@@ -100,6 +100,21 @@ class K_User extends Authenticatable
         return $this->hasMany('App\Models\K\K_Item','owner_id','id');
     }
     // 内容
+    function item_list()
+    {
+        return $this->hasMany('App\Models\K\K_Item','owner_id','id');
+    }
+    // 文章
+    function article_list()
+    {
+        return $this->hasMany('App\Models\K\K_Item','owner_id','id');
+    }
+    // 活动
+    function activity_list()
+    {
+        return $this->hasMany('App\Models\K\K_Item','owner_id','id');
+    }
+    // 广告
     function ad_list()
     {
         return $this->hasMany('App\Models\K\K_Item','owner_id','id');

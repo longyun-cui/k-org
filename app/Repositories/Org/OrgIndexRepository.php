@@ -91,7 +91,11 @@ class OrgIndexRepository {
             $return['menu_active_for_item_all'] = 'active';
         }
 
-        $item_list = $item_query->orderby('updated_at','desc')->paginate(20);
+        $item_list = $item_query
+
+            ->orderBy('is_published')
+            ->orderByDesc('updated_at')
+            ->paginate(20);
 
         $return['item_list'] = $item_list;
 
@@ -1971,7 +1975,13 @@ class OrgIndexRepository {
     // 【ITEM】返回-添加-视图
     public function view_mine_item_item_create($post_data)
     {
-        $me = Auth::guard('org')->user();
+
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+        $me_admin = $this->me_admin;
+        $me_admin_id = $me_admin->id;
+
         if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_K_ORG').'errors.404');
 
         $item_category = 'item';
@@ -2011,8 +2021,8 @@ class OrgIndexRepository {
 
         }
 
-        $list_link = '/org/item/item-all-list';
-        $list_link = '/org/';
+        $list_link = '/item/item-list';
+        $list_link = '/';
 
         $return['operate'] = 'create';
         $return['operate_id'] = 0;
@@ -2031,19 +2041,27 @@ class OrgIndexRepository {
     // 【ITEM】返回-编辑-视图
     public function view_mine_item_item_edit($post_data)
     {
-        $me = Auth::guard('org')->user();
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+        $me_admin = $this->me_admin;
+        $me_admin_id = $me_admin->id;
+
         if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_K_ORG').'errors.404');
 
         $item_id = $post_data["item-id"];
         $mine = K_Item::with(['user'])->find($item_id);
         if(!$mine) return view(env('TEMPLATE_K_ORG').'errors.404');
+        if($mine->owner_id != $me_id) return view(env('TEMPLATE_K_ORG').'errors.404');
+        if($mine->is_published != 0) return view(env('TEMPLATE_K_ORG').'errors.404');
 
 
         $item_type = 'item';
         $item_type_text = '内容';
         $title_text = '编辑'.$item_type_text;
         $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-list';
+        $list_link = '/item/item-list';
+        $list_link = '/';
 
         if($mine->item_type == 1)
         {
@@ -2051,7 +2069,7 @@ class OrgIndexRepository {
             $item_type_text = '文章';
             $title_text = '编辑'.$item_type_text;
             $list_text = $item_type_text.'列表';
-            $list_link = '/org/item/item-article-list';
+            $list_link = '/mine/item/item-list-for-article';
         }
         else if($mine->item_type == 11)
         {
@@ -2059,7 +2077,7 @@ class OrgIndexRepository {
             $item_type_text = '活动';
             $title_text = '编辑'.$item_type_text;
             $list_text = $item_type_text.'列表';
-            $list_link = '/org/item/item-activity-list';
+            $list_link = '/mine/item/item-list-for-activity';
         }
         else if($mine->item_type == 88)
         {
@@ -2067,7 +2085,7 @@ class OrgIndexRepository {
             $item_type_text = '广告';
             $title_text = '编辑'.$item_type_text;
             $list_text = $item_type_text.'列表';
-            $list_link = '/org/item/item-advertising-list';
+            $list_link = '/mine/item/item-list-for-advertising';
         }
 
 
@@ -2101,346 +2119,9 @@ class OrgIndexRepository {
                 $return['data'] = $mine;
                 return view($view_blade)->with($return);
             }
-            else return response("该文章不存在！", 404);
+            else return response("该内容不存在！", 404);
         }
     }
-
-    // 【ITEM】返回-添加-视图
-    public function view_item_item_create($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $item_type = 'item';
-        $item_type_text = '内容';
-        $title_text = '添加'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-all-list';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-        return view($view_blade)->with([
-            'operate'=>'create',
-            'operate_id'=>0,
-            'category'=>'item',
-            'type'=>$item_type,
-            'item_type_text'=>$item_type_text,
-            'title_text'=>$title_text,
-            'list_text'=>$list_text,
-            'list_link'=>$list_link,
-        ]);
-    }
-    // 【ITEM】返回-编辑-视图
-    public function view_item_item_edit($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $id = $post_data["id"];
-        $mine = K_Item::with(['user'])->find($id);
-        if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-
-        $item_type = 'item';
-        $item_type_text = '内容';
-        $title_text = '编辑'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-list';
-
-        if($mine->item_type == 1)
-        {
-            $item_type = 'article';
-            $item_type_text = '文章';
-            $title_text = '编辑'.$item_type_text;
-            $list_text = $item_type_text.'列表';
-            $list_link = '/org/item/item-article-list';
-        }
-        else if($mine->item_type == 11)
-        {
-            $item_type = 'activity';
-            $item_type_text = '活动';
-            $title_text = '编辑'.$item_type_text;
-            $list_text = $item_type_text.'列表';
-            $list_link = '/org/item/item-activity-list';
-        }
-        else if($mine->item_type == 88)
-        {
-            $item_type = 'advertising';
-            $item_type_text = '广告';
-            $title_text = '编辑'.$item_type_text;
-            $list_text = $item_type_text.'列表';
-            $list_link = '/org/item/item-advertising-list';
-        }
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-
-        if($id == 0)
-        {
-            return view($view_blade)->with([
-                'operate'=>'create',
-                'operate_id'=>$id,
-                'category'=>'item',
-                'type'=>$item_type,
-                'item_type_text'=>$item_type_text,
-                'title_text'=>$title_text,
-                'list_text'=>$list_text,
-                'list_link'=>$list_link,
-            ]);
-        }
-        else
-        {
-            $mine = K_Item::with(['user'])->find($id);
-            if($mine)
-            {
-                $mine->custom = json_decode($mine->custom);
-                $mine->custom2 = json_decode($mine->custom2);
-                $mine->custom3 = json_decode($mine->custom3);
-
-                return view($view_blade)->with([
-                    'operate'=>'edit',
-                    'operate_id'=>$id,
-                    'category'=>'item',
-                    'type'=>$item_type,
-                    'item_type_text'=>$item_type_text,
-                    'title_text'=>$title_text,
-                    'list_text'=>$list_text,
-                    'list_link'=>$list_link,
-                    'data'=>$mine
-                ]);
-            }
-            else return response("该文章不存在！", 404);
-        }
-    }
-
-    // 【ITEM】返回-添加-视图
-    public function view_item_article_create($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $item_type = 'article';
-        $item_type_text = '文章';
-        $title_text = '添加'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-article-list';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-        return view($view_blade)->with([
-            'operate'=>'create',
-            'operate_id'=>0,
-            'category'=>'item',
-            'type'=>$item_type,
-            'item_type_text'=>$item_type_text,
-            'title_text'=>$title_text,
-            'list_text'=>$list_text,
-            'list_link'=>$list_link,
-        ]);
-    }
-    // 【ITEM】返回-编辑-视图
-    public function view_item_article_edit($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $id = $post_data["id"];
-        $mine = K_Item::with(['user'])->find($id);
-        if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $item_type = 'article';
-        $item_type_text = '文章';
-        $title_text = '编辑'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-article-list';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-
-        if($id == 0)
-        {
-            return view($view_blade)->with([
-                'operate'=>'create',
-                'operate_id'=>$id,
-                'category'=>'item',
-                'type'=>$item_type,
-                'item_type_text'=>$item_type_text,
-                'title_text'=>$title_text,
-                'list_text'=>$list_text,
-                'list_link'=>$list_link,
-            ]);
-        }
-        else
-        {
-            $mine = K_Item::with(['user'])->find($id);
-            if($mine)
-            {
-                $mine->custom = json_decode($mine->custom);
-                $mine->custom2 = json_decode($mine->custom2);
-                $mine->custom3 = json_decode($mine->custom3);
-
-                return view($view_blade)->with([
-                    'operate'=>'edit',
-                    'operate_id'=>$id,
-                    'category'=>'item',
-                    'type'=>$item_type,
-                    'item_type_text'=>$item_type_text,
-                    'title_text'=>$title_text,
-                    'list_text'=>$list_text,
-                    'list_link'=>$list_link,
-                    'data'=>$mine
-                ]);
-            }
-            else return response("该文章不存在！", 404);
-        }
-    }
-
-    // 【ITEM】返回-添加-视图
-    public function view_item_activity_create($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $item_type = 'activity';
-        $item_type_text = '活动';
-        $title_text = '添加'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-activity-list';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-        return view($view_blade)->with([
-            'operate'=>'create',
-            'operate_id'=>0,
-            'category'=>'item',
-            'type'=>$item_type,
-            'item_type_text'=>$item_type_text,
-            'title_text'=>$title_text,
-            'list_text'=>$list_text,
-            'list_link'=>$list_link,
-        ]);
-    }
-    // 【ITEM】返回-编辑-视图
-    public function view_item_activity_edit($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $id = $post_data["id"];
-        $mine = K_Item::with(['user'])->find($id);
-        if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $item_type = 'activity';
-        $item_type_text = '活动';
-        $title_text = '编辑'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-activity-list';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-
-        if($id == 0)
-        {
-            return view($view_blade)->with(['operate'=>'create', 'operate_id'=>0, 'category'=>'item', 'type'=>'activity']);
-        }
-        else
-        {
-            $mine = K_Item::with(['user'])->find($id);
-            if($mine)
-            {
-                $mine->custom = json_decode($mine->custom);
-                $mine->custom2 = json_decode($mine->custom2);
-                $mine->custom3 = json_decode($mine->custom3);
-
-                return view($view_blade)->with([
-                    'operate'=>'edit',
-                    'operate_id'=>$id,
-                    'category'=>'item',
-                    'type'=>$item_type,
-                    'item_type_text'=>$item_type_text,
-                    'title_text'=>$title_text,
-                    'list_text'=>$list_text,
-                    'list_link'=>$list_link,
-                    'data'=>$mine
-                ]);
-            }
-            else return response("该活动不存在！", 404);
-        }
-    }
-
-    // 【ITEM】返回-添加-视图
-    public function view_item_advertising_create($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $item_type = 'advertising';
-        $item_type_text = '广告';
-        $title_text = '编辑'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-advertising-list';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-        return view($view_blade)->with([
-            'operate'=>'create',
-            'operate_id'=>0,
-            'category'=>'item',
-            'type'=>$item_type,
-            'item_type_text'=>$item_type_text,
-            'title_text'=>$title_text,
-            'list_text'=>$list_text,
-            'list_link'=>$list_link,
-        ]);
-    }
-    // 【ITEM】返回-编辑-视图
-    public function view_item_advertising_edit($post_data)
-    {
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $id = $post_data["id"];
-        $mine = K_Item::with(['user'])->find($id);
-        if(!$mine) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $item_type = 'advertising';
-        $item_type_text = '广告';
-        $title_text = '编辑'.$item_type_text;
-        $list_text = $item_type_text.'列表';
-        $list_link = '/org/item/item-advertising-list';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-edit';
-
-        if($id == 0)
-        {
-            return view($view_blade)->with([
-                'operate'=>'create',
-                'operate_id'=>0,
-                'category'=>'item',
-                'item_type_text'=>$item_type_text,
-                'title_text'=>$title_text,
-                'list_text'=>$list_text,
-                'list_link'=>$list_link,
-            ]);
-        }
-        else
-        {
-            $mine = K_Item::with(['user'])->find($id);
-            if($mine)
-            {
-                $mine->custom = json_decode($mine->custom);
-                $mine->custom2 = json_decode($mine->custom2);
-                $mine->custom3 = json_decode($mine->custom3);
-
-                return view($view_blade)->with([
-                    'operate'=>'edit',
-                    'operate_id'=>$id,
-                    'category'=>'item',
-                    'type'=>$item_type,
-                    'item_type_text'=>$item_type_text,
-                    'title_text'=>$title_text,
-                    'list_text'=>$list_text,
-                    'list_link'=>$list_link,
-                    'data'=>$mine
-                ]);
-            }
-            else return response("该广告不存在！", 404);
-        }
-    }
-
 
     // 【ITEM】保存-数据
     public function operate_mine_item_item_save($post_data)
@@ -2459,9 +2140,15 @@ class OrgIndexRepository {
             return response_error([],$messages->first());
         }
 
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+        $me_admin = $this->me_admin;
+        $me_admin_id = $me_admin->id;
 
+//        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+
+//        dd($post_data);
 
         $operate = $post_data["operate"];
         $operate_id = $post_data["operate_id"];
@@ -2470,12 +2157,15 @@ class OrgIndexRepository {
         if($operate == 'create') // 添加 ( $id==0，添加一个内容 )
         {
             $mine = new K_Item;
-            $post_data["owner_id"] = $me->id;
+            $post_data["owner_id"] = $me_id;
+            $post_data["creator_id"] = $me_admin_id;
             $post_data["item_category"] = 1;
-            if($operate_item_type == 'item') $post_data["item_type"] = 0;
-            else if($operate_item_type == 'article') $post_data["item_type"] = 1;
-            else if($operate_item_type == 'activity') $post_data["item_type"] = 11;
-            else if($operate_item_type == 'advertising') $post_data["item_type"] = 88;
+
+//            if($operate_item_type == 'item') $post_data["item_type"] = 0;
+//            else if($operate_item_type == 'article') $post_data["item_type"] = 1;
+//            else if($operate_item_type == 'activity') $post_data["item_type"] = 11;
+//            else if($operate_item_type == 'advertising') $post_data["item_type"] = 88;
+
         }
         else if($operate == 'edit') // 编辑
         {
@@ -2563,14 +2253,14 @@ class OrgIndexRepository {
                 }
 
                 // 生成二维码
-                $qr_code_path = "resource/unique/qr_code/";  // 保存目录
-                if(!file_exists(storage_path($qr_code_path)))
-                    mkdir(storage_path($qr_code_path), 0777, true);
-                // qr_code 图片文件
-                $url = 'http://www.k-org.cn/item/'.$mine->id;  // 目标 URL
-                $filename = 'qr_code_item_'.$mine->id.'.png';  // 目标 file
-                $qr_code = $qr_code_path.$filename;
-                QrCode::errorCorrection('H')->format('png')->size(640)->margin(0)->encoding('UTF-8')->generate($url,storage_path($qr_code));
+//                $qr_code_path = "resource/unique/qr_code/";  // 保存目录
+//                if(!file_exists(storage_path($qr_code_path)))
+//                    mkdir(storage_path($qr_code_path), 0777, true);
+//                // qr_code 图片文件
+//                $url = 'http://www.k-org.cn/item/'.$mine->id;  // 目标 URL
+//                $filename = 'qr_code_item_'.$mine->id.'.png';  // 目标 file
+//                $qr_code = $qr_code_path.$filename;
+//                QrCode::errorCorrection('H')->format('png')->size(640)->margin(0)->encoding('UTF-8')->generate($url,storage_path($qr_code));
 
             }
             else throw new Exception("insert--item--fail");
@@ -2595,288 +2285,6 @@ class OrgIndexRepository {
 
 
 
-
-
-
-
-
-
-    /*
-     * 业务系统
-     */
-
-
-    // 【ITEM】返回-列表-视图
-    public function view_item_item_list($post_data)
-    {
-        $item_type = isset($post_data['type']) ? $post_data['type'] : 'all';
-        if($item_type == 'all') $sidebar_active = 'sidebar_item_all_list_active';
-        else if($item_type == 'article') $sidebar_active = 'sidebar_item_article_list_active';
-        else if($item_type == 'activity') $sidebar_active = 'sidebar_item_activity_list_active';
-        else if($item_type == 'advertising') $sidebar_active = 'sidebar_item_advertising_list_active';
-        else $sidebar_active = 'sidebar_item_item_list_active';
-
-        $view_blade= env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-list';
-        return view($view_blade)
-            ->with([
-                'sidebar_item_active'=>'active',
-                $sidebar_active => 'active'
-            ]);
-    }
-    // 【ITEM】获取-列表-数据
-    public function get_item_item_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Item::select('*')
-            ->with('owner')
-            ->where(['item_category'=>1])
-            ->where('owner_id',$me->id);
-
-        $item_type = $post_data['type'];
-        if($item_type == 'article') $query->where('item_type',1);
-        else if($item_type == 'activity') $query->where('item_type',11);
-        else if($item_type == 'advertising') $query->where('item_type',88);
-
-        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("updated_at", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-
-    // 【ITEM】返回-全部内容-视图
-    public function view_item_all_list($post_data)
-    {
-        $view_blade= env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-all-list';
-        return view($view_blade)
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_all_list_active'=>'active'
-            ]);
-    }
-    // 【ITEM】获取-全部内容-数据
-    public function get_item_all_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Item::select('*')
-            ->with('owner')
-            ->where(['item_category'=>1])
-            ->where('item_type','!=',99)
-            ->where('owner_id',$me->id);
-
-        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("updated_at", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-    // 【ITEM】返回-广告列表-视图
-    public function view_item_article_list($post_data)
-    {
-        $view_blade= env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-article-list';
-        return view($view_blade)
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_article_list_active'=>'active'
-            ]);
-    }
-    // 【ITEM】获取-广告列表-数据
-    public function get_item_article_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Item::select('*')
-            ->with('owner')
-            ->where(['item_category'=>1,'item_type'=>1])
-            ->where('owner_id',$me->id);
-
-        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("updated_at", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-    // 【ITEM】返回-广告列表-视图
-    public function view_item_activity_list($post_data)
-    {
-        $view_blade= env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-activity-list';
-        return view($view_blade)
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_activity_list_active'=>'active'
-            ]);
-    }
-    // 【ITEM】获取-广告列表-数据
-    public function get_item_activity_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Item::select('*')
-            ->with('owner')
-            ->where(['item_category'=>1,'item_type'=>11])
-            ->where('owner_id',$me->id);
-
-        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("updated_at", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-    // 【ITEM】返回-广告列表-视图
-    public function view_item_advertising_list($post_data)
-    {
-        $view_blade= env('TEMPLATE_ADMIN').'org.admin.entrance.item.item-advertising-list';
-        return view($view_blade)
-            ->with([
-                'sidebar_item_active'=>'active',
-                'sidebar_item_advertising_list_active'=>'active'
-            ]);
-    }
-    // 【ITEM】获取-广告列表-数据
-    public function get_item_advertising_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Item::select('*')
-            ->with('owner')
-            ->where(['item_category'=>1,'item_type'=>88])
-            ->where('owner_id',$me->id);
-
-        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("updated_at", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-            $list[$k]->description = replace_blank($v->description);
-
-            if($v->id == $me->advertising_id) $list[$k]->adevertising_is_me = 1;
-            else $list[$k]->adevertising_is_me = 0;
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
 
 
 
@@ -3183,7 +2591,7 @@ class OrgIndexRepository {
         $return['item_list'] = $item_array;
 
         // method A
-        $item_html = view(env('TEMPLATE_K_COMMON_FRONT').'component.item-list')->with($return)->__toString();
+        $item_html = view(env('TEMPLATE_K_COMMON').'component.item-list')->with($return)->__toString();
 //        // method B
 //        $item_html = view(env('TEMPLATE_DOC_FRONT').'component.item-list')->with($return)->render();
 //        // method C
