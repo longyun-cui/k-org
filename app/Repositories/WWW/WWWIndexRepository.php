@@ -2205,19 +2205,14 @@ class WWWIndexRepository {
     public function view_mine_my_notification($post_data)
     {
         $this->get_me();
-
-        if($this->auth_check)
-        {
-            $me = Auth::user();
-            $me_id = $me->id;
-        }
-        else $me_id = 0;
+        $me = $this->me;
+        $me_id = $me->id;
 
         $count = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->whereIn('notification_category',[9,11])->count();
         if($count)
         {
             $notification_list = K_Notification::with([
-                    'source',
+                    'source_er',
                     'item'=>function($query) {
                         $query->with([
                             'owner',
@@ -2244,7 +2239,7 @@ class WWWIndexRepository {
         else
         {
             $notification_list = K_Notification::with([
-                    'source',
+                    'source_er',
                     'item'=>function($query) {
                         $query->with([
                             'owner',

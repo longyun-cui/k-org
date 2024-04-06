@@ -27,7 +27,7 @@ class SuperAuthController extends Controller
     {
         if(request()->isMethod('get'))
         {
-            return view(env('TEMPLATE_K_SUPER_ADMIN').'entrance.auth.login');
+            return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.auth.login');
         }
         else if(request()->isMethod('post'))
         {
@@ -74,7 +74,7 @@ class SuperAuthController extends Controller
     {
         if(request()->isMethod('get'))
         {
-            return view(env('TEMPLATE_K_SUPER_ADMIN').'auth.register');
+            return view(env('TEMPLATE_K_SUPER__ADMIN').'auth.register');
         }
         else if(request()->isMethod('post'))
         {

@@ -4,8 +4,8 @@
 >
     <!-- BEGIN PORTLET-->
     <div class="panel-default box-default item-portrait-container hidden-xs-">
-        <a href="{{ url('/user/'.$val->source->id) }}">
-            <img src="{{ url(env('DOMAIN_CDN').'/'.$val->source->portrait_img) }}" alt="">
+        <a href="{{ url('/user/'.$val->source_er->id) }}">
+            <img src="{{ url(env('DOMAIN_CDN').'/'.$val->source_er->portrait_img) }}" alt="">
         </a>
     </div>
 
@@ -14,10 +14,10 @@
         {{--header--}}
         <div class="item-row item-info-row text-muted">
             <span class="item-user-portrait visible-xs _none">
-                <img src="{{ url(env('DOMAIN_CDN').'/'.$val->source->portrait_img) }}" alt="">
+                <img src="{{ url(env('DOMAIN_CDN').'/'.$val->source_er->portrait_img) }}" alt="">
             </span>
             <span class="item-user-name">
-                <a href="{{ url('/user/'.$val->source->id) }}"><b>{{ $val->source->username or '' }}</b></a>
+                <a href="{{ url('/user/'.$val->source_er->id) }}"><b>{{ $val->source_er->username or '' }}</b></a>
             </span>
 
             <span style="margin-left:4px;">
