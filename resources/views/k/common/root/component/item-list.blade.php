@@ -29,7 +29,7 @@
             {{--cover 封面图片--}}
             @if(!empty($item->cover_picture))
                 {{--@if(@getimagesize(env('DOMAIN_CDN').'/'.$item->cover_picture))--}}
-                <a class="clearfix zoom" target="_self" href="{{ url('/item/'.$item->id) }}">
+                <a class="clearfix- zoom" target="_self" href="{{ url('/item/'.$item->id) }}">
                 <figure class="image-container pull-right">
                     <div class="image-box">
                         <img data-action="zoom" src="{{ $item->cover_picture or '' }}" alt="Property Image">
