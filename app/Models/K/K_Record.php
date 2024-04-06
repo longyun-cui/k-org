@@ -7,15 +7,37 @@ class K_Record extends Model
     //
     protected $table = "record";
     protected $fillable = [
-        'record_category', 'record_type', 'record_module', 'category', 'type', 'sort', 'form', 'module',
-        'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'visitor_id', 'item_id',
+        'active', 'status', 'category', 'type', 'form', 'sort',
+        'record_active', 'record_status', 'record_object', 'record_category', 'record_type', 'record_module',
+        'operate_object', 'operate_category', 'operate_type',
+        'owner_active',
+        'owner_id', 'creator_id', 'user_id', 'belong_id', 'source_id', 'object_id', 'visitor_id',
+        'p_id', 'parent_id',
+        'org_id', 'admin_id',
+        'item_id', 'order_id',
+
+
+        'column', 'column_type', 'column_name',
+
+        'before', 'after',
+        'before_id', 'after_id',
+
+        'name', 'title', 'subtitle', 'description', 'content', 'remark', 'custom', 'custom2', 'custom3',
+        'link_url', 'cover_pic', 'attachment_name', 'attachment_src', 'tag',
+        'time_point', 'time_type', 'start_time', 'end_time', 'address',
+
         'page_type', 'page_module', 'page_num',
-        'title', 'content',
-        'referer', 'from',
+        'from',
+        'referer',
         'open',
         'open_device_type', 'open_device_name', 'open_device_version', 'open_system', 'open_browser', 'open_app',
         'shared_location',
-        'ip'
+
+        'ip',
+        'visit_num', 'share_num', 'favor_num', 'comment_num',
+        'published_at',
+
+
     ];
     protected $dateFormat = 'U';
 

@@ -124,7 +124,7 @@
                         <div class="box-body">
 
                             {{csrf_field()}}
-                            <input type="hidden" name="operate" value="work-order" readonly>
+                            <input type="hidden" name="operate" value="item-detail" readonly>
                             <input type="hidden" name="id" value="0" readonly>
 
                             {{--标题--}}
@@ -171,6 +171,192 @@
                 <!-- END PORTLET-->
             </div>
         </div>
+    </div>
+</div>
+
+
+
+
+{{--修改-基本-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-text-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-text-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-text-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-text-set-operate" value="item-item-info-text-set" readonly>
+                    <input type="hidden" name="info-text-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-text-set-operate-type" value="add" readonly>
+                    <input type="hidden" name="info-text-set-column-key" value="" readonly>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 info-text-set-column-name"></label>
+                        <div class="col-md-8 ">
+                            <input type="text" class="form-control" name="info-text-set-column-value" autocomplete="off" placeholder="" value="">
+                            <textarea class="form-control" name="info-textarea-set-column-value" rows="6" cols="100%"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-text-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-text-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{--修改-时间-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-time-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-time-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-time-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-time-set-operate" value="item-item-info-time-set" readonly>
+                    <input type="hidden" name="info-time-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-time-set-operate-type" value="add" readonly>
+                    <input type="hidden" name="info-time-set-column-key" value="" readonly>
+                    <input type="hidden" name="info-time-set-time-type" value="" readonly>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 info-time-set-column-name"></label>
+                        <div class="col-md-8 ">
+                            <input type="text" class="form-control form-filter time_picker" name="info-time-set-column-value" autocomplete="off" placeholder="" value="" data-time-type="datetime" readonly="readonly">
+                            <input type="text" class="form-control form-filter date_picker" name="info-date-set-column-value" autocomplete="off" placeholder="" value="" data-time-type="date" readonly="readonly">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-time-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-time-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{--修改-radio-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-radio-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-radio-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-radio-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-radio-set-operate" value="item-item-info-option-set" readonly>
+                    <input type="hidden" name="info-radio-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-radio-set-operate-type" value="edit" readonly>
+                    <input type="hidden" name="info-radio-set-column-key" value="" readonly>
+
+
+                    <div class="form-group radio-box">
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-radio-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-radio-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{--修改-select-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-select-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-select-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-select-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-select-set-operate" value="item-item-info-option-set" readonly>
+                    <input type="hidden" name="info-select-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-select-set-operate-type" value="add" readonly>
+                    <input type="hidden" name="info-select-set-column-key" value="" readonly>
+                    <input type="hidden" name="info-select-set-column-key2" value="" readonly>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 info-select-set-column-name"></label>
+                        <div class="col-md-8 ">
+                            <select class="form-control select-primary" name="info-select-set-column-value" style="width:48%;" id="">
+                                <option data-id="0" value="0">未指定</option>
+                            </select>
+                            <select class="form-control select-assistant" name="info-select-set-column-value2" style="width:48%;" id="">
+                                <option data-id="0" value="0">未指定</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-select-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-select-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection
@@ -302,6 +488,18 @@
                         "className": "",
                         "width": "120px",
                         "orderable": true,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-time-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','创建时间');
+                                $(nTd).attr('data-key','created_at').attr('data-value',data);
+                                $(nTd).attr('data-column-name','创建时间');
+                                $(nTd).attr('data-time-type','datetime');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(!data) return '--';
@@ -323,6 +521,18 @@
                         "className": "",
                         "width": "120px",
                         "orderable": true,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-time-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','修改时间');
+                                $(nTd).attr('data-key','updated_at').attr('data-value',data);
+                                $(nTd).attr('data-column-name','修改时间');
+                                $(nTd).attr('data-time-type','datetime');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(!data) return '--';
@@ -344,6 +554,18 @@
                         "className": "",
                         "width": "120px",
                         "orderable": true,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-time-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','发布时间');
+                                $(nTd).attr('data-key','published_at').attr('data-value',data);
+                                $(nTd).attr('data-column-name','发布时间');
+                                $(nTd).attr('data-time-type','datetime');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(!data) return '--';
@@ -464,7 +686,7 @@
                     }
                     else
                     {
-                        $url = "{{ url('/item/order-list-for-all') }}";
+                        $url = "{{ url('/admin/item/item-list-for-all') }}";
                         if(window.location.search) history.replaceState({page: 1}, "", $url);
                     }
 

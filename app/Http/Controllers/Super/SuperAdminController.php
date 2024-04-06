@@ -358,6 +358,54 @@ class SuperAdminController extends Controller
 
 
 
+    // 【订单管理】修改-文本-信息
+    public function operate_item_item_info_text_set()
+    {
+        return $this->repo->operate_item_item_info_text_set(request()->all());
+    }
+    // 【订单管理】修改-时间-信息
+    public function operate_item_item_info_time_set()
+    {
+        return $this->repo->operate_item_item_info_time_set(request()->all());
+    }
+    // 【订单管理】修改-option-信息
+    public function operate_item_item_info_option_set()
+    {
+        return $this->repo->operate_item_item_info_option_set(request()->all());
+    }
+    // 【订单管理】修改-radio-信息
+    public function operate_item_item_info_radio_set()
+    {
+        return $this->repo->operate_item_item_info_option_set(request()->all());
+    }
+    // 【订单管理】修改-select-信息
+    public function operate_item_item_info_select_set()
+    {
+        return $this->repo->operate_item_item_info_option_set(request()->all());
+    }
+    // 【订单管理】添加-attachment-信息
+    public function operate_item_item_info_attachment_set()
+    {
+        return $this->repo->operate_item_item_info_attachment_set(request()->all());
+    }
+    // 【订单管理】删除-attachment-信息
+    public function operate_item_item_info_attachment_delete()
+    {
+        return $this->repo->operate_item_item_info_attachment_delete(request()->all());
+    }
+    // 【订单管理】修改-客户信息
+    public function operate_item_item_info_client_set()
+    {
+        return $this->repo->operate_item_item_info_option_set(request()->all());
+    }
+    // 【订单管理】修改-车辆信息
+    public function operate_item_item_info_car_set()
+    {
+        return $this->repo->operate_item_item_info_option_set(request()->all());
+    }
+
+
+
 
 
 

@@ -138,6 +138,18 @@ Route::group(['prefix'=>'admin'], function () {
         Route::match(['get','post'], '/item/item-admin-disable', $controller.'@operate_item_admin_disable');
         Route::match(['get','post'], '/item/item-admin-enable', $controller.'@operate_item_admin_enable');
 
+        // 订单-基本信息
+        Route::post('/item/item-info-text-set', $controller.'@operate_item_item_info_text_set');
+        Route::post('/item/item-info-time-set', $controller.'@operate_item_item_info_time_set');
+        Route::post('/item/item-info-radio-set', $controller.'@operate_item_item_info_option_set');
+        Route::post('/item/item-info-select-set', $controller.'@operate_item_item_info_option_set');
+        Route::post('/item/item-info-select2-set', $controller.'@operate_item_item_info_option_set');
+        Route::post('/item/item-info-client-set', $controller.'@operate_item_item_info_client_set');
+        Route::post('/item/item-info-car-set', $controller.'@operate_item_item_info_car_set');
+        // 订单-附件
+        Route::post('/item/item-info-attachment-set', $controller.'@operate_item_item_info_attachment_set');
+        Route::post('/item/item-info-attachment-delete', $controller.'@operate_item_item_info_attachment_delete');
+
 
 
 
