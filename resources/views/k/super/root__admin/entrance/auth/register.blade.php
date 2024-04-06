@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.auth')
+@extends(env('TEMPLATE_K_SUPER__ADMIN').'layout.auth')
 
 @section('title','注册')
 
