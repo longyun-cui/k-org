@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Super;
 
+use App\Models\K\K_Notification;
 use App\Models\K\K_User;
 use App\Models\K\K_Item;
 use App\Models\K\K_Record;
@@ -1657,7 +1658,7 @@ class SuperAdminRepository {
 
         $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
         $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 20;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 50;
 
         if(isset($post_data['order']))
         {
@@ -2756,6 +2757,97 @@ class SuperAdminRepository {
             return response_fail([],$msg);
         }
 
+    }
+
+
+
+
+
+
+
+
+    // 【K】【内容】【全部】返回-列表-视图
+    public function view_notification_list_for_all($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        // 类型1 数字型
+        $view_data['item_type'] = -1;
+        if(!empty($post_data['item_type']))
+        {
+            if(is_numeric($post_data['item_type']) && $post_data['item_type'] > 0) $view_data['item_type'] = $post_data['item_type'];
+            else $view_data['item_type'] = -1;
+        }
+        else $view_data['item_type'] = -1;
+
+        // 类型2 字符型
+//        $view_data['item_type'] = -1;
+//        if(isset($post_data['item_type']))
+//        {
+//            if(in_array($post_data['item_type'],config('k.common.super.item_type_only_key')))
+//            {
+//                $view_data['item_type'] = $post_data['item_type'];
+//            }
+//        }
+
+        $view_data['menu_active_by_item_list_for_notification'] = 'active menu-open';
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.notification.notification-list-for-all';
+        return view($view_blade)->with($view_data);
+    }
+    // 【K】【内容】【全部】返回-列表-数据
+    public function get_notification_list_for_all_datatable($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        $query = K_Notification::select('*')
+            ->with(['owner','source_er'])
+            ->where('owner_id','>=',1);
+
+        if(!empty($post_data['title'])) $query->where('title', 'like', "%{$post_data['title']}%");
+
+
+        // 内容类型
+        if(isset($post_data['item_type']))
+        {
+            if(!in_array($post_data['item_type'],['-1','0']))
+            {
+                $query->where('item_type', $post_data['item_type']);
+            }
+        }
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 50;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("id", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->withTrashed()->get();
+
+        foreach ($list as $k => $v)
+        {
+//            $list[$k]->encode_id = encode($v->id);
+//            $list[$k]->description = replace_blank($v->description);
+
+            if($v->owner_id == $me->id) $list[$k]->is_me = 1;
+            else $list[$k]->is_me = 0;
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
     }
 
 

@@ -359,6 +359,24 @@ class SuperAdminController extends Controller
 
 
 
+
+
+
+
+    // 【K】【内容】返回-全部内容-列表-视图
+    public function view_notification_list_for_all()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_notification_list_for_all(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_notification_list_for_all_datatable(request()->all());
+    }
+
+
+
+
+
+
+
+
     /*
      * 统计
      */

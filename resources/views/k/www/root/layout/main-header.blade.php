@@ -15,11 +15,11 @@
                 <span class="logo-big hidden-xs">
 {{--                    <img src="/favicon_transparent.png" class="img-icon" alt="Image">--}}
                     <img src="/custom/k/k-www.jpg" class="img-icon" alt="Image">
-                    <b class="hidden-xs" style="vertical-align: middle;">朝鲜族社群组织平台</b>
+                    <b class="hidden-xs" style="vertical-align: middle;">朝鲜族社群平台</b>
                 </span>
                 <span class="logo-big visible-xs">
                     <img src="/custom/k/k-www.jpg" class="img-icon" alt="Image">
-                    <b class="" style="vertical-align:middle;">朝鲜族社群组织平台</b>
+                    <b class="" style="vertical-align:middle;">朝鲜族社群平台</b>
                 </span>
                 <span class="visible-xs">
                 </span>
@@ -42,8 +42,8 @@
 
 
                 @if($auth_check)
-                <li class="">
-                    <a  href="{{ url('/my-notification') }}" data-type="notification">
+                <li class="{{ $menu_active_of_notification or '' }}">
+                    <a  href="{{ url('/mine/my-notification') }}" data-type="notification">
                         <i class="fa fa-envelope-o" style=""></i>
                         <span class="label label-success">@if(!empty($notification_count)){{ $notification_count or '' }}@endif</span>
                     </a>
@@ -171,12 +171,12 @@
                                     </a>
                                 </div>
                                 <div class="col-xs-6 text-center">
-                                    <a href="{{ url('/my-follow') }}">
+                                    <a href="{{ url('/mine/my-follow') }}">
                                         <i class="fa fa-cc text-red"></i> 名片夹 {{ $me->follow_num or '' }}
                                     </a>
                                 </div>
                                 <div class="col-xs-6 text-center">
-                                    <a href="{{ url('/my-fans') }}">
+                                    <a href="{{ url('/mine/my-fans') }}">
                                         <i class="fa fa-user text-red"></i> 粉丝 {{ $me->fans_num or '' }}
                                     </a>
                                 </div>
@@ -190,12 +190,12 @@
                                     </a>
                                 </div>
                                 <div class="col-xs-6 text-center">
-                                    <a href="{{ url('/my-favor') }}">
+                                    <a href="{{ url('/mine/my-favor') }}">
                                         <i class="fa fa-heart text-red"></i> 点赞
                                     </a>
                                 </div>
                                 <div class="col-xs-6 text-center">
-                                    <a href="{{ url('/my-collection') }}">
+                                    <a href="{{ url('/mine/my-collection') }}">
                                         <i class="fa fa-star text-red"></i> 收藏
                                     </a>
                                 </div>

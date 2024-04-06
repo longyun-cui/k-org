@@ -861,6 +861,98 @@ class OrgIndexRepository {
 
 
 
+
+
+    // 【我的消息】
+    public function view_mine_my_notification($post_data)
+    {
+        $this->get_me();
+
+        if($this->auth_check)
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+        }
+        else $me_id = 0;
+
+        $count = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->whereIn('notification_category',[9,11])->count();
+        if($count)
+        {
+            $notification_list = K_Notification::with([
+                'source',
+                'item'=>function($query) {
+                    $query->with([
+                        'owner',
+                        'forward_item'=>function($query) { $query->with(['owner']); }
+                    ]);
+                },
+                'communication'=>function($query) { $query->with(['owner']); },
+                'reply'=>function($query) {
+                    $query->with([
+                        'owner',
+                        'reply'=>function($query) { $query->with('owner'); }
+                    ]);
+                }
+            ])
+                ->whereIn('notification_category',[9,11])
+                ->where(['is_read'=>0])
+                ->where(['owner_id'=>$me_id])
+                ->orderBy('id','desc')
+                ->get();
+
+            view()->share('notification_style', 'new');
+            $update_num = K_Notification::where(['owner_id'=>$me_id,'is_read'=>0])->whereIn('notification_category',[9,11])->update(['is_read'=>1]);
+        }
+        else
+        {
+            $notification_list = K_Notification::with([
+                'source',
+                'item'=>function($query) {
+                    $query->with([
+                        'owner',
+                        'forward_item'=>function($query) { $query->with(['owner']); }
+                    ]);
+                },
+                'communication'=>function($query) { $query->with(['owner']); },
+                'reply'=>function($query) {
+                    $query->with([
+                        'owner',
+                        'reply'=>function($query) { $query->with('owner'); }
+                    ]);
+                }
+            ])
+                ->whereIn('notification_category',[9,11])
+                ->where(['owner_id'=>$me_id])
+                ->orderBy('id','desc')
+                ->paginate(20);
+
+            view()->share('notification_style', 'paginate');
+        }
+
+
+//        dd($notification_list->toArray());
+
+//        foreach ($items as $item)
+//        {
+//            $item->custom_decode = json_decode($item->custom);
+//            $item->content_show = strip_tags($item->content);
+//            $item->img_tags = get_html_img($item->content);
+//        }
+//
+
+        $view_data['notification_list'] = $notification_list;
+        $view_data['menu_active_of_notification'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.mine.my-notification';
+        return view($view_blade)->with($view_data);
+    }
+
+
+
+
+
+
+
     // 【select2】
     public function operate_business_select2_user($post_data)
     {

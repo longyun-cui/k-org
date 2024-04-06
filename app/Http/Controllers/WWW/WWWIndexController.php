@@ -33,14 +33,14 @@ class WWWIndexController extends Controller
         }
     }
     // 我的组织
-    public function view_my_organization()
+    public function view_mine_my_organization()
     {
-        return $this->repo->view_my_organization(request()->all());
+        return $this->repo->view_mine_my_organization(request()->all());
     }
     // 登录我的组织
-    public function operate_my_org_login()
+    public function operate_mine_my_org_login()
     {
-        return $this->repo->operate_my_org_login(request()->all());
+        return $this->repo->operate_mine_my_org_login(request()->all());
     }
 
 
@@ -57,7 +57,7 @@ class WWWIndexController extends Controller
         return $this->repo->view_tag(request()->all(),$q);
     }
 
-    // 【】
+    // 【介绍】
     public function view_introduction()
     {
         return $this->repo->view_introduction();
@@ -170,6 +170,41 @@ class WWWIndexController extends Controller
 
 
 
+    // 【我的消息】
+    public function view_mine_my_notification()
+    {
+        return $this->repo->view_mine_my_notification(request()->all());
+    }
+
+
+    // 【我的关注】
+    public function view_mine_my_follow()
+    {
+        return $this->repo->view_mine_my_follow(request()->all());
+    }
+    // 【我的粉丝】
+    public function view_mine_my_fans()
+    {
+        return $this->repo->view_mine_my_fans(request()->all());
+    }
+
+
+    // 【我的点赞】
+    public function view_mine_my_favor()
+    {
+        return $this->repo->view_mine_my_favor(request()->all());
+    }
+    // 【我的收藏】
+    public function view_mine_my_collection()
+    {
+        return $this->repo->view_mine_my_collection(request()->all());
+    }
+
+
+
+
+
+
 
 
 
@@ -183,41 +218,6 @@ class WWWIndexController extends Controller
     {
         return $this->repo->view_item(request()->all(),$id);
     }
-
-
-
-    // 【我的关注】
-    public function view_my_follow()
-    {
-        return $this->repo->view_my_follow(request()->all());
-    }
-    // 【我的粉丝】
-    public function view_my_fans()
-    {
-        return $this->repo->view_my_fans(request()->all());
-    }
-
-
-    // 【我的点赞】
-    public function view_my_favor()
-    {
-        return $this->repo->view_my_favor(request()->all());
-    }
-    // 【我的收藏】
-    public function view_my_collection()
-    {
-        return $this->repo->view_my_collection(request()->all());
-    }
-
-
-    // 【我的粉丝】
-    public function view_my_notification()
-    {
-        return $this->repo->view_my_notification(request()->all());
-    }
-
-
-
 
 
 

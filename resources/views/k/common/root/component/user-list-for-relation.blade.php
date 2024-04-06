@@ -1,4 +1,4 @@
-@foreach($user_list as $u)
+@forelse($user_list as $u)
 <div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px"
      data-user="{{ $u->relation_user->id or 0 }}"
      data-type="{{ $u->relation_type or 0 }}"
@@ -146,4 +146,10 @@
 
     </div>
 </div>
-@endforeach
+@empty
+<div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px">
+    <div class="panel-default box-default item-entity-container text-center">
+        空空如也
+    </div>
+</div>
+@endforelse

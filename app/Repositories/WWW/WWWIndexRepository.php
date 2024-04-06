@@ -157,7 +157,7 @@ class WWWIndexRepository {
             }
     }
     // 我的社群组织
-    public function view_my_organization($post_data)
+    public function view_mine_my_organization($post_data)
     {
         $this->get_me();
         $me = $this->me;
@@ -189,11 +189,11 @@ class WWWIndexRepository {
         $return['user_list'] = $user_list;
         $return['menu_active_for_my_follow'] = 'active';
 
-        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-organization';
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-organization';
         return view($view_blade)->with($return);
     }
     // 登录我的社群组织
-    public function operate_my_org_login($post_data)
+    public function operate_mine_my_org_login($post_data)
     {
         $this->get_me();
         $me = $this->me;
@@ -2026,7 +2026,7 @@ class WWWIndexRepository {
 
 
     // 【我的】【关注】
-    public function view_my_follow($post_data)
+    public function view_mine_my_follow($post_data)
     {
         $this->get_me();
         $me = $this->me;
@@ -2062,11 +2062,11 @@ class WWWIndexRepository {
         $return['user_list'] = $user_list;
         $return['menu_active_for_my_follow'] = 'active';
 
-        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-follow';
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-follow';
         return view($view_blade)->with($return);
     }
     // 【我的】【粉丝】
-    public function view_my_fans($post_data)
+    public function view_mine_my_fans($post_data)
     {
         $this->get_me();
         $me = $this->me;
@@ -2087,12 +2087,12 @@ class WWWIndexRepository {
         $return['user_list'] = $user_list;
         $return['menu_active_for_my_fans'] = 'active';
 
-        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-fans';
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-fans';
         return view($view_blade)->with($return);
     }
 
     // 【我的】【收藏】
-    public function view_my_favor($post_data)
+    public function view_mine_my_favor($post_data)
     {
         $this->get_me();
         $me = $this->me;
@@ -2141,11 +2141,11 @@ class WWWIndexRepository {
         $return['item_list'] = $item_list;
         $return['menu_active_for_my_favor'] = 'active';
 
-        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-favor';
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-favor';
         return view($view_blade)->with($return);
     }
     // 【我的】【收藏】
-    public function view_my_collection($post_data)
+    public function view_mine_my_collection($post_data)
     {
         $this->get_me();
         $me = $this->me;
@@ -2194,7 +2194,7 @@ class WWWIndexRepository {
         $return['item_list'] = $item_list;
         $return['menu_active_for_my_collection'] = 'active';
 
-        $view_blade = env('TEMPLATE_K_WWW').'entrance.my-collection';
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-collection';
         return view($view_blade)->with($return);
     }
 
@@ -2202,11 +2202,11 @@ class WWWIndexRepository {
 
 
     // 【我的消息】
-    public function view_my_notification($post_data)
+    public function view_mine_my_notification($post_data)
     {
         $this->get_me();
 
-        if(Auth::check())
+        if($this->auth_check)
         {
             $me = Auth::user();
             $me_id = $me->id;
@@ -2277,12 +2277,21 @@ class WWWIndexRepository {
 //            $item->img_tags = get_html_img($item->content);
 //        }
 //
-        return view(env('TEMPLATE_K_WWW').'entrance.my-notification')
-            ->with([
-                'notification_list'=>$notification_list,
-                'sidebar_menu_my_notification_active'=>'active'
-            ]);
+
+        $view_data['notification_list'] = $notification_list;
+        $view_data['menu_active_of_notification'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-notification';
+        return view($view_blade)->with($view_data);
     }
+
+
+
+
+
+
+
+
 
 
 

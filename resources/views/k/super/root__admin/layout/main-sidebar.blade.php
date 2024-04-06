@@ -87,6 +87,18 @@
 
 
             {{--流量统计--}}
+            <li class="header">消息</li>
+
+            <li class="treeview {{ $menu_active_by_item_list_for_notification or '' }}">
+                <a href="{{ url('/admin/notification/notification-list-for-all') }}">
+                    <i class="fa fa-bar-chart text-orange"></i> <span>消息</span>
+                </a>
+            </li>
+
+
+
+
+            {{--流量统计--}}
             <li class="header">流量统计</li>
 
             <li class="treeview {{ $sidebar_statistic_active or '' }}">

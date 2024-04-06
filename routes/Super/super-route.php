@@ -143,6 +143,21 @@ Route::group(['prefix'=>'admin'], function () {
 
 
 
+
+
+        /*
+         * business
+         */
+        // notification
+        Route::match(['get','post'], '/notification/notification-list-for-all', $controller.'@view_notification_list_for_all');
+
+
+
+
+
+
+
+
         /*
          * statistic
          */

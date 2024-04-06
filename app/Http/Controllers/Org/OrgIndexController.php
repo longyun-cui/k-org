@@ -164,6 +164,19 @@ class OrgIndexController extends Controller
 
 
 
+
+
+
+    // 【我的消息】
+    public function view_mine_my_notification()
+    {
+        return $this->repo->view_mine_my_notification(request()->all());
+    }
+
+
+
+
+
     /*
      * 用户系统
      */

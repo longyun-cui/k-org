@@ -19,7 +19,7 @@
 
             <div class="box-header with-border" style="margin:16px 0;">
 
-                <h3 class="box-title">全部内容</h3>
+                <h3 class="box-title">全部消息</h3>
 
                 <div class="pull-right _none">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
@@ -203,7 +203,7 @@
                 "serverSide": true,
                 "searching": false,
                 "ajax": {
-                    'url': "{{ url('/admin/item/item-list-for-all') }}",
+                    'url': "{{ url('/admin/notification/notification-list-for-all') }}",
                     "type": 'POST',
                     "dataType" : 'json',
                     "data": function (d) {
@@ -245,31 +245,17 @@
                         }
                     },
                     {
-                        "title": "类型",
-                        "data": "item_type",
-                        "width": "80px",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            if(data == 0) return 'item';
-                            else if(data == 1) return '<small class="btn-xs bg-primary">文章</small>';
-                            else if(data == 11) return '<small class="btn-xs bg-olive">活动</small>';
-                            else if(data == 88) return '<small class="btn-xs bg-purple">广告</small>';
-                            else if(data == 99) return '<small class="btn-xs bg-info">介绍</small>';
-                            else return '<small class="btn-xs bg-black">Error</small>';
-                        }
-                    },
-                    {
-                        "title": "标题",
-                        "data": "title",
-                        "className": "text-left",
-                        "width": "",
+                        "title": "发布者",
+                        "data": "creator_id",
+                        "className": "",
+                        "width": "120px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
+                            return row.source_er == null ? '未知' : '<a target="_blank" href="/user/'+row.source_er.id+'">'+row.source_er.username+'</a>';
                         }
                     },
                     {
-                        "title": "发布者",
+                        "title": "接收者",
                         "data": "owner_id",
                         "className": "",
                         "width": "120px",
@@ -279,18 +265,62 @@
                         }
                     },
                     {
-                        "title": "浏览",
-                        "data": "visit_num",
+                        "title": "类型",
+                        "data": "notification_category",
                         "width": "80px",
-                        "orderable": true,
+                        'orderable': false,
                         render: function(data, type, row, meta) {
-                            return data;
+                            if(data == 0) return 'item';
+                            else if(data == 9) return '<small class="btn-xs bg-primary">用户关系</small>';
+                            else if(data == 11) return '<small class="btn-xs bg-olive">内容</small>';
+                            else if(data == 88) return '<small class="btn-xs bg-purple">广告</small>';
+                            else if(data == 99) return '<small class="btn-xs bg-info">介绍</small>';
+                            else return '<small class="btn-xs bg-black">Error</small>';
                         }
                     },
                     {
-                        "title": "分享",
-                        "data": "share_num",
-                        "width": "60px",
+                        "title": "类型",
+                        "data": "notification_type",
+                        "className": "",
+                        "width": "80px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            if(row.notification_category == 0)
+                            {
+                                return data;
+                            }
+                            else if(row.notification_category == 9)
+                            {
+                                if(data == 0) return 'item';
+                                else if(data == 1) return '<small class="btn-xs bg-olive">关注</small>';
+                                else return '<small class="btn-xs bg-black">Error</small>';
+                            }
+                            else if(row.notification_category == 11)
+                            {
+                                if(data == 0) return 'item';
+                                else if(data == 11) return '<small class="btn-xs bg-red">点赞</small>';
+                                else return '<small class="btn-xs bg-black">Error</small>';
+                            }
+                            else
+                            {
+                                return data;
+                            }
+                        }
+                    },
+                    {
+                        "title": "已读",
+                        "data": "is_read",
+                        "width": "80px",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            if(data == 1) return '<small class="btn-xs bg-blue">已读</small>';
+                            else return '<small class="btn-xs bg-red">未读</small>';
+                        }
+                    },
+                    {
+                        "title": "PS",
+                        "data": "ps",
+                        "width": "",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
@@ -299,48 +329,6 @@
                     {
                         "title": "创建时间",
                         "data": 'created_at',
-                        "className": "",
-                        "width": "120px",
-                        "orderable": true,
-                        render: function(data, type, row, meta) {
-//                            return data;
-                            if(!data) return '--';
-                            var $date = new Date(data*1000);
-                            var $year = $date.getFullYear();
-                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
-                            var $day = ('00'+($date.getDate())).slice(-2);
-                            var $hour = ('00'+$date.getHours()).slice(-2);
-                            var $minute = ('00'+$date.getMinutes()).slice(-2);
-                            var $second = ('00'+$date.getSeconds()).slice(-2);
-//                            return $year+'-'+$month+'-'+$day;
-                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
-//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
-                        }
-                    },
-                    {
-                        "title": "修改时间",
-                        "data": 'updated_at',
-                        "className": "",
-                        "width": "120px",
-                        "orderable": true,
-                        render: function(data, type, row, meta) {
-//                            return data;
-                            if(!data) return '--';
-                            var $date = new Date(data*1000);
-                            var $year = $date.getFullYear();
-                            var $month = ('00'+($date.getMonth()+1)).slice(-2);
-                            var $day = ('00'+($date.getDate())).slice(-2);
-                            var $hour = ('00'+$date.getHours()).slice(-2);
-                            var $minute = ('00'+$date.getMinutes()).slice(-2);
-                            var $second = ('00'+$date.getSeconds()).slice(-2);
-//                            return $year+'-'+$month+'-'+$day;
-                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
-//                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
-                        }
-                    },
-                    {
-                        "title": "发布时间",
-                        "data": 'published_at',
                         "className": "",
                         "width": "120px",
                         "orderable": true,
@@ -496,5 +484,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-script')
+@include(env('TEMPLATE_K_SUPER__ADMIN').'entrance.notification.notification-list-script')
 @endsection

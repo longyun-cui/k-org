@@ -128,7 +128,7 @@ Route::group([], function () {
 
                 Route::get('/home/mine/original', $controller.'@view_home_mine_original');
 
-                Route::get('/home/mine/todo_list', $controller.'@view_home_mine_todolist');
+                Route::get('/home/mine/todo_list', $controller.'@view_home_mine_todo_list');
                 Route::get('/home/mine/schedule', $controller.'@view_home_mine_schedule');
 
                 Route::get('/home/mine/collection', $controller.'@view_home_mine_collection');
@@ -174,19 +174,19 @@ Route::group([], function () {
                 Route::match(['get','post'], '/mine/my-card-edit', $controller.'@view_my_card_edit');
 
                 // 名片夹 & 我的关注 & 我的粉丝
-                Route::get('/mine/my-cards-case', $controller.'@view_my_cards_case');
-                Route::get('/mine/my-follow', $controller.'@view_my_follow');
-                Route::get('/mine/my-fans', $controller.'@view_my_fans');
+                Route::get('/mine/my-cards-case', $controller.'@view_mine_my_cards_case');
+                Route::get('/mine/my-follow', $controller.'@view_mine_my_follow');
+                Route::get('/mine/my-fans', $controller.'@view_mine_my_fans');
 
                 // 收藏 & 点赞
-                Route::get('/mine/my-collection', $controller.'@view_my_collection');
-                Route::get('/mine/my-favor', $controller.'@view_my_favor');
-                Route::get('/mine/my-like', $controller.'@view_my_favor');
+                Route::get('/mine/my-collection', $controller.'@view_mine_my_collection');
+                Route::get('/mine/my-favor', $controller.'@view_mine_my_favor');
+                Route::get('/mine/my-like', $controller.'@view_mine_my_favor');
                 //
-                Route::get('/mine/my-organization', $controller.'@view_my_organization');
-                Route::post('/mine/my-org-login', $controller.'@operate_my_org_login');
+                Route::get('/mine/my-organization', $controller.'@view_mine_my_organization');
+                Route::post('/mine/my-org-login', $controller.'@operate_mine_my_org_login');
 
-                Route::get('/mine/my-notification', $controller.'@view_my_notification');
+                Route::get('/mine/my-notification', $controller.'@view_mine_my_notification');
 
 
                 /*

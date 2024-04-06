@@ -139,7 +139,7 @@ Route::group([], function () {
         Route::match(['get','post'], '/item/item-ad-cancel', $controller.'@operate_item_ad_cancel');
 
 
-        Route::get('/org/mine/my-advertising-list', $controller.'@view_mine_my_advertising_list');
+        Route::get('/mine/my-advertising-list', $controller.'@view_mine_my_advertising_list');
 
 
         /*
@@ -158,7 +158,7 @@ Route::group([], function () {
          * notification
          */
         // notification-list
-        Route::match(['get','post'], '/mine/my-notification', $controller.'@show_mine_my_notification');
+        Route::match(['get','post'], '/mine/my-notification', $controller.'@view_mine_my_notification');
 
 
 

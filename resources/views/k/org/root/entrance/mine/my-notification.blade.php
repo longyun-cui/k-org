@@ -1,4 +1,4 @@
-@extends(env('TEMPLATE_K_WWW').'layout.layout')
+@extends(env('TEMPLATE_K_ORG').'layout.layout')
 
 
 @section('head_title')消息通知 - 朝鲜族社群平台@endsection
@@ -14,7 +14,7 @@
 @section('wx_share_imgUrl'){{ url('/custom/k/k-www.jpg') }}@endsection
 
 
-S
+
 
 @section('sidebar')
 {{--    @include(env('TEMPLATE_K_WWW').'component.sidebar.sidebar-root')--}}
@@ -25,12 +25,12 @@ S
 <div class="container">
 
     {{--左侧--}}
-    <div class="main-body-section main-body-left-section section-wrapper page-item">
+    <div class="main-body-section main-body-center-section section-wrapper page-item">
 
         {{--@foreach($datas as $num => $item)--}}
             {{--@include('frontend.component.topic')--}}
         {{--@endforeach--}}
-        @include(env('TEMPLATE_K_WWW').'component.notification-list',['notification_list'=>$notification_list])
+        @include(env('TEMPLATE_K_COMMON').'component.notification-list',['notification_list'=>$notification_list])
         {{--{!! $notification_list->links() !!}--}}
 
     </div>

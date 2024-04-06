@@ -45,7 +45,7 @@ Route::group(['prefix'=>'common'], function () {
  * SUPER
  */
 Route::group(['domain'=>'super.'.env('DOMAIN_ROOT'), 'namespace'=>'Super'], function () {
-    require(__DIR__ . '/Super/route.php');
+    require(__DIR__ . '/Super/super-route.php');
 });
 
 

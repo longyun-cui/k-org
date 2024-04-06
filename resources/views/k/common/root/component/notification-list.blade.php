@@ -1,4 +1,4 @@
-@foreach($notification_list as $num => $val)
+@forelse($notification_list as $num => $val)
 <div class="item-piece item-option item-wrapper notification-piece notification-option margin-bottom-8px radius-2px"
      data-notification="{{ $val->id }}"
 >
@@ -249,7 +249,11 @@
     </div>
     <!-- END PORTLET-->
 </div>
-@endforeach
+@empty
+<div class="item-piece item-option item-wrapper notification-piece notification-option margin-bottom-8px radius-2px">
+    暂无消息
+</div>
+@endforelse
 
 @if($notification_style == "paginate")
     {{{ $notification_list->links() }}}
