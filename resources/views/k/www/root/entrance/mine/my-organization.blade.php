@@ -79,9 +79,9 @@
                     if(!data.success) layer.msg(data.msg);
                     else
                     {
-                        layer.closeAll();
-                        var temp_window=window.open();
-                        temp_window.location="{{ env('DOMAIN_ORG') }}";
+                        {{--layer.closeAll();--}}
+                        {{--var temp_window=window.open();--}}
+                        {{--temp_window.location="{{ env('DOMAIN_ORG') }}";--}}
                         window.location.href = "{{ env('DOMAIN_ORG') }}";
                     }
                 },
