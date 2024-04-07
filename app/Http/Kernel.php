@@ -66,11 +66,15 @@ class Kernel extends HttpKernel
 
         'wx.share' => \App\Http\Middleware\WXShareMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
+
         'org' => \App\Http\Middleware\OrgMiddleware::class,
         'org.notification' => \App\Http\Middleware\OrgNotificationMiddleware::class,
+
         'sponsor' => \App\Http\Middleware\SponsorMiddleware::class,
         'sponsor.notification' => \App\Http\Middleware\SponsorNotificationMiddleware::class,
+
         'home' => \App\Http\Middleware\HomeMiddleware::class,
+
         'notification' => \App\Http\Middleware\NotificationMiddleware::class,
         'login' => \App\Http\Middleware\LoginMiddleware::class,
         'login.turn' => \App\Http\Middleware\TurnToLoginMiddleware::class,

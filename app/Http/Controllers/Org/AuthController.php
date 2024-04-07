@@ -27,7 +27,7 @@ class AuthController extends Controller
     {
         if(request()->isMethod('get'))
         {
-            return view(env('TEMPLATE_K_ORG_ADMIN').'entrance.auth.login');
+            return view(env('TEMPLATE_K_ORG').'entrance.auth.login');
         }
         else if(request()->isMethod('post'))
         {
@@ -70,7 +70,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::guard('org')->logout();
-        return redirect('/org/login');
+        return redirect('/login');
     }
 
     // 登陆

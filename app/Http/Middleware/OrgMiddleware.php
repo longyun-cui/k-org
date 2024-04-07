@@ -22,7 +22,7 @@ class OrgMiddleware
     {
         if(!Auth::guard('org')->check()) // 未登录
         {
-            return redirect('/org/login');
+            return redirect(env('DOMAIN_WWW'));
 //            $return["status"] = false;
 //            $return["log"] = "admin-no-login";
 //            $return["msg"] = "请先登录";
