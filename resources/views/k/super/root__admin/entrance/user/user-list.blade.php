@@ -51,7 +51,7 @@
                             <option value="-1">全部</option>
                             <option value="1" @if($user_type == 1) selected="selected" @endif>个人用户</option>
                             <option value="11" @if($user_type == 11) selected="selected" @endif>社群组织</option>
-                            <option value="11" @if($user_type == 88) selected="selected" @endif>企业</option>
+                            <option value="88" @if($user_type == 88) selected="selected" @endif>企业</option>
                         </select>
 
 
