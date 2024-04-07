@@ -836,13 +836,13 @@ class OrgIndexRepository {
             }
             else throw new Exception("update--user--fail");
 
-//            $ext = K_UserExt::where('user_id',$me->id)->first();
-//            $mine_data = $post_data;
-//            $bool = $ext->fill($mine_data)->save();
-//            if($bool)
-//            {
-//            }
-//            else throw new Exception("update--ext--fail");
+            $ext = K_UserExt::where('user_id',$me->id)->first();
+            $mine_data = $post_data;
+            $bool = $ext->fill($mine_data)->save();
+            if($bool)
+            {
+            }
+            else throw new Exception("update--ext--fail");
 
             DB::commit();
             return response_success(['id'=>$me->id]);
