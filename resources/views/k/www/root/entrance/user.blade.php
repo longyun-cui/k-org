@@ -16,7 +16,7 @@
 @section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
 @section('meta_description')发现身边的朝鲜族社群组织活动@endsection
-@section('meta_keywords')朝鲜族,朝鲜族社群,朝鲜族组织,朝鲜族活动,{{ $data->username or '朝鲜族社群平台' }},{{ $data->description or '' }}@endsection
+@section('meta_keywords')朝鲜族,朝鲜族社群,朝鲜族组织,朝鲜族活动,朝鲜族社群平台,朝鲜族组织平台,朝鲜族活动平台,{{ $data->username or '' }},{{ $data->description or '' }}@endsection
 
 
 @section('wx_share_title'){{ $data->username or '朝鲜族社群平台' }}@endsection
@@ -79,7 +79,7 @@
                             @if(!empty($data->introduction->content))
                                 {!! $data->introduction->content or '' !!}
                             @else
-                                <small>暂无简介3</small>
+                                <small>暂无简介</small>
                             @endif
                         </div>
                     </div>
