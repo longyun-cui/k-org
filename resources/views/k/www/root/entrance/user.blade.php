@@ -3,13 +3,13 @@
 
 @section('head_title')
     @if(request('type') == 'root')
-        {{ $data->username or '' }}的主页
+        {{ $data->username or '' }}
     @elseif(request('type') == 'article')
         {{ $data->username or '' }}的文章
     @elseif(request('type') == 'activity')
         {{ $data->username or '' }}的活动
     @else
-        {{ $data->username or '' }}的主页
+        {{ $data->username or '' }}
     @endif
 @endsection
 
