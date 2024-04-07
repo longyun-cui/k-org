@@ -123,24 +123,31 @@ class WWWIndexRepository {
                 $bool = $user->fill($user_create)->save();
                 if($bool)
                 {
-                    $me_relation = new K_Pivot_User_Relation;
-                    $me_relation->relation_category = 11;
-                    $me_relation->relation_type = 0;
-                    $me_relation->mine_user_id = $user->id;
-                    $me_relation->relation_user_id = $me_id;
-                    $bool_2 = $me_relation->save();
+                    $user_ext = new K_UserExt;
+                    $user_ext_create['user_id'] = $user->id;
+                    $bool_2 = $user_ext->fill($user_ext_create)->save();
                     if($bool_2)
                     {
-                        $portrait_path = "k/unique/portrait_for_user/".date('Y-m-d');
-                        if (!is_dir(storage_resource_path($portrait_path)))
+                        $me_relation = new K_Pivot_User_Relation;
+                        $me_relation->relation_category = 11;
+                        $me_relation->relation_type = 0;
+                        $me_relation->mine_user_id = $user->id;
+                        $me_relation->relation_user_id = $me_id;
+                        $bool_3 = $me_relation->save();
+                        if($bool_3)
                         {
-                            mkdir(storage_resource_path($portrait_path), 0777, true);
+                            $portrait_path = "k/unique/portrait_for_user/".date('Y-m-d');
+                            if (!is_dir(storage_resource_path($portrait_path)))
+                            {
+                                mkdir(storage_resource_path($portrait_path), 0777, true);
+                            }
+                            copy(storage_resource_path("materials/portrait/user0.jpeg"), storage_resource_path($portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg"));
+                            $user->portrait_img = $portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg";
+                            $user->save();
                         }
-                        copy(storage_resource_path("materials/portrait/user0.jpeg"), storage_resource_path($portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg"));
-                        $user->portrait_img = $portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg";
-                        $user->save();
+                        else throw new Exception("insert--K_Pivot_User_Relation--failed");
                     }
-                    else throw new Exception("insert--K_Pivot_User_Relation--failed");
+                    else throw new Exception("insert--user-ext--failed");
                 }
                 else throw new Exception("insert--user--failed");
 
