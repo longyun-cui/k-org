@@ -187,7 +187,7 @@
                         <div class="form-group has-feedback">
                             {{--<label class="control-label- col-md-2">微信号</label>--}}
                             <div class="col-md-12 ">
-                                <input type="text" class="form-control" name="linkman_wx_id" placeholder="联系人微信" value="{{ $data->wx_id or '' }}">
+                                <input type="text" class="form-control" name="linkman_wx_id" placeholder="联系人微信" value="{{ $data->linkman_wx_id or '' }}">
                                 <span class="form-control-feedback fa fa-weixin"> 联系人微信</span>
                             </div>
                         </div>
