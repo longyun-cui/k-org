@@ -52,7 +52,7 @@
 
 
                 {{--<!-- Menu -->--}}
-                <li class="dropdown _none">
+                <li class="dropdown _none-">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-search" style="width:16px;vertical-align:middle;"></i>
                         {{--<span class="label label-warning">10</span>--}}
@@ -64,7 +64,7 @@
                             <ul class="menu" style="max-height:480px;">
                                 <li>
                                     <div class="input-group" style="background:#333;">
-                                        <input type="text" name="q" class="form-control" placeholder="查找...">
+                                        <input type="text" name="search-text" class="form-control" placeholder="查找...">
                                         <span class="input-group-btn">
                                             <button type="submit" name="search" id="search-btn" class="btn btn-flat"  style="background: #000;">
                                                 <i class="fa fa-search"></i>

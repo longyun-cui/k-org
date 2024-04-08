@@ -54,6 +54,32 @@
         });
 
 
+        // 查询
+        $('#search-btn').on('click', function(event){
+
+            var $text = $('input[name="search-text"]').val();
+
+            window.location.href = "/tag/"+$text;
+
+            // $.post(
+            //     "/mine/my-card-show",
+            //     {
+            //         _token: $('meta[name="_token"]').attr('content'),
+            //         operate: "my-card-show"
+            //     },
+            //     function(data){
+            //         if(!data.success) layer.msg(data.msg);
+            //         else
+            //         {
+            //             layer.closeAll();
+            //         }
+            //     },
+            //     'json'
+            // );
+
+        });
+
+
 
 
 

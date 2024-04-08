@@ -26,7 +26,7 @@
 <div class="container">
 
     {{--左侧--}}
-    <div class="main-body-section main-body-left-section section-wrapper">
+    <div class="main-body-section main-body-center-section section-wrapper">
 
         @include(env('TEMPLATE_K_WWW').'component.tag-list')
 

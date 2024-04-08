@@ -3,7 +3,8 @@
     <div class="">
         <i class="fa fa-list-ul"></i>
         <a class="tag" href="{{ url('/organization-list') }}">#组织列表</a>
-        <a class="tag" href="{{ url('/?type=activity') }}">#活动</a>
+        <a class="tag" href="{{ url('/org-register') }}">#注册新组织</a>
+        <a class="tag _none" href="{{ url('/?type=activity') }}">#活动</a>
         <br>
     </div>
 
@@ -28,10 +29,9 @@
         <a class="tag" href="{{ url('/tag/羽毛球') }}">#羽毛球</a>
     </div>
 
-    <div class="margin-top-8px">
+    <div class="margin-top-8px _none">
         <i class="fa fa-sign-in"></i>
         <a class="tag" href="{{ url('/org') }}">#组织后台登录</a>
-        <a class="tag" href="{{ url('/org/register') }}">#注册新组织</a>
     </div>
 
 </div>
@@ -47,7 +47,8 @@
 
     <div class="pull-left" style="width:calc(100% - 24px);">
         <a class="tag" href="{{ url('/organization-list') }}">#组织列表</a>
-        <a class="tag" href="{{ url('/?type=activity') }}">#活动</a>
+        <a class="tag" href="{{ url('/org-register') }}">#注册新组织</a>
+        <a class="tag _none" href="{{ url('/?type=activity') }}">#活动</a>
         <br>
     </div>
 
@@ -75,7 +76,7 @@
 </div>
 
 
-<div class="box-body bg-white margin-bottom-2px">
+<div class="box-body bg-white margin-bottom-12px">
 
     <div class="pull-left" style="width:20px;">
         <i class="fa fa-tags"></i>
@@ -91,7 +92,7 @@
 </div>
 
 
-<div class="box-body bg-white margin-bottom-16px">
+<div class="box-body bg-white margin-bottom-16px _none">
 
     <div class="pull-left" style="width:20px;">
         <i class="fa fa-sign-in"></i>

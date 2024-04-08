@@ -463,7 +463,10 @@ class WWWIndexRepository {
                 'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
                 'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
             ])
-            ->where('user_type',11)
+//            ->where('user_type',11)
+            ->where(function($query) {
+                $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+            })
             ->where(['user_status'=>1,'active'=>1]);
 
 
@@ -485,7 +488,10 @@ class WWWIndexRepository {
 
         if($q) $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%")->orWhere('area_district','like',"%$q%");
 
-        $user_list = $user_query->orderBy('user_type')->orderByDesc('id')->paginate(20);
+        $user_list = $user_query
+//            ->orderBy('user_type')
+            ->orderByDesc('id')
+            ->paginate(20);
 
         $return['user_list'] = $user_list;
 
