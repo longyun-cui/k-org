@@ -41,6 +41,16 @@
             <ul class="nav navbar-nav hidden-xs- hidden-sm-">
 
 
+                @if(!$auth_check)
+                    <div class="navbar-custom-menu pull-right" style="height:50px;line-height:50px;padding:0 8px;float:left;">
+                        <a href="{{ url('/login-link') }}">
+                            <i class="fa fa-sign-in"></i>
+                            <span>微信登录</span>
+                        </a>
+                    </div>
+                @endif
+
+
                 @if($auth_check)
                 <li class="{{ $menu_active_of_notification or '' }}">
                     <a  href="{{ url('/mine/my-notification') }}" data-type="notification">
@@ -109,58 +119,51 @@
                                     </a>
                                 </li>
                                 @if($auth_check)
-                                    <li class="_none">
-                                        <a href="{{ url('/home') }}">
-                                            <i class="fa fa-home text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>{{ $me->username }}</span>
-                                        </a>
-                                    </li>
+                                <li class="_none">
+                                    <a href="{{ url('/home') }}">
+                                        <i class="fa fa-home text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>{{ $me->username }}</span>
+                                    </a>
+                                </li>
 
-                                    <li class="_none">
-                                        <a href="{{ url('/mine/my-follow') }}">
-                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>我的关注</span>
-                                        </a>
-                                    </li>
-                                    <li class="_none">
-                                        <a href="{{ url('/mine/my-fans') }}">
-                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>我的粉丝</span>
-                                        </a>
-                                    </li>
-                                    <li class="_none-">
-                                        <a href="{{ url('/mine/my-favor') }}">
-                                            <i class="fa fa-heart text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>我的点赞</span>
-                                        </a>
-                                    </li>
-                                    <li class="_none-">
-                                        <a href="{{ url('/mine/my-collection') }}">
-                                            <i class="fa fa-star text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>我的收藏</span>
-                                        </a>
-                                    </li>
+                                <li class="_none">
+                                    <a href="{{ url('/mine/my-follow') }}">
+                                        <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>我的关注</span>
+                                    </a>
+                                </li>
+                                <li class="_none">
+                                    <a href="{{ url('/mine/my-fans') }}">
+                                        <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>我的粉丝</span>
+                                    </a>
+                                </li>
+                                <li class="_none-">
+                                    <a href="{{ url('/mine/my-favor') }}">
+                                        <i class="fa fa-heart text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>我的点赞</span>
+                                    </a>
+                                </li>
+                                <li class="_none-">
+                                    <a href="{{ url('/mine/my-collection') }}">
+                                        <i class="fa fa-star text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>我的收藏</span>
+                                    </a>
+                                </li>
 
-                                    <li>
-                                        <a href="{{ url('/mine/my-organization') }}">
-                                            <i class="fa fa-sitemap text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>我的社群组织</span>
-                                        </a>
-                                    </li>
+                                <li>
+                                    <a href="{{ url('/mine/my-organization') }}">
+                                        <i class="fa fa-sitemap text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>我的社群组织</span>
+                                    </a>
+                                </li>
 
-                                    <li class="_none">
-                                        <a href="{{ url('/logout') }}">
-                                            <i class="fa fa-sign-out text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>退出</span>
-                                        </a>
-                                    </li>
-                                @else
-                                    <li class="_none">
-                                        <a href="{{ url('/login-link') }}">
-                                            <i class="fa fa-sign-in"></i>
-                                            <span>微信登录</span>
-                                        </a>
-                                    </li>
+                                <li class="_none">
+                                    <a href="{{ url('/logout') }}">
+                                        <i class="fa fa-sign-out text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                        <span>退出</span>
+                                    </a>
+                                </li>
                                 @endif
                             </ul>
                         </li>
@@ -307,57 +310,50 @@
                                     </a>
                                 </li>
                                 @if($auth_check)
-                                    <li class="_none">
-                                        <a href="{{ url('/home') }}">
-                                            <i class="fa fa-home text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
-                                            <span>{{ $me->username }}</span>
-                                        </a>
-                                    </li>
+                                <li class="_none">
+                                    <a href="{{ url('/home') }}">
+                                        <i class="fa fa-home text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>{{ $me->username }}</span>
+                                    </a>
+                                </li>
 
-                                    <li>
-                                        <a href="{{ url('/user/'.$me->id) }}">
-                                            <i class="fa fa-info-circle text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
-                                            <span>我的名片</span>
-                                        </a>
-                                    </li>
+                                <li>
+                                    <a href="{{ url('/user/'.$me->id) }}">
+                                        <i class="fa fa-info-circle text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>我的名片</span>
+                                    </a>
+                                </li>
 
-                                    <li>
-                                        <a href="{{ url('/mine/my-follow') }}">
-                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
-                                            <span>我的关注</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('/mine/my-fans') }}">
-                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
-                                            <span>我的粉丝</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('/mine/my-favor') }}">
-                                            <i class="fa fa-heart text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
-                                            <span>我的点赞</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('/mine/my-collection') }}">
-                                            <i class="fa fa-star text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
-                                            <span>我的收藏</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="{{ url('/logout') }}">
-                                            <i class="fa fa-sign-out text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
-                                            <span>退出</span>
-                                        </a>
-                                    </li>
-                                @else
-                                    <li>
-                                        <a href="{{ url('/login-link') }}">
-                                            <i class="fa fa-sign-in"></i>
-                                            <span>微信登录</span>
-                                        </a>
-                                    </li>
+                                <li>
+                                    <a href="{{ url('/mine/my-follow') }}">
+                                        <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>我的关注</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/mine/my-fans') }}">
+                                        <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>我的粉丝</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/mine/my-favor') }}">
+                                        <i class="fa fa-heart text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>我的点赞</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/mine/my-collection') }}">
+                                        <i class="fa fa-star text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>我的收藏</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{ url('/logout') }}">
+                                        <i class="fa fa-sign-out text-default" style="width:16px;margin-right:8px;text-align:center;"></i>
+                                        <span>退出</span>
+                                    </a>
+                                </li>
                                 @endif
                             </ul>
                         </li>
@@ -373,15 +369,6 @@
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>
             </ul>
-
-            @if(!$auth_check)
-                <div class="navbar-custom-menu" style="height:50px;line-height:50px;padding:0 8px;float:left;">
-                    <a href="{{ url('/login-link') }}">
-                        <i class="fa fa-sign-in"></i>
-                        <span>微信登录</span>
-                    </a>
-                </div>
-            @endif
 
         </div>
     </nav>
