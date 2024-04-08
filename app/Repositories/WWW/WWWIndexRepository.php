@@ -266,7 +266,7 @@ class WWWIndexRepository {
                 $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
             })
             ->where(['user_status'=>1,'active'=>1])
-            ->orderBy('user_type')
+//            ->orderBy('user_type')
             ->orderByDesc('id');
 
 
