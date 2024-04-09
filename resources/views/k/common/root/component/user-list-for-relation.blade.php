@@ -129,10 +129,13 @@
                     </div>
                 @endif
                 {{--地址--}}
-                @if(!empty($u->relation_user->contact_address))
+                @if(!empty($u->relation_user->area_province) || !empty($u->relation_user->contact_address))
                     <div class="item-row item-info-row">
                         <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->relation_user->contact_address or '暂无' }}</span>
+                        <span class="text-muted">{{ $u->relation_user->area_province or '' }}</span>
+                        <span class="text-muted">{{ $u->relation_user->area_city or '' }}</span>
+                        <span class="text-muted">{{ $u->relation_user->area_district or '' }}</span>
+                        <span class="text-muted">{{ $u->relation_user->contact_address or '' }}</span>
                     </div>
                 @endif
 
