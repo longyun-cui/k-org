@@ -676,7 +676,7 @@
                     }
                     else
                     {
-                        $url = "{{ url('/user/user-list') }}";
+                        $url = "{{ url('/admin/user/user-list') }}";
                         if(window.location.search) history.replaceState({page: 1}, "", $url);
                     }
 
