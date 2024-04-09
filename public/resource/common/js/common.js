@@ -129,6 +129,18 @@ $(function() {
         $(this).removeClass('fa-plus-square').addClass('fa-minus-square');
     });
 
+
+    $(".main-body").on('click', '.copy-btn', function () {
+        var $title = $(this).attr('data-title');
+        var $text = $(this).attr('data-text');
+        var $temp = $("<textarea>");
+        $("body").append($temp);
+        $temp.val($text).select();
+        document.execCommand("copy");
+        $temp.remove();
+        layer.msg($title+'已复制到剪切板！');
+    });
+
 });
 
 

@@ -100,7 +100,9 @@
                 @if(!empty($u->wx_id))
                     <div class="item-row item-info-row">
                         <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->wx_id or '' }}</span>
+                        <span class="text-muted copy-btn" data-title="微信号" data-text="{{ $u->linkman_wx_id or '' }}">
+                            {{ $u->wx_id or '' }}
+                        </span>
                         @if(!empty($u->wx_qr_code_img))
                         <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->wx_qr_code_img) }}">
                             <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
@@ -141,24 +143,28 @@
                     <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->linkman_wx_qr_code_img) }}">
                         <div class="item-row item-info-row">
                             <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                            <span class="text-muted">{{ $u->linkman_wx_id or '' }}</span>
+                            <span class="text-muted copy-btn" data-title="微信号" data-text="{{ $u->linkman_wx_id or '' }}">
+                                {{ $u->linkman_wx_id or '' }}
+                            </span>
                             <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
                         </div>
                     </a>
                     @else
                         <div class="item-row item-info-row">
                             <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                            <span class="text-muted">{{ $u->linkman_wx_id or '' }}</span>
+                            <span class="text-muted copy-btn" data-title="微信号" data-text="{{ $u->linkman_wx_id or '' }}">
+                                {{ $u->linkman_wx_id or '' }}
+                            </span>
                         </div>
                     @endif
                 @endif
                 {{--地址--}}
                 @if(!empty($u->area_province) || !empty($u->contact_address))
-                    <div class="item-row item-info-row">
+                    <div class="item-row item-info-row copy-btn" data-title="地址" data-text="{{ $u->area_province or '' }}{{ $u->area_city or '' }}{{ $u->area_district or '' }}{{ $u->contact_address or '' }}">
                         <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
                         <span class="text-muted">{{ $u->area_province or '' }}</span>
                         <span class="text-muted">{{ $u->area_city or '' }}</span>
-{{--                        <span class="text-muted">{{ $u->area_district or '' }}</span>--}}
+                        <span class="text-muted">{{ $u->area_district or '' }}</span>
                         <span class="text-muted">{{ $u->contact_address or '' }}</span>
                     </div>
                 @endif

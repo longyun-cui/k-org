@@ -115,12 +115,14 @@
                     </div>
                 @endif
                 {{--联系人微信--}}
-                @if(!empty($u->relation_user->linkman_wechat_id))
+                @if(!empty($u->relation_user->linkman_wx_id))
                     <div class="item-row item-info-row">
                         <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->relation_user->linkman_wechat_id or '暂无' }}</span>
-                        @if(!empty($u->relation_user->linkman_wechat_qr_code_img))
-                            <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->relation_user->linkman_wechat_qr_code_img) }}">
+                        <span class="text-muted copy-btn" data-text="{{ $u->linkman_wx_id or '' }}" data-title="微信号">
+                            {{ $u->relation_user->linkman_w_id or '暂无' }}
+                        </span>
+                        @if(!empty($u->relation_user->linkman_wx_qr_code_img))
+                            <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->relation_user->linkman_wx_qr_code_img) }}">
                                 <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
                             </a>
                         @endif
