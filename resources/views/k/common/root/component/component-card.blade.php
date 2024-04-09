@@ -46,7 +46,7 @@
             {{--商业说明--}}
             @if(!empty($data->description))
                 <p class="text-muted text-center margin-bottom-4px">
-                    <b>{{ $data->description or '暂无' }}</b>
+                    <b>{{ $data->description or '' }}</b>
                 </p>
             @endif
 
@@ -340,7 +340,7 @@
             @if(!empty($data->contact_address))
                 <div class="item-info-row margin-4px">
                     <i class="fa fa-map-marker text-primary"></i>
-                    <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
+                    <span class="text-muted">{{ $data->contact_address or '' }}</span>
                 </div>
             @endif
 

@@ -107,61 +107,69 @@ class WWWIndexRepository {
 //        {
 //        }
 //        else return response_error(['error_type'=>'password_confirm'],'确认密码不一致！');
-            DB::beginTransaction();
-            try
-            {
-                // 注册
-                $user = new K_User;
-                $user_create['creator_id'] = $me_id;
-                $user_create['principal_id'] = $me_id;
-                $user_create['user_category'] = 1;
-                $user_create['user_type'] = $user_type;
-                $user_create['username'] = $username;
-                $user_create['mobile'] = $mobile;
+
+        $area_province = !empty($post_data['area_province']) ? $post_data['area_province'] : '';
+        $area_city = !empty($post_data['area_city']) ? $post_data['area_city'] : '';
+        $area_district = !empty($post_data['area_district']) ? $post_data['area_district'] : '';
+
+        DB::beginTransaction();
+        try
+        {
+            // 注册
+            $user = new K_User;
+            $user_create['creator_id'] = $me_id;
+            $user_create['principal_id'] = $me_id;
+            $user_create['user_category'] = 1;
+            $user_create['user_type'] = $user_type;
+            $user_create['username'] = $username;
+            $user_create['mobile'] = $mobile;
+            $user_create['area_province'] = $area_province;
+            $user_create['area_city'] = $area_city;
+            $user_create['area_district'] = $area_district;
 //                $user_create['password'] = password_encode($password);
 //                $user_create['portrait_img'] = 'unique/portrait/user2.jpg';
-                $bool = $user->fill($user_create)->save();
-                if($bool)
-                {
-                    $user_ext = new K_UserExt;
-                    $user_ext_create['user_id'] = $user->id;
-                    $bool_2 = $user_ext->fill($user_ext_create)->save();
-                    if($bool_2)
-                    {
-                        $me_relation = new K_Pivot_User_Relation;
-                        $me_relation->relation_category = 11;
-                        $me_relation->relation_type = 0;
-                        $me_relation->mine_user_id = $user->id;
-                        $me_relation->relation_user_id = $me_id;
-                        $bool_3 = $me_relation->save();
-                        if($bool_3)
-                        {
-                            $portrait_path = "k/unique/portrait_for_user/".date('Y-m-d');
-                            if (!is_dir(storage_resource_path($portrait_path)))
-                            {
-                                mkdir(storage_resource_path($portrait_path), 0777, true);
-                            }
-                            copy(storage_resource_path("materials/portrait/user0.jpeg"), storage_resource_path($portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg"));
-                            $user->portrait_img = $portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg";
-                            $user->save();
-                        }
-                        else throw new Exception("insert--K_Pivot_User_Relation--failed");
-                    }
-                    else throw new Exception("insert--user-ext--failed");
-                }
-                else throw new Exception("insert--user--failed");
-
-                DB::commit();
-                return response_success([],'注册成功！');
-            }
-            catch (Exception $e)
+            $bool = $user->fill($user_create)->save();
+            if($bool)
             {
-                DB::rollback();
-                $msg = '注册失败，请重试！';
-                $msg = $e->getMessage();
-//                exit($e->getMessage());
-                return response_fail([],$msg);
+                $user_ext = new K_UserExt;
+                $user_ext_create['user_id'] = $user->id;
+                $bool_2 = $user_ext->fill($user_ext_create)->save();
+                if($bool_2)
+                {
+                    $me_relation = new K_Pivot_User_Relation;
+                    $me_relation->relation_category = 11;
+                    $me_relation->relation_type = 0;
+                    $me_relation->mine_user_id = $user->id;
+                    $me_relation->relation_user_id = $me_id;
+                    $bool_3 = $me_relation->save();
+                    if($bool_3)
+                    {
+                        $portrait_path = "k/unique/portrait_for_user/".date('Y-m-d');
+                        if (!is_dir(storage_resource_path($portrait_path)))
+                        {
+                            mkdir(storage_resource_path($portrait_path), 0777, true);
+                        }
+                        copy(storage_resource_path("materials/portrait/user0.jpeg"), storage_resource_path($portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg"));
+                        $user->portrait_img = $portrait_path."/portrait_for_user_by_user_".$user->id.".jpeg";
+                        $user->save();
+                    }
+                    else throw new Exception("insert--K_Pivot_User_Relation--failed");
+                }
+                else throw new Exception("insert--user-ext--failed");
             }
+            else throw new Exception("insert--user--failed");
+
+            DB::commit();
+            return response_success([],'注册成功！');
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '注册失败，请重试！';
+            $msg = $e->getMessage();
+//                exit($e->getMessage());
+            return response_fail([],$msg);
+        }
     }
     // 我的社群组织
     public function view_mine_my_organization($post_data)

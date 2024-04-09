@@ -192,7 +192,7 @@
                     <span class="text-muted">{{ $data->area_province or '' }}</span>
                     <span class="text-muted">{{ $data->area_city or '' }}</span>
                     <span class="text-muted">{{ $data->area_district or '' }}</span>
-                    <span class="text-muted">{{ $data->contact_address or '暂无' }}</span>
+                    <span class="text-muted">{{ $data->contact_address or '' }}</span>
                 </li>
 {{--                @endif--}}
             </ul>
@@ -214,7 +214,7 @@
 </div>
 
 
-@if(!empty($data->ext->content) || !empty($data->ext->description))
+@if(!empty($data->ext->content))
 <div class=" item-piece item-option margin-top-4px padding-16px border-bottom-0">
     <article class="readmore-content item-piece item-option padding-0 border-bottom-0">
 
@@ -222,13 +222,13 @@
             <h4>{{ $data->ext->title or '我的介绍' }}</h4>
         </div>
 
-        @if(!empty($data->ext->description))
-            <div class="item-row item-description-row with-background margin-bottom-8px">
-                <div class="text-row text-description-row text-muted">
-                    {{ $data->ext->description or '暂无描述' }}
-                </div>
-            </div>
-        @endif
+{{--        @if(!empty($data->ext->description))--}}
+{{--            <div class="item-row item-description-row with-background margin-bottom-8px">--}}
+{{--                <div class="text-row text-description-row text-muted">--}}
+{{--                    {{ $data->ext->description or '暂无描述' }}--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        @endif--}}
 
         @if(!empty($data->ext->content))
         <div class="item-row">
