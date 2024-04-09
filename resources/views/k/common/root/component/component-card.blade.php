@@ -428,7 +428,7 @@
     .box-footer { padding:4px; }
     .widget-user .box-footer { padding-top:4px; border-bottom: 1px solid #f4f4f4; }
     .list-group { margin-bottom:0; }
-    .list-group-item { padding:4px 12px; border:1px solid #eeeeee; font-size:12px; }
+    .list-group-item { padding:6px 12px; border:1px solid #eeeeee; font-size:14px; }
     .list-group-item:first-child { border-top:0; }
     .list-group-item:last-child { border-bottom:0; }
     .list-group-item i { width:20px; text-align:center; }
