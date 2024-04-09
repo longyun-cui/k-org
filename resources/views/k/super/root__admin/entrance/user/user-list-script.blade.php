@@ -265,7 +265,8 @@
                         console.log(data);
 //                        window.open('/');
                         var temp_window=window.open();
-                        if(data.data.user.user_type == 1) temp_window.location="{{ env('DOMAIN_WWW') }}";
+                        if(data.data.user.user_type == 0) temp_window.location="{{ env('DOMAIN_WWW') }}";
+                        else if(data.data.user.user_type == 1) temp_window.location="{{ env('DOMAIN_WWW') }}";
                         else if(data.data.user.user_type == 11) temp_window.location="{{ env('DOMAIN_ORG') }}";
                         else if(data.data.user.user_type == 88) temp_window.location="{{ env('DOMAIN_ORG') }}";
 

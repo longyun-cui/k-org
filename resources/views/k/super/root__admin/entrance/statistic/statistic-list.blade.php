@@ -94,30 +94,16 @@
                     </div>
                 </div>
 
+                <div class="tableArea">
                 <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
-                            <th>ID</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
+                </div>
 
             </div>
 
@@ -156,6 +142,35 @@
     </div>
 </div>
 @endsection
+
+
+
+
+@section('custom-css')
+@endsection
+@section('custom-style')
+    <style>
+        .tableArea table { min-width:1360px; }
+        /*.tableArea table { width:100% !important; min-width:1380px; }*/
+        /*.tableArea table tr th, .tableArea table tr td { white-space:nowrap; }*/
+
+        .datatable-search-row .input-group .date-picker-btn { width:30px; }
+        .table-hover>tbody>tr:hover td { background-color: #bbccff; }
+
+        .select2-container { height:100%; border-radius:0; float:left; }
+        .select2-container .select2-selection--single { border-radius:0; }
+        .bg-fee-2 { background:#C3FAF7; }
+        .bg-fee { background:#8FEBE5; }
+        .bg-deduction { background:#C3FAF7; }
+        .bg-income { background:#8FEBE5; }
+        .bg-route { background:#FFEBE5; }
+        .bg-finance { background:#E2FCAB; }
+        .bg-empty { background:#F6C5FC; }
+        .bg-journey { background:#F5F9B4; }
+    </style>
+@endsection
+
+
 
 
 @section('custom-script')
