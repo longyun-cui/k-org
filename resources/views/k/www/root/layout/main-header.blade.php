@@ -45,7 +45,7 @@
                     <div class="navbar-custom-menu pull-right" style="height:50px;line-height:50px;padding:0 8px;float:left;">
                         <a href="{{ url('/login-link') }}">
                             <i class="fa fa-sign-in"></i>
-                            <span>微信登录</span>
+                            <span>微信登录/注册</span>
                         </a>
                     </div>
                 @endif
