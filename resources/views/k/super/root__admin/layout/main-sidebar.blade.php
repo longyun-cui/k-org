@@ -40,12 +40,12 @@
                     <i class="fa fa-user"></i><span>全部用户</span>
                 </a>
             </li>
-            <li class="treeview {{ $menu_active_by_user_list_for_individual or '' }}">
+            <li class="treeview {{ $menu_active_by_user_list_for_individual or '' }} _none">
                 <a href="{{ url('/admin/user/user-list-for-individual') }}">
                     <i class="fa fa-user"></i><span>个人用户</span>
                 </a>
             </li>
-            <li class="treeview {{ $menu_active_by_user_list_for_org or '' }}">
+            <li class="treeview {{ $menu_active_by_user_list_for_org or '' }} _none">
                 <a href="{{ url('/admin/user/user-list-for-org') }}">
                     <i class="fa fa-user"></i><span>社群组织</span>
                 </a>
@@ -62,22 +62,22 @@
                     <i class="fa fa-file-text text-green"></i><span>全部内容</span>
                 </a>
             </li>
-            <li class="treeview {{ $menu_active_by_item_list_for_article or '' }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_article or '' }} _none">
                 <a href="{{ url('/admin/item/item-list-for-article') }}">
                     <i class="fa fa-file-text text-green"></i><span>文章</span>
                 </a>
             </li>
-            <li class="treeview {{ $menu_active_by_item_list_for_activity or '' }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_activity or '' }} _none">
                 <a href="{{ url('/admin/item/item-list-for-activity') }}">
                     <i class="fa fa-file-text text-green"></i><span>活动</span>
                 </a>
             </li>
-            <li class="treeview {{ $menu_active_by_item_list_for_advertising or '' }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_advertising or '' }} _none">
                 <a href="{{ url('/admin/item/item-list-for-advertising') }}">
                     <i class="fa fa-file-text text-green"></i><span>广告</span>
                 </a>
             </li>
-            <li class="treeview {{ $menu_active_by_item_list_for_mine or '' }}">
+            <li class="treeview {{ $menu_active_by_item_list_for_mine or '' }} _none">
                 <a href="{{ url('/admin/item/item-list-for-mine') }}">
                     <i class="fa fa-file-text text-green"></i><span>我的</span>
                 </a>
