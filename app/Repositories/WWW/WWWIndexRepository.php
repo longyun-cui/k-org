@@ -535,6 +535,25 @@ class WWWIndexRepository {
 
 
         $item_list = $item_query->orderByDesc('published_at')->paginate(20);
+        foreach ($item_list as $item)
+        {
+            $item->custom = json_decode($item->custom);
+            $item->custom_decode = json_decode($item->custom);
+            $item->content_show = strip_tags($item->content);
+            $item->img_tags = get_html_img($item->content);
+
+
+//            if(!empty($item->cover_pic) && @getimagesize(env('DOMAIN_CDN').'/'.$item->cover_pic))
+            if(!empty($item->cover_pic) && file_exists(storage_resource_path($item->cover_pic)))
+            {
+                $item->cover_picture = env('DOMAIN_CDN').'/'.$item->cover_pic;
+            }
+            else
+            {
+                if(!empty($item->img_tags[0])) $item->cover_picture = $item->img_tags[2][0];
+            }
+//            dd($item->cover_picture);
+        }
         $return['item_list'] = $item_list;
 
 
@@ -1347,11 +1366,30 @@ class WWWIndexRepository {
             $item_list = $item_query->orderBy('published_at','desc')->paginate(20);
         }
 
+//        foreach ($item_list as $item)
+//        {
+//            $item->custom_decode = json_decode($item->custom);
+//            $item->content_show = strip_tags($item->content);
+//            $item->img_tags = get_html_img($item->content);
+//        }
         foreach ($item_list as $item)
         {
+            $item->custom = json_decode($item->custom);
             $item->custom_decode = json_decode($item->custom);
             $item->content_show = strip_tags($item->content);
             $item->img_tags = get_html_img($item->content);
+
+
+//            if(!empty($item->cover_pic) && @getimagesize(env('DOMAIN_CDN').'/'.$item->cover_pic))
+            if(!empty($item->cover_pic) && file_exists(storage_resource_path($item->cover_pic)))
+            {
+                $item->cover_picture = env('DOMAIN_CDN').'/'.$item->cover_pic;
+            }
+            else
+            {
+                if(!empty($item->img_tags[0])) $item->cover_picture = $item->img_tags[2][0];
+            }
+//            dd($item->cover_picture);
         }
 //        dd($item->toArray());
 
