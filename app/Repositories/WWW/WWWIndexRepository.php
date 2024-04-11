@@ -1715,6 +1715,7 @@ class WWWIndexRepository {
                 })
                 ->where('user_status',1)
                 ->where('active',1)
+                ->orderByDesc('id')
                 ->paginate(50);
         }
         else
@@ -1734,6 +1735,7 @@ class WWWIndexRepository {
                 })
                 ->where('user_status',1)
                 ->where('active',1)
+                ->orderByDesc('id')
                 ->paginate(50);
         }
 
