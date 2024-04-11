@@ -452,7 +452,7 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             // return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
-                            return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+row.id+'">'+data+'</a>';
+                            return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/item/'+row.id+'">'+data+'</a>';
                         }
                     },
                     {
