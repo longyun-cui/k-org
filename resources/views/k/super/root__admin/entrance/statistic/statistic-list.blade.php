@@ -297,10 +297,10 @@
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "",
                         "title": "页面",
                         "data": "id",
+                        "className": "text-left",
+                        "width": "",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.record_type == 3)
@@ -322,7 +322,7 @@
                             {
                                 if(row.object)
                                 {
-                                    return '<a target="_blank" href="/item/'+row.object.id+'">'+row.object.username+'</a>';
+                                    return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+row.object.id+'">'+row.object.username+'</a>';
                                 }
                                 else
                                 {
@@ -333,9 +333,9 @@
                             {
                                 if(row.item)
                                 {
-                                    return '<a target="_blank" href="/item/'+row.item.id+'">'+row.item.title+'</a>';
+                                    return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/item/'+row.item.id+'">'+row.item.title+'</a>';
                                 }
-                                else
+                                elses
                                 {
                                     return "item.id="+row.item_id+"，该内容已删除。";
                                 }
@@ -355,7 +355,7 @@
                         render: function(data, type, row, meta) {
                             return row.creator == null
                                 ? '<small class="btn-xs bg-black">游客</small>'
-                                : '<a target="_blank" href="/user/'+row.creator.id+'">'+row.creator.username+'</a>';
+                                : '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+row.creator.id+'">'+row.creator.username+'</a>';
                         }
                     },
                     {
