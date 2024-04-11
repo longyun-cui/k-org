@@ -36,7 +36,7 @@
     {{--右侧-作者-用户名片--}}
     <div class="main-body-section main-body-right-section section-wrapper pull-right">
         {{--@include(env('TEMPLATE_K_WWW').'component.component-user', ['data'=>$item->owner])--}}
-        @include(env('TEMPLATE_K_COMMON').'component.component-user', ['data'=>$user])
+        @include(env('TEMPLATE_K_COMMON').'component.component-card', ['data'=>$user])
     </div>
 
 
