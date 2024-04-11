@@ -322,7 +322,7 @@
                             {
                                 if(row.object)
                                 {
-                                    return '<a target="_blank" href="/user/'+row.object.id+'">'+row.object.username+'</a>';
+                                    return '<a target="_blank" href="/item/'+row.object.id+'">'+row.object.username+'</a>';
                                 }
                                 else
                                 {
