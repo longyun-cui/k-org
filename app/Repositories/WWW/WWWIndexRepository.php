@@ -500,6 +500,7 @@ class WWWIndexRepository {
 //            $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%")->orWhere('area_district','like',"%$q%");
             $user_query->where(function($query) use($q) {
                 $query->where('tag','like',"%$q%")
+                    ->orWhere('title','like',"%$q%")
                     ->orWhere('description','like',"%$q%")
                     ->orWhere('area_city','like',"%$q%")
                     ->orWhere('area_district','like',"%$q%");
