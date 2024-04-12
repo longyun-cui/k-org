@@ -305,7 +305,7 @@
                         render: function(data, type, row, meta) {
                             if(row.record_type == 3)
                             {
-                                return '<a target="_blank" href="/tag/'+row.title+'">'+"#"+row.title+'</a>';
+                                return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/tag/'+row.title+'">'+"#"+row.title+'</a>';
                             }
 
                             if(row.page_type == 1)
