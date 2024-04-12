@@ -500,7 +500,7 @@ class WWWIndexRepository {
 //            $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%")->orWhere('area_district','like',"%$q%");
             $user_query->where(function($query) use($q) {
                 $query->where('tag','like',"%$q%")
-                    ->orWhere('title','like',"%$q%")
+                    ->orWhere('name','like',"%$q%")
                     ->orWhere('description','like',"%$q%")
                     ->orWhere('area_city','like',"%$q%")
                     ->orWhere('area_district','like',"%$q%");
@@ -522,6 +522,15 @@ class WWWIndexRepository {
 //        }
 
         $item_query->where(['item_status'=>1,'active'=>1])->whereIn('owner_id',$user_ids);
+
+
+        if($q)
+        {
+            $item_query->where(function($query) use($q) {
+                $query->where('title','like',"%$q%")
+                    ->orWhere('description','like',"%$q%");
+            });
+        }
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
         if($type == 'root')
