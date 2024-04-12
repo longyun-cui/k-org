@@ -494,7 +494,17 @@ class WWWIndexRepository {
         {
         }
 
-        if($q) $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%")->orWhere('area_district','like',"%$q%");
+
+        if($q)
+        {
+//            $user_query->where('tag','like',"%$q%")->orWhere('area_city','like',"%$q%")->orWhere('area_district','like',"%$q%");
+            $user_query->where(function($query) use($q) {
+                $query->where('tag','like',"%$q%")
+                    ->orWhere('description','like',"%$q%")
+                    ->orWhere('area_city','like',"%$q%")
+                    ->orWhere('area_district','like',"%$q%");
+            });
+        }
 
         $user_list = $user_query
 //            ->orderBy('user_type')
