@@ -108,6 +108,7 @@
                         </div>
                     @endif
 
+                    @if(!empty($item->description) || !empty($item->content_show))
                     <div class="row-sm margin-top-4px">
                         <div class="text-description-row multi-ellipsis-3">
                             @if(!empty($item->description))
@@ -118,6 +119,7 @@
                             {{ $item->content_show or '' }}
                         </div>
                     </div>
+                    @endif
 
                     <div class="text-title-row multi-ellipsis-1 _none">
                         <span class="info-tags text-danger">该组织•贴片广告</span>
