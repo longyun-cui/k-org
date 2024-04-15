@@ -49,24 +49,15 @@
 
             @include(env('TEMPLATE_K_COMMON').'component.component-card', ['data'=>$data])
 
-            {{--<div class="box-body visible-xs visible-sm" style="margin-bottom:4px;background:#fff;">--}}
-            {{--<i class="fa fa-user text-orange"></i>&nbsp; <b>{{ $data->name or '' }}</b>--}}
-            {{--</div>--}}
-
-{{--            <div class="box-body visible-xs visible-sm" style="margin-bottom:16px;background:#fff;">--}}
-{{--                <div class="margin">访问：{{ $data->visit_num or 0 }}</div>--}}
-{{--                <div class="margin">文章：{{ $data->article_count or 0 }}</div>--}}
-{{--                <div class="margin">活动：{{ $data->activity_count or 0 }}</div>--}}
-{{--            </div>--}}
 
 
-            @if(!in_array(request('type'),['org','introduction']))
+{{--            @if(!in_array(request('type'),['org','introduction']))--}}
                 {{--<div class="item-row margin-bottom-4px pull-right visible-xs">--}}
                 {{--<strong>Ta的内容</strong>--}}
                 {{--</div>--}}
                 {{--@include(env('TEMPLATE_ROOT_FRONT').'component.item-list',['item_list'=>$item_list])--}}
                 {{--{!! $item_list->links() !!}--}}
-            @endif
+{{--            @endif--}}
 
 
             @if(request('type') == 'introduction')
@@ -85,10 +76,6 @@
                     </div>
                 </div>
             @endif
-
-            {{--@if($data->user_type == 88 && request('type') == 'org')--}}
-            {{--@include(env('TEMPLATE_ROOT_FRONT').'component.user-list',['user_list'=>$data->pivot_org_list])--}}
-            {{--@endif--}}
 
         </div>
     </div>
@@ -119,11 +106,11 @@
 
 
         {{--我赞助的组织机构--}}
-        @if(count($data->pivot_org_list))
+        @if(count($data->pivot_sponsored_list))
             <div class="item-row margin-top-8px pull-right _none">
-                {{--<strong>赞助的组织</strong>--}}
+                <strong>Ta赞助的人</strong>
             </div>
-            @include(env('TEMPLATE_K_COMMON').'component.menu-for-org', ['org_list'=>$data->pivot_org_list])
+            @include(env('TEMPLATE_K_COMMON').'component.menu-for-org', ['org_list'=>$data->pivot_sponsored_list])
         @endif
 
 
