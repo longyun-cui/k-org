@@ -66,7 +66,7 @@
                     </div>
                 @endif
                 {{--QQ--}}
-                @if(!empty($u->mine_user->relation_user->QQ_number))
+                @if(!empty($u->mine_user->QQ_number))
                     <div class="item-row item-info-row">
                         <i class="fa fa-qq text-primary" style="width:16px;"></i>
                         <a target="_blank" href="tencent://message/?uin={{ $u->mine_user->QQ_number }}">
@@ -75,17 +75,16 @@
                     </div>
                 @endif
                 {{--微信号--}}
-                @if(!empty($u->mine_user->wechat_id))
-                            <div class="item-row item-info-row">
-                                <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                                <span class="text-muted">{{ $u->mine_user->wechat_id or '暂无' }}</span>
-                                @if(!empty($u->mine_user->wechat_qr_code_img))
-                                    <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->mine_user->wechat_qr_code_img) }}">
-                                        <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
-                                    </a>
-                                @endif
-                            </div>
-                        </a>
+                @if(!empty($u->mine_user->wx_id))
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-weixin text-success" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->mine_user->wx_id or '暂无' }}</span>
+                        @if(!empty($u->mine_user->wx_qr_code_img))
+                            <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->mine_user->wx_qr_code_img) }}">
+                                <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
+                            </a>
+                        @endif
+                    </div>
                 @endif
                 {{--网站--}}
                 @if(!empty($u->mine_user->website))
@@ -115,30 +114,33 @@
                     </div>
                 @endif
                 {{--联系人微信--}}
-                @if(!empty($u->mine_user->linkman_wechat_id))
+                @if(!empty($u->mine_user->linkman_wx_id))
                     <div class="item-row item-info-row">
                         <i class="fa fa-weixin text-success" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->mine_user->linkman_wechat_id or '暂无' }}</span>
-                        @if(!empty($u->mine_user->linkman_wechat_qr_code_img))
-                            <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->mine_user->linkman_wechat_qr_code_img) }}">
+                        <span class="text-muted">{{ $u->mine_user->linkman_wx_id or '暂无' }}</span>
+                        @if(!empty($u->mine_user->linkman_wx_qr_code_img))
+                            <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$u->mine_user->linkman_wx_qr_code_img) }}">
                                 <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
                             </a>
                         @endif
                     </div>
                 @endif
                 {{--地址--}}
-                @if(!empty($u->mine_user->contact_address))
-                    <div class="item-row item-info-row">
+                @if(!empty($u->mine_user->area_province) || !empty($u->mine_user->contact_address))
+                    <div class="item-row item-info-row copy-btn" data-title="地址" data-text="{{ $u->mine_user->area_province or '' }}{{ $u->mine_user->area_city or '' }}{{ $u->mine_user->area_district or '' }}{{ $u->mine_user->contact_address or '' }}">
                         <i class="fa fa-map-marker text-primary" style="width:16px;"></i>
-                        <span class="text-muted">{{ $u->mine_user->contact_address or '暂无' }}</span>
+                        <span class="text-muted">{{ $u->mine_user->area_province or '' }}</span>
+                        <span class="text-muted">{{ $u->mine_user->area_city or '' }}</span>
+                        <span class="text-muted">{{ $u->mine_user->area_district or '' }}</span>
+                        <span class="text-muted">{{ $u->mine_user->contact_address or '' }}</span>
                     </div>
                 @endif
 
-                {{--@if(!empty($u->description))--}}
+                @if(!empty($u->mine_user->description))
                 <div class="item-row item-info-row">
                     {{ $u->mine_user->description or '暂无简介' }}
                 </div>
-                {{--@endif--}}
+                @endif
                 
                 <div class="item-row item-info-row">
                     <a class="btn btn-xs bg-olive user-login-to-org-submit" data-id="{{ $u->mine_user->id }}">登录</a>
@@ -151,9 +153,9 @@
     </div>
 </div>
 @empty
-<div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px">
-    <div class="panel-default box-default item-entity-container text-center">
-        <div>暂时没有任何组织机构，<a href="{{ url(env('DOMAIN_WWW').'/org-register') }}">注册一个</a></div>
+    <div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px">
+        <div class="panel-default box-default item-entity-container text-center">
+            <div>暂时没有任何组织机构</div>
+        </div>
     </div>
-</div>
 @endforelse

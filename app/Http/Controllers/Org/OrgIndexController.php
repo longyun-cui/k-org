@@ -175,26 +175,92 @@ class OrgIndexController extends Controller
 
 
 
+    // 【用户】SELECT2 USER
+    public function operate_mine_select2_user()
+    {
+        return $this->repo->operate_mine_select2_user(request()->all());
+    }
+
 
 
     /*
      * 用户系统
      */
     // 【用户】【成员】返回-列表
-    public function view_mine_user_my_member_list()
+    public function view_mine_my_member_list()
     {
-        return $this->repo->view_mine_user_my_member_list(request()->all());
+        return $this->repo->view_mine_my_member_list(request()->all());
     }
     // 【用户】【粉丝】返回-列表
-    public function view_mine_user_my_fans_list()
+    public function view_mine_my_fans_list()
     {
-        return $this->repo->view_mine_user_my_fans_list(request()->all());
+        return $this->repo->view_mine_my_fans_list(request()->all());
+    }
+    // 【用户】【粉丝】返回-列表
+    public function view_mine_my_follow_list()
+    {
+        return $this->repo->view_mine_my_follow_list(request()->all());
     }
     // 【用户】【赞助商】返回-列表
-    public function view_mine_user_my_sponsor_list()
+    public function view_mine_my_sponsor_list()
     {
-        return $this->repo->view_mine_user_my_sponsor_list(request()->all());
+        return $this->repo->view_mine_my_sponsor_list(request()->all());
     }
+
+
+
+
+    // 【赞助商】添加
+    public function operate_mine_sponsor_add()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_mine_sponsor_add(request()->all());
+        else if (request()->isMethod('post')) return $this->repo->operate_mine_sponsor_add_save(request()->all());
+    }
+    // 【赞助商】删除
+    public function operate_mine_sponsor_delete()
+    {
+        return $this->repo->operate_mine_sponsor_delete(request()->all());
+    }
+    // 【赞助商】关闭
+    public function operate_mine_sponsor_close()
+    {
+        return $this->repo->operate_mine_sponsor_close(request()->all());
+    }
+    // 【赞助商】开启
+    public function operate_mine_sponsor_open()
+    {
+        return $this->repo->operate_mine_sponsor_open(request()->all());
+    }
+
+
+
+
+    // 【成员】添加
+    public function operate_mine_fans_remove()
+    {
+        return $this->repo->operate_mine_fans_remove(request()->all());
+    }
+
+
+    // 【成员】添加
+    public function operate_mine_member_add()
+    {
+        return $this->repo->operate_mine_member_add(request()->all());
+    }
+    // 【成员】移除
+    public function operate_mine_member_remove()
+    {
+        return $this->repo->operate_mine_member_remove(request()->all());
+    }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -252,46 +318,6 @@ class OrgIndexController extends Controller
     public function operate_user_sponsor_relation_bulk()
     {
         return $this->repo->operate_user_sponsor_relation_bulk(request()->all());
-    }
-
-
-
-
-    // 【赞助商】删除
-    public function operate_user_sponsor_delete()
-    {
-        return $this->repo->operate_user_sponsor_delete(request()->all());
-    }
-    // 【赞助商】关闭
-    public function operate_user_sponsor_close()
-    {
-        return $this->repo->operate_user_sponsor_close(request()->all());
-    }
-    // 【赞助商】开启
-    public function operate_user_sponsor_open()
-    {
-        return $this->repo->operate_user_sponsor_open(request()->all());
-    }
-
-
-
-
-    // 【成员】添加
-    public function operate_user_fans_remove()
-    {
-        return $this->repo->operate_user_fans_remove(request()->all());
-    }
-
-
-    // 【成员】添加
-    public function operate_user_member_add()
-    {
-        return $this->repo->operate_user_member_add(request()->all());
-    }
-    // 【成员】移除
-    public function operate_user_member_remove()
-    {
-        return $this->repo->operate_user_member_remove(request()->all());
     }
 
 

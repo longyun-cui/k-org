@@ -21,32 +21,16 @@
                         <b>{{ $u->relation_user->username or '' }}</b>
                     </a>
 
-                    @if(Auth::check() && $u->relation_user_id != Auth::user()->id)
-
                         <span class="tool-inn tool-set _none"><i class="fa fa-cog"></i></span>
 
-                        @if($u->relation_type == 21)
-                            <span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-exchange"></i> 相互收藏</span>
-                        @elseif($u->relation_type == 41)
-                            <span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-check"></i> 已收藏</span>
-                        @elseif($u->relation_type == 71)
-                            <span class="tool-inn tool-info follow-add follow-add-it"><i class="fa fa-plus text-yellow"></i> 收藏</span>
+                        @if($u->relation_active == 1)
+                            <span class="tool-inn tool-info bg-red user-sponsor-close-submit" data-id="{{ $u->id }}" data-user-id="{{ $u->relation_user->id }}"><i class="fa fa-minus-circle"></i>禁用</span>
+                        <span class="tool-inn tool-info"><i class="fa fa-check-circle-o"></i>已启用</span>
                         @else
-                            <span class="tool-inn tool-info follow-add follow-add-it"><i class="fa fa-plus text-yellow"></i> 收藏</span>
+                            <span class="tool-inn tool-info bg-olive user-sponsor-open-submit" data-id="{{ $u->id }}" data-user-id="{{ $u->relation_user->id }}"><i class="fa fa-plus-circle"></i> 启用</span>
+                        <span class="tool-inn tool-info"><i class="fa fa-circle-o"></i>未启用</span>
                         @endif
 
-                        <div class="tool-menu-list _none" style="z-index:999;">
-                            <ul>
-                                @if(in_array($u->relation_type, [21,41]))
-                                    <li class="follow-remove-it" role="button"><i class="fa fa-minus"></i> 取消收藏</li>
-                                @endif
-                                @if(in_array($u->relation_type, [21,71]))
-                                    <li class="fans-remove-it" role="button"><i class="fa fa-minus"></i> 移除粉丝</li>
-                                @endif
-                            </ul>
-                        </div>
-
-                    @endif
 
                 </div>
 
@@ -153,7 +137,7 @@
 @empty
 <div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px">
     <div class="panel-default box-default item-entity-container text-center">
-        空空如也
+        暂时没有赞助商!
     </div>
 </div>
 @endforelse

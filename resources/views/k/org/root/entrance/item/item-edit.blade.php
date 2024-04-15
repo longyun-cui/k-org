@@ -297,7 +297,7 @@
                 </form>
 
                 <div class="box-footer">
-                    <div class="row">
+                    <div class="row-">
                         <div class="col-md-12 col-md-offset-2-">
                             <button type="button" class="btn btn-success" id="edit-item-submit"><i class="fa fa-check"></i> 提交</button>
                             <button type="button" onclick="history.go(-1);" class="btn btn-default">返回</button>
@@ -305,6 +305,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 

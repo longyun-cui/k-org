@@ -81,7 +81,7 @@
 .item-description-row { line-height:20px; }
 .item-description-row.with-background { padding:4px; line-height:20px; background:#eee; }
 
-.item-content-row { margin-top:8px; min-height:0; color:#666; font-size:14px; }
+.item-content-row { min-height:0; color:#666; font-size:14px; }
 
 .item-tools-row { color:#aaa; }
 .item-tools-row a { color:#aaa; }

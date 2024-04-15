@@ -17,14 +17,14 @@
 
 
 @section('sidebar')
-    @include(env('TEMPLATE_K_COMMON').'component.sidebar.sidebar-root')
+{{--    @include(env('TEMPLATE_K_COMMON').'component.sidebar.sidebar-root')--}}
 @endsection
 @section('header','')
 @section('description','')
 @section('content')
 <div class="container">
 
-    {{--左侧--}}
+    {{--我的社群组织--}}
     <div class="main-body-section main-body-center-section section-wrapper page-item">
 
         @include(env('TEMPLATE_K_COMMON').'component.user-list-for-mine',['user_list'=>$user_list])
@@ -32,16 +32,13 @@
 
     </div>
 
-
-    {{--右侧--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right hidden-xs hidden-sm">
-
-{{--        @if($auth_check)--}}
-{{--            @include(env('TEMPLATE_K_COMMON').'component.menu-for-me')--}}
-{{--        @else--}}
-{{--            @include(env('TEMPLATE_K_COMMON').'component.menu-for-root')--}}
-{{--        @endif--}}
-
+    {{--注册新组织--}}
+    <div class="main-body-section main-body-center-section section-wrapper page-item">
+        <div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px">
+            <div class="panel-default box-default item-entity-container text-center">
+                <div><a href="{{ url(env('DOMAIN_WWW').'/org-register') }}">注册一个社群组织</a></div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -61,7 +58,7 @@
 @section('custom-script')
 <script>
     $(function() {
-        // 监听 'ifUnchecked' 事件
+        // 登录
         $('.user-login-to-org-submit').on('click', function(event){
             var $that = $(this);
             var $org_id = $that.attr('data-id');

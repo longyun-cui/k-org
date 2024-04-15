@@ -36,9 +36,9 @@
 <div class="container">
 
     {{--右侧-用户名片--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right _none">
+    <div class="main-body-section main-body-right-section section-wrapper pull-right">
 
-{{--        @include(env('TEMPLATE_K_COMMON').'component.component-user', ['data'=>$data])--}}
+        {{--@include(env('TEMPLATE_K_COMMON').'component.component-user', ['data'=>$data])--}}
         {{--@include(env('TEMPLATE_K_COMMON').'component.menu-for-user', ['data'=>$data])--}}
 
     </div>
@@ -113,11 +113,11 @@
 
 
     {{--右侧-广告等--}}
-    <div class="main-body-section main-body-left-section section-wrapper pull-left margin-top-4px _none-">
+    <div class="main-body-section main-body-center-section section-wrapper pull-left- margin-top-4px _none-">
 
 
         {{--[IF]我是组织--}}
-        @if($data->user_type == 11)
+{{--        @if($data->user_type == 11)--}}
 
             {{--贴片广告--}}
             @if(!empty($data->ad))
@@ -128,13 +128,14 @@
             @endif
 
             @if(count($data->pivot_sponsor_list))
-                <div class="item-row margin-top-8px pull-right _none">
-                    <strong>我的赞助商</strong>
+                <div class="item-row margin-top-8px pull-right _none-">
+                    <strong>Ta的赞助商</strong>
+{{--                    <strong>{{ $data->username or 'Ta' }}的赞助商</strong>--}}
                 </div>
                 @include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])
             @endif
 
-        @endif
+{{--        @endif--}}
 
 
         {{--[IF]我是赞助商--}}
@@ -150,8 +151,8 @@
 
             {{--我的广告--}}
             @if(count($data->ad_list))
-                <div class="item-row margin-top-8px pull-right _none">
-                    <strong>广告</strong>
+                <div class="item-row margin-top-8px pull-right _none-">
+                    <strong>Ta的广告</strong>
                 </div>
                 @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
             @endif

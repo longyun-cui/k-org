@@ -19,7 +19,7 @@
         </figure>
         @endif
 
-        <div class="text-container padding-10px">
+        <div class="text-container">
 
             <div class="item-row">
 
@@ -34,7 +34,7 @@
                 @endif
 
                 <div class="item-row text-info-row text-muted">
-                    <span class="info-tags text-danger">{{ $ad_tag or '该组织•贴片广告' }}</span>
+                    <span class="info-tags text-danger- bg-red">{{ $ad_tag or '该组织•广告' }}</span>
                 </div>
 
                 <div class="item-row text-title-row multi-ellipsis-1 with-border-top _none-" style="display:none;">

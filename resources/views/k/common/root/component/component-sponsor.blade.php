@@ -44,7 +44,7 @@
             </div>
             @endif
 
-            <div class="item-row item-info-row text-muted">
+            <div class="item-row item-info-row text-muted margin-top-4px">
                 <span class="info-tags text-primary bg-yellow">该组织·赞助商</span>
             </div>
 

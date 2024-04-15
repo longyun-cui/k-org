@@ -240,7 +240,7 @@ desired effect
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 {{--<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>--}}
 {{--<script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>--}}
-@include(env('TEMPLATE_K_WWW').'layout.wx-script')
+{{--@include(env('TEMPLATE_K_WWW').'layout.wx-script')--}}
 
 
 <script src="{{ asset('/resource/common/js/common.js') }}"></script>

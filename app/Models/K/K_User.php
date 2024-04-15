@@ -120,6 +120,7 @@ class K_User extends Authenticatable
         return $this->hasMany('App\Models\K\K_Item','owner_id','id');
     }
 
+
     // 广告
     function ad()
     {
@@ -131,6 +132,7 @@ class K_User extends Authenticatable
     {
         return $this->hasOne('App\Models\K\K_Item','id','introduction_id');
     }
+
 
     // 与我相关的内容
     function pivot_item()
@@ -156,14 +158,22 @@ class K_User extends Authenticatable
             ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
 
-    // 与我相关的内容
+
+    // 我的赞助商
     function pivot_sponsor_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','mine_user_id','relation_user_id')
             ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
     }
 
-    // 与我相关的内容
+    // 我赞助的
+    function pivot_sponsored_list()
+    {
+        return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')
+            ->withPivot(['active','category','type','relation_active','relation_category','relation_type'])->withTimestamps();
+    }
+
+    // 我赞助的企业
     function pivot_org_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')
@@ -171,7 +181,7 @@ class K_User extends Authenticatable
     }
 
 
-    // 与我相关的内容
+    // 我的关注
     function pivot_follow_list()
     {
         return $this->belongsToMany('App\Models\K\K_User','pivot_user_relation','relation_user_id','mine_user_id')

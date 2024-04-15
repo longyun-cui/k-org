@@ -178,16 +178,28 @@
                                         </a>
                                     </li>
 
+                                    <li class="_none">
+                                        <a href="{{ url('/mine/my-member-list') }}">
+                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                            <span>我的成员</span>
+                                        </a>
+                                    </li>
                                     <li>
-                                        <a href="{{ url('/mine/my-follow') }}">
+                                        <a href="{{ url('/mine/my-fans-list') }}">
+                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                            <span>我的粉丝</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/mine/my-follow-list') }}">
                                             <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
                                             <span>我的关注</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('/mine/my-fans') }}">
+                                        <a href="{{ url('/mine/my-sponsor-list') }}">
                                             <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
-                                            <span>我的粉丝</span>
+                                            <span>我的赞助商</span>
                                         </a>
                                     </li>
                                     <li class="_none">

@@ -89,24 +89,26 @@ Route::group([], function () {
 
 
 
-        Route::match(['get','post'], '/mine/user/select2_sponsor', $controller.'@operate_mine_user_select2_sponsor');
+        Route::match(['get','post'], '/mine/select2_user', $controller.'@operate_mine_select2_user');
 
 
-        Route::match(['get','post'], '/mine/user/my-member-list', $controller.'@view_mine_user_my_member_list');
-        Route::match(['get','post'], '/mine/user/my-fans-list', $controller.'@view_mine_user_my_fans_list');
-        Route::match(['get','post'], '/mine/user/my-sponsor-list', $controller.'@view_mine_user_my_sponsor_list');
+        Route::match(['get','post'], '/mine/my-member-list', $controller.'@view_mine_my_member_list');
+        Route::match(['get','post'], '/mine/my-fans-list', $controller.'@view_mine_my_fans_list');
+        Route::match(['get','post'], '/mine/my-follow-list', $controller.'@view_mine_my_follow_list');
+        Route::match(['get','post'], '/mine/my-sponsor-list', $controller.'@view_mine_my_sponsor_list');
 
-        Route::match(['get','post'], '/mine/user/sponsor-delete', $controller.'@operate_mine_user_sponsor_delete');
-        Route::match(['get','post'], '/mine/user/sponsor-close', $controller.'@operate_mine_user_sponsor_close');
-        Route::match(['get','post'], '/mine/user/sponsor-open', $controller.'@operate_mine_user_sponsor_open');
+        Route::match(['get','post'], '/mine/sponsor-add', $controller.'@operate_mine_sponsor_add');
+        Route::match(['get','post'], '/mine/sponsor-delete', $controller.'@operate_mine_sponsor_delete');
+        Route::match(['get','post'], '/mine/sponsor-close', $controller.'@operate_mine_sponsor_close');
+        Route::match(['get','post'], '/mine/sponsor-open', $controller.'@operate_mine_sponsor_open');
 
         Route::match(['get','post'], '/mine/user/relation-sponsor-list', $controller.'@view_mine_user_relation_sponsor_list');
         Route::match(['get','post'], '/mine/user/sponsor-relation', $controller.'@operate_mine_user_sponsor_relation');
         Route::match(['get','post'], '/mine/user/sponsor-relation-bulk', $controller.'@operate_mine_user_sponsor_relation_bulk');
 
-        Route::match(['get','post'], '/mine/user/member-add', $controller.'@operate_mine_user_member_add');
-        Route::match(['get','post'], '/mine/user/member-remove', $controller.'@operate_mine_user_member_remove');
-        Route::match(['get','post'], '/mine/user/fans-remove', $controller.'@operate_mine_user_fans_remove');
+        Route::match(['get','post'], '/mine/member-add', $controller.'@operate_mine_member_add');
+        Route::match(['get','post'], '/mine/member-remove', $controller.'@operate_mine_member_remove');
+        Route::match(['get','post'], '/mine/fans-remove', $controller.'@operate_mine_fans_remove');
 
 
 

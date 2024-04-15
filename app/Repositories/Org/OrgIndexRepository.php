@@ -65,6 +65,74 @@ class OrgIndexRepository {
 
 
 
+    //
+    public function operate_mine_select2_user($post_data)
+    {
+        if(empty($post_data['keyword']))
+        {
+            $query =K_User::select(['id','username as text'])
+                ->where(function($query) {
+                    $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+                })
+                ->where(['active'=>1,'status'=>1,'user_active'=>1,'user_status'=>1]);
+        }
+        else
+        {
+            $keyword = "%{$post_data['keyword']}%";
+            $query =K_User::select(['id','username as text'])->where('username','like',"%$keyword%")
+                ->where(function($query) {
+                    $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+                })
+                ->where(['active'=>1,'status'=>1,'user_active'=>1,'user_status'=>1]);
+        }
+
+        if(!empty($post_data['type']))
+        {
+            $type = $post_data['type'];
+            if($type == 'all')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1,11,88]);
+            }
+            else if($type == 'principal')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1]);
+            }
+            else if($type == 'individual')
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1]);
+            }
+            else if($type == 'association')
+            {
+//                $query->where(['user_type'=>11]);
+                $query->whereIn('user_type',[11]);
+            }
+            else if($type == 'enterprise')
+            {
+//                $query->where(['user_type'=>88]);
+                $query->whereIn('user_type',[88]);
+            }
+            else
+            {
+//                $query->where(['user_type'=>1]);
+                $query->whereIn('user_type',[1,11,88]);
+            }
+        }
+        else
+        {
+        }
+
+        $list = $query->orderBy('id','desc')->get()->toArray();
+        $unSpecified = ['id'=>0,'text'=>'[未指定]'];
+        array_unshift($list,$unSpecified);
+        return $list;
+    }
+
+
+
+
     // 返回（后台）主页视图
     public function view_index()
     {
@@ -370,7 +438,8 @@ class OrgIndexRepository {
     // 【基本信息】保存-数据
     public function operate_info_save($post_data)
     {
-        $me = Auth::guard('org')->user();
+        $this->get_me();
+        $me = $this->me;
 
         // 启动数据库事务
         DB::beginTransaction();
@@ -948,42 +1017,14 @@ class OrgIndexRepository {
 
 
 
-    // 【select2】
-    public function operate_business_select2_user($post_data)
+
+    // 【MINE】【我的成员】
+    public function view_mine_my_member_list($post_data)
     {
-        $me = Auth::guard('org')->user();
-        if(empty($post_data['keyword']))
-        {
-            $list =User::select(['id','username as text'])
-                ->where(['userstatus'=>'正常','status'=>1])
-                ->whereIn('usergroup',['Agent','Agent2'])
-                ->orderBy('id','desc')
-                ->get()
-                ->toArray();
-        }
-        else
-        {
-            $keyword = "%{$post_data['keyword']}%";
-            $list =User::select(['id','username as text'])
-                ->where(['userstatus'=>'正常','status'=>1])
-                ->whereIn('usergroup',['Agent','Agent2'])
-                ->where('sitename','like',"%$keyword%")
-                ->orderBy('id','desc')
-                ->get()
-                ->toArray();
-        }
-        array_unshift($list, ['id'=>0,'text'=>'【全部代理】']);
-        return $list;
+        return true;
     }
-
-
-
-    // 【用户】【user-list】【我的成员】
-    public function view_mine_user_my_member_list($post_data)
-    {
-    }
-    // 【用户】【user-list】【我的粉丝】
-    public function view_mine_user_my_fans_list($post_data)
+    // 【MINE】【我的粉丝】
+    public function view_mine_my_fans($post_data)
     {
         $me = Auth::guard("org")->user();
 
@@ -1006,274 +1047,128 @@ class OrgIndexRepository {
         $view_blade = env('TEMPLATE_K_ORG').'entrance.my-follow-list';
         return view($view_blade)->with($return);
     }
-    // 【用户】【user-list】【我的赞助商】
-    public function view_mine_user_my_sponsor_list($post_data)
+    // 【MINE】【我的成员】
+    public function view_mine_my_follow($post_data)
     {
+        return true;
     }
-
-
-
-
-
-    // 【用户】【成员】返回-列表-视图
-    public function view_user_my_member_list($post_data)
+    // 【MINE】【我的粉丝】
+    public function view_mine_my_fans_list($post_data)
     {
-        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.user-my-member-list')
-            ->with(['sidebar_user_member_list_active'=>'active menu-open']);
-    }
-    // 【用户】【成员】返回-列表-数据
-    public function get_user_my_member_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('relation_user')->where(['relation_category'=>11,'relation_type'=>11,'mine_user_id'=>$me->id]);
+        $this->get_me();
+        $me = $this->me;
 
-//        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
-
-        if(isset($post_data['order']))
+        if(Auth::check())
         {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
+            $me = Auth::user();
+            $me_id = $me->id;
 
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("id", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-    // 【用户】【粉丝】返回-列表-视图
-    public function view_user_my_fans_list($post_data)
-    {
-        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.user-my-fans-list')
-            ->with(['sidebar_user_fans_list_active'=>'active menu-open']);
-    }
-    // 【用户】【粉丝】返回-列表-数据
-    public function get_user_my_fans_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_user_id'=>$me->id])
-        ->whereIn('relation_type',['21','41']);
-
-//        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("id", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-    // 【用户】【粉丝】返回-列表-视图
-    public function view_user_my_sponsor_list($post_data)
-    {
-        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.user-my-sponsor-list')
-            ->with(['sidebar_user_sponsor_list_active'=>'active menu-open']);
-    }
-    // 【用户】【粉丝】返回-列表-数据
-    public function get_user_my_sponsor_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_Pivot_User_Relation::select('*')->with('relation_user')
-            ->where(['mine_user_id'=>$me->id,'relation_category'=>88,'relation_type'=>1]);
-
-        if(!empty($post_data['username']))
-        {
-            $username = $post_data['username'];
-            $query->whereHas('relation_user', function ($query1) use($username) { $query1->where('user.username', 'like', "%{$username}%"); } );
-        }
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("updated_at", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-//        dd($list->toArray());
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-
-
-    // 【用户】【赞助商】返回-列表-视图
-    public function view_user_relation_sponsor_list($post_data)
-    {
-        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.relation-sponsor-list')
-            ->with(['sidebar_user_relation_sponsor_list_active'=>'active menu-open']);
-    }
-    // 【用户】【赞助商】返回-列表-数据
-    public function get_user_relation_sponsor_list_datatable($post_data)
-    {
-        $me = Auth::guard("org")->user();
-        $query = K_User::select('*')->where(['user_category'=>1,'user_type'=>88]);
-
-        if(!empty($post_data['username']))
-        {
-            $query->where('username', 'like', "%{$post_data['username']}%");
-        }
-        else
-        {
-            $query->where('username', '不可能存在的赞助商！');
-        }
-
-        $total = $query->count();
-
-        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
-        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
-        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
-
-        if(isset($post_data['order']))
-        {
-            $columns = $post_data['columns'];
-            $order = $post_data['order'][0];
-            $order_column = $order['column'];
-            $order_dir = $order['dir'];
-
-            $field = $columns[$order_column]["data"];
-            $query->orderBy($field, $order_dir);
-        }
-        else $query->orderBy("id", "desc");
-
-        if($limit == -1) $list = $query->get();
-        else $list = $query->skip($skip)->take($limit)->get();
-
-        foreach ($list as $k => $v)
-        {
-            $list[$k]->encode_id = encode($v->id);
-        }
-//        dd($list->toArray());
-        return datatable_response($list, $draw, $total);
-    }
-
-
-
-    // 【赞助商】关联
-    public function operate_user_sponsor_relation($post_data)
-    {
-        $messages = [
-            'operate.required' => '参数有误',
-            'id.required' => '请选择ID',
-        ];
-        $v = Validator::make($post_data, [
-            'operate' => 'required',
-            'id' => 'required',
-        ], $messages);
-        if ($v->fails())
-        {
-            $messages = $v->errors();
-            return response_error([],$messages->first());
-        }
-
-        $operate = $post_data["operate"];
-        if($operate != 'sponsor-relation') return response_error([],"参数有误！");
-        $id = $post_data["id"];
-        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
-
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
-
-        $pivot_relation = K_Pivot_User_Relation::where(['relation_category'=>88,'relation_type'=>1,'mine_user_id'=>$me->id,'relation_user_id'=>$id])->first();
-        if($pivot_relation) return response_error([],"该赞助商已经关联过了！");
-
-        // 启动数据库事务
-        DB::beginTransaction();
-        try
-        {
-            $mine = new K_Pivot_User_Relation;
-
-            $mine_data['relation_category'] = 88;
-            $mine_data['relation_type'] = 1;
-            $mine_data['mine_user_id'] = $me->id;
-            $mine_data['relation_user_id'] = $id;
-
-            $bool = $mine->fill($mine_data)->save();
-            if($bool)
+            $user_list = K_Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$me_id])->whereIn('relation_type',[21,71])->get();
+            foreach ($user_list as $user)
             {
-
+                $user->relation_with_me = $user->relation_type;
             }
-            else throw new Exception("insert--pivot_relation--fail");
+        }
+        else return response_error([],"请先登录！");
 
-            DB::commit();
-            return response_success([]);
-        }
-        catch (Exception $e)
-        {
-            DB::rollback();
-            $msg = '删除失败，请重试';
-            $msg = $e->getMessage();
-//            exit($e->getMessage());
-            return response_fail([],$msg);
-        }
+        $return['user_list'] = $user_list;
+        $return['menu_active_for_my_fans'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.mine.my-fans-list';
+        return view($view_blade)->with($return);
     }
-    // 【赞助商】批量关联
-    public function operate_user_sponsor_relation_bulk($post_data)
+    // 【MINE】【我的关注】
+    public function view_mine_my_follow_list($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $user_list = K_Pivot_User_Relation::with([
+                'relation_user'=>function($query) {
+//                        $query->withCount([
+//                            'fans_list as fans_count' => function($query) { $query->where(['relation_type'=>41]); },
+//                            'items as item_count' => function($query) { $query->where(['item_category'=>1]); },
+//                            'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+//                            'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+//                        ]);
+                },
+            ])
+                ->where(['mine_user_id'=>$me_id])
+                ->whereIn('relation_type',[21,41])
+                ->orderby('id','desc')
+                ->paginate(20);
+
+            foreach ($user_list as $user)
+            {
+                $user->relation_with_me = $user->relation_type;
+            }
+
+        }
+        else return response_error([],"请先登录！");
+
+        $return['user_list'] = $user_list;
+        $return['menu_active_for_my_follow'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.mine.my-follow-list';
+        return view($view_blade)->with($return);
+    }
+    // 【MINE】【我的关注】
+    public function view_mine_my_sponsor_list($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+
+        if($this->auth_check)
+        {
+
+            $user_list = K_Pivot_User_Relation::with([
+                'relation_user'=>function($query) {
+//                        $query->withCount([
+//                            'fans_list as fans_count' => function($query) { $query->where(['relation_type'=>41]); },
+//                            'items as item_count' => function($query) { $query->where(['item_category'=>1]); },
+//                            'items as article_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>1]); },
+//                            'items as activity_count' => function($query) { $query->where(['item_category'=>1,'item_type'=>11]); },
+//                        ]);
+                },
+            ])
+                ->where(['mine_user_id'=>$me_id])
+                ->whereIn('relation_category',[88])
+//                ->whereIn('relation_type',[21,41])
+                ->orderby('id','desc')
+                ->paginate(20);
+
+            foreach ($user_list as $user)
+            {
+                $user->relation_with_me = $user->relation_type;
+            }
+
+        }
+        else return response_error([],"请先登录！");
+
+        $return['user_list'] = $user_list;
+        $return['menu_active_for_my_follow'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.mine.my-sponsor-list';
+        return view($view_blade)->with($return);
+    }
+
+
+    // 【成员】添加
+    public function operate_mine_member_add($post_data)
     {
         $messages = [
-            'operate.required' => '参数有误',
-            'bulk_sponsor_id.required' => '请选择ID',
+            'operate.required' => 'Parameter operate Missing.',
+            'user_id.required' => 'Parameter user_id Missing.',
         ];
         $v = Validator::make($post_data, [
             'operate' => 'required',
-            'bulk_sponsor_id' => 'required',
+            'user_id' => 'required',
         ], $messages);
         if ($v->fails())
         {
@@ -1282,38 +1177,36 @@ class OrgIndexRepository {
         }
 
         $operate = $post_data["operate"];
-        if($operate != 'sponsor-relation-bulk') return response_error([],"参数有误！");
+        if($operate != 'member-add') return response_error([],"操作参数有误！");
 
         $me = Auth::guard('org')->user();
+        $me_id = $me->id;
         if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+
+        $user_id = $post_data["user_id"];
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"用户ID参数有误！");
+        $user = K_User::find($user_id);
+        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
 
 
         // 启动数据库事务
         DB::beginTransaction();
         try
         {
-            $sponsor_ids = $post_data["bulk_sponsor_id"];
-            foreach($sponsor_ids as $key => $sponsor_id)
+            $relation = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+            if($relation)
             {
-                if(intval($sponsor_id) !== 0 && !$sponsor_id) return response_error([],"参数ID有误！");
-                $pivot_relation = K_Pivot_User_Relation::where(['relation_category'=>88,'mine_user_id'=>$me->id,'relation_user_id'=>$sponsor_id])->first();
-                if(!$pivot_relation)
-                {
-                    $mine = new K_Pivot_User_Relation;
-
-                    $mine_data['relation_category'] = 88;
-                    $mine_data['relation_type'] = 1;
-                    $mine_data['mine_user_id'] = $me->id;
-                    $mine_data['relation_user_id'] = $sponsor_id;
-
-                    $bool = $mine->fill($mine_data)->save();
-                    if($bool)
-                    {
-
-                    }
-                    else throw new Exception("insert--pivot_relation--fail");
-                }
-//                else return response_error([],"该赞助商已经关联过了！");
+                $relation->relation_type = 11;
+                $relation->save();
+            }
+            else
+            {
+                $relation = new K_Pivot_User_Relation;
+                $relation->relation_category = 11;
+                $relation->relation_type = 11;
+                $relation->mine_user_id = $me_id;
+                $relation->relation_user_id = $user_id;
+                $relation->save();
             }
 
             DB::commit();
@@ -1322,26 +1215,25 @@ class OrgIndexRepository {
         catch (Exception $e)
         {
             DB::rollback();
-            $msg = '删除失败，请重试';
+            $msg = '操作失败，请重试！';
             $msg = $e->getMessage();
 //            exit($e->getMessage());
             return response_fail([],$msg);
         }
+
     }
-
-
-
-
-    // 【赞助商】删除
-    public function operate_user_sponsor_delete($post_data)
+    // 【成员】移除
+    public function operate_mine_member_remove($post_data)
     {
         $messages = [
-            'operate.required' => '参数有误',
-            'id.required' => '请输入用户名',
+            'operate.required' => 'Parameter operate Missing.',
+            'pivot_id.required' => 'Parameter pivot_id Missing.',
+            'user_id.required' => 'Parameter user_id Missing.',
         ];
         $v = Validator::make($post_data, [
             'operate' => 'required',
-            'id' => 'required',
+            'pivot_id' => 'required',
+            'user_id' => 'required',
         ], $messages);
         if ($v->fails())
         {
@@ -1350,24 +1242,30 @@ class OrgIndexRepository {
         }
 
         $operate = $post_data["operate"];
-        if($operate != 'sponsor-delete') return response_error([],"参数有误！");
-        $id = $post_data["id"];
-        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+        if($operate != 'member-remove') return response_error([],"操作参数有误！");
 
         $me = Auth::guard('org')->user();
+        $me_id = $me->id;
         if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
 
-        $pivot_relation = K_Pivot_User_Relation::find($id);
-        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
-        if($pivot_relation->mine_user_id != $me->id) return response_error([],"该关联有误！");
-        if($pivot_relation->relation_type != 88) return response_error([],"非赞助商关联，不能执行该操作！");
+
+        $pivot_id = $post_data["pivot_id"];
+        $pivot_relation = K_Pivot_User_Relation::find($pivot_id);
+        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试！");
+        if($pivot_relation->relation_category != 11) return response_error([],"关联类型有误！");
+        if($pivot_relation->mine_user_id != $me->id) return response_error([],"不是我的关联！");
+
+        $user_id = $post_data["user_id"];
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"用户ID参数有误！");
+        if($pivot_relation->relation_user_id != $user_id) return response_error([],"关联对象有误！");
+
+        $user = K_User::find($user_id);
+        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
 
         // 启动数据库事务
         DB::beginTransaction();
         try
         {
-            // 删除【用户】
-//            $user->pivot_menus()->detach(); // 删除相关目录
             $bool = $pivot_relation->delete();
             if(!$bool) throw new Exception("delete--pivot_relation--fail");
 
@@ -1377,59 +1275,6 @@ class OrgIndexRepository {
         catch (Exception $e)
         {
             DB::rollback();
-            $msg = '删除失败，请重试';
-            $msg = $e->getMessage();
-//            exit($e->getMessage());
-            return response_fail([],$msg);
-        }
-    }
-    // 【赞助商】关闭
-    public function operate_user_sponsor_close($post_data)
-    {
-        $messages = [
-            'operate.required' => '参数有误',
-            'id.required' => '请输入用户名',
-        ];
-        $v = Validator::make($post_data, [
-            'operate' => 'required',
-            'id' => 'required',
-        ], $messages);
-        if ($v->fails())
-        {
-            $messages = $v->errors();
-            return response_error([],$messages->first());
-        }
-
-        $operate = $post_data["operate"];
-        if($operate != 'sponsor-close') return response_error([],"参数有误！");
-        $id = $post_data["id"];
-        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
-
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
-
-        $pivot_relation = K_Pivot_User_Relation::find($id);
-        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
-        if($pivot_relation->mine_user_id != $me->id) return response_error([],"该关联有误！");
-        if($pivot_relation->relation_category != 88) return response_error([],"非赞助商关联，不能执行该操作！");
-
-        // 启动数据库事务
-        DB::beginTransaction();
-        try
-        {
-            $update["relation_active"] = 9;
-            $bool = $pivot_relation->fill($update)->save();
-            if($bool)
-            {
-            }
-            else throw new Exception("update--pivot_relation--fail");
-
-            DB::commit();
-            return response_success([]);
-        }
-        catch (Exception $e)
-        {
-            DB::rollback();
             $msg = '操作失败，请重试！';
             $msg = $e->getMessage();
 //            exit($e->getMessage());
@@ -1437,69 +1282,10 @@ class OrgIndexRepository {
         }
 
     }
-    // 【赞助商】开启
-    public function operate_user_sponsor_open($post_data)
-    {
-        $messages = [
-            'operate.required' => '参数有误',
-            'id.required' => '请输入用户名',
-        ];
-        $v = Validator::make($post_data, [
-            'operate' => 'required',
-            'id' => 'required',
-        ], $messages);
-        if ($v->fails())
-        {
-            $messages = $v->errors();
-            return response_error([],$messages->first());
-        }
-
-        $operate = $post_data["operate"];
-        if($operate != 'sponsor-open') return response_error([],"参数有误！");
-        $id = $post_data["id"];
-        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
-
-        $me = Auth::guard('org')->user();
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
-
-        $pivot_relation = K_Pivot_User_Relation::find($id);
-        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
-        if($pivot_relation->mine_user_id != $me->id) return response_error([],"该关联有误！");
-        if($pivot_relation->relation_category != 88) return response_error([],"非赞助商关联，不能执行该操作！");
-
-        $me_sponsor_count = K_Pivot_User_Relation::where(['relation_active'=>1,'relation_type'=>88,'mine_user_id'=>$me->id])->count();
-        if($me_sponsor_count >= 3) return response_error([],"启用的赞助商不能超过3个！");
-
-        // 启动数据库事务
-        DB::beginTransaction();
-        try
-        {
-            $update["relation_active"] = 1;
-            $bool = $pivot_relation->fill($update)->save();
-            if($bool)
-            {
-            }
-            else throw new Exception("update--pivot_relation--fail");
-
-            DB::commit();
-            return response_success([]);
-        }
-        catch (Exception $e)
-        {
-            DB::rollback();
-            $msg = '操作失败，请重试！';
-            $msg = $e->getMessage();
-//            exit($e->getMessage());
-            return response_fail([],$msg);
-        }
-
-    }
-
-
 
 
     // 【粉丝】移除
-    public function operate_user_fans_remove($post_data)
+    public function operate_mine_fans_remove($post_data)
     {
         $messages = [
             'operate.required' => 'Parameter operate Missing.',
@@ -1608,80 +1394,151 @@ class OrgIndexRepository {
     }
 
 
-    // 【成员】添加
-    public function operate_user_member_add($post_data)
+
+
+    // 【赞助商】添加-视图
+    public function view_mine_sponsor_add($post_data)
     {
-        $messages = [
-            'operate.required' => 'Parameter operate Missing.',
-            'user_id.required' => 'Parameter user_id Missing.',
-        ];
-        $v = Validator::make($post_data, [
-            'operate' => 'required',
-            'user_id' => 'required',
-        ], $messages);
-        if ($v->fails())
-        {
-            $messages = $v->errors();
-            return response_error([],$messages->first());
-        }
 
-        $operate = $post_data["operate"];
-        if($operate != 'member-add') return response_error([],"操作参数有误！");
-
-        $me = Auth::guard('org')->user();
+        $this->get_me();
+        $me = $this->me;
         $me_id = $me->id;
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+        $me_admin = $this->me_admin;
+        $me_admin_id = $me_admin->id;
 
-        $user_id = $post_data["user_id"];
-        if(intval($user_id) !== 0 && !$user_id) return response_error([],"用户ID参数有误！");
-        $user = K_User::find($user_id);
-        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
+        if(!in_array($me->user_type,[11,88])) return view(env('TEMPLATE_K_ORG').'errors.404');
 
+        $item_category = 'sponsor';
+        $item_type = 'item';
 
-        // 启动数据库事务
-        DB::beginTransaction();
-        try
-        {
-            $relation = K_Pivot_User_Relation::where(['relation_category'=>11,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
-            if($relation)
-            {
-                $relation->relation_type = 11;
-                $relation->save();
-            }
-            else
-            {
-                $relation = new K_Pivot_User_Relation;
-                $relation->relation_category = 11;
-                $relation->relation_type = 11;
-                $relation->mine_user_id = $me_id;
-                $relation->relation_user_id = $user_id;
-                $relation->save();
-            }
+        $item_type_text = '内容';
+        $title_text = '添加'.$item_type_text;
+        $list_text = $item_type_text.'列表';
 
-            DB::commit();
-            return response_success([]);
-        }
-        catch (Exception $e)
-        {
-            DB::rollback();
-            $msg = '操作失败，请重试！';
-            $msg = $e->getMessage();
-//            exit($e->getMessage());
-            return response_fail([],$msg);
-        }
+        $item_type = request('item-type','item');
 
+        $list_link = '/item/item-list';
+        $list_link = '/';
+
+        $return['operate'] = 'create';
+        $return['operate_id'] = 0;
+        $return['operate_category'] = 'item';
+        $return['operate_type'] = $item_type;
+        $return['operate_item_category'] = 'item';
+        $return['operate_item_type'] = $item_type;
+        $return['operate_item_text'] = $item_type_text;
+        $return['title_text'] = $title_text;
+        $return['list_text'] = $list_text;
+        $return['list_link'] = $list_link;
+
+        $view_blade = env('TEMPLATE_K_ORG').'entrance.mine.sponsor-add';
+        return view($view_blade)->with($return);
     }
-    // 【成员】移除
-    public function operate_user_member_remove($post_data)
+    // 【赞助商】添加
+    public function operate_mine_sponsor_add_save($post_data)
     {
         $messages = [
-            'operate.required' => 'Parameter operate Missing.',
-            'pivot_id.required' => 'Parameter pivot_id Missing.',
-            'user_id.required' => 'Parameter user_id Missing.',
+            'user_id.required' => '参数有误',
+            'user_id.numeric' => '参数有误',
+            'user_id.exists' => '参数有误',
+        ];
+        $v = Validator::make($post_data, [
+            'user_id' => 'required|numeric|exists:user,id'
+        ], $messages);
+        if ($v->fails())
+        {
+            $errors = $v->errors();
+            return response_error([],$errors->first());
+        }
+
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+
+        if($this->auth_check)
+        {
+            $user_id = $post_data['user_id'];
+            $user = K_User::find($user_id);
+
+            DB::beginTransaction();
+            try
+            {
+                $me_relation = K_Pivot_User_Relation::where(['relation_category'=>88,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                if($me_relation)
+                {
+                    throw new Exception("已经是我的赞助商了，不能重复添加！");
+//                    if($me_relation->relation_type == 71) $me_relation->relation_type = 1;
+//                    else $me_relation->relation_type = 0;
+//                    $me_relation->save();
+                }
+                else
+                {
+                    $me_relation = new K_Pivot_User_Relation;
+                    $me_relation->relation_category = 88;
+                    $me_relation->relation_type = 1;
+                    $me_relation->mine_user_id = $me_id;
+                    $me_relation->relation_user_id = $user_id;
+                    $me_relation->save();
+                }
+//                $me->timestamps = false;
+//                $me->increment('follow_num');
+
+//                $it_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+//                if($it_relation)
+//                {
+//                    if($it_relation->relation_type == 41) $it_relation->relation_type = 21;
+//                    else $it_relation->relation_type = 71;
+//                    $it_relation->save();
+//                }
+//                else
+//                {
+//                    $it_relation = new K_Pivot_User_Relation;
+//                    $it_relation->relation_category = 88;
+//                    $it_relation->relation_type = 71;
+//                    $it_relation->mine_user_id = $user_id;
+//                    $it_relation->relation_user_id = $me_id;
+//                    $it_relation->save();
+//                }
+//                $user->timestamps = false;
+//                $user->increment('fans_num');
+
+
+//                $notification_insert['notification_category'] = 9;
+//                $notification_insert['notification_type'] = 1;
+//                $notification_insert['owner_id'] = $user_id;
+//                $notification_insert['user_id'] = $user_id;
+//                $notification_insert['belong_id'] = $user_id;
+//                $notification_insert['source_id'] = $me_id;
+//
+//                $notification = new K_Notification;
+//                $bool = $notification->fill($notification_insert)->save();
+//                if(!$bool) throw new Exception("insert--notification--fail");
+
+                DB::commit();
+                return response_success(['relation_type'=>$me_relation->relation_type]);
+            }
+            catch (Exception $e)
+            {
+                DB::rollback();
+                $msg = '操作失败，请重试！';
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
+                return response_fail([], $msg);
+            }
+        }
+        else return response_error([],"请先登录！");
+    }
+    // 【赞助商】删除
+    public function operate_mine_sponsor_delete($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'id.required' => 'id.required.',
+            'user_id.required' => 'user_id.required.',
         ];
         $v = Validator::make($post_data, [
             'operate' => 'required',
-            'pivot_id' => 'required',
+            'id' => 'required',
             'user_id' => 'required',
         ], $messages);
         if ($v->fails())
@@ -1691,30 +1548,30 @@ class OrgIndexRepository {
         }
 
         $operate = $post_data["operate"];
-        if($operate != 'member-remove') return response_error([],"操作参数有误！");
-
-        $me = Auth::guard('org')->user();
-        $me_id = $me->id;
-        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
-
-
-        $pivot_id = $post_data["pivot_id"];
-        $pivot_relation = K_Pivot_User_Relation::find($pivot_id);
-        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试！");
-        if($pivot_relation->relation_category != 11) return response_error([],"关联类型有误！");
-        if($pivot_relation->mine_user_id != $me->id) return response_error([],"不是我的关联！");
-
+        if($operate != 'sponsor-delete') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
         $user_id = $post_data["user_id"];
-        if(intval($user_id) !== 0 && !$user_id) return response_error([],"用户ID参数有误！");
-        if($pivot_relation->relation_user_id != $user_id) return response_error([],"关联对象有误！");
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"参数USER_ID有误！");
 
-        $user = K_User::find($user_id);
-        if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
+
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+
+
+        $pivot_relation = K_Pivot_User_Relation::find($id);
+        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
+        if($pivot_relation->mine_user_id != $me->id) return response_error([],"不是我的关联，不能执行该操作，请刷新重试！");
+        if($pivot_relation->relation_user_id != $user_id) return response_error([],"关联对象有误，不能执行该操作，请刷新重试！");
+        if($pivot_relation->relation_category != 88) return response_error([],"非赞助商关联，不能执行该操作，请刷新重试！");
 
         // 启动数据库事务
         DB::beginTransaction();
         try
         {
+            // 删除【用户】
+//            $user->pivot_menus()->detach(); // 删除相关目录
             $bool = $pivot_relation->delete();
             if(!$bool) throw new Exception("delete--pivot_relation--fail");
 
@@ -1724,6 +1581,132 @@ class OrgIndexRepository {
         catch (Exception $e)
         {
             DB::rollback();
+            $msg = '删除失败，请重试';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+    // 【赞助商】关闭
+    public function operate_mine_sponsor_close($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'id.required' => 'id.required.',
+            'user_id.required' => 'user_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'sponsor-close') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+        $user_id = $post_data["user_id"];
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"参数USER_ID有误！");
+
+
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+
+
+        $pivot_relation = K_Pivot_User_Relation::find($id);
+        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
+        if($pivot_relation->mine_user_id != $me->id) return response_error([],"不是我的关联，不能执行该操作，请刷新重试！");
+        if($pivot_relation->relation_user_id != $user_id) return response_error([],"关联对象有误，不能执行该操作，请刷新重试！");
+        if($pivot_relation->relation_category != 88) return response_error([],"非赞助商关联，不能执行该操作，请刷新重试！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $update["relation_active"] = 9;
+            $bool = $pivot_relation->fill($update)->save();
+            if($bool)
+            {
+            }
+            else throw new Exception("update--pivot_relation--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+
+    }
+    // 【赞助商】开启
+    public function operate_mine_sponsor_open($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'id.required' => 'id.required.',
+            'user_id.required' => 'user_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+            'user_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'sponsor-open') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+        $user_id = $post_data["user_id"];
+        if(intval($user_id) !== 0 && !$user_id) return response_error([],"参数USER_ID有误！");
+
+
+        $this->get_me();
+        $me = $this->me;
+        $me_id = $me->id;
+
+
+        $pivot_relation = K_Pivot_User_Relation::find($id);
+        if(!$pivot_relation) return response_error([],"该关联不存在，刷新页面重试");
+        if($pivot_relation->mine_user_id != $me->id) return response_error([],"不是我的关联，不能执行该操作，请刷新重试！");
+        if($pivot_relation->relation_user_id != $user_id) return response_error([],"关联对象有误，不能执行该操作，请刷新重试！");
+        if($pivot_relation->relation_category != 88) return response_error([],"非赞助商关联，不能执行该操作，请刷新重试！");
+
+//        $me_sponsor_count = K_Pivot_User_Relation::where(['relation_active'=>1,'relation_type'=>88,'mine_user_id'=>$me->id])->count();
+//        if($me_sponsor_count >= 3) return response_error([],"启用的赞助商不能超过3个！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $update["relation_active"] = 1;
+            $bool = $pivot_relation->fill($update)->save();
+            if($bool)
+            {
+            }
+            else throw new Exception("update--pivot_relation--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
             $msg = '操作失败，请重试！';
             $msg = $e->getMessage();
 //            exit($e->getMessage());
@@ -1734,325 +1717,195 @@ class OrgIndexRepository {
 
 
 
-
-
-
-
-
-    /*
-     * 统计
-     */
-
-    // 【】流量统计
-    public function view_statistic_index()
-    {
-        $me = Auth::guard('org')->user();
-        $me_id = $me->id;
-
-        $this_month = date('Y-m');
-        $this_month_year = date('Y');
-        $this_month_month = date('m');
-        $last_month = date('Y-m',strtotime('last month'));
-        $last_month_year = date('Y',strtotime('last month'));
-        $last_month_month = date('m',strtotime('last month'));
-
-
-        // 总访问量【统计】
-        $all = K_Record::select(
-            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('object_id',$me_id)
-            ->get();
-        $all = $all->keyBy('day');
-
-        // 首页访问量【统计】
-        $rooted = K_Record::select(
-            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>2,'page_module'=>1])
-            ->where('object_id',$me_id)
-            ->get();
-        $rooted = $rooted->keyBy('day');
-
-        // 介绍页访问量【统计】
-        $introduction = K_Record::select(
-            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>2,'page_module'=>2])
-            ->where('object_id',$me_id)
-            ->get();
-        $introduction = $introduction->keyBy('day');
-
-
-
-
-        // 打开设备类型【占比】
-        $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
-            ->groupBy('open_device_type')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('object_id',$me_id)
-            ->get();
-        foreach($open_device_type as $k => $v)
-        {
-            if($v->open_device_type == 0) $open_device_type[$k]->name = "默认";
-            else if($v->open_device_type == 1) $open_device_type[$k]->name = "移动端";
-            else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
-        }
-
-        // 打开系统类型【占比】
-        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
-            ->groupBy('open_system')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('object_id',$me_id)
-            ->get();
-
-        // 打开APP类型【占比】
-        $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
-            ->groupBy('open_app')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('object_id',$me_id)
-            ->get();
-
-
-
-
-        // 总分享【统计】
-        $shared_all = K_Record::select(
-            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>2])
-            ->where('object_id',$me_id)
-            ->get();
-        $shared_all = $shared_all->keyBy('day');
-
-        // 首页分享【统计】
-        $shared_root = K_Record::select(
-            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>2,'page_module'=>1])
-            ->where('object_id',$me_id)
-            ->get();
-        $shared_root = $shared_root->keyBy('day');
-
-
-
-
-        // 总分享【占比】
-        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>2])
-            ->where('object_id',$me_id)
-            ->get();
-        foreach($shared_all_scale as $k => $v)
-        {
-            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
-            else $shared_all_scale[$k]->name = "其他";
-        }
-
-        // 首页分享【占比】
-        $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>1,'page_module'=>1])
-            ->where('object_id',$me_id)
-            ->get();
-        foreach($shared_root_scale as $k => $v)
-        {
-            if($v->shared_location == 1) $shared_root_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_root_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_root_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_root_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
-            else $shared_root_scale[$k]->name = "其他";
-        }
-
-
-        $view_data["all"] = $all;
-        $view_data["rooted"] = $rooted;
-        $view_data["introduction"] = $introduction;
-        $view_data["open_device_type"] = $open_device_type;
-        $view_data["open_app"] = $open_app;
-        $view_data["open_system"] = $open_system;
-        $view_data["shared_all"] = $shared_all;
-        $view_data["shared_root"] = $shared_root;
-        $view_data["shared_all_scale"] = $shared_all_scale;
-        $view_data["shared_root_scale"] = $shared_root_scale;
-        $view_data["sidebar_statistic_active"] = 'active';
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.statistic.statistic-index';
-        return view($view_blade)->with($view_data);
-    }
-    // 【】流量统计
-    public function view_statistic_item($post_data)
+    // 【添加关注】
+    public function user_relation_add($post_data)
     {
         $messages = [
-            'id.required' => 'id required',
+            'user_id.required' => '参数有误',
+            'user_id.numeric' => '参数有误',
+            'user_id.exists' => '参数有误',
         ];
         $v = Validator::make($post_data, [
-            'id' => 'required',
+            'user_id' => 'required|numeric|exists:user,id'
         ], $messages);
         if ($v->fails())
         {
-            $messages = $v->errors();
-            return response_error([],$messages->first());
+            $errors = $v->errors();
+            return response_error([],$errors->first());
         }
 
-        $me = Auth::guard('org')->user();
-        $me_id = $me->id;
-
-        $item_id = $post_data["id"];
-        $item = K_Item::find($item_id);
-        if(!$item) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-        if($item->owner_id != $me_id) return view(env('TEMPLATE_ADMIN').'org.errors.404');
-
-        $this_month = date('Y-m');
-        $this_month_year = date('Y');
-        $this_month_month = date('m');
-        $last_month = date('Y-m',strtotime('last month'));
-        $last_month_year = date('Y',strtotime('last month'));
-        $last_month_month = date('m',strtotime('last month'));
-
-
-        // 访问量【统计】
-        $data = K_Record::select(
-            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('item_id',$item_id)
-            ->get();
-        $data = $data->keyBy('day');
-
-
-
-
-        // 打开设备类型【占比】
-        $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
-            ->groupBy('open_device_type')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('item_id',$item_id)
-            ->get();
-        foreach($open_device_type as $k => $v)
+        if(Auth::check())
         {
-            if($v->open_device_type == 0) $open_device_type[$k]->name = "默认";
-            else if($v->open_device_type == 1) $open_device_type[$k]->name = "移动端";
-            else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
+            $me = Auth::user();
+            $me_id = $me->id;
+
+            $user_id = $post_data['user_id'];
+            $user = K_User::find($user_id);
+
+            DB::beginTransaction();
+            try
+            {
+                $me_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                if($me_relation)
+                {
+                    if($me_relation->relation_type == 71) $me_relation->relation_type = 21;
+                    else $me_relation->relation_type = 41;
+                    $me_relation->save();
+                }
+                else
+                {
+                    $me_relation = new K_Pivot_User_Relation;
+                    $me_relation->relation_category = 1;
+                    $me_relation->relation_type = 41;
+                    $me_relation->mine_user_id = $me_id;
+                    $me_relation->relation_user_id = $user_id;
+                    $me_relation->save();
+                }
+                $me->timestamps = false;
+                $me->increment('follow_num');
+
+                $it_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                if($it_relation)
+                {
+                    if($it_relation->relation_type == 41) $it_relation->relation_type = 21;
+                    else $it_relation->relation_type = 71;
+                    $it_relation->save();
+                }
+                else
+                {
+                    $it_relation = new K_Pivot_User_Relation;
+                    $it_relation->relation_category = 1;
+                    $it_relation->relation_type = 71;
+                    $it_relation->mine_user_id = $user_id;
+                    $it_relation->relation_user_id = $me_id;
+                    $it_relation->save();
+                }
+                $user->timestamps = false;
+                $user->increment('fans_num');
+
+                $notification_insert['notification_category'] = 9;
+                $notification_insert['notification_type'] = 1;
+                $notification_insert['owner_id'] = $user_id;
+                $notification_insert['user_id'] = $user_id;
+                $notification_insert['belong_id'] = $user_id;
+                $notification_insert['source_id'] = $me_id;
+
+                $notification = new K_Notification;
+                $bool = $notification->fill($notification_insert)->save();
+                if(!$bool) throw new Exception("insert--notification--fail");
+
+                DB::commit();
+                return response_success(['relation_type'=>$me_relation->relation_type]);
+            }
+            catch (Exception $e)
+            {
+                DB::rollback();
+                $msg = '操作失败，请重试！';
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
+                return response_fail([], $msg);
+            }
         }
-
-        // 打开系统类型【占比】
-        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
-            ->groupBy('open_system')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('item_id',$item_id)
-            ->get();
-
-        // 打开APP类型【占比】
-        $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
-            ->groupBy('open_app')
-            ->where(['record_category'=>1,'record_type'=>1])
-            ->where('item_id',$item_id)
-            ->get();
-
-
-
-
-        // 分享【统计】
-        $shared_data = K_Record::select(
-            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
-            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
-            DB::raw('count(*) as count')
-        )
-            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
-            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
-            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
-            ->where(['record_category'=>1,'record_type'=>2])
-            ->where('item_id',$item_id)
-            ->get();
-        $shared_data = $shared_data->keyBy('day');
-
-
-        // 总分享【占比】
-        $shared_data_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
-            ->groupBy('shared_location')
-            ->where(['record_category'=>1,'record_type'=>2])
-            ->where('item_id',$item_id)
-            ->get();
-        foreach($shared_data_scale as $k => $v)
-        {
-            if($v->shared_location == 1) $shared_data_scale[$k]->name = "微信好友";
-            else if($v->shared_location == 2) $shared_data_scale[$k]->name = "微信朋友圈";
-            else if($v->shared_location == 3) $shared_data_scale[$k]->name = "QQ好友";
-            else if($v->shared_location == 4) $shared_data_scale[$k]->name = "QQ空间";
-            else if($v->shared_location == 5) $shared_data_scale[$k]->name = "腾讯微博";
-            else $shared_data_scale[$k]->name = "其他";
-        }
-
-
-        $view_data["item"] = $item;
-        $view_data["data"] = $data;
-        $view_data["open_device_type"] = $open_device_type;
-        $view_data["open_app"] = $open_app;
-        $view_data["open_system"] = $open_system;
-        $view_data["shared_data"] = $shared_data;
-        $view_data["shared_data_scale"] = $shared_data_scale;
-
-        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.statistic.statistic-item';
-        return view($view_blade)->with($view_data);
+        else return response_error([],"请先登录！");
     }
+    // 【取消关注】
+    public function user_relation_remove($post_data)
+    {
+        $messages = [
+            'user_id.required' => '参数有误',
+            'user_id.numeric' => '参数有误',
+            'user_id.exists' => '参数有误',
+        ];
+        $v = Validator::make($post_data, [
+            'user_id' => 'required|numeric|exists:user,id'
+        ], $messages);
+        if ($v->fails())
+        {
+            $errors = $v->errors();
+            return response_error([],$errors->first());
+        }
 
+        if(Auth::check())
+        {
+            $me = Auth::user();
+            $me_id = $me->id;
 
+            $user_id = $post_data['user_id'];
+            $user = K_User::find($user_id);
 
+            DB::beginTransaction();
+            try
+            {
+                $me_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$me_id,'relation_user_id'=>$user_id])->first();
+                if($me_relation)
+                {
+                    if($me_relation->relation_type == 21)
+                    {
+                        $me_relation->relation_type = 71;
+                        $me_relation->save();
+                    }
+                    else if($me_relation->relation_type == 41)
+                    {
+//                        $me_relation->relation_type = 91;
+//                        $me_relation->save();
 
+                        $bool = $me_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
+                    else
+                    {
+//                        $me_relation->relation_type = 91;
+//                        $me_relation->save();
 
+                        $bool = $me_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
+                }
+                $me->timestamps = false;
+                $me->decrement('follow_num');
 
+                $it_relation = K_Pivot_User_Relation::where(['relation_category'=>1,'mine_user_id'=>$user_id,'relation_user_id'=>$me_id])->first();
+                if($it_relation)
+                {
+                    if($it_relation->relation_type == 21)
+                    {
+                        $it_relation->relation_type = 41;
+                        $it_relation->save();
+                    }
+                    else if($it_relation->relation_type == 71)
+                    {
+//                        $it_relation->relation_type = 92;
+//                        $it_relation->save();
 
+                        $bool = $it_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
+                    else
+                    {
+//                        $it_relation->relation_type = 92;
+//                        $it_relation->save();
+
+                        $bool = $it_relation->delete();
+                        if(!$bool) throw new Exception("delete--pivot_relation--fail");
+                    }
+                }
+                $user->timestamps = false;
+                $user->decrement('fans_num');
+
+                DB::commit();
+                return response_success(['relation_type'=>$me_relation->relation_type]);
+            }
+            catch (Exception $e)
+            {
+                DB::rollback();
+                $msg = '操作失败，请重试！';
+                $msg = $e->getMessage();
+//                exit($e->getMessage());
+                return response_fail([], $msg);
+            }
+        }
+        else return response_error([],"请先登录！");
+    }
 
 
 
@@ -2373,9 +2226,6 @@ class OrgIndexRepository {
 
 
 
-
-
-
     // 【ITEM】获取详情
     public function operate_item_item_get($post_data)
     {
@@ -2665,6 +2515,644 @@ class OrgIndexRepository {
 
 
 
+
+
+
+
+
+
+
+
+
+    // 【用户】【成员】返回-列表-视图
+    public function view_user_my_member_list($post_data)
+    {
+        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.user-my-member-list')
+            ->with(['sidebar_user_member_list_active'=>'active menu-open']);
+    }
+    // 【用户】【成员】返回-列表-数据
+    public function get_user_my_member_list_datatable($post_data)
+    {
+        $me = Auth::guard("org")->user();
+        $query = K_Pivot_User_Relation::select('*')->with('relation_user')->where(['relation_category'=>11,'relation_type'=>11,'mine_user_id'=>$me->id]);
+
+//        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("id", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->get();
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+    // 【用户】【粉丝】返回-列表-视图
+    public function view_user_my_fans_list($post_data)
+    {
+        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.user-my-fans-list')
+            ->with(['sidebar_user_fans_list_active'=>'active menu-open']);
+    }
+    // 【用户】【粉丝】返回-列表-数据
+    public function get_user_my_fans_list_datatable($post_data)
+    {
+        $me = Auth::guard("org")->user();
+        $query = K_Pivot_User_Relation::select('*')->with('mine_user')->where(['relation_category'=>1,'relation_user_id'=>$me->id])
+            ->whereIn('relation_type',['21','41']);
+
+//        if(!empty($post_data['username'])) $query->where('username', 'like', "%{$post_data['username']}%");
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("id", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->get();
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+    // 【用户】【粉丝】返回-列表-视图
+    public function view_user_my_sponsor_list($post_data)
+    {
+        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.user-my-sponsor-list')
+            ->with(['sidebar_user_sponsor_list_active'=>'active menu-open']);
+    }
+    // 【用户】【粉丝】返回-列表-数据
+    public function get_user_my_sponsor_list_datatable($post_data)
+    {
+        $me = Auth::guard("org")->user();
+        $query = K_Pivot_User_Relation::select('*')->with('relation_user')
+            ->where(['mine_user_id'=>$me->id,'relation_category'=>88,'relation_type'=>1]);
+
+        if(!empty($post_data['username']))
+        {
+            $username = $post_data['username'];
+            $query->whereHas('relation_user', function ($query1) use($username) { $query1->where('user.username', 'like', "%{$username}%"); } );
+        }
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("updated_at", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->get();
+
+//        dd($list->toArray());
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+
+
+    // 【用户】【赞助商】返回-列表-视图
+    public function view_user_relation_sponsor_list($post_data)
+    {
+        return view(env('TEMPLATE_ADMIN').'org.admin.entrance.user.relation-sponsor-list')
+            ->with(['sidebar_user_relation_sponsor_list_active'=>'active menu-open']);
+    }
+    // 【用户】【赞助商】返回-列表-数据
+    public function get_user_relation_sponsor_list_datatable($post_data)
+    {
+        $this->get_me();
+        $me = $this->me;
+        $query = K_User::select('*')->where(['user_category'=>1,'user_type'=>88]);
+
+        if(!empty($post_data['username']))
+        {
+            $query->where('username', 'like', "%{$post_data['username']}%");
+        }
+        else
+        {
+            $query->where('username', '不可能存在的赞助商！');
+        }
+
+        $total = $query->count();
+
+        $draw  = isset($post_data['draw'])  ? $post_data['draw']  : 1;
+        $skip  = isset($post_data['start'])  ? $post_data['start']  : 0;
+        $limit = isset($post_data['length']) ? $post_data['length'] : 40;
+
+        if(isset($post_data['order']))
+        {
+            $columns = $post_data['columns'];
+            $order = $post_data['order'][0];
+            $order_column = $order['column'];
+            $order_dir = $order['dir'];
+
+            $field = $columns[$order_column]["data"];
+            $query->orderBy($field, $order_dir);
+        }
+        else $query->orderBy("id", "desc");
+
+        if($limit == -1) $list = $query->get();
+        else $list = $query->skip($skip)->take($limit)->get();
+
+        foreach ($list as $k => $v)
+        {
+            $list[$k]->encode_id = encode($v->id);
+        }
+//        dd($list->toArray());
+        return datatable_response($list, $draw, $total);
+    }
+
+
+
+    // 【赞助商】关联
+    public function operate_user_sponsor_relation($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'id.required' => '请选择ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'sponsor-relation') return response_error([],"参数有误！");
+        $id = $post_data["id"];
+        if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
+
+        $me = Auth::guard('org')->user();
+        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+
+        $pivot_relation = K_Pivot_User_Relation::where(['relation_category'=>88,'relation_type'=>1,'mine_user_id'=>$me->id,'relation_user_id'=>$id])->first();
+        if($pivot_relation) return response_error([],"该赞助商已经关联过了！");
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $mine = new K_Pivot_User_Relation;
+
+            $mine_data['relation_category'] = 88;
+            $mine_data['relation_type'] = 1;
+            $mine_data['mine_user_id'] = $me->id;
+            $mine_data['relation_user_id'] = $id;
+
+            $bool = $mine->fill($mine_data)->save();
+            if($bool)
+            {
+
+            }
+            else throw new Exception("insert--pivot_relation--fail");
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '删除失败，请重试';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+    // 【赞助商】批量关联
+    public function operate_user_sponsor_relation_bulk($post_data)
+    {
+        $messages = [
+            'operate.required' => '参数有误',
+            'bulk_sponsor_id.required' => '请选择ID',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'bulk_sponsor_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $operate = $post_data["operate"];
+        if($operate != 'sponsor-relation-bulk') return response_error([],"参数有误！");
+
+        $me = Auth::guard('org')->user();
+        if(!in_array($me->user_type,[11])) return response_error([],"你没有操作权限！");
+
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            $sponsor_ids = $post_data["bulk_sponsor_id"];
+            foreach($sponsor_ids as $key => $sponsor_id)
+            {
+                if(intval($sponsor_id) !== 0 && !$sponsor_id) return response_error([],"参数ID有误！");
+                $pivot_relation = K_Pivot_User_Relation::where(['relation_category'=>88,'mine_user_id'=>$me->id,'relation_user_id'=>$sponsor_id])->first();
+                if(!$pivot_relation)
+                {
+                    $mine = new K_Pivot_User_Relation;
+
+                    $mine_data['relation_category'] = 88;
+                    $mine_data['relation_type'] = 1;
+                    $mine_data['mine_user_id'] = $me->id;
+                    $mine_data['relation_user_id'] = $sponsor_id;
+
+                    $bool = $mine->fill($mine_data)->save();
+                    if($bool)
+                    {
+
+                    }
+                    else throw new Exception("insert--pivot_relation--fail");
+                }
+//                else return response_error([],"该赞助商已经关联过了！");
+            }
+
+            DB::commit();
+            return response_success([]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '删除失败，请重试';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+
+
+
+
+
+
+
+
+    /*
+     * 统计
+     */
+
+    // 【】流量统计
+    public function view_statistic_index()
+    {
+        $me = Auth::guard('org')->user();
+        $me_id = $me->id;
+
+        $this_month = date('Y-m');
+        $this_month_year = date('Y');
+        $this_month_month = date('m');
+        $last_month = date('Y-m',strtotime('last month'));
+        $last_month_year = date('Y',strtotime('last month'));
+        $last_month_month = date('m',strtotime('last month'));
+
+
+        // 总访问量【统计】
+        $all = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        $all = $all->keyBy('day');
+
+        // 首页访问量【统计】
+        $rooted = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>2,'page_module'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        $rooted = $rooted->keyBy('day');
+
+        // 介绍页访问量【统计】
+        $introduction = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1,'page_type'=>2,'page_module'=>2])
+            ->where('object_id',$me_id)
+            ->get();
+        $introduction = $introduction->keyBy('day');
+
+
+
+
+        // 打开设备类型【占比】
+        $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
+            ->groupBy('open_device_type')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        foreach($open_device_type as $k => $v)
+        {
+            if($v->open_device_type == 0) $open_device_type[$k]->name = "默认";
+            else if($v->open_device_type == 1) $open_device_type[$k]->name = "移动端";
+            else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
+        }
+
+        // 打开系统类型【占比】
+        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
+            ->groupBy('open_system')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+
+        // 打开APP类型【占比】
+        $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
+            ->groupBy('open_app')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+
+
+
+
+        // 总分享【统计】
+        $shared_all = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('object_id',$me_id)
+            ->get();
+        $shared_all = $shared_all->keyBy('day');
+
+        // 首页分享【统计】
+        $shared_root = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>2,'page_module'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        $shared_root = $shared_root->keyBy('day');
+
+
+
+
+        // 总分享【占比】
+        $shared_all_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('object_id',$me_id)
+            ->get();
+        foreach($shared_all_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_all_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_all_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_all_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_all_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_all_scale[$k]->name = "腾讯微博";
+            else $shared_all_scale[$k]->name = "其他";
+        }
+
+        // 首页分享【占比】
+        $shared_root_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>2,'page_type'=>1,'page_module'=>1])
+            ->where('object_id',$me_id)
+            ->get();
+        foreach($shared_root_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_root_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_root_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_root_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_root_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_root_scale[$k]->name = "腾讯微博";
+            else $shared_root_scale[$k]->name = "其他";
+        }
+
+
+        $view_data["all"] = $all;
+        $view_data["rooted"] = $rooted;
+        $view_data["introduction"] = $introduction;
+        $view_data["open_device_type"] = $open_device_type;
+        $view_data["open_app"] = $open_app;
+        $view_data["open_system"] = $open_system;
+        $view_data["shared_all"] = $shared_all;
+        $view_data["shared_root"] = $shared_root;
+        $view_data["shared_all_scale"] = $shared_all_scale;
+        $view_data["shared_root_scale"] = $shared_root_scale;
+        $view_data["sidebar_statistic_active"] = 'active';
+
+        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.statistic.statistic-index';
+        return view($view_blade)->with($view_data);
+    }
+    // 【】流量统计
+    public function view_statistic_item($post_data)
+    {
+        $messages = [
+            'id.required' => 'id required',
+        ];
+        $v = Validator::make($post_data, [
+            'id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $me = Auth::guard('org')->user();
+        $me_id = $me->id;
+
+        $item_id = $post_data["id"];
+        $item = K_Item::find($item_id);
+        if(!$item) return view(env('TEMPLATE_ADMIN').'org.errors.404');
+        if($item->owner_id != $me_id) return view(env('TEMPLATE_ADMIN').'org.errors.404');
+
+        $this_month = date('Y-m');
+        $this_month_year = date('Y');
+        $this_month_month = date('m');
+        $last_month = date('Y-m',strtotime('last month'));
+        $last_month_year = date('Y',strtotime('last month'));
+        $last_month_month = date('m',strtotime('last month'));
+
+
+        // 访问量【统计】
+        $data = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+        $data = $data->keyBy('day');
+
+
+
+
+        // 打开设备类型【占比】
+        $open_device_type = K_Record::select('open_device_type',DB::raw('count(*) as count'))
+            ->groupBy('open_device_type')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+        foreach($open_device_type as $k => $v)
+        {
+            if($v->open_device_type == 0) $open_device_type[$k]->name = "默认";
+            else if($v->open_device_type == 1) $open_device_type[$k]->name = "移动端";
+            else if($v->open_device_type == 2)  $open_device_type[$k]->name = "PC端";
+        }
+
+        // 打开系统类型【占比】
+        $open_system = K_Record::select('open_system',DB::raw('count(*) as count'))
+            ->groupBy('open_system')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+
+        // 打开APP类型【占比】
+        $open_app = K_Record::select('open_app',DB::raw('count(*) as count'))
+            ->groupBy('open_app')
+            ->where(['record_category'=>1,'record_type'=>1])
+            ->where('item_id',$item_id)
+            ->get();
+
+
+
+
+        // 分享【统计】
+        $shared_data = K_Record::select(
+            DB::raw("DATE(FROM_UNIXTIME(created_at)) as date"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%Y-%m') as month"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%c') as month_0"),
+            DB::raw("DATE_FORMAT(FROM_UNIXTIME(created_at),'%e') as day"),
+            DB::raw('count(*) as count')
+        )
+            ->groupBy(DB::raw("DATE(FROM_UNIXTIME(created_at))"))
+            ->whereYear(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_year)
+            ->whereMonth(DB::raw("DATE(FROM_UNIXTIME(created_at))"),$this_month_month)
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('item_id',$item_id)
+            ->get();
+        $shared_data = $shared_data->keyBy('day');
+
+
+        // 总分享【占比】
+        $shared_data_scale = K_Record::select('shared_location',DB::raw('count(*) as count'))
+            ->groupBy('shared_location')
+            ->where(['record_category'=>1,'record_type'=>2])
+            ->where('item_id',$item_id)
+            ->get();
+        foreach($shared_data_scale as $k => $v)
+        {
+            if($v->shared_location == 1) $shared_data_scale[$k]->name = "微信好友";
+            else if($v->shared_location == 2) $shared_data_scale[$k]->name = "微信朋友圈";
+            else if($v->shared_location == 3) $shared_data_scale[$k]->name = "QQ好友";
+            else if($v->shared_location == 4) $shared_data_scale[$k]->name = "QQ空间";
+            else if($v->shared_location == 5) $shared_data_scale[$k]->name = "腾讯微博";
+            else $shared_data_scale[$k]->name = "其他";
+        }
+
+
+        $view_data["item"] = $item;
+        $view_data["data"] = $data;
+        $view_data["open_device_type"] = $open_device_type;
+        $view_data["open_app"] = $open_app;
+        $view_data["open_system"] = $open_system;
+        $view_data["shared_data"] = $shared_data;
+        $view_data["shared_data_scale"] = $shared_data_scale;
+
+        $view_blade = env('TEMPLATE_ADMIN').'org.admin.entrance.statistic.statistic-item';
+        return view($view_blade)->with($view_data);
+    }
 
 
 
