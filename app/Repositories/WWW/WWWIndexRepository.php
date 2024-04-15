@@ -1236,7 +1236,6 @@ class WWWIndexRepository {
     {
         $this->get_me();
         $me = $this->me;
-        $me_id = $me->id;
 
         $user_id = $id;
 
@@ -1303,6 +1302,7 @@ class WWWIndexRepository {
 
         if($this->auth_check)
         {
+            $me_id = $me->id;
             $record["creator_id"] = $me_id;
 
             $item_query = K_Item::with([
@@ -1310,8 +1310,7 @@ class WWWIndexRepository {
     //                'forward_item'=>function($query) { $query->with('user'); },
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
                 ])
-                ->where('item_status',1)
-                ->where('active',1)
+                ->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1,'is_published'=>1])
                 ->where('owner_id',$user_id);
 
             if($type == 'root')
