@@ -94,7 +94,52 @@
     </div>
 
 
-    {{--左侧-内容--}}
+    {{--右侧-广告等--}}
+    <div class="main-body-section main-body-center-section section-wrapper margin-top-4px">
+
+
+
+        {{--贴片广告--}}
+        @if(!empty($data->ad))
+            <div class="item-row margin-top-8px pull-right _none">
+                <strong>广告</strong>
+            </div>
+            @include(env('TEMPLATE_K_COMMON').'component.component-ad-paste', ['item'=>$data->ad])
+        @endif
+
+
+        {{--我的赞助商--}}
+        @if(count($data->pivot_sponsor_list))
+            <div class="item-row margin-top-8px pull-right _none-">
+                <strong>Ta的赞助商</strong>
+                {{--<strong>{{ $data->username or 'Ta' }}的赞助商</strong>--}}
+            </div>
+            @include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])
+        @endif
+
+
+        {{--我赞助的组织机构--}}
+        @if(count($data->pivot_org_list))
+            <div class="item-row margin-top-8px pull-right _none">
+                {{--<strong>赞助的组织</strong>--}}
+            </div>
+            @include(env('TEMPLATE_K_COMMON').'component.menu-for-org', ['org_list'=>$data->pivot_org_list])
+        @endif
+
+
+        {{--我的广告--}}
+        @if(count($data->ad_list))
+            <div class="item-row margin-top-8px pull-right _none-">
+                <strong>Ta的广告</strong>
+            </div>
+            @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
+        @endif
+
+
+    </div>
+
+
+    {{--内容--}}
     <div class="main-body-section main-body-center-section section-wrapper">
 
         @if(request('type') != 'introduction')
@@ -107,56 +152,6 @@
 
         @if($data->user_type == 88 && request('type') == 'org')
             @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$data->pivot_org_list])
-        @endif
-
-    </div>
-
-
-    {{--右侧-广告等--}}
-    <div class="main-body-section main-body-center-section section-wrapper pull-left- margin-top-4px _none-">
-
-
-        {{--[IF]我是组织--}}
-{{--        @if($data->user_type == 11)--}}
-
-            {{--贴片广告--}}
-            @if(!empty($data->ad))
-                <div class="item-row margin-top-8px pull-right _none">
-                    <strong>广告</strong>
-                </div>
-                @include(env('TEMPLATE_K_COMMON').'component.component-ad-paste', ['item'=>$data->ad])
-            @endif
-
-            @if(count($data->pivot_sponsor_list))
-                <div class="item-row margin-top-8px pull-right _none-">
-                    <strong>Ta的赞助商</strong>
-{{--                    <strong>{{ $data->username or 'Ta' }}的赞助商</strong>--}}
-                </div>
-                @include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])
-            @endif
-
-{{--        @endif--}}
-
-
-        {{--[IF]我是赞助商--}}
-        @if($data->user_type == 88)
-
-            {{--我赞助的组织机构--}}
-            @if(count($data->pivot_org_list))
-                <div class="item-row margin-top-8px pull-right _none">
-                    {{--<strong>赞助的组织</strong>--}}
-                </div>
-                @include(env('TEMPLATE_K_COMMON').'component.menu-for-org', ['org_list'=>$data->pivot_org_list])
-            @endif
-
-            {{--我的广告--}}
-            @if(count($data->ad_list))
-                <div class="item-row margin-top-8px pull-right _none-">
-                    <strong>Ta的广告</strong>
-                </div>
-                @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
-            @endif
-
         @endif
 
     </div>
