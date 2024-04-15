@@ -1236,6 +1236,7 @@ class WWWIndexRepository {
     {
         $this->get_me();
         $me = $this->me;
+        $me_id = $me->id;
 
         $user_id = $id;
 
@@ -1243,7 +1244,7 @@ class WWWIndexRepository {
 
         $user = K_User::with([
                 'ext','introduction',
-//                'items'=>function($query) { $query->with('owner')->where(['item_status'=>1,'active'=>1])->orderBy('published_at','desc'); },
+                'items'=>function($query) { $query->with('owner')->where(['item_status'=>1,'active'=>1])->orderBy('published_at','desc'); },
 //                'ad',
                 'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
                 'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1])->orderby('updated_at','desc'); },
@@ -1300,10 +1301,8 @@ class WWWIndexRepository {
 
         $is_follow = 0;
 
-        if(Auth::check())
+        if($this->auth_check)
         {
-            $me = Auth::user();
-            $me_id = $me->id;
             $record["creator_id"] = $me_id;
 
             $item_query = K_Item::with([
@@ -1356,8 +1355,7 @@ class WWWIndexRepository {
         else
         {
             $item_query = K_Item::with(['owner'])
-                ->where('item_status',1)
-                ->where('active',1)
+                ->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1])
                 ->where('owner_id',$user_id);
 
             if($type == 'root')
@@ -1384,7 +1382,7 @@ class WWWIndexRepository {
                 $record["page_module"] = 1; // page_module=0 default index
             }
 
-            $item_list = $item_query->orderBy('published_at','desc')->paginate(20);
+            $item_list = $item_query->orderByDesc('published_at')->paginate(20);
         }
 
 //        foreach ($item_list as $item)
