@@ -59,7 +59,7 @@
                 <div class="col-xs-4 border-right">
                     <a href="{{ url('/user/'.$data->id) }}" target="_blank">
                         <div class="description-block">
-                            <h5 class="description-header">{{ $data->fans_num or 0 }}</h5>
+                            <h5 class="description-header">{{ $data->item_count or 0 }}</h5>
                             <span class="description-text">内容</span>
                         </div>
                     </a>
