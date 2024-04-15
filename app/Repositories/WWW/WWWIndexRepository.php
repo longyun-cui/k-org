@@ -1355,7 +1355,7 @@ class WWWIndexRepository {
         else
         {
             $item_query = K_Item::with(['owner'])
-                ->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1])
+                ->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1,'is_published'=>1])
                 ->where('owner_id',$user_id);
 
             if($type == 'root')
