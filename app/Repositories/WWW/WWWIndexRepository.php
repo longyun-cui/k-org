@@ -1243,7 +1243,7 @@ class WWWIndexRepository {
 
         $user = K_User::with([
                 'ext','introduction',
-                'items'=>function($query) { $query->with('owner')->where(['item_status'=>1,'active'=>1])->orderBy('published_at','desc'); },
+//                'items'=>function($query) { $query->with('owner')->where(['item_status'=>1,'active'=>1])->orderBy('published_at','desc'); },
 //                'ad',
                 'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
                 'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1])->orderby('updated_at','desc'); },
@@ -1253,9 +1253,7 @@ class WWWIndexRepository {
                 'pivot_sponsor_list as pivot_sponsor_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1]); },
                 'pivot_sponsored_list as pivot_sponsored_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
 //                'pivot_org_list as pivot_org_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
-                'items as item_count' => function($query) { $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1])->whereIn('item_type',[1,11]); },
-//                'items as article_count' => function($query) { $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1,'item_type'=>1]); },
-//                'items as activity_count' => function($query) { $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1,'item_type'=>11]); },
+                'item_list as item_count' => function($query) { $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1]); }
             ])
             ->find($user_id);
 //        dd($user->toArray());
