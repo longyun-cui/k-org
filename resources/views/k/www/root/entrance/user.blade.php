@@ -129,16 +129,12 @@
     {{--内容--}}
     <div class="main-body-section main-body-center-section section-wrapper">
 
-        @if(request('type') != 'introduction')
-            @if(!empty($item_list) && count($item_list))
-                @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
-                {!! $item_list->links() !!}
-            @endif
-        @endif
-
-
-        @if($data->user_type == 88 && request('type') == 'org')
-            @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$data->pivot_org_list])
+        @if(!empty($item_list) && count($item_list))
+            <div class="item-row margin-top-8px pull-right _none-">
+                <strong>Ta的分享</strong>
+            </div>
+            @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
+            {!! $item_list->links() !!}
         @endif
 
     </div>
