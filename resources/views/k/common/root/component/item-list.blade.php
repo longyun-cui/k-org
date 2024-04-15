@@ -102,7 +102,7 @@
                     @endif
 
                     @if(!empty($item->address))
-                        <div class="text-row text-info-row multi-ellipsis-2 margin-top-4px margin-bottom-4px">
+                        <div class="text-row text-info-row multi-ellipsis-row-2 margin-top-4px margin-bottom-4px">
                             <i class="icon ion-location text-blue" style="width:16px;text-align:center;"></i>
                             <span class="">{{ $item->address or '' }}</span>
                         </div>
