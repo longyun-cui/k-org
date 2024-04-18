@@ -1,5 +1,5 @@
 {{--<!-- Content Wrapper. Contains page content -->--}}
-<div class="content-wrapper main-body" style="padding:16px 4px;margin-left:0;background:url(/bg.gif) repeat;">
+<div class="content-wrapper main-body" style="padding:0 4px 16px;margin-left:0;background:url(/bg.gif) repeat;">
     <!-- Content Header (Page header) -->
     <section class="content-header" style="display:none;">
         <h1>
