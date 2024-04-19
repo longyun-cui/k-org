@@ -159,5 +159,14 @@
         //     console.log('Input state changed.');
         // });
 
+
+        // 查询
+        $('.dropUp-toggle').on('click', function(event){
+            var $that = $(this);
+            var $drop = $(this).parents('.dropUp');
+            $drop.toggleClass('open');
+            return false;
+        });
+
     });
 </script>

@@ -7,6 +7,7 @@ $(function() {
         var delta = (event.originalEvent.wheelDelta && (event.originalEvent.wheelDelta > 0 ? 1 : -1)) ||  // chrome & ie
             (event.originalEvent.detail && (event.originalEvent.detail > 0 ? -1 : 1));              // firefox
 
+        $('.dropUp').removeClass('open');
         // console.log(event.originalEvent.wheelDelta);
         if (delta > 0)
         {

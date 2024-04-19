@@ -5,17 +5,17 @@
     <nav class="navbar navbar-static-top" role="navigation" style="margin-left:0;background-color:#1a2226;">
 
         <!-- Sidebar toggle button-->
-{{--        <a href="#" class="sidebar-toggle visible-xs @yield('sidebar-toggle')" data-toggle="offcanvas" role="button">--}}
-{{--            <span class="sr-only">Toggle navigation</span>--}}
-{{--        </a>--}}
+        {{--<a href="#" class="sidebar-toggle visible-xs @yield('sidebar-toggle')" data-toggle="offcanvas" role="button">--}}
+            {{--<span class="sr-only">Toggle navigation</span>--}}
+        {{--</a>--}}
 
 
         <div class="navbar-custom-menu" style="height:50px;line-height:50px;float:left;">
             <a href="{{ url('/') }}">
                 <span class="logo-big hidden-xs">
-{{--                    <img src="/favicon_transparent.png" class="img-icon" alt="Image">--}}
+                    {{--<img src="/favicon_transparent.png" class="img-icon" alt="Image">--}}
                     <img src="/custom/k/k-www.jpg" class="img-icon" alt="Image">
-                    <b class="hidden-xs" style="vertical-align: middle;">朝鲜族社群平台</b>
+                    <b class="hidden-xs" style="vertical-align:middle;">朝鲜族社群平台</b>
                 </span>
                 <span class="logo-big visible-xs">
                     <img src="/custom/k/k-www.jpg" class="img-icon" alt="Image">
@@ -24,10 +24,7 @@
                 <span class="visible-xs">
                 </span>
             </a>
-            <a href="{{ url('/') }}">
-            </a>
         </div>
-
 
 
         {{--<div class="header-logo" >--}}
@@ -52,7 +49,7 @@
 
 
                 @if($auth_check)
-                <li class="{{ $menu_active_of_notification or '' }}">
+                <li class="{{ $menu_active_of_notification or '' }} _none">
                     <a  href="{{ url('/mine/my-notification') }}" data-type="notification">
                         <i class="fa fa-envelope-o" style=""></i>
                         <span class="label label-success">@if(!empty($notification_count)){{ $notification_count or '' }}@endif</span>
@@ -90,7 +87,7 @@
 
 
                 {{--<!-- Menu -->--}}
-                <li class="dropdown _none-">
+                <li class="dropdown _none">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-list" style="width:16px;vertical-align:middle;"></i>
                         {{--<span class="label label-warning">10</span>--}}
@@ -184,7 +181,7 @@
                     </a>
 
 
-                    <ul class="dropdown-menu _none-">
+                    <ul class="dropdown-menu _none">
                         <!-- The user image in the menu -->
                         <li class="user-header">
                                 <img src="{{ url(env('DOMAIN_CDN').'/'.$me->portrait_img) }}" class="img-circle" alt="User Image">
@@ -371,6 +368,8 @@
             </ul>
 
         </div>
+
+
     </nav>
 
 </header>
