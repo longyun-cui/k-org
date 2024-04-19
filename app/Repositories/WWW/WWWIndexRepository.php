@@ -366,30 +366,28 @@ class WWWIndexRepository {
         $page["item_id"] = 0;
         $page["user_id"] = 0;
 
-        $sidebar_active = '';
-
         if($type == 'root')
         {
             $head_title = "朝鲜族社群平台";
-            $sidebar_active = 'menu_active_for_root';
+            $sidebar_active = 'menu_active_by_home';
             $page["module"] = 1;
         }
         else if($type == 'article')
         {
             $head_title = "文章 - 朝鲜族社群平台";
-            $sidebar_active = 'menu_active_for_article';
+            $sidebar_active = 'menu_active_by_article';
             $page["module"] = 9;
         }
         else if($type == 'activity')
         {
             $head_title = "活动 - 朝鲜族社群平台";
-            $sidebar_active = 'menu_active_for_activity';
+            $sidebar_active = 'menu_active_by_activity';
             $page["module"] = 11;
         }
         else
         {
             $head_title = "朝鲜族社群平台";
-            $sidebar_active = 'menu_active_for_root';
+            $sidebar_active = 'menu_active_by_home';
             $page["module"] = 1;
         }
 
@@ -399,6 +397,7 @@ class WWWIndexRepository {
         $return['getType'] = 'items';
         $return['page_type'] = 'root';
         $return['page'] = $page;
+
 
 
         $path = request()->path();
@@ -1815,12 +1814,13 @@ class WWWIndexRepository {
         $page["item_id"] = 0;
         $page["user_id"] = 0;
 
-        return view(env('TEMPLATE_K_WWW').'entrance.organization-list')
-            ->with([
-                'user_list'=>$user_list,
-                'sidebar_menu_organization_list_active' => 'active',
-                'page' => $page
-            ]);
+
+        $return_data['user_list'] = $user_list;
+        $return_data['page'] = $page;
+        $return_data['menu_active_by_organization'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.organization-list';
+        return view($view_blade)->with($return_data);
     }
 
 
