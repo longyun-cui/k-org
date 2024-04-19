@@ -57,7 +57,7 @@
                                         <button type="button" class="btn">
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="user_type" value="88"> 企业/商铺/店铺
+                                                    <input type="radio" name="user_type" value="88"> 企业/商家
                                                 </label>
                                             </div>
                                         </button>
