@@ -1,7 +1,7 @@
 @extends(env('TEMPLATE_K_WWW').'layout.layout')
 
 
-@section('head_title')我的关注 - 朝鲜族社群平台@endsection
+@section('head_title')我的名片夹 - 朝鲜族社群平台@endsection
 
 @section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
