@@ -89,7 +89,7 @@
 <style>
     .aui-footer {
         width: 100vw;
-        height: 50px;
+        height: 56px;
         border-top:1px solid #888;
         background: #FFF;
         display: flex;
@@ -171,7 +171,7 @@
         justify-content: space-around;
         white-space: nowrap;
         position: fixed !important;
-        bottom: 50px;
+        bottom: 56px;
         right: 2px;
         z-index: 997;
         margin-bottom:0;
