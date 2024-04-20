@@ -268,9 +268,9 @@
     display:block;
     width:100%;
     height:auto;
-    min-height:-webkit-calc(100% - 64px);
-    min-height:-moz-calc(100% - 64px);
-    min-height:calc(100% - 64px);
+    min-height:-webkit-calc(100% - 114px);
+    min-height:-moz-calc(100% - 114px);
+    min-height:calc(100% - 114px);
     padding:0;
     margin-top:50px;
     line-height:1.6;
