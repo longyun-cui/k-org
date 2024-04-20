@@ -440,6 +440,8 @@ class WWWIndexRepository {
         $record["page_module"] = 2; // page_module=2 introduction
         $record["page_num"] = 1;
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         $page["type"] = 1;
