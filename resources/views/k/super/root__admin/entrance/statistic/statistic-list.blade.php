@@ -214,33 +214,33 @@
                 "orderCellsTop": true,
                 "columns": [
                     {
-                        "width": "32px",
                         "title": "选择",
                         "data": "id",
+                        "width": "40px",
                         'orderable': false,
                         render: function(data, type, row, meta) {
                             return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
                         }
                     },
                     {
-                        "width": "32px",
                         "title": "序号",
                         "data": null,
+                        "width": "40px",
                         "targets": 0,
                         'orderable': false
                     },
                     {
-                        "className": "font-12px",
-                        "width": "48px",
                         "title": "ID",
                         "data": "id",
+                        "className": "font-12px",
+                        "width": "50px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "width": "48px",
+                        "width": "50px",
                         "title": "操作",
                         "data": "id",
                         'orderable': false,
@@ -347,10 +347,10 @@
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "",
                         "title": "访问者",
                         "data": "creator_id",
+                        "className": "text-left",
+                        "width": "160px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.creator == null
@@ -359,10 +359,10 @@
                         }
                     },
                     {
-                        "className": "",
-                        "width": "64px",
                         "title": "移动端",
                         "data": "open_device_type",
+                        "className": "",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             if(data == 1) return '<small class="btn-xs bg-primary">移动端</small>';
@@ -371,10 +371,10 @@
                         }
                     },
                     {
-                        "className": "",
-                        "width": "64px",
                         "title": "系统",
                         "data": "open_system",
+                        "className": "",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
@@ -387,10 +387,10 @@
                         }
                     },
                     {
-                        "className": "",
-                        "width": "64px",
                         "title": "浏览器",
                         "data": "open_browser",
+                        "className": "",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
@@ -398,10 +398,10 @@
                         }
                     },
                     {
-                        "className": "",
-                        "width": "64px",
                         "title": "APP",
                         "data": "open_app",
+                        "className": "",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
@@ -412,10 +412,10 @@
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "88px",
                         "title": "IP",
                         "data": "ip",
+                        "className": "",
+                        "width": "100px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -423,10 +423,20 @@
                         }
                     },
                     {
-                        "className": "font-12px",
-                        "width": "96px",
+                        "title": "IP",
+                        "data": "ip_info",
+                        "className": "text-left",
+                        "width": "160px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                           return data;
+                        }
+                    },
+                    {
                         "title": "访问时间",
                         "data": 'created_at',
+                        "className": "font-12px",
+                        "width": "100px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -447,7 +457,7 @@
                         }
                     },
                     {
-                        "width": "112px",
+                        "width": "120px",
                         "title": "操作",
                         "data": 'id',
                         "orderable": false,

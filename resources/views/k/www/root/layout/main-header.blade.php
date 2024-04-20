@@ -181,7 +181,7 @@
                     </a>
 
 
-                    <ul class="dropdown-menu _none">
+                    <ul class="dropdown-menu _none-">
                         <!-- The user image in the menu -->
                         <li class="user-header">
                                 <img src="{{ url(env('DOMAIN_CDN').'/'.$me->portrait_img) }}" class="img-circle" alt="User Image">
@@ -191,7 +191,7 @@
                                 </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body _none-">
+                        <li class="user-body _none">
                             <div class="row">
                                 <div class="col-xs-4 text-center _none">
                                     <a href="{{ url('/user/'.$me->id) }}">

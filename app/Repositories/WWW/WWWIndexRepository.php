@@ -290,11 +290,11 @@ class WWWIndexRepository {
         }
         else
         {
-
         }
 
 //        $user_list = $user_query->paginate(20);
         $user_list = $user_query->get();
+        $return['user_list'] = $user_list;
 
 
         $item_query->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1,'is_published'=>1]);
@@ -344,10 +344,8 @@ class WWWIndexRepository {
             }
 //            dd($item->cover_picture);
         }
-
         $return['item_list'] = $item_list;
 
-        $return['user_list'] = $user_list;
 
 
 
@@ -4226,7 +4224,11 @@ class WWWIndexRepository {
         $post_data["open_browser"] = $browseInfo['browser'];
         $post_data["open_app"] = $browseInfo['app'];
 
-        $post_data["ip"] = Get_IP();
+        $ip = Get_IP();
+        $post_data["ip"] = $ip;
+        $ip_info = get_ip_info($ip);
+        $post_data["ip_info"] = $ip_info['adcode']['o'];
+
         $bool = $record->fill($post_data)->save();
         if($bool) return true;
         else return false;

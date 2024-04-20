@@ -7,7 +7,14 @@
         </div>
     </a>
 
-    <a class="aui-footer-list {{ $menu_active_by_activity or '' }}" href="{{ url('/?type=activity') }}">
+    <a class="aui-footer-list {{ $menu_active_by_organization or '' }}" href="{{ url('/organization-list') }}">
+        <div class="">
+            <i class="fa fa-sitemap"></i>
+            <p class="mt-1">社群/商家</p>
+        </div>
+    </a>
+
+    <a class="aui-footer-list {{ $menu_active_by_activity or '' }} _none" href="{{ url('/?type=activity') }}">
         <div class="">
             <i class="fa fa-clock-o"></i>
             <p class="mt-1">活动</p>
@@ -27,10 +34,10 @@
         </div>
     </div>
 
-    <a class="aui-footer-list {{ $menu_active_by_organization or '' }}" href="{{ url('/organization-list') }}">
+    <a class="aui-footer-list {{ $menu_active_by_follow or '' }}" href="{{ url('/mine/my-follow') }}">
         <div class="">
-            <i class="fa fa-sitemap"></i>
-            <p class="mt-1">社群/商家</p>
+            <i class="fa fa-cc"></i>
+            <p class="mt-1">名片夹</p>
         </div>
     </a>
 
@@ -41,38 +48,38 @@
         </a>
 
         <ul class="aui-footer-menu-list dropUp-menu">
-            <li>
+            <li class="_none">
                 <a href="{{ url('/mine/my-follow') }}">
                     <i class="fa fa-cc text-red" style="width:16px;margin-right:4px;text-align:right;"></i>
                     <span>名片夹</span>
                 </a>
             </li>
-            <li>
+            <li class="">
                 <a href="{{ url('/mine/my-fans') }}">
                     <i class="fa fa-user text-red" style="width:16px;margin-right:4px;text-align:right;"></i>
                     <span>我的粉丝</span>
                 </a>
             </li>
-            <li>
+            <li class="">
                 <a href="{{ url('/mine/my-favor') }}">
                     <i class="fa fa-heart text-red" style="width:16px;margin-right:4px;text-align:right;"></i>
                     <span>我的点赞</span>
                 </a>
             </li>
-            <li>
+            <li class="">
                 <a href="{{ url('/mine/my-collection') }}">
                     <i class="fa fa-star text-red" style="width:16px;margin-right:4px;text-align:right;"></i>
                     <span>我的收藏</span>
                 </a>
             </li>
-            <li>
+            <li class="">
                 <a href="{{ url('/mine/my-organization') }}">
                     <i class="fa fa-sitemap text-red" style="width:16px;margin-right:4px;text-align:right;"></i>
                     <span>我的社群组织</span>
                 </a>
             </li>
             @if($auth_check)
-            <li>
+            <li class="">
                 <a href="{{ url('/user/'.$me->id) }}">
                     <i class="fa fa-info text-red" style="width:16px;margin-right:4px;text-align:right;"></i>
                     <span>我的主页</span>

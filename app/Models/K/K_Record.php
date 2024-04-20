@@ -33,7 +33,7 @@ class K_Record extends Model
         'open_device_type', 'open_device_name', 'open_device_version', 'open_system', 'open_browser', 'open_app',
         'shared_location',
 
-        'ip',
+        'ip', 'ip_info',
         'visit_num', 'share_num', 'favor_num', 'comment_num',
         'published_at',
 
