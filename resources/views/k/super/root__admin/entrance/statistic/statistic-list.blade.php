@@ -436,7 +436,7 @@
                         "title": "访问时间",
                         "data": 'created_at',
                         "className": "font-12px",
-                        "width": "100px",
+                        "width": "120px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -453,7 +453,7 @@
 //                            return $year+'-'+$month+'-'+$day;
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;'+$hour+':'+$minute;
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
-                            return $year+'.'+$month+'.'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute;
+                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
                         }
                     },
                     {
