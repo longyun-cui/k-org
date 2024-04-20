@@ -361,7 +361,7 @@ class WWWIndexRepository {
         $record["page_num"] = $item_list->toArray()["current_page"];
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -423,9 +423,14 @@ class WWWIndexRepository {
         }
         else $me_id = 0;
 
+
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
+
+
         $introduction = K_Item::find(1);
-
-
 
 
         // 插入记录表
@@ -464,6 +469,11 @@ class WWWIndexRepository {
             $record["creator_id"] = $me_id;
         }
         else $me_id = 0;
+
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
 
         $user_query = K_User::select('*')
             ->with([
@@ -596,6 +606,8 @@ class WWWIndexRepository {
         $record["page_num"] = $item_list->toArray()["current_page"];
         $record["title"] = $q;
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         $sidebar_active = '';
@@ -1131,6 +1143,11 @@ class WWWIndexRepository {
         $this->get_me();
         $me = $this->me;
 
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
+
         $item = K_Item::with(['owner'])->find($id);
         if($item)
         {
@@ -1213,6 +1230,8 @@ class WWWIndexRepository {
         $record["object_id"] = $item->owner_id;
         $record["item_id"] = $id;
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -1240,6 +1259,11 @@ class WWWIndexRepository {
     {
         $this->get_me();
         $me = $this->me;
+
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
 
         $user_id = $id;
 
@@ -1442,6 +1466,8 @@ class WWWIndexRepository {
         $record["page_num"] = $item_list->toArray()["current_page"];
         $record["object_id"] = $user_id;
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -1642,6 +1668,11 @@ class WWWIndexRepository {
 //        $user_decode = decode($user_encode);
 //        if(!$user_decode) return view('frontend.404');
 
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
+
         $user_id = $id;
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
@@ -1727,6 +1758,8 @@ class WWWIndexRepository {
         $record["page_num"] = 1;
         $record["object_id"] = $user_id;
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -1750,6 +1783,11 @@ class WWWIndexRepository {
     {
 
         $this->get_me();
+
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
 
         if($this->auth_check)
         {
@@ -1811,6 +1849,8 @@ class WWWIndexRepository {
         $record["page_module"] = 33; // page_module=33 organization
         $record["page_num"] = $user_list->toArray()["current_page"];
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         $page["type"] = 1;
@@ -4247,6 +4287,11 @@ class WWWIndexRepository {
         }
         else $me_id = 0;
 
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
+
         $record_module = isset($post_data["record_module"]) ? $post_data["record_module"] : 0;
         $page_type = isset($post_data["page_type"]) ? $post_data["page_type"] : 0;
         $page_module = isset($post_data["page_module"]) ? $post_data["page_module"] : 0;
@@ -4264,6 +4309,8 @@ class WWWIndexRepository {
         $record["item_id"] = $item_id;
         $record["object_id"] = $user_id;
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         if($page_type == 1)
