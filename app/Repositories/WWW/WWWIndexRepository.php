@@ -257,6 +257,11 @@ class WWWIndexRepository {
         }
         else $me_id = 0;
 
+        $ip = Get_IP();
+        $ip_info = get_ip_info($ip);
+        $ip_province = $ip_info['ipdata']['info1'];
+        $ip_city = $ip_info['ipdata']['info2'];
+
 
         $item_query = K_Item::with(['owner']);
 
@@ -355,6 +360,8 @@ class WWWIndexRepository {
         $record["page_type"] = 1; // page_type=1 default platform
         $record["page_num"] = $item_list->toArray()["current_page"];
         $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+        $record["ip_info"] = $ip_info['adcode']['o'];;
         $this->record($record);
 
 
@@ -4223,11 +4230,6 @@ class WWWIndexRepository {
         $post_data["open_system"] = $browseInfo['system'];
         $post_data["open_browser"] = $browseInfo['browser'];
         $post_data["open_app"] = $browseInfo['app'];
-
-        $ip = Get_IP();
-        $post_data["ip"] = $ip;
-        $ip_info = get_ip_info($ip);
-        $post_data["ip_info"] = $ip_info['adcode']['o'];
 
         $bool = $record->fill($post_data)->save();
         if($bool) return true;
