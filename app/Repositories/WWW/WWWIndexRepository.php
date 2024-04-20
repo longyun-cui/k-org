@@ -425,9 +425,9 @@ class WWWIndexRepository {
 
 
         $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
 
 
         $introduction = K_Item::find(1);
@@ -441,7 +441,7 @@ class WWWIndexRepository {
         $record["page_num"] = 1;
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         $page["type"] = 1;
@@ -473,9 +473,9 @@ class WWWIndexRepository {
         else $me_id = 0;
 
         $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
 
         $user_query = K_User::select('*')
             ->with([
@@ -609,7 +609,7 @@ class WWWIndexRepository {
         $record["title"] = $q;
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         $sidebar_active = '';
@@ -1146,9 +1146,9 @@ class WWWIndexRepository {
         $me = $this->me;
 
         $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
 
         $item = K_Item::with(['owner'])->find($id);
         if($item)
@@ -1233,7 +1233,7 @@ class WWWIndexRepository {
         $record["item_id"] = $id;
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -1263,9 +1263,9 @@ class WWWIndexRepository {
         $me = $this->me;
 
         $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
 
         $user_id = $id;
 
@@ -1469,7 +1469,7 @@ class WWWIndexRepository {
         $record["object_id"] = $user_id;
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -1671,9 +1671,9 @@ class WWWIndexRepository {
 //        if(!$user_decode) return view('frontend.404');
 
         $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
 
         $user_id = $id;
 
@@ -1761,7 +1761,7 @@ class WWWIndexRepository {
         $record["object_id"] = $user_id;
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -4290,9 +4290,9 @@ class WWWIndexRepository {
         else $me_id = 0;
 
         $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
 
         $record_module = isset($post_data["record_module"]) ? $post_data["record_module"] : 0;
         $page_type = isset($post_data["page_type"]) ? $post_data["page_type"] : 0;
@@ -4312,7 +4312,7 @@ class WWWIndexRepository {
         $record["object_id"] = $user_id;
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         if($page_type == 1)
