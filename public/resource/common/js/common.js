@@ -1,7 +1,7 @@
 $(function() {
 
     // 监听鼠标移动事件
-    $(document).on("mousewheel DOMMouseScroll", function (event) {
+    $(document).on("mousewheel DOMMouseScroll touchmove", function (event) {
 
         var $wheelDelta = event.originalEvent.wheelDelta;
         var delta = (event.originalEvent.wheelDelta && (event.originalEvent.wheelDelta > 0 ? 1 : -1)) ||  // chrome & ie
