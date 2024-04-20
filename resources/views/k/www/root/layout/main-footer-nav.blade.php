@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <a class="aui-footer-list {{ $menu_active_by_follow or '' }}" href="{{ url('/mine/my-follow') }}">
+    <a class="aui-footer-list {{ $menu_active_for_my_follow or '' }}" href="{{ url('/mine/my-follow') }}">
         <div class="">
             <i class="fa fa-cc"></i>
             <p class="mt-1">名片夹</p>
