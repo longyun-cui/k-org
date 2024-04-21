@@ -80,11 +80,11 @@
                     <span> • 访问 {{ $u->visit_num }}</span>
                 </div>
 
-                @if(!empty($data->contact_phone))
+                @if(!empty($u->contact_phone))
                     <li class="list-group-item">
                         <i class="fa fa-phone text-primary"></i>
                         <span class="text-muted">
-                            <a href="tel:{{ $data->contact_phone or '' }}">{{ $data->contact_phone or '暂无' }}</a>
+                            <a href="tel:{{ $u->contact_phone or '' }}">{{ $u->contact_phone or '暂无' }}</a>
                         </span>
                     </li>
                 @endif
