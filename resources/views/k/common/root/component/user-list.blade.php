@@ -81,12 +81,10 @@
                 </div>
 
                 @if(!empty($u->contact_phone))
-                    <li class="list-group-item">
-                        <i class="fa fa-phone text-primary"></i>
-                        <span class="text-muted">
-                            <a href="tel:{{ $u->contact_phone or '' }}">{{ $u->contact_phone or '暂无' }}</a>
-                        </span>
-                    </li>
+                    <div class="item-row item-info-row">
+                        <i class="fa fa-envelope text-primary" style="width:16px;"></i>
+                        <span class="text-muted">{{ $u->contact_phone or '' }}</span>
+                    </div>
                 @endif
                 {{--Email--}}
                 @if(!empty($u->email))
