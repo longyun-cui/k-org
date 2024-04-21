@@ -28,25 +28,20 @@
 
         {{--@include(env('TEMPLATE_K_WWW').'component.left-tag')--}}
 
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-{{--                <li class="{{ $menu_active_for_root or '' }}"><a href="/" data-toggle="tab-">首页</a></li>--}}
-{{--                <li class="{{ $menu_active_for_activity or '' }}"><a href="/?type=activity" data-toggle="tab-">只看活动</a></li>--}}
-{{--                <li class="{{ $menu_active_for_my_focus or '' }}"><a href="/?type=my-focus" data-toggle="tab-">我的关注</a></li>--}}
-{{--                <li class="{{ $menu_active_for_organization_list or '' }}"><a href="/organization-list" data-toggle="tab-">组织机构</a></li>--}}
-            </ul>
-            <div class="tab-content" style="width:100%; padding:10px 0;float:left;">
-                <div class="active tab-pane" id="all">
-                    @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
-                    {!! $user_list->links() !!}
-                </div>
-                {{--<div class="tab-pane" id="timeline">--}}
-                {{--</div>--}}
 
-                {{--<div class="tab-pane" id="settings">--}}
-                {{--</div>--}}
+        {{--注册新组织--}}
+        <div class="main-body-section main-body-center-section section-wrapper page-item">
+            <div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px">
+                <div class="panel-default box-default item-entity-container text-center">
+                    <div><a href="{{ url(env('DOMAIN_WWW').'/org-register') }}">注册一个社群组织</a></div>
+                </div>
             </div>
         </div>
+
+
+        @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
+        {!! $user_list->links() !!}
+
 
     </div>
 
