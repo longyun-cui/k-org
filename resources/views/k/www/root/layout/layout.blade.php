@@ -172,7 +172,8 @@ desired effect
 
 {{--<!-- AdminLTE App -->--}}
 {{--<script src="/AdminLTE/dist/js/app.min.js"></script>--}}
-<script src="{{ asset('/AdminLTE/dist/js/app.min.js') }}"></script>
+<script src="{{ asset('/AdminLTE/dist/js/app.js') }}"></script>
+{{--<script src="{{ asset('/AdminLTE/dist/js/app.min.js') }}"></script>--}}
 
 {{--<script src="/AdminLTE/plugins/iCheck/icheck.min.js"></script>--}}
 {{--<script src="https://cdn.bootcdn.net/iCheck/1.0.2/icheck.min.js"></script>--}}

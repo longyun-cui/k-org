@@ -264,14 +264,17 @@ function _init() {
       //Set the min-height of the content and sidebar based on the
       //the height of the document.
       if ($("body").hasClass("fixed")) {
-        $(".content-wrapper, .right-side").css('min-height', window_height - footer_height);
+        console.log(1);
+        $(".content-wrapper, .right-side").css('min-height', window_height - footer_height - 55);
       } else {
         var postSetWidth;
         if (window_height >= sidebar_height) {
-          $(".content-wrapper, .right-side").css('min-height', window_height - neg);
+          console.log(2);
+          $(".content-wrapper, .right-side").css('min-height', window_height - neg - 55);
           postSetWidth = window_height - neg;
         } else {
-          $(".content-wrapper, .right-side").css('min-height', sidebar_height);
+          console.log(3);
+          $(".content-wrapper, .right-side").css('min-height', sidebar_height - 55);
           postSetWidth = sidebar_height;
         }
 
