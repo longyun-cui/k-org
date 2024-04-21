@@ -80,6 +80,14 @@
                     <span> • 访问 {{ $u->visit_num }}</span>
                 </div>
 
+                @if(!empty($data->contact_phone))
+                    <li class="list-group-item">
+                        <i class="fa fa-phone text-primary"></i>
+                        <span class="text-muted">
+                            <a href="tel:{{ $data->contact_phone or '' }}">{{ $data->contact_phone or '暂无' }}</a>
+                        </span>
+                    </li>
+                @endif
                 {{--Email--}}
                 @if(!empty($u->email))
                     <div class="item-row item-info-row">
