@@ -82,7 +82,7 @@
 
                 @if(!empty($u->contact_phone))
                     <div class="item-row item-info-row">
-                        <i class="fa fa-envelope text-primary" style="width:16px;"></i>
+                        <i class="fa fa-phone text-primary" style="width:16px;"></i>
                         <span class="text-muted">{{ $u->contact_phone or '' }}</span>
                     </div>
                 @endif
