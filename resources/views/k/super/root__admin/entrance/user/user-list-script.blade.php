@@ -372,7 +372,7 @@
             var $that = $(this);
             $('.info-text-set-title').html($that.attr("data-name"));
             $('.info-text-set-column-name').html($that.attr("data-column-name"));
-            $('input[name=info-text-set-item-id]').val($that.attr("data-id"));
+            $('input[name=info-text-set-user-id]').val($that.attr("data-id"));
             $('input[name=info-text-set-column-key]').val($that.attr("data-key"));
             $('input[name=info-text-set-operate-type]').val($that.attr('data-operate-type'));
             if($that.attr('data-text-type') == "textarea")
@@ -420,11 +420,11 @@
             // });
 
             $.post(
-                "{{ url('/department/department-info-text-set') }}",
+                "{{ url('/admin/user/user-info-text-set') }}",
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     operate: $('input[name="info-text-set-operate"]').val(),
-                    item_id: $('input[name="info-text-set-item-id"]').val(),
+                    user_id: $('input[name="info-text-set-user-id"]').val(),
                     operate_type: $('input[name="info-text-set-operate-type"]').val(),
                     column_key: $column_key,
                     column_value: $column_value,
@@ -460,7 +460,7 @@
             $('.info-time-set-title').html($that.attr("data-name"));
             $('.info-time-set-column-name').html($that.attr("data-column-name"));
             $('input[name=info-time-set-operate-type]').val($that.attr('data-operate-type'));
-            $('input[name=info-time-set-item-id]').val($that.attr("data-id"));
+            $('input[name=info-time-set-user-id]').val($that.attr("data-id"));
             $('input[name=info-time-set-column-key]').val($that.attr("data-key"));
             $('input[name=info-time-set-time-type]').val($that.attr('data-time-type'));
             if($that.attr('data-time-type') == "datetime")
@@ -509,12 +509,12 @@
             // });
 
             $.post(
-                "{{ url('/department/department-info-text-set') }}",
-                        {{--"{{ url('/department/department-info-time-set') }}",--}}
+                "{{ url('/admin/user/user-info-text-set') }}",
+                        {{--"{{ url('/admin/user/user-info-time-set') }}",--}}
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     operate: $('input[name="info-time-set-operate"]').val(),
-                    item_id: $('input[name="info-time-set-item-id"]').val(),
+                    user_id: $('input[name="info-time-set-user-id"]').val(),
                     operate_type: $('input[name="info-time-set-operate-type"]').val(),
                     column_key: $column_key,
                     column_value: $column_value,
@@ -552,7 +552,7 @@
             var $that = $(this);
             $('.info-select-set-title').html($that.attr("data-id"));
             $('.info-select-set-column-name').html($that.attr("data-name"));
-            $('input[name=info-select-set-item-id]').val($that.attr("data-id"));
+            $('input[name=info-select-set-user-id]').val($that.attr("data-id"));
             $('input[name=info-select-set-column-key]').val($that.attr("data-key"));
 //            $('select[name=info-select-set-column-value]').find("option").eq(0).prop("selected",true);
 //            $('select[name=info-select-set-column-value]').find("option").eq(0).attr("selected","selected");
@@ -562,7 +562,7 @@
             $('input[name=info-select-set-operate-type]').val($that.attr('data-operate-type'));
 
 
-            $('select[name=info-select-set-column-value]').removeClass('select2-department').removeClass('select2-client');
+            $('select[name=info-select-set-column-value]').removeClass('select2-user').removeClass('select2-client');
             if($that.attr("data-key") == "receipt_status")
             {
                 var $option_html = $('#receipt_status-option-list').html();
@@ -606,9 +606,9 @@
             var $that = $(this);
             $('.info-select-set-title').html($that.attr("data-id"));
             $('.info-select-set-column-name').html($that.attr("data-name"));
-            $('input[name=info-select-set-item-id]').val($that.attr("data-id"));
+            $('input[name=info-select-set-user-id]').val($that.attr("data-id"));
             $('input[name=info-select-set-column-key]').val($that.attr("data-key"));
-            $('input[name=info-select-set-column-key]').prop('data-department-type',$that.attr("data-department-type"));
+            $('input[name=info-select-set-column-key]').prop('data-user-type',$that.attr("data-user-type"));
 //            $('select[name=info-select-set-column-value]').find("option").eq(0).prop("selected",true);
 //            $('select[name=info-select-set-column-value]').find("option").eq(0).attr("selected","selected");
             $('select[name=info-select-set-column-value]').find('option').eq(0).val($that.attr("data-value"));
@@ -679,7 +679,7 @@
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     operate: $('input[name="info-select-set-operate"]').val(),
-                    user_id: $('input[name="info-select-set-item-id"]').val(),
+                    user_id: $('input[name="info-select-set-user-id"]').val(),
                     operate_type: $('input[name="info-select-set-operate-type"]').val(),
                     column_key: $column_key,
                     column_value: $column_value,

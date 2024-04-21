@@ -176,7 +176,7 @@
         <div class="box- box-info- form-container">
 
             <div class="box-header with-border margin-top-16px margin-bottom-16px">
-                <h3 class="box-title">修改车辆【<span class="info-text-set-title"></span>】</h3>
+                <h3 class="box-title">修改【<span class="info-text-set-title"></span>】</h3>
                 <div class="box-tools pull-right">
                 </div>
             </div>
@@ -185,8 +185,8 @@
                 <div class="box-body">
 
                     {{ csrf_field() }}
-                    <input type="hidden" name="info-text-set-operate" value="item-user-info-text-set" readonly>
-                    <input type="hidden" name="info-text-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-text-set-operate" value="user-info-text-set" readonly>
+                    <input type="hidden" name="info-text-set-user-id" value="0" readonly>
                     <input type="hidden" name="info-text-set-operate-type" value="add" readonly>
                     <input type="hidden" name="info-text-set-column-key" value="" readonly>
 
@@ -229,9 +229,9 @@
                 <div class="box-body">
 
                     {{ csrf_field() }}
-                    <input type="hidden" name="info-time-set-operate" value="item-user-info-text-set" readonly>
+                    <input type="hidden" name="info-time-set-operate" value="user-info-text-set" readonly>
                     {{--<input type="hidden" name="info-time-set-operate" value="item-user-info-time-set" readonly>--}}
-                    <input type="hidden" name="info-time-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-time-set-user-id" value="0" readonly>
                     <input type="hidden" name="info-time-set-operate-type" value="add" readonly>
                     <input type="hidden" name="info-time-set-column-key" value="" readonly>
                     <input type="hidden" name="info-time-set-time-type" value="" readonly>
@@ -318,7 +318,7 @@
 
                     {{ csrf_field() }}
                     <input type="hidden" name="info-select-set-operate" value="user-info-option-set" readonly>
-                    <input type="hidden" name="info-select-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-select-set-user-id" value="0" readonly>
                     <input type="hidden" name="info-select-set-operate-type" value="add" readonly>
                     <input type="hidden" name="info-select-set-column-key" value="" readonly>
 
@@ -456,6 +456,28 @@
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.area_province + '-' + row.area_city + '-' + row.area_district;
+                        }
+                    },
+                    {
+                        "title": "标签",
+                        "data": "tag",
+                        "className": "",
+                        "width": "160px",
+                        "orderable": false,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-text-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','标签');
+                                $(nTd).attr('data-key','tag').attr('data-value',data);
+                                $(nTd).attr('data-column-name','标签');
+                                $(nTd).attr('data-text-type','text');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
+                        render: function(data, type, row, meta) {
+                            return data;
                         }
                     },
                     {

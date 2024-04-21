@@ -1002,35 +1002,35 @@ class SuperAdminRepository {
             else
             {
                 // 需要记录(本人修改已发布 || 他人修改)
-                if($me->id == $item->creator_id && $item->is_published == 0 && false)
-                {
-                }
-                else
-                {
-                    $record = new K_Record;
-
-                    $record_data["ip"] = Get_IP();
-                    $record_data["record_object"] = 21;
-                    $record_data["record_category"] = 11;
-                    $record_data["record_type"] = 1;
-                    $record_data["creator_id"] = $me->id;
-                    $record_data["item_id"] = $id;
-                    $record_data["operate_object"] = 41;
-                    $record_data["operate_category"] = 1;
-
-                    if($operate_type == "add") $record_data["operate_type"] = 1;
-                    else if($operate_type == "edit") $record_data["operate_type"] = 11;
-
-                    $record_data["column_name"] = $column_key;
-                    $record_data["before"] = $before;
-                    $record_data["after"] = $column_value;
-
-                    $bool_1 = $record->fill($record_data)->save();
-                    if($bool_1)
-                    {
-                    }
-                    else throw new Exception("insert--record--fail");
-                }
+//                if($me->id == $item->creator_id && $item->is_published == 0 && false)
+//                {
+//                }
+//                else
+//                {
+//                    $record = new K_Record;
+//
+//                    $record_data["ip"] = Get_IP();
+//                    $record_data["record_object"] = 21;
+//                    $record_data["record_category"] = 11;
+//                    $record_data["record_type"] = 1;
+//                    $record_data["creator_id"] = $me->id;
+//                    $record_data["item_id"] = $id;
+//                    $record_data["operate_object"] = 41;
+//                    $record_data["operate_category"] = 1;
+//
+//                    if($operate_type == "add") $record_data["operate_type"] = 1;
+//                    else if($operate_type == "edit") $record_data["operate_type"] = 11;
+//
+//                    $record_data["column_name"] = $column_key;
+//                    $record_data["before"] = $before;
+//                    $record_data["after"] = $column_value;
+//
+//                    $bool_1 = $record->fill($record_data)->save();
+//                    if($bool_1)
+//                    {
+//                    }
+//                    else throw new Exception("insert--record--fail");
+//                }
             }
 
             DB::commit();
@@ -1093,36 +1093,36 @@ class SuperAdminRepository {
             else
             {
                 // 需要记录(本人修改已发布 || 他人修改)
-                if($me->id == $item->creator_id && $item->is_published == 0 && false)
-                {
-                }
-                else
-                {
-                    $record = new K_Record;
-
-                    $record_data["ip"] = Get_IP();
-                    $record_data["record_object"] = 21;
-                    $record_data["record_category"] = 11;
-                    $record_data["record_type"] = 1;
-                    $record_data["creator_id"] = $me->id;
-                    $record_data["item_id"] = $id;
-                    $record_data["operate_object"] = 41;
-                    $record_data["operate_category"] = 1;
-
-                    if($operate_type == "add") $record_data["operate_type"] = 1;
-                    else if($operate_type == "edit") $record_data["operate_type"] = 11;
-
-                    $record_data["column_type"] = $time_type;
-                    $record_data["column_name"] = $column_key;
-                    $record_data["before"] = $before;
-                    $record_data["after"] = strtotime($column_value);
-
-                    $bool_1 = $record->fill($record_data)->save();
-                    if($bool_1)
-                    {
-                    }
-                    else throw new Exception("insert--record--fail");
-                }
+//                if($me->id == $item->creator_id && $item->is_published == 0 && false)
+//                {
+//                }
+//                else
+//                {
+//                    $record = new K_Record;
+//
+//                    $record_data["ip"] = Get_IP();
+//                    $record_data["record_object"] = 21;
+//                    $record_data["record_category"] = 11;
+//                    $record_data["record_type"] = 1;
+//                    $record_data["creator_id"] = $me->id;
+//                    $record_data["item_id"] = $id;
+//                    $record_data["operate_object"] = 41;
+//                    $record_data["operate_category"] = 1;
+//
+//                    if($operate_type == "add") $record_data["operate_type"] = 1;
+//                    else if($operate_type == "edit") $record_data["operate_type"] = 11;
+//
+//                    $record_data["column_type"] = $time_type;
+//                    $record_data["column_name"] = $column_key;
+//                    $record_data["before"] = $before;
+//                    $record_data["after"] = strtotime($column_value);
+//
+//                    $bool_1 = $record->fill($record_data)->save();
+//                    if($bool_1)
+//                    {
+//                    }
+//                    else throw new Exception("insert--record--fail");
+//                }
             }
 
             DB::commit();
