@@ -78,9 +78,9 @@
                         <select class="form-control form-filter" name="open_app" style="width:80px;">
                             <option value ="0">APP</option>
                             <option value ="1">默认</option>
-                            <option value ="WeChat">WeChat</option>
+                            <option value ="WeChat">微信</option>
                             <option value ="QQ">QQ</option>
-                            <option value ="Alipay">Alipay</option>
+                            <option value ="Alipay">阿里巴巴</option>
                             <option value ="Others">其他</option>
                         </select>
 
@@ -367,7 +367,8 @@
                         render: function(data, type, row, meta) {
                             if(data == 1) return '<small class="btn-xs bg-primary">移动端</small>';
                             else if(data == 2) return '<small class="btn-xs bg-olive">PC端</small>';
-                            else return '<small class="btn-xs bg-black">Error</small>';
+                            // else return '<small class="btn-xs bg-black">Error</small>';
+                            else return 'Error';
                         }
                     },
                     {
@@ -377,9 +378,10 @@
                         "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
-                            if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            if(data == "Unknown") return '未知';
                             else if(data == "Android") return '<small class="btn-xs bg-primary">安卓</small>';
-                            else if(data == "iPhone") return '<small class="btn-xs bg-olive">苹果</small>';
+                            else if(data == "iPhone") return '<small class="btn-xs bg-olive">iPhone</small>';
                             else if(data == "iPad") return '<small class="btn-xs bg-olive">iPad</small>';
                             else if(data == "Mac") return '<small class="btn-xs bg-olive">Mac</small>';
                             else if(data == "Windows") return '<small class="btn-xs bg-purple">微软</small>';
@@ -393,7 +395,11 @@
                         "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
-                            if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            if(data == "Unknown") return '未知';
+                            else if(data == "Chrome") return '<small class="btn-xs bg-olive">Chrome</small>';
+                            else if(data == "Firefox") return '<small class="btn-xs bg-orange"Firefox</small>';
+                            else if(data == "Safari") return '<small class="btn-xs bg-primary">Safari</small>';
                             else return data;
                         }
                     },
@@ -404,7 +410,8 @@
                         "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
-                            if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            if(data == "Unknown") return '未知';
                             else if(data == "WeChat") return '<small class="btn-xs bg-olive">微信</small>';
                             else if(data == "QQ") return '<small class="btn-xs bg-orange">QQ</small>';
                             else if(data == "Alipay") return '<small class="btn-xs bg-primary">支付宝</small>';
