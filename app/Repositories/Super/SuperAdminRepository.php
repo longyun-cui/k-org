@@ -4205,7 +4205,9 @@ class SuperAdminRepository {
                 $record = K_Record::find($v->id);
                 $record->ip_info = $ip_info['adcode']['o'];
                 $record->save();
+                $list[$k]->ip_info = $ip_info['adcode']['o'];
             }
+
 //            $list[$k]->encode_id = encode($v->id);
 //            $list[$k]->description = replace_blank($v->description);
 
