@@ -4198,7 +4198,7 @@ class SuperAdminRepository {
 
         foreach ($list as $k => $v)
         {
-            if(empty($v->ip_info))
+            if(!empty($v->ip) && empty($v->ip_info))
             {
                 $ip = $v->ip;
                 $ip_info = get_ip_info($ip);
