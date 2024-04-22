@@ -398,7 +398,7 @@
                             // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
                             if(data == "Unknown") return '未知';
                             else if(data == "Chrome") return '<small class="btn-xs bg-olive">Chrome</small>';
-                            else if(data == "Firefox") return '<small class="btn-xs bg-orange"Firefox</small>';
+                            else if(data == "Firefox") return '<small class="btn-xs bg-orange">Firefox</small>';
                             else if(data == "Safari") return '<small class="btn-xs bg-primary">Safari</small>';
                             else return data;
                         }
