@@ -335,7 +335,7 @@
                                 {
                                     return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/item/'+row.item.id+'">'+row.item.title+'</a>';
                                 }
-                                elses
+                                else
                                 {
                                     return "item.id="+row.item_id+"，该内容已删除。";
                                 }
