@@ -4013,10 +4013,53 @@ class SuperAdminRepository {
         $this->get_me();
         $me = $this->me;
 
-        return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-list')
-            ->with([
-                'sidebar_statistic_list_active'=>'active'
-            ]);
+
+        // 操作
+        if(!empty($post_data['record_type']))
+        {
+            if($post_data['record_type'] != '-1') $view_data['record_type'] = $post_data['record_type'];
+            else $view_data['record_type'] = '-1';
+        }
+        else $view_data['record_type'] = -1;
+
+        //设备
+        if(!empty($post_data['open_device_type']))
+        {
+            if($post_data['open_device_type'] != '-1') $view_data['open_device_type'] = $post_data['open_device_type'];
+            else $view_data['open_device_type'] = -1;
+        }
+        else $view_data['open_device_type'] = -1;
+
+        // 系统
+        if(!empty($post_data['open_system']))
+        {
+            if($post_data['open_system'] != '-1') $view_data['open_system'] = $post_data['open_system'];
+            else $view_data['open_system'] = -1;
+        }
+        else $view_data['open_system'] = -1;
+
+        // 浏览器
+        if(!empty($post_data['open_browser']))
+        {
+            if($post_data['open_browser'] != '-1') $view_data['open_browser'] = $post_data['open_browser'];
+            else $view_data['open_browser'] = -1;
+        }
+        else $view_data['open_browser'] = -1;
+
+        // APP
+        if(!empty($post_data['open_app']))
+        {
+            if($post_data['open_app'] != '-1') $view_data['open_app'] = $post_data['open_app'];
+            else $view_data['open_app'] = -1;
+        }
+        else $view_data['open_app'] = -1;
+
+
+        $view_data['sidebar_statistic_list_active'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_SUPER__ADMIN').'entrance.statistic.statistic-list';
+        return view($view_blade)
+            ->with($view_data);
     }
     // 【K】【内容】【全部】返回-列表-数据
     public function get_statistic_list_datatable($post_data)
@@ -4030,7 +4073,7 @@ class SuperAdminRepository {
 
         if(!empty($post_data['record_type']))
         {
-            if($post_data['record_type'] == "0")
+            if($post_data['record_type'] == "-1")
             {
             }
             else if(in_array($post_data['record_type'],[1,2,3]))
@@ -4057,7 +4100,7 @@ class SuperAdminRepository {
 
         if(!empty($post_data['open_device_type']))
         {
-            if($post_data['open_device_type'] == "0")
+            if($post_data['open_device_type'] == "-1")
             {
             }
             else if(in_array($post_data['open_system'],[1,2]))
@@ -4084,7 +4127,7 @@ class SuperAdminRepository {
 
         if(!empty($post_data['open_system']))
         {
-            if($post_data['open_system'] == "0")
+            if($post_data['open_system'] == "-1")
             {
             }
             else if($post_data['open_system'] == "1")
@@ -4115,7 +4158,7 @@ class SuperAdminRepository {
 
         if(!empty($post_data['open_browser']))
         {
-            if($post_data['open_browser'] == "0")
+            if($post_data['open_browser'] == "-1")
             {
             }
             else if($post_data['open_browser'] == "1")
@@ -4146,7 +4189,7 @@ class SuperAdminRepository {
 
         if(!empty($post_data['open_app']))
         {
-            if($post_data['open_app'] == "0")
+            if($post_data['open_app'] == "-1")
             {
             }
             else if($post_data['open_app'] == "1")

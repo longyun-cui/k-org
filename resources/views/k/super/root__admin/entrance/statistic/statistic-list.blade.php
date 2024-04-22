@@ -40,48 +40,48 @@
 
                         <input type="text" class="form-control form-filter item-search-keyup" name="title" placeholder="标题" />
 
-                        <select class="form-control form-filter" name="record_type" style="width:96px;">
-                            <option value ="0">操作</option>
-                            <option value ="1">访问</option>
-                            <option value ="2">分享</option>
-                            <option value ="3">查询</option>
-                            <option value ="Others">其他</option>
+                        <select class="form-control form-filter" name="record_type" style="width:100px;">
+                            <option value="-1">全部操作</option>
+                            <option value="1" @if($record_type == '1') selected="selected" @endif>访问</option>
+                            <option value="2" @if($record_type == '2') selected="selected" @endif>分享</option>
+                            <option value="3" @if($record_type == '3') selected="selected" @endif>查询</option>
+                            <option value="Others" @if($record_type == 'Others') selected="selected" @endif>其他</option>
                         </select>
 
-                        <select class="form-control form-filter" name="open_device_type" style="width:96px;">
-                            <option value ="0">设备</option>
-                            <option value ="1">移动端</option>
-                            <option value ="2">PC端</option>
-                            <option value ="Others">其他</option>
+                        <select class="form-control form-filter" name="open_device_type" style="width:100px;">
+                            <option value="-1">全部设备</option>
+                            <option value="1" @if($open_device_type == '1') selected="selected" @endif>移动端</option>
+                            <option value="2" @if($open_device_type == '2') selected="selected" @endif>PC端</option>
+                            <option value="Others" @if($open_device_type == 'Others') selected="selected" @endif>其他</option>
                         </select>
 
-                        <select class="form-control form-filter" name="open_system" style="width:96px;">
-                            <option value ="0">系统</option>
-                            <option value ="1">默认</option>
-                            <option value ="Android">Android</option>
-                            <option value ="iPhone">iPhone</option>
-                            <option value ="iPad">iPad</option>
-                            <option value ="Mac">Mac</option>
-                            <option value ="Windows">Windows</option>
-                            <option value ="Others">其他</option>
+                        <select class="form-control form-filter" name="open_system" style="width:100px;">
+                            <option value="-1">全部系统</option>
+                            <option value="1" @if($open_system == '1') selected="selected" @endif>默认</option>
+                            <option value="Android" @if($open_system == 'Android') selected="selected" @endif>Android</option>
+                            <option value="iPhone" @if($open_system == 'iPhone') selected="selected" @endif>iPhone</option>
+                            <option value="iPad" @if($open_system == 'iPad') selected="selected" @endif>iPad</option>
+                            <option value="Mac" @if($open_system == 'Mac') selected="selected" @endif>Mac</option>
+                            <option value="Windows" @if($open_system == 'Windows') selected="selected" @endif>Windows</option>
+                            <option value="Others" @if($open_system == 'Others') selected="selected" @endif>其他</option>
                         </select>
 
                         <select class="form-control form-filter" name="open_browser" style="width:80px;">
-                            <option value ="0">浏览器</option>
-                            <option value ="1">默认</option>
-                            <option value ="Chrome">Chrome</option>
-                            <option value ="Firefox">Firefox</option>
-                            <option value ="Safari">Safari</option>
-                            <option value ="Others">其他</option>
+                            <option value="-1">全部浏览器</option>
+                            <option value="1" @if($open_browser == '1') selected="selected" @endif>默认</option>
+                            <option value="Chrome" @if($open_browser == 'Chrome') selected="selected" @endif>Chrome</option>
+                            <option value="Firefox" @if($open_browser == 'Firefox') selected="selected" @endif>Firefox</option>
+                            <option value="Safari" @if($open_browser == 'Safari') selected="selected" @endif>Safari</option>
+                            <option value="Others" @if($open_browser == 'Others') selected="selected" @endif>其他</option>
                         </select>
 
                         <select class="form-control form-filter" name="open_app" style="width:80px;">
-                            <option value ="0">APP</option>
-                            <option value ="1">默认</option>
-                            <option value ="WeChat">微信</option>
-                            <option value ="QQ">QQ</option>
-                            <option value ="Alipay">阿里巴巴</option>
-                            <option value ="Others">其他</option>
+                            <option value="-1">全部APP</option>
+                            <option value="1" @if($open_app == '1') selected="selected" @endif>默认</option>
+                            <option value="WeChat" @if($open_app == 'WeChat') selected="selected" @endif>微信</option>
+                            <option value="QQ" @if($open_app == 'QQ') selected="selected" @endif>QQ</option>
+                            <option value="Alipay" @if($open_app == 'Alipay') selected="selected" @endif>阿里巴巴</option>
+                            <option value="Others" @if($open_app == 'Others') selected="selected" @endif>其他</option>
                         </select>
 
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
@@ -115,11 +115,11 @@
                         <div class="input-group">
                             <span class="input-group-addon"><input type="checkbox" id="check-review-all"></span>
                             <select name="bulk-operat-status" class="form-control form-filter">
-                                <option value ="0">请选择</option>
-                                <option value ="待审核">待审核</option>
-                                <option value ="优化中">优化中</option>
-                                <option value ="合作停">合作停</option>
-                                <option value ="">被拒绝</option>
+                                <option value="0">请选择</option>
+                                <option value="待审核">待审核</option>
+                                <option value="优化中">优化中</option>
+                                <option value="合作停">合作停</option>
+                                <option value="">被拒绝</option>
                             </select>
                             <span class="input-group-addon btn btn-default" id="operat-bulk-submit"><i class="fa fa-check"></i> 批量操作</span>
                             <span class="input-group-addon btn btn-default" id="delete-bulk-submit"><i class="fa fa-trash-o"></i> 批量删除</span>
@@ -485,45 +485,34 @@
                         cell.innerHTML =  startIndex + i + 1;
                     });
 
-                    ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
-                    $("a.verify").click(function(event){
-                        event.preventDefault();
-                        var node = $(this);
-                        var tr = node.closest('tr');
-                        var nickname = tr.find('span.nickname').text();
-                        var cert_name = tr.find('span.certificate_type_name').text();
-                        var action = node.attr('data-action');
-                        var certificate_id = node.attr('data-id');
-                        var action_name = node.text();
+                    var $obj = new Object();
+                    if($('input[name="record-id"]').val())  $obj.record_id = $('input[name="record-id"]').val();
 
-                        var tpl = "{{trans('labels.crc.verify_user_certificate_tpl')}}";
-                        layer.open({
-                            'title': '警告',
-                            content: tpl
-                                .replace('@action_name', action_name)
-                                .replace('@nickname', nickname)
-                                .replace('@certificate_type_name', cert_name),
-                            btn: ['Yes', 'No'],
-                            yes: function(index) {
-                                layer.close(index);
-                                $.post(
-                                    '/admin/medsci/certificate/user/verify',
-                                    {
-                                        action: action,
-                                        id: certificate_id,
-                                        _token: '{{csrf_token()}}'
-                                    },
-                                    function(json){
-                                        if(json['response_code'] == 'success') {
-                                            layer.msg('操作成功!', {time: 3500});
-                                            ajax_datatable.ajax.reload();
-                                        } else {
-                                            layer.alert(json['response_data'], {time: 10000});
-                                        }
-                                    }, 'json');
-                            }
-                        });
-                    });
+                    if($('select[name="record_type"]').val() != '-1')  $obj.record_type = $('select[name="record_type"]').val();
+                    if($('select[name="open_device_type"]').val() != '-1')  $obj.open_device_type = $('select[name="open_device_type"]').val();
+                    if($('select[name="open_system"]').val() != '-1')  $obj.open_system = $('select[name="open_system"]').val();
+                    if($('select[name="open_browser"]').val() != '-1')  $obj.open_browser = $('select[name="open_browser"]').val();
+                    if($('select[name="open_app"]').val() != '-1')  $obj.open_app = $('select[name="open_app"]').val();
+
+                    var $page_length = this.api().context[0]._iDisplayLength; // 当前每页显示多少
+                    if($page_length != 50) $obj.length = $page_length;
+                    var $page_start = this.api().context[0]._iDisplayStart; // 当前页开始
+                    var $pagination = ($page_start / $page_length) + 1; //得到页数值 比页码小1
+                    if($pagination > 1) $obj.page = $pagination;
+
+
+                    if(JSON.stringify($obj) != "{}")
+                    {
+                        var $url = url_build('',$obj);
+                        history.replaceState({page: 1}, "", $url);
+                    }
+                    else
+                    {
+                        $url = "{{ url('/admin/statistic/statistic-list') }}";
+                        if(window.location.search) history.replaceState({page: 1}, "", $url);
+                    }
+
+
                 },
                 "language": { url: '/common/dataTableI18n' },
             });
