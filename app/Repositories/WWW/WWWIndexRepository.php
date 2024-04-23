@@ -259,8 +259,8 @@ class WWWIndexRepository {
 
         $ip = Get_IP();
         $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+        $ip_province = $ip_info['adcode']['p'];
+        $ip_city = $ip_info['adcode']['c'];
 
 
         $item_query = K_Item::with(['owner']);

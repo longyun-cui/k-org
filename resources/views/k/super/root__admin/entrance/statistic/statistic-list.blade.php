@@ -213,22 +213,22 @@
                 "order": [],
                 "orderCellsTop": true,
                 "columns": [
-                    {
-                        "title": "选择",
-                        "data": "id",
-                        "width": "40px",
-                        'orderable': false,
-                        render: function(data, type, row, meta) {
-                            return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
-                        }
-                    },
-                    {
-                        "title": "序号",
-                        "data": null,
-                        "width": "40px",
-                        "targets": 0,
-                        'orderable': false
-                    },
+                    // {
+                    //     "title": "选择",
+                    //     "data": "id",
+                    //     "width": "40px",
+                    //     'orderable': false,
+                    //     render: function(data, type, row, meta) {
+                    //         return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
+                    //     }
+                    // },
+                    // {
+                    //     "title": "序号",
+                    //     "data": null,
+                    //     "width": "40px",
+                    //     "targets": 0,
+                    //     'orderable': false
+                    // },
                     {
                         "title": "ID",
                         "data": "id",
@@ -480,10 +480,10 @@
                 ],
                 "drawCallback": function (settings) {
 
-                    let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
-                    this.api().column(1).nodes().each(function(cell, i) {
-                        cell.innerHTML =  startIndex + i + 1;
-                    });
+                    // let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    // this.api().column(1).nodes().each(function(cell, i) {
+                    //     cell.innerHTML =  startIndex + i + 1;
+                    // });
 
                     var $obj = new Object();
                     if($('input[name="record-id"]').val())  $obj.record_id = $('input[name="record-id"]').val();
