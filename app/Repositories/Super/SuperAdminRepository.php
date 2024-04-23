@@ -151,20 +151,23 @@ class SuperAdminRepository {
     // 【基本信息】返回视图
     public function view_info_index()
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.info.index')->with(['data'=>$me]);
     }
 
     // 【基本信息】返回-编辑-视图
     public function view_info_edit()
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.info.edit')->with(['data'=>$me]);
     }
     // 【基本信息】保存数据
     public function operate_info_save($post_data)
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
 
         // 启动数据库事务
         DB::beginTransaction();
@@ -219,7 +222,8 @@ class SuperAdminRepository {
     // 【密码】返回修改视图
     public function view_info_password_reset()
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         return view(env('TEMPLATE_K_SUPER__ADMIN').'entrance.info.password-reset')->with(['data'=>$me]);
     }
     // 【密码】保存数据
@@ -247,7 +251,8 @@ class SuperAdminRepository {
 
         if($password_new == $password_confirm)
         {
-            $me = Auth::guard('admin')->user();
+            $this->get_me();
+            $me = $this->me;
             if(password_check($password_pre,$me->password))
             {
                 $me->password = password_encode($password_new);
@@ -295,7 +300,8 @@ class SuperAdminRepository {
         $id = $post_data["id"];
         if(intval($id) !== 0 && !$id) return response_error([],"参数ID有误！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($me->user_type != 0) return response_error([],"你没有操作权限");
 
         $password = $post_data["user-password"];
@@ -339,7 +345,8 @@ class SuperAdminRepository {
     // 【select2】
     public function operate_business_select2_user($post_data)
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if(empty($post_data['keyword']))
         {
             $list =K_User::select(['id','username as text'])
@@ -737,7 +744,8 @@ class SuperAdminRepository {
     // 【用户】【组织】删除
     public function operate_user_user_delete($post_data)
     {
-        $mine = Auth::guard('admin')->user();
+        $this->get_me();
+        $mine = $this->me;
         if($mine->usergroup != "Manage") return response_error([],"你没有操作权限");
 
         $id = $post_data["id"];
@@ -878,8 +886,9 @@ class SuperAdminRepository {
         $user = K_User::find($id);
         if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
-        if($me->user_category != 0) return response_error([],"你没有操作权限！");
+        $this->get_me();
+        $me = $this->me;
+//        if($me->user_category != 0) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
         DB::beginTransaction();
@@ -928,7 +937,8 @@ class SuperAdminRepository {
         $user = K_User::find($id);
         if(!$user) return response_error([],"该用户不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($me->user_category != 0) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
@@ -1914,7 +1924,8 @@ class SuperAdminRepository {
     // 【ITEM】返回-添加-视图
     public function view_item_item_create($post_data)
     {
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if(!in_array($me->user_type,[0,1])) return view(env('TEMPLATE_K_SUPER__ADMIN').'errors.404');
 
         $item_type = 'item';
@@ -2042,7 +2053,8 @@ class SuperAdminRepository {
             return response_error([],$messages->first());
         }
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if(!in_array($me->user_type,[0,1])) return response_error([],"你没有操作权限！");
 
 
@@ -2202,7 +2214,8 @@ class SuperAdminRepository {
         $item = K_Item::find($id);
         if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
 
         return response_success($item,"");
@@ -2233,7 +2246,8 @@ class SuperAdminRepository {
         $item = K_Item::find($id);
         if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
@@ -2325,7 +2339,8 @@ class SuperAdminRepository {
         $item = K_Item::withTrashed()->find($id);
         if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
@@ -2382,7 +2397,8 @@ class SuperAdminRepository {
         $item = K_Item::withTrashed()->find($id);
         if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($me->user_category != 0) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
@@ -2474,7 +2490,8 @@ class SuperAdminRepository {
         $item = K_Item::find($id);
         if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($item->owner_id != $me->id) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
@@ -2519,7 +2536,8 @@ class SuperAdminRepository {
         }
 //        dd($post_data);
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($me->usergroup != "Manage") return response_error([],"你没有操作权限！");
 
         $keyword_status = $post_data["bulk_keyword_status"];
@@ -2617,7 +2635,8 @@ class SuperAdminRepository {
             return response_error([],$messages->first());
         }
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($me->usergroup != "Manage") return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
@@ -2683,7 +2702,8 @@ class SuperAdminRepository {
         $item = K_Item::find($id);
         if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($me->user_category != 0) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
@@ -2733,7 +2753,8 @@ class SuperAdminRepository {
         $item = K_Item::find($id);
         if(!$item) return response_error([],"该内容不存在，刷新页面重试！");
 
-        $me = Auth::guard('admin')->user();
+        $this->get_me();
+        $me = $this->me;
         if($me->user_category != 0) return response_error([],"你没有操作权限！");
 
         // 启动数据库事务
