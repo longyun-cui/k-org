@@ -316,6 +316,22 @@
                 time: 0
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
+
+                    var index1 = layer.load(1, {
+                        shade: [0.3, '#fff'],
+                        content: '<span class="loadtip">正在操作…</span>',
+                        success: function (layer) {
+                            layer.find('.layui-layer-content').css({
+                                'padding-top': '40px',
+                                'width': '120px',
+                            });
+                            layer.find('.loadtip').css({
+                                'font-size':'20px',
+                                'margin-left':'-18px'
+                            });
+                        }
+                    });
+
                     $.post(
                         "{{ url('/admin/user/user-admin-enable') }}",
                         {
@@ -325,6 +341,7 @@
                         },
                         function(data){
                             layer.close(index);
+                            layer.closeAll('loading');
                             if(!data.success) layer.msg(data.msg);
                             else
                             {
@@ -332,6 +349,17 @@
                             }
                         },
                         'json'
+                    )
+                    .error(
+                        function(xhr, errorText, errorType) {
+                            layer.close(index);
+                            layer.closeAll('loading');
+                            layer.msg(errorText);
+                            console.log(xhr);
+                            console.log(errorText);
+                            console.log(errorType);
+                        },
+                        "json"
                     );
                 }
             });
@@ -343,6 +371,22 @@
                 time: 0
                 ,btn: ['确定', '取消']
                 ,yes: function(index){
+
+                    var index1 = layer.load(1, {
+                        shade: [0.3, '#fff'],
+                        content: '<span class="loadtip">正在操作…</span>',
+                        success: function (layer) {
+                            layer.find('.layui-layer-content').css({
+                                'padding-top': '40px',
+                                'width': '120px',
+                            });
+                            layer.find('.loadtip').css({
+                                'font-size':'20px',
+                                'margin-left':'-18px'
+                            });
+                        }
+                    });
+
                     $.post(
                         "{{ url('/admin/user/user-admin-disable') }}",
                         {
@@ -352,6 +396,7 @@
                         },
                         function(data){
                             layer.close(index);
+                            layer.closeAll('loading');
                             if(!data.success) layer.msg(data.msg);
                             else
                             {
@@ -359,7 +404,19 @@
                             }
                         },
                         'json'
+                    )
+                    .error(
+                        function(xhr, errorText, errorType) {
+                            layer.close(index);
+                            layer.closeAll('loading');
+                            layer.msg(errorText);
+                            console.log(xhr);
+                            console.log(errorText);
+                            console.log(errorType);
+                        },
+                        "json"
                     );
+
                 }
             });
         });

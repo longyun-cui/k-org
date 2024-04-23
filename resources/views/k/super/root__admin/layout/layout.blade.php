@@ -24,11 +24,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Font Awesome -->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">--}}
     {{--<link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">--}}
-    <link rel="stylesheet" href="{{ asset('/lib/css/font-awesome-4.5.0.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/font-awesome-4.5.0.min.css') }}">
     <!-- Ionicons -->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">--}}
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">--}}
-    <link rel="stylesheet" href="{{ asset('/lib/css/ionicons-2.0.1.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/ionicons-2.0.1.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="/AdminLTE/dist/css/AdminLTE.min.css">
     {{--<link href="https://cdn.bootcss.com/admin-lte/2.3.11/css/AdminLTE.min.css" rel="stylesheet">--}}
@@ -49,29 +49,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{--<link href="https://cdn.bootcss.com/bootstrap-modal/2.2.6/css/bootstrap-modal.min.css" rel="stylesheet">--}}
 
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/css/fileinput.min.css">--}}
-    <link rel="stylesheet" href="{{ asset('/lib/css/bootstrap-fileinput-4.4.8.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/lib/css/fileinput-only.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/bootstrap-fileinput-4.4.8.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/fileinput-only.css') }}">
 
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/iCheck/1.0.2/skins/all.css">--}}
-    {{--<link rel="stylesheet" href="{{ asset('/lib/css/iCheck-1.0.2-skins-all.css') }}">--}}
+    {{--<link rel="stylesheet" href="{{ asset('/resource/component/css/iCheck-1.0.2-skins-all.css') }}">--}}
     <link rel="stylesheet" href="/AdminLTE/plugins/iCheck/all.css">
 
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">--}}
     {{--<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">--}}
-    <link rel="stylesheet" href="{{ asset('/lib/css/bootstrap-datetimepicker-4.17.47.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/lib/css/bootstrap-datepicker-1.9.0.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/bootstrap-datetimepicker-4.17.47.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/bootstrap-datepicker-1.9.0.min.css') }}">
 
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css">--}}
-    <link rel="stylesheet" href="{{ asset('/lib/css/bootstrap-switch-3.3.4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/bootstrap-switch-3.3.4.min.css') }}">
 
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/4.2.2/css/swiper.min.css">--}}
-    <link rel="stylesheet" href="{{ asset('/lib/css/swiper-4.2.2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/swiper-4.2.2.min.css') }}">
 
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/lightcase/2.5.0/css/lightcase.min.css">--}}
     <link rel="stylesheet" href="{{ asset('/resource/component/css/lightcase-2.5.0.min.css') }}">
 
     {{--<link rel="stylesheet" href="https://cdn.bootcss.com/select2/4.0.5/css/select2.min.css">--}}
-    <link rel="stylesheet" href="{{ asset('/lib/css/select2-4.0.5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/select2-4.0.5.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('/common/css/common.css') }}" media="all" />
     {{--<link rel="stylesheet" href="{{ asset('/common/css/frontend/index.css') }}" media="all" />--}}
@@ -141,30 +141,31 @@ desired effect
 <script src="/AdminLTE/dist/js/app.min.js"></script>
 
 {{--<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>--}}
-<script src="{{ asset('/lib/js/jquery-ui-1.12.1.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/jquery-ui-1.12.1.min.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/bootstrap-modal/2.2.6/js/bootstrap-modal.min.js"></script>--}}
 
 {{--<script src="https://cdn.bootcss.com/layer/3.0.3/layer.min.js"></script>--}}
-<script src="{{ asset('/lib/js/layer-3.0.3.min.js') }}"></script>
+{{--<script src="{{ asset('/resource/component/js/layer-3.0.3.min.js') }}"></script>--}}
+<script src="{{ asset('/resource/component/js/layer-3.5.1/layer.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/js/fileinput.min.js"></script>--}}
-<script src="{{ asset('/lib/js/fileinput-4.4.8.min.js') }}"></script>
-<script src="{{ asset('/lib/js/fileinput-only.js') }}"></script>
+<script src="{{ asset('/resource/component/js/fileinput-4.4.8.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/fileinput-only.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>--}}
-<script src="{{ asset('/lib/js/jquery.form-4.2.2.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/jquery.form-4.2.2.min.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/moment.js/2.19.0/moment.min.js"></script>--}}
-<script src="{{ asset('/lib/js/moment-2.19.0.min.js') }}"></script>
-<script src="{{ asset('/lib/js/moment-2.19.0-locale-zh-cn.js') }}"></script>
-<script src="{{ asset('/lib/js/moment-2.19.0-locale-ko.js') }}"></script>
+<script src="{{ asset('/resource/component/js/moment-2.19.0.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/moment-2.19.0-locale-zh-cn.js') }}"></script>
+<script src="{{ asset('/resource/component/js/moment-2.19.0-locale-ko.js') }}"></script>
 
 <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>--}}
-{{--<script src="{{ asset('/lib/js/icheck-1.0.2.min.js') }}"></script>--}}
+{{--<script src="{{ asset('/resource/component/js/icheck-1.0.2.min.js') }}"></script>--}}
 <script src="/AdminLTE/plugins/iCheck/icheck.min.js"></script>
 
 {{--<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>--}}
@@ -181,7 +182,7 @@ desired effect
 <script src="{{ asset('/resource/component/js/lightcase-2.5.0.min.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/Swiper/4.2.2/js/swiper.min.js"></script>--}}
-<script src="{{ asset('/lib/js/swiper-4.2.2.min.js') }}"></script>
+<script src="{{ asset('/resource/component/js/swiper-4.2.2.min.js') }}"></script>
 
 {{--<script src="https://cdn.bootcss.com/select2/4.0.5/js/select2.min.js"></script>--}}
 <script src="{{ asset('/resource/component/js/select2-4.0.5.min.js') }}"></script>
