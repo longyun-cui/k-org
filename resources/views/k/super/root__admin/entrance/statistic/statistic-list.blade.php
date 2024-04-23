@@ -240,6 +240,18 @@
                         }
                     },
                     {
+                        "title": "访问者",
+                        "data": "creator_id",
+                        "className": "text-left",
+                        "width": "120px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return row.creator == null
+                                ? '<small class="btn-xs bg-black">游客</small>'
+                                : '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+row.creator.id+'">'+row.creator.username+'</a>';
+                        }
+                    },
+                    {
                         "width": "50px",
                         "title": "操作",
                         "data": "id",
@@ -344,18 +356,6 @@
                             {
                                 return '<small class="btn-xs bg-black">page_type Error</small>';
                             }
-                        }
-                    },
-                    {
-                        "title": "访问者",
-                        "data": "creator_id",
-                        "className": "text-left",
-                        "width": "160px",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            return row.creator == null
-                                ? '<small class="btn-xs bg-black">游客</small>'
-                                : '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+row.creator.id+'">'+row.creator.username+'</a>';
                         }
                     },
                     {
