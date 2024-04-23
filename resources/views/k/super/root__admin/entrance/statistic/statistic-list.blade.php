@@ -242,8 +242,8 @@
                     {
                         "title": "访问者",
                         "data": "creator_id",
-                        "className": "text-left",
-                        "width": "120px",
+                        "className": "",
+                        "width": "80px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return row.creator == null
