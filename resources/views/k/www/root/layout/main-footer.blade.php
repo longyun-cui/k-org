@@ -17,7 +17,7 @@
         <a href="{{ url(env('DOMAIN_WWW').'/org-register') }}">注册新组织</a>
     </small>
     <br>
-    <small>如有疑问请联系管理员 电话：<strong>17721364771</strong></small>
+    <small>商务合作-电话微信同号 <strong>17721364771</strong></small>
     <br>
     {{--<small>联系电话：</small><strong>17721364771</strong>--}}
     {{--<br>--}}
