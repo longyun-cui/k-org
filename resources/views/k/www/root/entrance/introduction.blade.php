@@ -34,7 +34,7 @@
             <div class="item-piece item-option">
                 <div class="box-body item-row item-content-row">
                     <div class="item-row text-center">
-                        <h4>平台介绍</h4>
+                        <h4>{{ $data->title or '' }}</h4>
                     </div>
 
 
