@@ -462,7 +462,7 @@
                         "width": "120px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
-                            return row.owner == null ? '未知' : '<a target="_blank" href="/user/'+row.owner.id+'">'+row.owner.username+'</a>';
+                            return row.owner == null ? '未知' : '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+row.owner.id+'">'+row.owner.username+'</a>';
                         }
                     },
                     {
