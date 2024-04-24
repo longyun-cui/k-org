@@ -116,8 +116,7 @@ Route::group(['prefix'=>'admin'], function () {
          * business
          */
         // item
-        Route::match(['get','post'], '/item/item-list', $controller.'@view_item_item_list');
-        Route::match(['get','post'], '/item/item-list-for-all', $controller.'@view_item_list_for_all');
+        Route::match(['get','post'], '/item/item-list', $controller.'@view_item_list');
         Route::match(['get','post'], '/item/item-list-for-article', $controller.'@view_item_list_for_article');
         Route::match(['get','post'], '/item/item-list-for-activity', $controller.'@view_item_list_for_activity');
         Route::match(['get','post'], '/item/item-list-for-advertising', $controller.'@view_item_list_for_advertising');

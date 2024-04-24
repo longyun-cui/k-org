@@ -263,7 +263,27 @@ class WWWIndexRepository {
         $ip_city = $ip_info['adcode']['c'];
 
 
-        $item_query = K_Item::with(['owner']);
+        $return['recommend'] = '';
+
+        $recommend = '';
+        $region_key = '';
+        $region_name = '';
+        foreach(config('k.common.region_list') as $key => $value)
+        {
+            if(in_array($ip_province,$value))
+            {
+                $recommend = 'yes';
+                $region_key = $key;
+                $region_name = config('k.common.region_name.'.$region_key);
+                break;
+            }
+        }
+//        dd($region_name);
+//        dd(in_array($ip_province,config('k.common.province_list')));
+//        dd(array_search($ip_province,config('k.common.province_list')));
+
+
+
 
         $user_query = K_User::select('*')
             ->with([
@@ -279,31 +299,27 @@ class WWWIndexRepository {
                 $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
             })
             ->where(['user_status'=>1,'active'=>1])
-//            ->orderBy('user_type')
             ->orderByDesc('id');
+
+        $item_query = K_Item::with(['owner']);
 
 
         if($this->auth_check)
         {
+            $user_query->with([
+                'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
+            ]);
+
             $item_query->with([
                     'pivot_item_relation'=>function($query) use($me_id) { $query->where('user_id',$me_id); }
-                ]);
-
-            $user_query->with([
-                    'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
                 ]);
         }
         else
         {
         }
 
-//        $user_list = $user_query->paginate(20);
-        $user_list = $user_query->get();
-        $return['user_list'] = $user_list;
-
 
         $item_query->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1,'is_published'=>1]);
-
 
 
         $type = !empty($post_data['type']) ? $post_data['type'] : 'root';
@@ -328,7 +344,48 @@ class WWWIndexRepository {
         }
 
 
-        $item_list = $item_query->orderByDesc('published_at')->paginate(20);
+        // 地域
+        if($recommend == 'yes')
+        {
+            $return['recommend'] = 'local';
+
+            $user_query_of_local = clone $user_query;
+            $user_query_of_local->where('area_region',$region_name);
+            $user_list_of_local = $user_query_of_local->get();
+            $return['user_list_of_local'] = $user_list_of_local;
+
+            $item_query_of_local = clone $item_query;
+            $item_query_of_local->where('area_region',$region_name)->orderByDesc('published_at');
+            $item_list_of_local = $item_query_of_local->get();
+            $return['item_list_of_local'] = $item_list_of_local;
+
+//          $user_list = $user_query->paginate(20);
+            $user_list = (clone $user_query)
+                ->where(function($query) use($region_name) {
+                    $query->whereNull('area_region')->orWhere('area_region','<>',$region_name);
+                })
+                ->get();
+            $return['user_list'] = $user_list;
+
+            $item_list = (clone $item_query)
+                ->where(function($query) use($region_name) {
+                    $query->whereNull('area_region')->orWhere('area_region','<>',$region_name);
+                })
+                ->orderByDesc('published_at')
+                ->paginate(20);
+
+        }
+        else
+        {
+
+//          $user_list = $user_query->paginate(20);
+            $user_list = $user_query->where('area_region',$region_name)->get();
+            $return['user_list'] = $user_list;
+
+            $item_list = $item_query->orderByDesc('published_at')->paginate(20);
+        }
+
+
 
         foreach ($item_list as $item)
         {

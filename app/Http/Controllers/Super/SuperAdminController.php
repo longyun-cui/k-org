@@ -261,17 +261,11 @@ class SuperAdminController extends Controller
     /*
      * 内容
      */
-    // 【K】【内容】返回-列表-视图
-    public function view_item_item_list()
-    {
-        if(request()->isMethod('get')) return $this->repo->view_item_item_list(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_item_item_datatable(request()->all());
-    }
     // 【K】【内容】返回-全部内容-列表-视图
-    public function view_item_list_for_all()
+    public function view_item_list()
     {
-        if(request()->isMethod('get')) return $this->repo->view_item_list_for_all(request()->all());
-        else if(request()->isMethod('post')) return $this->repo->get_item_list_for_all_datatable(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_item_list(request()->all());
+        else if(request()->isMethod('post')) return $this->repo->get_item_list_datatable(request()->all());
     }
     // 【K】【内容】返回-列表-视图
     public function view_item_list_for_article()

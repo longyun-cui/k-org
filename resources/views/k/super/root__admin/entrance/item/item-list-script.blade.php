@@ -470,7 +470,7 @@
             // });
 
             $.post(
-                "{{ url('/item/item-info-text-set') }}",
+                "{{ url('/admin/item/item-info-text-set') }}",
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     operate: $('input[name="info-text-set-operate"]').val(),
@@ -897,7 +897,7 @@
             // });
 
             $.post(
-                "{{ url('/item/item-info-select-set') }}",
+                "{{ url('/admin/item/item-info-select-set') }}",
                 {
                     _token: $('meta[name="_token"]').attr('content'),
                     operate: $('input[name="info-select-set-operate"]').val(),

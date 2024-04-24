@@ -1,7 +1,7 @@
-@extends(env('TEMPLATE_K_SUPER_ADMIN').'layout.layout')
+@extends(env('TEMPLATE_K_SUPER__ADMIN').'layout.layout')
 
 
-@section('head_title','内容列表')
+@section('head_title','全部内容')
 
 
 @section('header','')
@@ -15,11 +15,11 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="box box-info">
+        <div class="box box-info main-list-body">
 
             <div class="box-header with-border" style="margin:16px 0;">
 
-                <h3 class="box-title">内容列表</h3>
+                <h3 class="box-title">全部内容</h3>
 
                 <div class="pull-right _none">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
@@ -40,6 +40,13 @@
 
                         <input type="text" class="form-control form-filter item-search-keyup" name="title" placeholder="标题" />
 
+                        <select class="form-control form-filter" name="item_type" style="width:96px;">
+                            <option value="-1">全部</option>
+                            <option value="1" @if($item_type == 1) selected="selected" @endif>文章</option>
+                            <option value="11" @if($item_type == 11) selected="selected" @endif>活动</option>
+                            <option value="88" @if($item_type == 88) selected="selected" @endif>广告</option>
+                        </select>
+
                         <button type="button" class="form-control btn btn-flat btn-success filter-submit" id="filter-submit">
                             <i class="fa fa-search"></i> 搜索
                         </button>
@@ -50,28 +57,38 @@
                     </div>
                 </div>
 
+                <div class="tableArea">
                 <table class='table table-striped table-bordered table-hover' id='datatable_ajax'>
                     <thead>
                         <tr role='row' class='heading'>
-                            <th>ID</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
+                </div>
 
+            </div>
+
+
+            <div class="box-footer">
+                <div class="row" style="margin:16px 0;">
+                    <div class="col-md-offset-0 col-md-4 col-sm-8 col-xs-12">
+                        {{--<button type="button" class="btn btn-primary"><i class="fa fa-check"></i> 提交</button>--}}
+                        {{--<button type="button" onclick="history.go(-1);" class="btn btn-default">返回</button>--}}
+                        <div class="input-group">
+                            <span class="input-group-addon"><input type="checkbox" id="check-review-all"></span>
+                            <select name="bulk-operat-status" class="form-control form-filter">
+                                <option value ="0">请选择</option>
+                                <option value ="封禁">封禁</option>
+                                <option value ="删除">删除</option>
+                                <option value ="永久删除">永久删除</option>
+                            </select>
+                            <span class="input-group-addon btn btn-default" id="operat-bulk-submit"><i class="fa fa-check"></i> 批量操作</span>
+                            <span class="input-group-addon btn btn-default" id="delete-bulk-submit"><i class="fa fa-trash-o"></i> 批量删除</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -107,7 +124,7 @@
                         <div class="box-body">
 
                             {{csrf_field()}}
-                            <input type="hidden" name="operate" value="work-order" readonly>
+                            <input type="hidden" name="operate" value="item-detail" readonly>
                             <input type="hidden" name="id" value="0" readonly>
 
                             {{--标题--}}
@@ -156,7 +173,207 @@
         </div>
     </div>
 </div>
+
+
+
+
+{{--修改-基本-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-text-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-text-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-text-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-text-set-operate" value="item-item-info-text-set" readonly>
+                    <input type="hidden" name="info-text-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-text-set-operate-type" value="add" readonly>
+                    <input type="hidden" name="info-text-set-column-key" value="" readonly>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 info-text-set-column-name"></label>
+                        <div class="col-md-8 ">
+                            <input type="text" class="form-control" name="info-text-set-column-value" autocomplete="off" placeholder="" value="">
+                            <textarea class="form-control" name="info-textarea-set-column-value" rows="6" cols="100%"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-text-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-text-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{--修改-时间-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-time-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-time-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-time-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-time-set-operate" value="item-item-info-time-set" readonly>
+                    <input type="hidden" name="info-time-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-time-set-operate-type" value="add" readonly>
+                    <input type="hidden" name="info-time-set-column-key" value="" readonly>
+                    <input type="hidden" name="info-time-set-time-type" value="" readonly>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 info-time-set-column-name"></label>
+                        <div class="col-md-8 ">
+                            <input type="text" class="form-control form-filter time_picker" name="info-time-set-column-value" autocomplete="off" placeholder="" value="" data-time-type="datetime" readonly="readonly">
+                            <input type="text" class="form-control form-filter date_picker" name="info-date-set-column-value" autocomplete="off" placeholder="" value="" data-time-type="date" readonly="readonly">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-time-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-time-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{--修改-radio-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-radio-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-radio-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-radio-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-radio-set-operate" value="item-item-info-option-set" readonly>
+                    <input type="hidden" name="info-radio-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-radio-set-operate-type" value="edit" readonly>
+                    <input type="hidden" name="info-radio-set-column-key" value="" readonly>
+
+
+                    <div class="form-group radio-box">
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-radio-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-radio-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{--修改-select-信息--}}
+<div class="modal fade modal-main-body" id="modal-body-for-info-select-set">
+    <div class="col-md-6 col-md-offset-3 margin-top-64px margin-bottom-64px bg-white">
+
+        <div class="box- box-info- form-container">
+
+            <div class="box-header with-border margin-top-16px margin-bottom-16px">
+                <h3 class="box-title">修改订单【<span class="info-select-set-title"></span>】</h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-select-set-form">
+                <div class="box-body">
+
+                    {{ csrf_field() }}
+                    <input type="hidden" name="info-select-set-operate" value="item-item-info-option-set" readonly>
+                    <input type="hidden" name="info-select-set-item-id" value="0" readonly>
+                    <input type="hidden" name="info-select-set-operate-type" value="add" readonly>
+                    <input type="hidden" name="info-select-set-column-key" value="" readonly>
+                    <input type="hidden" name="info-select-set-column-key2" value="" readonly>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 info-select-set-column-name"></label>
+                        <div class="col-md-8 ">
+                            <select class="form-control select-primary" name="info-select-set-column-value" style="width:48%;" id="">
+                                <option data-id="0" value="0">未指定</option>
+                            </select>
+                            <select class="form-control select-assistant" name="info-select-set-column-value2" style="width:48%;" id="">
+                                <option data-id="0" value="0">未指定</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="button" class="btn btn-success" id="item-submit-for-info-select-set"><i class="fa fa-check"></i> 提交</button>
+                        <button type="button" class="btn btn-default" id="item-cancel-for-info-select-set">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 @endsection
+
+
+
+
+@section('custom-css')
+@endsection
+@section('custom-style')
+    <style>
+        .tableArea table { width:100% !important; min-width:1440px; }
+        .tableArea table tr th, .tableArea table tr td { white-space:nowrap; }
+    </style>
+@endsection
+
+
 
 
 @section('custom-script')
@@ -167,7 +384,7 @@
             var dt = $('#datatable_ajax');
             var ajax_datatable = dt.DataTable({
 //                "aLengthMenu": [[20, 50, 200, 500, -1], ["20", "50", "200", "500", "全部"]],
-                "aLengthMenu": [[20, 50, 100, 200], ["20", "50", "100", "200"]],
+                "aLengthMenu": [[50, 100, 200], ["50", "100", "200"]],
                 "processing": true,
                 "serverSide": true,
                 "searching": false,
@@ -177,17 +394,9 @@
                     "dataType" : 'json',
                     "data": function (d) {
                         d._token = $('meta[name="_token"]').attr('content');
+                        d.title = $('input[name="title"]').val();
                         d.keyword = $('input[name="keyword"]').val();
-                        d.website = $('input[name="website"]').val();
-//                        d.nickname 	= $('input[name="nickname"]').val();
-//                        d.certificate_type_id = $('select[name="certificate_type_id"]').val();
-//                        d.certificate_state = $('select[name="certificate_state"]').val();
-//                        d.admin_name = $('input[name="admin_name"]').val();
-//
-//                        d.created_at_from = $('input[name="created_at_from"]').val();
-//                        d.created_at_to = $('input[name="created_at_to"]').val();
-//                        d.updated_at_from = $('input[name="updated_at_from"]').val();
-//                        d.updated_at_to = $('input[name="updated_at_to"]').val();
+                        d.item_type = $('select[name="item_type"]').val();
 
                     },
                 },
@@ -195,89 +404,125 @@
                 "order": [],
                 "orderCellsTop": true,
                 "columns": [
+                    // {
+                    //     "title": "选择",
+                    //     "data": "id",
+                    //     "width": "40px",
+                    //     'orderable': true,
+                    //     render: function(data, type, row, meta) {
+                    //         return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
+                    //     }
+                    // },
+                    // {
+                    //     "title": "序号",
+                    //     "data": null,
+                    //     "width": "40px",
+                    //     "targets": 0,
+                    //     'orderable': false
+                    // },
                     {
-                        "width": "32px",
-                        "title": "选择",
-                        "data": "id",
-                        'orderable': true,
-                        render: function(data, type, row, meta) {
-                            return '<label><input type="checkbox" name="bulk-id" class="minimal" value="'+data+'"></label>';
-                        }
-                    },
-                    {
-                        "width": "32px",
-                        "title": "序号",
-                        "data": null,
-                        "targets": 0,
-                        'orderable': false
-                    },
-                    {
-                        "className": "font-12px",
-                        "width": "48px",
                         "title": "ID",
                         "data": "id",
+                        "className": "",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "className": "text-left",
-                        "width": "",
-                        "title": "标题",
-                        "data": "title",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
-                        }
-                    },
-                    {
-                        "className": "text-left",
-                        "width": "160px",
-                        "title": "发布者",
-                        "data": "owner_id",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            return row.owner == null ? '未知' : '<a target="_blank" href="/user/'+row.owner.id+'">'+row.owner.username+'</a>';
-                        }
-                    },
-                    {
-                        "width": "48px",
                         "title": "类型",
                         "data": "item_type",
+                        "width": "80px",
                         'orderable': false,
                         render: function(data, type, row, meta) {
                             if(data == 0) return 'item';
                             else if(data == 1) return '<small class="btn-xs bg-primary">文章</small>';
                             else if(data == 11) return '<small class="btn-xs bg-olive">活动</small>';
                             else if(data == 88) return '<small class="btn-xs bg-purple">广告</small>';
-                            else return "有误";
+                            else if(data == 99) return '<small class="btn-xs bg-info">介绍</small>';
+                            else return '<small class="btn-xs bg-black">Error</small>';
                         }
                     },
                     {
-                        "width": "40px",
+                        "title": "标题",
+                        "data": "title",
+                        "className": "text-left",
+                        "width": "160px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            // return '<a target="_blank" href="/item/'+row.id+'">'+data+'</a>';
+                            return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/item/'+row.id+'">'+data+'</a>';
+                        }
+                    },
+                    {
+                        "title": "发布者",
+                        "data": "owner_id",
+                        "className": "",
+                        "width": "120px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            return row.owner == null ? '未知' : '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+row.owner.id+'">'+row.owner.username+'</a>';
+                        }
+                    },
+                    {
+                        "title": "区域",
+                        "data": "area_region",
+                        "className": "",
+                        "width": "100px",
+                        "orderable": false,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-text-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','区域');
+                                $(nTd).attr('data-key','area_region').attr('data-value',data);
+                                $(nTd).attr('data-column-name','区域');
+                                $(nTd).attr('data-text-type','text');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
+                        render: function(data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    {
                         "title": "浏览",
                         "data": "visit_num",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "width": "40px",
                         "title": "分享",
                         "data": "share_num",
+                        "width": "60px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
                         }
                     },
                     {
-                        "className": "font-12px",
-                        "width": "112px",
                         "title": "创建时间",
                         "data": 'created_at',
+                        "className": "",
+                        "width": "120px",
                         "orderable": true,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-time-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','创建时间');
+                                $(nTd).attr('data-key','created_at').attr('data-value',data);
+                                $(nTd).attr('data-column-name','创建时间');
+                                $(nTd).attr('data-time-type','datetime');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(!data) return '--';
@@ -294,11 +539,23 @@
                         }
                     },
                     {
-                        "className": "font-12px",
-                        "width": "112px",
                         "title": "修改时间",
                         "data": 'updated_at',
+                        "className": "",
+                        "width": "120px",
                         "orderable": true,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-time-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','修改时间');
+                                $(nTd).attr('data-key','updated_at').attr('data-value',data);
+                                $(nTd).attr('data-column-name','修改时间');
+                                $(nTd).attr('data-time-type','datetime');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(!data) return '--';
@@ -315,11 +572,23 @@
                         }
                     },
                     {
-                        "className": "font-12px",
-                        "width": "112px",
                         "title": "发布时间",
                         "data": 'published_at',
+                        "className": "",
+                        "width": "120px",
                         "orderable": true,
+                        "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
+                            if(row.is_completed != 1 && row.item_status != 97)
+                            {
+                                $(nTd).addClass('modal-show-for-info-time-set');
+                                $(nTd).attr('data-id',row.id).attr('data-name','发布时间');
+                                $(nTd).attr('data-key','published_at').attr('data-value',data);
+                                $(nTd).attr('data-column-name','发布时间');
+                                $(nTd).attr('data-time-type','datetime');
+                                if(data) $(nTd).attr('data-operate-type','edit');
+                                else $(nTd).attr('data-operate-type','add');
+                            }
+                        },
                         render: function(data, type, row, meta) {
 //                            return data;
                             if(!data) return '--';
@@ -336,9 +605,9 @@
                         }
                     },
                     {
-                        "width": "64px",
                         "title": "状态",
                         "data": "active",
+                        "width": "80px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
 //                            return data;
@@ -347,105 +616,103 @@
                                 return '<small class="btn-xs bg-black">已删除</small>';
                             }
 
-                            if(data == 0)
+                            if(row.item_status == 1)
                             {
-                                return '<small class="btn-xs bg-teal">待发布</small>';
-                            }
-                            else if(data == 1)
-                            {
-                                return '<small class="btn-xs bg-olive">已发布</small>';
+                                if(data == 0)
+                                {
+                                    return '<small class="btn-xs bg-teal">待发布</small>';
+                                }
+                                else if(data == 1)
+                                {
+                                    return '<small class="btn-xs bg-olive">已发布</small>';
 //                                if(row.is_read == 0) return '<small class="btn-xs bg-olive">未读</small>';
 //                                else if(row.is_read == 1) return '<small class="btn-xs bg-primary">已读</small>';
 //                                else return "--";
-                            }
-                            else if(data == 9)
-                            {
-                                return '<small class="btn-xs bg-purple">已完成</small>';
-                            }
-                            else return "有误";
-                        }
-                    },
-                    {
-                        "width": "288px",
-                        "title": "操作",
-                        "data": 'id',
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            if(row.active == 0)
-                            {
-                                $html_1 =
-                                    '<a class="btn btn-xs bg-navy item-edit-link" data-id="'+data+'">编辑</a>'+
-                                    '<a class="btn btn-xs bg-navy item-publish-submit" data-id="'+data+'">发布</a>'+
-                                    '';
+                                }
+                                else if(data == 9)
+                                {
+                                    return '<small class="btn-xs bg-purple">已完成</small>';
+                                }
+                                else return "有误";
                             }
                             else
                             {
-                                $html_1 =
-                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>'+
-                                    '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">发布</a>'+
-                                    '';
+                                return '<small class="btn-xs btn-danger">已封禁</small>';
                             }
+                        }
+                    },
+                    {
+                        "title": "操作",
+                        "data": 'id',
+                        "width": "240px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+
+                            if(row.item_status == 1)
+                            {
+                                $html_able = '<a class="btn btn-xs btn-danger item-admin-disable-submit" data-id="'+data+'">封禁</a>';
+                            }
+                            else
+                            {
+                                $html_able = '<a class="btn btn-xs btn-success item-admin-enable-submit" data-id="'+data+'">解禁</a>';
+                            }
+
+                            if(row.is_me == 1 && row.active == 0)
+                            {
+                                $html_publish = '<a class="btn btn-xs bg-olive item-publish-submit" data-id="'+data+'">发布</a>';
+                            }
+                            else
+                            {
+                                $html_publish = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">发布</a>';
+                            }
+
                             var html =
-//                                    '<a class="btn btn-xs item-enable-submit" data-id="'+value+'">启用</a>'+
-//                                    '<a class="btn btn-xs item-disable-submit" data-id="'+value+'">禁用</a>'+
-//                                    '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
-//                                    '<a class="btn btn-xs item-statistics-submit" data-id="'+value+'">流量统计</a>'+
-                                    {{--'<a class="btn btn-xs" href="/item/edit?id='+value+'">编辑</a>'+--}}
-                                    $html_1+
-                                    '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'">删除</a>'+
+                                    $html_able+
+//                                    '<a class="btn btn-xs" href="/item/edit?id='+data+'">编辑</a>'+
+                                    '<a class="btn btn-xs btn-primary item-edit-link" data-id="'+data+'">编辑</a>'+
+                                    $html_publish+
+                                    '<a class="btn btn-xs bg-navy item-admin-delete-submit" data-id="'+data+'">删除</a>'+
                                     '<a class="btn btn-xs bg-navy item-admin-delete-permanently-submit" data-id="'+data+'">永久删除</a>'+
-                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
+//                                    '<a class="btn btn-xs bg-primary item-detail-show" data-id="'+data+'">查看详情</a>'+
+                                    '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
+//                                    '<a class="btn btn-xs bg-olive item-download-qr-code-submit" data-id="'+data+'">下载二维码</a>'+
                                     '';
                             return html;
+
                         }
                     }
                 ],
                 "drawCallback": function (settings) {
 
-                    let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
-                    this.api().column(1).nodes().each(function(cell, i) {
-                        cell.innerHTML =  startIndex + i + 1;
-                    });
+                    // let startIndex = this.api().context[0]._iDisplayStart;//获取本页开始的条数
+                    // this.api().column(1).nodes().each(function(cell, i) {
+                    //     cell.innerHTML =  startIndex + i + 1;
+                    // });
 
-                    ajax_datatable.$('.tooltips').tooltip({placement: 'top', html: true});
-                    $("a.verify").click(function(event){
-                        event.preventDefault();
-                        var node = $(this);
-                        var tr = node.closest('tr');
-                        var nickname = tr.find('span.nickname').text();
-                        var cert_name = tr.find('span.certificate_type_name').text();
-                        var action = node.attr('data-action');
-                        var certificate_id = node.attr('data-id');
-                        var action_name = node.text();
+                    var $obj = new Object();
+                    if($('input[name="item-id"]').val())  $obj.item_id = $('input[name="item-id"]').val();
+                    if($('input[name="title"]').val())  $obj.title = $('input[name="title"]').val();
+                    if($('input[name="keyword"]').val())  $obj.keyword = $('input[name="keyword"]').val();
+                    if($('select[name="item_type"]').val() != "-1")  $obj.item_type = $('select[name="item_type"]').val();
 
-                        var tpl = "{{trans('labels.crc.verify_user_certificate_tpl')}}";
-                        layer.open({
-                            'title': '警告',
-                            content: tpl
-                                .replace('@action_name', action_name)
-                                .replace('@nickname', nickname)
-                                .replace('@certificate_type_name', cert_name),
-                            btn: ['Yes', 'No'],
-                            yes: function(index) {
-                                layer.close(index);
-                                $.post(
-                                    '/admin/medsci/certificate/user/verify',
-                                    {
-                                        action: action,
-                                        id: certificate_id,
-                                        _token: '{{csrf_token()}}'
-                                    },
-                                    function(json){
-                                        if(json['response_code'] == 'success') {
-                                            layer.msg('操作成功!', {time: 3500});
-                                            ajax_datatable.ajax.reload();
-                                        } else {
-                                            layer.alert(json['response_data'], {time: 10000});
-                                        }
-                                    }, 'json');
-                            }
-                        });
-                    });
+                    var $page_length = this.api().context[0]._iDisplayLength; // 当前每页显示多少
+                    if($page_length != 50) $obj.length = $page_length;
+                    var $page_start = this.api().context[0]._iDisplayStart; // 当前页开始
+                    var $pagination = ($page_start / $page_length) + 1; //得到页数值 比页码小1
+                    if($pagination > 1) $obj.page = $pagination;
+
+
+                    if(JSON.stringify($obj) != "{}")
+                    {
+                        var $url = url_build('',$obj);
+                        history.replaceState({page: 1}, "", $url);
+                    }
+                    else
+                    {
+                        $url = "{{ url('/admin/item/item-list-for-all') }}";
+                        if(window.location.search) history.replaceState({page: 1}, "", $url);
+                    }
+
                 },
                 "language": { url: '/common/dataTableI18n' },
             });
@@ -474,5 +741,5 @@
         TableDatatablesAjax.init();
     });
 </script>
-@include(env('TEMPLATE_K_SUPER_ADMIN').'entrance.item.item-list-script')
+@include(env('TEMPLATE_K_SUPER__ADMIN').'entrance.item.item-list-script')
 @endsection

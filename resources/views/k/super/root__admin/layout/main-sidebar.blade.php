@@ -58,7 +58,7 @@
             <li class="header">内容管理</li>
 
             <li class="treeview {{ $menu_active_by_item_list_for_all or '' }} ">
-                <a href="{{ url('/admin/item/item-list-for-all') }}">
+                <a href="{{ url('/admin/item/item-list') }}">
                     <i class="fa fa-file-text text-green"></i><span>全部内容</span>
                 </a>
             </li>
