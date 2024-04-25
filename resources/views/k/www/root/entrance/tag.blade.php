@@ -26,14 +26,12 @@
 <div class="container">
 
     {{--左侧--}}
-    <div class="main-body-section main-body-center-section section-wrapper">
+    <div class="main-body-section main-body-center-section section-wrapper page-item">
 
         @include(env('TEMPLATE_K_WWW').'component.tag-list')
 
         <div class="container-box pull-left margin-bottom-16px">
-            @if(request('type') != 'activity')
-                @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
-            @endif
+            @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
         </div>
 
         <div class="container-box pull-left margin-bottom-16px">
@@ -77,11 +75,6 @@
 @section('script')
 <script>
     $(function() {
-//        $('article').readmore({
-//            speed: 150,
-//            moreLink: '<a href="#">展开更多</a>',
-//            lessLink: '<a href="#">收起</a>'
-//        });
     });
 </script>
 @endsection
