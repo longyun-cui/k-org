@@ -5,8 +5,9 @@
         console.log("{{ $user_count_by_city or '' }}");
         console.log("{{ $user_count_by_province or '' }}");
         console.log("{{ $user_count_by_region or '' }}");
-        console.log("{{ $user_query_by or '' }}");
-        console.log("{{ $user_query_of_recommend_count or 'count-0' }}");
+        console.log("{{ $user_query_by or 'user_query_by' }}");
+        console.log("{{ $user_query_of_recommend_count or 'user_query_of_recommend_count' }}");
+        console.log("{{ $q or 'q' }}");
 
 //        $('article').readmore({
 //            speed: 150,
