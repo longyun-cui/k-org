@@ -1,6 +1,8 @@
 <script>
     $(function() {
 
+        console.log("{{ $user_recommend }}");
+
 //        $('article').readmore({
 //            speed: 150,
 //            moreLink: '<a href="#">展开更多</a>',
