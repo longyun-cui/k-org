@@ -24,7 +24,7 @@
 @section('content')
 <div class="container">
 
-    <div class="main-body-section main-body-left-section section-wrapper page-item">
+    <div class="main-body-section main-body-center-section section-wrapper page-item">
 
         {{--@include(env('TEMPLATE_K_WWW').'component.left-tag')--}}
 
