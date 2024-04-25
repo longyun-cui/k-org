@@ -392,7 +392,7 @@ class WWWIndexRepository {
         {
             $return['user_recommend'] = 'recommend';
 
-            if($query_by == 'region')
+            if($user_query_by == 'region')
             {
                 $user_query_of_recommend = clone $user_query;
                 $user_list_of_recommend = $user_query_of_recommend
@@ -402,7 +402,7 @@ class WWWIndexRepository {
                     ->get();
                 $return['user_query_of_recommend'] = $user_list_of_recommend;
             }
-            else if($query_by == 'city' || $query_by == 'province')
+            else if($user_query_by == 'city' || $user_query_by == 'province')
             {
                 $user_query_of_recommend = clone $user_query;
                 $user_list_of_recommend = $user_query_of_recommend
