@@ -275,6 +275,17 @@ class WWWIndexRepository {
             $ip_province_region_name = config('k.common.region_name.'.$ip_province_region_key);  // 地区-名称
             $ip_region_list = config('k.common.region_list.'.$ip_province_region_key);  // 地区-在内的省
         }
+        else
+        {
+            $ip_province_code = array_search($ip_province,config('k.common.province_name'));
+            if($ip_province_code)
+            {
+                $ip_province_info = config('k.common.province_list.'.$ip_province_code); // 省-信息
+                $ip_province_region_key = $ip_province_info['provinceRegion'];  // 省-代码
+                $ip_province_region_name = config('k.common.region_name.'.$ip_province_region_key);  // 地区-名称
+                $ip_region_list = config('k.common.region_list.'.$ip_province_region_key);  // 地区-在内的省
+            }
+        }
 
 
         // 查询用户
