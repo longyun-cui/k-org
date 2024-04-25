@@ -418,6 +418,7 @@ class WWWIndexRepository {
                     ->inRandomOrder()->take(5)
                     ->get();
                 $return['user_query_of_recommend'] = $user_list_of_recommend;
+                $return['user_query_of_recommend_count'] = count($user_list_of_recommend);
             }
 
 
