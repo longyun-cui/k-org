@@ -1,10 +1,11 @@
 <script>
     $(function() {
 
-        console.log("{{ $user_recommend or '' }}");
+        console.log("{{ $user_recommend or 'no' }}");
         console.log("{{ $user_count_by_city or '' }}");
         console.log("{{ $user_count_by_province or '' }}");
         console.log("{{ $user_count_by_region or '' }}");
+        console.log("{{ $user_query_by or '' }}");
 
 //        $('article').readmore({
 //            speed: 150,
