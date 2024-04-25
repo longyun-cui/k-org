@@ -12968,7 +12968,7 @@ var region = [
         ]
     },
     {
-        provinceName: '宁夏回族自治区',
+        provinceName: '青海省',
         provinceCode: '630000',
         mallCityList: [
             {

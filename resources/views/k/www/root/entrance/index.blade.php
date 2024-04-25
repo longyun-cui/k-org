@@ -52,14 +52,21 @@
 {{--        </div>--}}
 
 
-        @if($recommend == 'local')
+        {{--推荐用户--}}
+        @if($user_recommend == 'recommend')
 
             <div class="container-box pull-left margin-bottom-4px">
-                @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list_of_local])
+                @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_query_of_recommend])
             </div>
 
+        @endif
+
+
+        {{--推荐内容--}}
+        @if($item_recommend == 'recommend')
+
             <div class="container-box pull-left margin-bottom-4px">
-                @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list_of_local])
+                @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list_of_recommend])
             </div>
 
         @endif
@@ -70,11 +77,14 @@
             @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
         </div>
 
+        {!! $item_list->links() !!}
+
+
+
         <div class="container-box pull-left margin-bottom-4px">
             @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
         </div>
 
-        {!! $item_list->links() !!}
 
 
     </div>
