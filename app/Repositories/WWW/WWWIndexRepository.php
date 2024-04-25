@@ -286,7 +286,6 @@ class WWWIndexRepository {
                 $ip_region_list = config('k.common.region_list.'.$ip_province_region_key);  // 地区-在内的省
             }
         }
-        dd($ip_province_code.'--'.$ip_province.'--'.$ip_city);
 
 
         // 查询用户
@@ -309,6 +308,7 @@ class WWWIndexRepository {
         // 根据地理位置推荐用户
         if($ip_province_code)
         {
+            dd($ip_province_code.'--'.$ip_province.'--'.$ip_city);
             $q = $ip_city;
             $user_query_C1 = clone $user_query;
             $user_count_by_city = $user_query_C1
