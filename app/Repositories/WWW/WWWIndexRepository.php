@@ -267,8 +267,6 @@ class WWWIndexRepository {
         $query_by = '';
 
 
-        $user_recommend = '';
-        $user_query_by = '';
 
         $recommend_item = '';
         $item_query_by = '';
@@ -311,10 +309,15 @@ class WWWIndexRepository {
             })
             ->where(['user_status'=>1,'active'=>1]);
 
+
+        $user_recommend = '';
+        $user_query_by = '';
+
         $user_count_by_city = 0;
         $user_count_by_province = 0;
         $user_count_by_region = 0;
-        $q = '--';
+        $q = '';
+
         // 根据地理位置推荐用户
         if($ip_province_code)
         {
@@ -332,7 +335,7 @@ class WWWIndexRepository {
                 ->count();
             if($user_count_by_city >= 5)
             {
-                $user_recommend == 'yes';
+                $user_recommend = 'yes';
                 $user_query_by = 'city';
             }
             else
@@ -351,7 +354,7 @@ class WWWIndexRepository {
                     ->count();
                 if($user_count_by_province >= 5)
                 {
-                    $user_recommend == 'yes';
+                    $user_recommend = 'yes';
                     $user_query_by = 'province';
                 }
                 else
@@ -361,12 +364,12 @@ class WWWIndexRepository {
                     $user_count_by_region = $user_query_C3->whereIn('area_province',$ip_region_list)->count();
                     if($user_count_by_region > 0)
                     {
-                        $user_recommend == 'yes';
+                        $user_recommend = 'yes';
                         $user_query_by = 'region';
                     }
                     else
                     {
-                        $user_recommend == 'no';
+                        $user_recommend = 'no';
                     }
                 }
             }
