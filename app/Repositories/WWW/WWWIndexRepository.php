@@ -314,6 +314,7 @@ class WWWIndexRepository {
         $user_count_by_city = 0;
         $user_count_by_province = 0;
         $user_count_by_region = 0;
+        $q = $ip_city;
         // 根据地理位置推荐用户
         if($ip_province_code)
         {
