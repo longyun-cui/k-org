@@ -261,6 +261,7 @@ class WWWIndexRepository {
         $ip_info = get_ip_info($ip);
         $ip_province = $ip_info['adcode']['p'];
         $ip_city = $ip_info['adcode']['c'];
+        dd($ip_province.'--'.$ip_city);
 
 
         $recommend = '';
