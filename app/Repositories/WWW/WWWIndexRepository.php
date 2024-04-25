@@ -304,7 +304,9 @@ class WWWIndexRepository {
             })
             ->where(['user_status'=>1,'active'=>1]);
 
-
+        $user_count_by_city = 0;
+        $user_count_by_province = 0;
+        $user_count_by_region = 0;
         // 根据地理位置推荐用户
         if($ip_province_code)
         {
@@ -361,6 +363,9 @@ class WWWIndexRepository {
                 }
             }
         }
+        $return['user_count_by_city'] = $user_count_by_city;
+        $return['user_count_by_province'] = $user_count_by_province;
+        $return['user_count_by_region'] = $user_count_by_region;
 
 
         // 登录，查询与我的关系（关注 | 粉丝）
@@ -404,7 +409,6 @@ class WWWIndexRepository {
                     })
                     ->inRandomOrder()->take(5)
                     ->get();
-//                dd($user_list_of_recommend->toArray());
                 $return['user_query_of_recommend'] = $user_list_of_recommend;
             }
 
