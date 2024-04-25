@@ -375,6 +375,8 @@ class WWWIndexRepository {
         $return['user_count_by_province'] = $user_count_by_province;
         $return['user_count_by_region'] = $user_count_by_region;
         $return['user_query_by'] = $user_query_by;
+        $return['q'] = $q;
+        $return['user_recommend'] = $user_recommend;
 
 
         // 登录，查询与我的关系（关注 | 粉丝）
