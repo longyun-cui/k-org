@@ -267,6 +267,13 @@ class WWWIndexRepository {
         $query_by = '';
 
 
+        $user_recommend = '';
+        $user_query_by = '';
+
+        $recommend_item = '';
+        $item_query_by = '';
+
+
         $ip_province_code = array_search($ip_province,config('k.common.province_short'));
         if($ip_province_code)
         {
@@ -324,8 +331,8 @@ class WWWIndexRepository {
                 ->count();
             if($user_count_by_city >= 5)
             {
-                $recommend == 'yes';
-                $query_by = 'city';
+                $user_recommend == 'yes';
+                $user_query_by = 'city';
             }
             else
             {
@@ -343,8 +350,8 @@ class WWWIndexRepository {
                     ->count();
                 if($user_count_by_province >= 5)
                 {
-                    $recommend == 'yes';
-                    $query_by = 'province';
+                    $user_recommend == 'yes';
+                    $user_query_by = 'province';
                 }
                 else
                 {
@@ -353,12 +360,12 @@ class WWWIndexRepository {
                     $user_count_by_region = $user_query_C3->whereIn('area_province',$ip_region_list)->count();
                     if($user_count_by_region > 0)
                     {
-                        $recommend == 'yes';
-                        $query_by = 'region';
+                        $user_recommend == 'yes';
+                        $user_query_by = 'region';
                     }
                     else
                     {
-                        $recommend == 'no';
+                        $user_recommend == 'no';
                     }
                 }
             }
@@ -381,7 +388,7 @@ class WWWIndexRepository {
 
 
         // 推荐用户
-        if($recommend == 'yes')
+        if($user_recommend == 'yes')
         {
             $return['user_recommend'] = 'recommend';
 
