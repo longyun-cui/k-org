@@ -394,7 +394,7 @@ class WWWIndexRepository {
         // 推荐用户
         if($user_recommend == 'yes')
         {
-            $return['user_recommend'] = 'recommend';
+            $return['user_recommend_is'] = 'recommend';
 
             if($user_query_by == 'region')
             {
@@ -443,7 +443,7 @@ class WWWIndexRepository {
         }
         else
         {
-            $return['user_recommend'] = '';
+            $return['user_recommend_is'] = '';
 
 //          $user_list = $user_query->paginate(20);
             $user_list = $user_query->orderByDesc('id')->get();
@@ -484,7 +484,7 @@ class WWWIndexRepository {
         // 推荐
         if($recommend == 'yes')
         {
-            $return['item_recommend'] = 'local';
+            $return['item_recommend_is'] = 'local';
 
 
 //            $item_query_of_local = clone $item_query;
@@ -511,7 +511,7 @@ class WWWIndexRepository {
         }
         else
         {
-            $return['item_recommend'] = '';
+            $return['item_recommend_is'] = '';
 
             $item_list = $item_query->with(['owner'])->orderByDesc('published_at')->paginate(20);
         }

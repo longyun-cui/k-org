@@ -53,7 +53,7 @@
 
 
         {{--推荐用户--}}
-        @if($user_recommend == 'recommend')
+        @if($user_recommend_is == 'recommend')
 
             <div class="container-box pull-left margin-bottom-4px">
                 @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_query_of_recommend])
@@ -63,7 +63,7 @@
 
 
         {{--推荐内容--}}
-        @if($item_recommend == 'recommend')
+        @if($item_recommend_is == 'recommend')
 
             <div class="container-box pull-left margin-bottom-4px">
                 @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list_of_recommend])
