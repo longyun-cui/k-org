@@ -261,7 +261,6 @@ class WWWIndexRepository {
         $ip_info = get_ip_info($ip);
         $ip_province = $ip_info['adcode']['p'];
         $ip_city = $ip_info['adcode']['c'];
-        dd($ip_province.'--'.$ip_city);
 
 
         $recommend = '';
@@ -287,6 +286,7 @@ class WWWIndexRepository {
                 $ip_region_list = config('k.common.region_list.'.$ip_province_region_key);  // 地区-在内的省
             }
         }
+        dd($ip_province_code.'--'.$ip_province.'--'.$ip_city);
 
 
         // 查询用户
