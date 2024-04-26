@@ -234,7 +234,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">【联系人】微信</label>
                     <div class="col-md-8 ">
-                        <input type="text" class="form-control" name="linkman_wechat_id" placeholder="联系人微信" value="{{ $data->linkman_wechat_id or '' }}">
+                        <input type="text" class="form-control" name="linkman_wx_id" placeholder="联系人微信" value="{{ $data->linkman_wx_id or '' }}">
                     </div>
                 </div>
                 {{--联系人微信二维码--}}
@@ -244,8 +244,8 @@
 
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail">
-                                @if(!empty($data->linkman_wechat_qr_code_img))
-                                    <img src="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wechat_qr_code_img) }}" alt="" />
+                                @if(!empty($data->linkman_wx_qr_code_img))
+                                    <img src="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wx_qr_code_img) }}" alt="" />
                                 @endif
                             </div>
                             <div class="fileinput-preview fileinput-exists thumbnail">
@@ -254,7 +254,7 @@
                                 <span class="btn-file">
                                     <button class="btn btn-sm btn-primary fileinput-new">选择图片</button>
                                     <button class="btn btn-sm btn-warning fileinput-exists">更改</button>
-                                    <input type="file" name="linkman_wechat_qr_code" />
+                                    <input type="file" name="linkman_wx_qr_code" />
                                 </span>
                                 <span class="">
                                     <button class="btn btn-sm btn-danger fileinput-exists" data-dismiss="fileinput">移除</button>
