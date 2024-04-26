@@ -357,7 +357,7 @@
 @endsection
 @section('custom-style')
     <style>
-        .tableArea table { min-width:1360px; }
+        .tableArea table { min-width:1440px; }
         /*.tableArea table { width:100% !important; min-width:1380px; }*/
         /*.tableArea table tr th, .tableArea table tr td { white-space:nowrap; }*/
 
@@ -432,7 +432,7 @@
                         "title": "名称",
                         "data": "id",
                         "className": "text-left",
-                        "width": "",
+                        "width": "160px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             return '<a target="_blank" href="{{ env('DOMAIN_WWW') }}/user/'+data+'">'+row.username+'</a>';
@@ -661,7 +661,7 @@
                     {
                         "title": "操作",
                         "data": "id",
-                        "width": "300px",
+                        "width": "360px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                             if(row.user_status == 1)
