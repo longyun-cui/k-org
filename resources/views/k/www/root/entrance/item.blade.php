@@ -26,36 +26,47 @@
 <div class="container">
 
     {{--左侧--}}
-    <div class="main-body-section main-body-left-section section-wrapper page-item margin-bottom-16px">
+    <div class="main-body-section main-body-center-section section-wrapper margin-top-4px">
 
-        @include(env('TEMPLATE_K_WWW').'component.item')
+        <div class="container-box pull-left margin-top-8px">
+            @include(env('TEMPLATE_K_WWW').'component.item')
+        </div>
 
     </div>
 
 
     {{--右侧-作者-用户名片--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right">
-        {{--@include(env('TEMPLATE_K_WWW').'component.component-user', ['data'=>$item->owner])--}}
-        @include(env('TEMPLATE_K_COMMON').'component.component-card', ['data'=>$user])
+    <div class="main-body-section main-body-center-section section-wrapper margin-top-4px _none-">
+        <div class="container-box pull-left margin-top-8px">
+            {{--@include(env('TEMPLATE_K_WWW').'component.component-user', ['data'=>$item->owner])--}}
+            @include(env('TEMPLATE_K_COMMON').'component.component-card', ['data'=>$item->owner])
+        </div>
     </div>
 
 
     {{--右侧-作者-赞助商--}}
-    <div class="main-body-section main-body-right-section section-wrapper pull-right" style="clear:right;">
+    <div class="main-body-section main-body-center-section section-wrapper margin-top-4px _none-">
 
-        {{--@if(!empty($user->ad))--}}
-            {{--<div class="item-row margin-top-4px margin-bottom-2px pull-right">--}}
-                {{--<strong>Ta的贴片广告</strong>--}}
-            {{--</div>--}}
-        {{--@endif--}}
-        @include(env('TEMPLATE_K_COMMON').'component.component-ad-paste', ['item'=>$user->ad])
+        @if(!empty($user->ad))
+            <div class="item-row margin-top-4px pull-right _none">
+                <strong>Ta的贴片广告</strong>
+            </div>
+            <div class="container-box pull-left margin-top-8px">
+                @include(env('TEMPLATE_K_COMMON').'component.component-ad-paste', ['item'=>$user->ad])
+            </div>
+        @endif
+
+
 
         @if(count($user->pivot_sponsor_list))
-        <div class="item-row margin-top-16px margin-bottom-2px pull-right">
-            <strong>Ta的赞助商</strong>
-        </div>
+            <div class="item-row margin-top-4px pull-right _none">
+                <strong>Ta的赞助商</strong>
+            </div>
+            <div class="container-box pull-left margin-top-8px">
+                {{--@include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$user->pivot_sponsor_list])--}}
+                @include(env('TEMPLATE_K_COMMON').'component.user-list', ['user_list'=>$user->pivot_sponsor_list,'type'=>'sponsor'])
+            </div>
         @endif
-        @include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$user->pivot_sponsor_list])
 
     </div>
 
