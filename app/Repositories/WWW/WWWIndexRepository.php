@@ -1545,29 +1545,11 @@ class WWWIndexRepository {
                 ->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1,'is_published'=>1])
                 ->where('owner_id',$user_id);
 
-            if($type == 'root')
-            {
-                $item_query->whereIn('item_type',[1,11]);
-                $record["page_module"] = 1; // page_module=0 default index
-            }
-            else if($type == 'introduction')
-            {
-                $record["page_module"] = 2; // page_module=2 introduction
-            }
-            else if($type == 'article')
-            {
-                $item_query->whereIn('item_type',[1]);
-                $record["page_module"] = 9; // page_module=0 article
-            }
-            else if($type == 'activity')
-            {
-                $item_query->whereIn('item_type',[11]);
-                $record["page_module"] = 11; // page_module=0 activity
-            }
-            else
-            {
-                $record["page_module"] = 1; // page_module=0 default index
-            }
+            if($type == 'root') $item_query->whereIn('item_type',[1,11]);
+            else if($type == 'introduction') $item_query->whereIn('item_type',[1,11]);
+            else if($type == 'article') $item_query->whereIn('item_type',[1]);
+            else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+            else  $item_query->whereIn('item_type',[1,11]);
 
             $item_list = $item_query->orderBy('published_at','desc')->paginate(20);
 

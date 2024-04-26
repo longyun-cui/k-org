@@ -197,6 +197,12 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="{{ url('/mine/my-ad-list') }}">
+                                            <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
+                                            <span>我的广告</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ url('/mine/my-sponsor-list') }}">
                                             <i class="fa fa-user text-default" style="width:16px;margin-right:8px;text-align:right;"></i>
                                             <span>我的赞助商</span>

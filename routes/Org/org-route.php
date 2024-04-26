@@ -96,6 +96,7 @@ Route::group([], function () {
         Route::match(['get','post'], '/mine/my-fans-list', $controller.'@view_mine_my_fans_list');
         Route::match(['get','post'], '/mine/my-follow-list', $controller.'@view_mine_my_follow_list');
         Route::match(['get','post'], '/mine/my-sponsor-list', $controller.'@view_mine_my_sponsor_list');
+        Route::match(['get','post'], '/mine/my-ad-list', $controller.'@view_mine_my_ad_list');
 
         Route::match(['get','post'], '/mine/sponsor-add', $controller.'@operate_mine_sponsor_add');
         Route::match(['get','post'], '/mine/sponsor-delete', $controller.'@operate_mine_sponsor_delete');
@@ -109,6 +110,11 @@ Route::group([], function () {
         Route::match(['get','post'], '/mine/member-add', $controller.'@operate_mine_member_add');
         Route::match(['get','post'], '/mine/member-remove', $controller.'@operate_mine_member_remove');
         Route::match(['get','post'], '/mine/fans-remove', $controller.'@operate_mine_fans_remove');
+
+
+        Route::match(['get','post'], '/mine/ad-close', $controller.'@operate_mine_ad_close');
+        Route::match(['get','post'], '/mine/ad-open', $controller.'@operate_mine_ad_open');
+
 
 
 

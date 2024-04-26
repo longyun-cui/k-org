@@ -256,6 +256,20 @@ class OrgIndexController extends Controller
 
 
 
+    // 【广告】关闭
+    public function operate_mine_ad_close()
+    {
+        return $this->repo->operate_mine_sponsor_close(request()->all());
+    }
+    // 【广告】开启
+    public function operate_mine_ad_open()
+    {
+        return $this->repo->operate_mine_sponsor_open(request()->all());
+    }
+
+
+
+
 
 
 
