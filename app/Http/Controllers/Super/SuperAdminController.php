@@ -152,7 +152,8 @@ class SuperAdminController extends Controller
         $user = K_User::where('id',$user_id)->first();
 
         if($user->user_type == 11) Auth::guard('org')->login($user,true);
-        else if($user->user_type == 88) Auth::guard('sponsor')->login($user,true);
+        else if($user->user_type == 88) Auth::guard('org')->login($user,true);
+//        else if($user->user_type == 88) Auth::guard('sponsor')->login($user,true);
         else Auth::guard('user')->login($user,true);
 
         if(request()->isMethod('get'))

@@ -35,14 +35,14 @@
                     <span class="text-muted">{{ $v->contact_address or '暂无' }}</span>
                 </div>
                 @endif
-                    {{--联系人微信--}}
+                {{--联系人姓名--}}
                 @if(!empty($v->linkman_name))
                 <div class="margin-4px">
                     <i class="fa fa-user text-orange"></i>
                     <span class="text-muted">{{ $v->linkman_name or '暂无' }}</span>
                 </div>
                 @endif
-                    {{--联系人微信--}}
+                {{--联系人电话--}}
                 @if(!empty($v->linkman_phone))
                 <div class="margin-4px">
                     <i class="fa fa-phone text-orange"></i>

@@ -101,7 +101,8 @@
                 <strong>Ta的赞助商</strong>
                 {{--<strong>{{ $data->username or 'Ta' }}的赞助商</strong>--}}
             </div>
-            @include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])
+{{--            @include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])--}}
+            @include(env('TEMPLATE_K_COMMON').'component.user-list', ['user_list'=>$data->pivot_sponsor_list,'belong'=>'sponsor'])
         @endif
 
 
@@ -110,7 +111,8 @@
             <div class="item-row margin-top-8px pull-right _none">
                 <strong>Ta赞助的人</strong>
             </div>
-            @include(env('TEMPLATE_K_COMMON').'component.menu-for-org', ['org_list'=>$data->pivot_sponsored_list])
+{{--            @include(env('TEMPLATE_K_COMMON').'component.menu-for-org', ['org_list'=>$data->pivot_sponsored_list])--}}
+            @include(env('TEMPLATE_K_COMMON').'component.user-list', ['user_list'=>$data->pivot_sponsored_list,'belong'=>'sponsored'])
         @endif
 
 

@@ -60,7 +60,7 @@
 
                     @else
 
-                        <span class="tool-inn tool-info follow-add follow-add-it" role="button"><i class="fa fa-plus"></i> 关注</span>
+                        <span class="tool-inn tool-info follow-add follow-add-it" role="button"><i class="fa fa-plus"></i> 收藏名片</span>
 
                     @endif
 
@@ -73,11 +73,11 @@
                 @endif
 
                 <div class="item-row item-info-row">
-                    <span>粉丝 {{ $u->fans_num }}</span>
+                    <span>粉丝 {{ $u->fans_num or '' }}</span>
                     {{--<span> • 内容 {{ $u->item_count }}</span>--}}
                     {{--<span> • 文章 {{ $u->article_count }}</span>--}}
                     {{--<span> • 活动 {{ $u->activity_count }}</span>--}}
-                    <span> • 访问 {{ $u->visit_num }}</span>
+                    <span> • 访问 {{ $u->visit_num or '' }}</span>
                 </div>
 
                 @if(!empty($u->contact_phone))
@@ -178,6 +178,18 @@
             </div>
 
         </div>
+
+        @if(!empty($belong))
+        @if($belong == 'sponsor')
+        <div class="item-row item-info-row text-muted margin-top-4px">
+            <span class="info-tags text-primary bg-yellow">我的赞助人</span>
+        </div>
+        @elseif($belong == 'sponsored')
+        <div class="item-row item-info-row text-muted">
+            <span class="info-tags text-primary bg-yellow">我赞助的人</span>
+        </div>
+        @endif
+        @endif
 
     </div>
 </div>
