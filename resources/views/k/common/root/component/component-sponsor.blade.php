@@ -21,14 +21,8 @@
                 </span>
             </div>
 
-            @if(!empty($v->linkman) or !empty($v->contact_phone) or !empty($v->contact_address))
+            @if(!empty($v->linkman_name) or !empty($v->contact_phone) or !empty($v->contact_address))
             <div class="item-row item-info-row">
-                @if(!empty($v->linkman))
-                <div class="margin-4px">
-                    <i class="fa fa-user text-orange"></i>
-                    <span class="text-muted">{{ $v->linkman or '暂无' }}</span>
-                </div>
-                @endif
                 @if(!empty($v->contact_phone))
                 <div class="margin-4px">
                     <i class="fa fa-phone text-success"></i>
@@ -39,6 +33,32 @@
                 <div class="margin-4px">
                     <i class="fa fa-map-marker text-primary"></i>
                     <span class="text-muted">{{ $v->contact_address or '暂无' }}</span>
+                </div>
+                @endif
+                    {{--联系人微信--}}
+                @if(!empty($v->linkman_name))
+                <div class="margin-4px">
+                    <i class="fa fa-user text-orange"></i>
+                    <span class="text-muted">{{ $v->linkman_name or '暂无' }}</span>
+                </div>
+                @endif
+                    {{--联系人微信--}}
+                @if(!empty($v->linkman_phone))
+                <div class="margin-4px">
+                    <i class="fa fa-user text-orange"></i>
+                    <span class="text-muted">{{ $v->linkman_phone or '暂无' }}</span>
+                </div>
+                @endif
+                {{--联系人微信--}}
+                @if(!empty($data->linkman_wx_id))
+                <div class="margin-4px">
+                    <i class="fa fa-user text-orange"></i>
+                    <span class="text-muted">{{ $data->linkman_wx_id or '暂无' }}</span>
+                    @if(!empty($data->linkman_wx_qr_code_img))
+                        <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wx_qr_code_img) }}">
+                            <i class="fa fa-qrcode text-danger" style="width:16px;font-weight:500;"></i>
+                        </a>
+                    @endif
                 </div>
                 @endif
             </div>
