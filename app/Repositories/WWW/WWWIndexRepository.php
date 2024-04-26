@@ -477,10 +477,10 @@ class WWWIndexRepository {
         {
         }
 
-        if($type == 'root') $item_query->whereIn('item_type',[1,11,88]);
+        if($type == 'root') $item_query->whereIn('item_type',[1,11]);
         else if($type == 'article') $item_query->whereIn('item_type',[1]);
         else if($type == 'activity') $item_query->whereIn('item_type',[11]);
-        else  $item_query->whereIn('item_type',[1,11,88]);
+        else  $item_query->whereIn('item_type',[1,11]);
 
 
 
@@ -1469,13 +1469,23 @@ class WWWIndexRepository {
                 'ext','introduction',
 //                'items'=>function($query) { $query->with('owner')->where(['item_status'=>1,'active'=>1])->orderBy('published_at','desc'); },
 //                'ad',
-                'ad_list'=>function($query) { $query->where(['item_category'=>1,'item_type'=>88])->orderby('updated_at','desc'); },
-                'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1])->orderby('updated_at','desc'); },
-                'pivot_sponsored_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc'); },
+                'ad_list'=>function($query) {
+                    $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1,'item_type'=>88])->orderby('updated_at','desc');
+                },
+                'pivot_sponsor_list'=>function($query) {
+                    $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1])->orderby('updated_at','desc');
+                },
+                'pivot_sponsored_list'=>function($query) {
+                    $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1])->orderby('updated_at','desc');
+                    },
             ])
             ->withCount([
-                'pivot_sponsor_list as pivot_sponsor_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1]); },
-                'pivot_sponsored_list as pivot_sponsored_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
+                'pivot_sponsor_list as pivot_sponsor_count' => function($query) {
+                    $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1,'user.user_status'=>1]);
+                },
+                'pivot_sponsored_list as pivot_sponsored_count' => function($query) {
+                    $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]);
+                },
 //                'pivot_org_list as pivot_org_count' => function($query) { $query->where(['relation_active'=>1,'relation_category'=>88,'relation_type'=>1]); },
                 'item_list as item_count' => function($query) { $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1]); }
             ])
@@ -1577,31 +1587,14 @@ class WWWIndexRepository {
         {
             $item_query = K_Item::with(['owner'])
                 ->where(['active'=>1,'status'=>1,'item_active'=>1,'item_status'=>1,'is_published'=>1])
+//                ->whereIn('item_type',[1,11])
                 ->where('owner_id',$user_id);
 
-            if($type == 'root')
-            {
-                $item_query->whereIn('item_type',[1,11]);
-                $record["page_module"] = 1; // page_module=0 default index
-            }
-            else if($type == 'introduction')
-            {
-                $record["page_module"] = 2; // page_module=2 introduction
-            }
-            else if($type == 'article')
-            {
-                $item_query->whereIn('item_type',[1]);
-                $record["page_module"] = 9; // page_module=0 article
-            }
-            else if($type == 'activity')
-            {
-                $item_query->whereIn('item_type',[11]);
-                $record["page_module"] = 11; // page_module=0 activity
-            }
-            else
-            {
-                $record["page_module"] = 1; // page_module=0 default index
-            }
+            if($type == 'root') $item_query->whereIn('item_type',[1,11]);
+            else if($type == 'introduction') $item_query->whereIn('item_type',[1,11]);
+            else if($type == 'article') $item_query->whereIn('item_type',[1]);
+            else if($type == 'activity') $item_query->whereIn('item_type',[11]);
+            else $item_query->whereIn('item_type',[1,11]);
 
             $item_list = $item_query->orderByDesc('published_at')->paginate(20);
         }
@@ -1634,26 +1627,11 @@ class WWWIndexRepository {
 //        dd($item->toArray());
 
 
-        if($type == 'root')
-        {
-            $record["page_module"] = 1;  // page_module=0 default index
-        }
-        else if($type == 'introduction')
-        {
-            $record["page_module"] = 2;  // page_module=2 introduction
-        }
-        else if($type == 'article')
-        {
-            $record["page_module"] = 9;  // page_module=0 article
-        }
-        else if($type == 'activity')
-        {
-            $record["page_module"] = 11;  // page_module=0 activity
-        }
-        else
-        {
-            $record["page_module"] = 1;  // page_module=0 default index
-        }
+        if($type == 'root') $record["page_module"] = 1;  // page_module=0 default index
+        else if($type == 'introduction') $record["page_module"] = 2;  // page_module=2 introduction
+        else if($type == 'article') $record["page_module"] = 9;  // page_module=0 article
+        else if($type == 'activity') $record["page_module"] = 11;  // page_module=0 activity
+        else $record["page_module"] = 1;  // page_module=0 default index
 
         // 插入记录表
         $record["record_category"] = 1; // record_category=1 browse/share

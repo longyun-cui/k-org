@@ -148,6 +148,10 @@
 
             <div class="item-info-row">
 
+                @if($item->item_type == 88)
+                <span class="info-tags text-primary bg-gray">广告</span>
+                @endif
+
                 {{--浏览--}}
                 <a class="tool-button" href="{{ url('/item/'.$item->id) }}" role="button">
                     <span>
