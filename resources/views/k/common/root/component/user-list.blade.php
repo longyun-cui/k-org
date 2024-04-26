@@ -179,14 +179,14 @@
 
         </div>
 
-        @if(!empty($belong))
-        @if($belong == 'sponsor')
+        @if(!empty($type))
+        @if($type == 'sponsor')
         <div class="item-row item-info-row text-muted margin-top-4px">
-            <span class="info-tags text-primary bg-yellow">我的赞助人</span>
+            <span class="info-tags text-primary bg-yellow">赞助者</span>
         </div>
-        @elseif($belong == 'sponsored')
+        @elseif($type == 'sponsored')
         <div class="item-row item-info-row text-muted">
-            <span class="info-tags text-primary bg-yellow">我赞助的人</span>
+            <span class="info-tags text-primary bg-blue">我赞助的人</span>
         </div>
         @endif
         @endif

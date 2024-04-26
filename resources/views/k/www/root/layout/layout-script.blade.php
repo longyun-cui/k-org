@@ -19,7 +19,7 @@
             speed: 300,
             lessLink: '<a href="#">收起</a>',
             moreLink: '<a href="#">展开更多</a>',
-            collapsedHeight: 480,
+            collapsedHeight: 240,
             embedCSS: false
         });
 

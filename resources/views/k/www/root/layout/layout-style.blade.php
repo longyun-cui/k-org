@@ -1,5 +1,9 @@
 <style>
 
+    article.readmore-content {
+        /*height:360px;*/
+    }
+
     article.readmore-content + a {
         position: relative;
         float:left;

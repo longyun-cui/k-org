@@ -88,40 +88,48 @@
 
         {{--贴片广告--}}
         @if(!empty($data->ad))
-            <div class="item-row margin-top-8px pull-right _none">
-                <strong>广告</strong>
+            <div class="item-row margin-top-4px pull-right _none-">
+{{--                <strong>广告</strong>--}}
             </div>
-            @include(env('TEMPLATE_K_COMMON').'component.component-ad-paste', ['item'=>$data->ad])
+            <div class="container-box pull-left margin-top-8px">
+                @include(env('TEMPLATE_K_COMMON').'component.component-ad-paste', ['item'=>$data->ad])
+            </div>
         @endif
 
 
         {{--我的赞助商--}}
         @if(count($data->pivot_sponsor_list))
-            <div class="item-row margin-top-8px pull-right _none-">
+            <div class="item-row margin-top-8px pull-right _none">
                 <strong>Ta的赞助商</strong>
                 {{--<strong>{{ $data->username or 'Ta' }}的赞助商</strong>--}}
             </div>
 {{--            @include(env('TEMPLATE_K_COMMON').'component.component-sponsor', ['sponsor_list'=>$data->pivot_sponsor_list])--}}
-            @include(env('TEMPLATE_K_COMMON').'component.user-list', ['user_list'=>$data->pivot_sponsor_list,'belong'=>'sponsor'])
+            <div class="container-box pull-left margin-top-8px">
+                @include(env('TEMPLATE_K_COMMON').'component.user-list', ['user_list'=>$data->pivot_sponsor_list,'type'=>'sponsor'])
+            </div>
         @endif
 
 
         {{--我赞助的组织机构--}}
         @if(count($data->pivot_sponsored_list))
-            <div class="item-row margin-top-8px pull-right _none">
+            <div class="item-row margin-top-4px pull-right _none">
                 <strong>Ta赞助的人</strong>
             </div>
+            <div class="container-box pull-left margin-top-8px">
 {{--            @include(env('TEMPLATE_K_COMMON').'component.menu-for-org', ['org_list'=>$data->pivot_sponsored_list])--}}
-            @include(env('TEMPLATE_K_COMMON').'component.user-list', ['user_list'=>$data->pivot_sponsored_list,'belong'=>'sponsored'])
+                @include(env('TEMPLATE_K_COMMON').'component.user-list', ['user_list'=>$data->pivot_sponsored_list,'type'=>'sponsored'])
+            </div>
         @endif
 
 
         {{--我的广告--}}
         @if(count($data->ad_list))
-            <div class="item-row margin-top-8px pull-right _none-">
+            <div class="item-row margin-top-4px pull-right _none">
                 <strong>Ta的广告</strong>
             </div>
-            @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
+            <div class="container-box pull-left margin-top-8px">
+                @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
+            </div>
         @endif
 
 
@@ -129,14 +137,16 @@
 
 
     {{--内容--}}
-    <div class="main-body-section main-body-center-section section-wrapper">
+    <div class="main-body-section main-body-center-section section-wrapper margin-top-4px">
 
         @if(!empty($item_list) && count($item_list))
-            <div class="item-row margin-top-8px pull-right _none-">
+            <div class="item-row margin-top-8px pull-right _none">
                 <strong>Ta的分享</strong>
             </div>
-            @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
-            {!! $item_list->links() !!}
+            <div class="container-box pull-left margin-top-8px">
+                @include(env('TEMPLATE_K_COMMON').'component.item-list',['item_list'=>$item_list])
+                {!! $item_list->links() !!}
+            </div>
         @endif
 
     </div>
