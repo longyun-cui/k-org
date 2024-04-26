@@ -45,14 +45,14 @@
                     {{--联系人微信--}}
                 @if(!empty($v->linkman_phone))
                 <div class="margin-4px">
-                    <i class="fa fa-user text-orange"></i>
+                    <i class="fa fa-phone text-orange"></i>
                     <span class="text-muted">{{ $v->linkman_phone or '暂无' }}</span>
                 </div>
                 @endif
                 {{--联系人微信--}}
                 @if(!empty($data->linkman_wx_id))
                 <div class="margin-4px">
-                    <i class="fa fa-user text-orange"></i>
+                    <i class="fa fa-weixin text-orange"></i>
                     <span class="text-muted">{{ $data->linkman_wx_id or '暂无' }}</span>
                     @if(!empty($data->linkman_wx_qr_code_img))
                         <a class="lightcase-image" href="{{ url(env('DOMAIN_CDN').'/'.$data->linkman_wx_qr_code_img) }}">
