@@ -357,7 +357,7 @@
 @endsection
 @section('custom-style')
     <style>
-        .tableArea table { min-width:1800px; }
+        .tableArea table { min-width:1680px; }
         /*.tableArea table { width:100% !important; min-width:1380px; }*/
         /*.tableArea table tr th, .tableArea table tr td { white-space:nowrap; }*/
 
@@ -413,6 +413,66 @@
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             return data;
+                        }
+                    },
+                    {
+                        "title": "操作",
+                        "data": "id",
+                        "width": "300px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+                            if(row.user_status == 1)
+                            {
+                                $html_able =
+                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>';
+                            }
+                            else
+                            {
+                                $html_able = '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>';
+                            }
+
+                            if(row.user_type == 1)
+                            {
+                                $html_edit = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>';
+                            }
+                            else
+                            {
+                                $html_edit = '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>';
+                            }
+
+                            var html =
+                                $html_able+
+                                //                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
+                                //                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
+                                $html_edit+
+                                '<a class="btn btn-xs bg-maroon item-change-password-show" data-id="'+data+'">修改密码</a>'+
+                                '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
+                                '<a class="btn btn-xs bg-olive item-login-submit" data-id="'+data+'">登录</a>'+
+                                '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
+                                '';
+                            return html;
+                        }
+                    },
+                    {
+                        "title": "状态",
+                        "data": "active",
+                        "width": "60px",
+                        "orderable": false,
+                        render: function(data, type, row, meta) {
+//                            return data;
+                            if(row.deleted_at != null)
+                            {
+                                return '<small class="btn-xs bg-black">已删除</small>';
+                            }
+
+                            if(row.user_status == 1)
+                            {
+                                return '<small class="btn-xs btn-success">正常</small>';
+                            }
+                            else
+                            {
+                                return '<small class="btn-xs btn-danger">已封禁</small>';
+                            }
                         }
                     },
                     {
@@ -634,66 +694,6 @@
 //                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute+':'+$second;
 
                            return $year+'-'+$month+'-'+$day+'&nbsp;&nbsp;'+$hour+':'+$minute;
-                        }
-                    },
-                    {
-                        "title": "状态",
-                        "data": "active",
-                        "width": "60px",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-//                            return data;
-                            if(row.deleted_at != null)
-                            {
-                                return '<small class="btn-xs bg-black">已删除</small>';
-                            }
-
-                            if(row.user_status == 1)
-                            {
-                                return '<small class="btn-xs btn-success">正常</small>';
-                            }
-                            else
-                            {
-                                return '<small class="btn-xs btn-danger">已封禁</small>';
-                            }
-                        }
-                    },
-                    {
-                        "title": "操作",
-                        "data": "id",
-                        "width": "360px",
-                        "orderable": false,
-                        render: function(data, type, row, meta) {
-                            if(row.user_status == 1)
-                            {
-                                $html_able =
-                                    '<a class="btn btn-xs btn-danger user-admin-disable-submit" data-id="'+data+'">封禁</a>';
-                            }
-                            else
-                            {
-                                $html_able = '<a class="btn btn-xs btn-success user-admin-enable-submit" data-id="'+data+'">解禁</a>';
-                            }
-
-                            if(row.user_type == 1)
-                            {
-                                $html_edit = '<a class="btn btn-xs btn-default disabled" data-id="'+data+'">编辑</a>';
-                            }
-                            else
-                            {
-                                $html_edit = '<a class="btn btn-xs btn-primary item-edit-submit" data-id="'+data+'">编辑</a>';
-                            }
-
-                            var html =
-                                $html_able+
-//                                '<a class="btn btn-xs item-download-qrcode-submit" data-id="'+value+'">下载二维码</a>'+
-//                                '<a class="btn btn-xs btn-primary item-recharge-show" data-id="'+data+'">充值/退款</a>'+
-                                $html_edit+
-                                '<a class="btn btn-xs bg-maroon item-change-password-show" data-id="'+data+'">修改密码</a>'+
-                                '<a class="btn btn-xs bg-navy item-delete-submit" data-id="'+data+'" >删除</a>'+
-                                '<a class="btn btn-xs bg-olive item-login-submit" data-id="'+data+'">登录</a>'+
-                                '<a class="btn btn-xs bg-purple item-statistic-submit" data-id="'+data+'">流量统计</a>'+
-                                '';
-                            return html;
                         }
                     }
                 ],
