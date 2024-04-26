@@ -357,7 +357,7 @@
 @endsection
 @section('custom-style')
     <style>
-        .tableArea table { min-width:1440px; }
+        .tableArea table { min-width:1800px; }
         /*.tableArea table { width:100% !important; min-width:1380px; }*/
         /*.tableArea table tr th, .tableArea table tr td { white-space:nowrap; }*/
 
@@ -506,7 +506,7 @@
                         "title": "负责人",
                         "data": "principal_id",
                         "className": "",
-                        "width": "128px",
+                        "width": "120px",
                         "orderable": false,
                         "fnCreatedCell": function (nTd, data, row, iRow, iCol) {
                             if(row.is_completed != 1 && row.item_status != 97)
