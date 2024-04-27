@@ -181,7 +181,7 @@
                 </div>
             </div>
 
-            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-text-set-form">
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-text-set-form" onsubmit="return false;">
                 <div class="box-body">
 
                     {{ csrf_field() }}
@@ -225,7 +225,7 @@
                 </div>
             </div>
 
-            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-time-set-form">
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-time-set-form" onsubmit="return false;">
                 <div class="box-body">
 
                     {{ csrf_field() }}
@@ -273,7 +273,7 @@
                 </div>
             </div>
 
-            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-radio-set-form">
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-radio-set-form" onsubmit="return false;">
                 <div class="box-body">
 
                     {{ csrf_field() }}
@@ -313,7 +313,7 @@
                 </div>
             </div>
 
-            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-select-set-form">
+            <form action="" method="post" class="form-horizontal form-bordered " id="modal-info-select-set-form" onsubmit="return false;">
                 <div class="box-body">
 
                     {{ csrf_field() }}

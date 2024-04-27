@@ -435,12 +435,14 @@
             if($that.attr('data-text-type') == "textarea")
             {
                 $('input[name=info-text-set-column-value]').val('').hide();
-                $('textarea[name=info-textarea-set-column-value]').text($that.attr("data-value")).show();
+                $('textarea[name=info-textarea-set-column-value]').text($that.attr("data-value")).show().focus();
+                setTimeout("$('textarea[name=info-textarea-set-column-value]').focus()", 300 );
             }
             else
             {
                 $('textarea[name=info-textarea-set-column-value]').val('').hide();
-                $('input[name=info-text-set-column-value]').val($that.attr("data-value")).show();
+                $('input[name=info-text-set-column-value]').val($that.attr("data-value")).show().focus();
+                setTimeout("$('input[name=info-text-set-column-value]').focus()", 300 );
             }
 
             $('#item-submit-for-info-text-set').attr('data-text-type',$that.attr('data-text-type'));
@@ -507,6 +509,23 @@
             );
 
         });
+        // Input 回车事件
+        $(".main-content").on('keyup', "input[name=info-text-set-column-value]", function(event) {
+            if(event.keyCode ==13)
+            {
+                // 回车事件被触发
+                // 在这里写下你要执行的代码
+                $('#item-submit-for-info-text-set').click();
+            }
+        });
+        // $(".main-content").on('keyup', "textarea[name=info-textarea-set-column-value]", function(event) {
+        //     if(event.keyCode ==13)
+        //     {
+        //         // 回车事件被触发
+        //         // 在这里写下你要执行的代码
+        //         $('#item-submit-for-info-text-set').click();
+        //     }
+        // });
 
 
 
