@@ -1,15 +1,17 @@
 @extends(env('TEMPLATE_K_WWW').'layout.layout')
 
-@section('head_title','注册组织 - 如未科技')
-@section('meta_title')@endsection
+
+@section('head_title')注册社群组织@endsection
+
+@section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
-@section('meta_description')@endsection
-@section('meta_keywords')@endsection
+@section('meta_description')朝鲜族社群组织活动平台,发现身边的朝鲜族社群组织活动@endsection
+@section('meta_keywords')朝鲜族,朝鲜族社区,朝鲜族社群,朝鲜族组织,朝鲜族活动,朝鲜族社群平台,朝鲜族组织平台,朝鲜族活动平台,朝鲜族生活社区@endsection
 
 
-@section('wx_share_title')@endsection
-@section('wx_share_desc')@endsection
-@section('wx_share_imgUrl')@endsection
+@section('wx_share_title')注册社群组织@endsection
+@section('wx_share_desc')朝鲜族社群平台@endsection
+@section('wx_share_imgUrl'){{ url('/custom/k/k-www.jpg') }}@endsection
 
 
 

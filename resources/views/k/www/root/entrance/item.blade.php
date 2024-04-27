@@ -3,13 +3,13 @@
 
 @section('head_title') {{ $item->title or '朝鲜族平台' }} @endsection
 
-@section('meta_title')朝鲜族社群组织活动平台@endsection
+@section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
-@section('meta_description')发现身边的朝鲜族社群组织活动@endsection
-@section('meta_keywords')朝鲜族,朝鲜族社群,朝鲜族组织,朝鲜族活动@endsection
+@section('meta_description')朝鲜族社群组织活动平台,发现身边的朝鲜族社群组织活动@endsection
+@section('meta_keywords')朝鲜族,朝鲜族社区,朝鲜族社群,朝鲜族组织,朝鲜族活动,朝鲜族社群平台,朝鲜族组织平台,朝鲜族活动平台,朝鲜族生活社区,{{ $item->title or '朝鲜族社群平台' }},{{ '@'.$item->owner->username }},@endsection
 
 
-@section('wx_share_title'){{ $item->title or '朝鲜族平台' }}@endsection
+@section('wx_share_title'){{ $item->title or '朝鲜族社群平台' }}@endsection
 @section('wx_share_desc'){{ '@'.$item->owner->username }}@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}@endsection
 
