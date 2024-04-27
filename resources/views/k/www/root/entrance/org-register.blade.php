@@ -10,7 +10,7 @@
 
 
 @section('wx_share_title')注册社群组织@endsection
-@section('wx_share_desc')朝鲜族社群平台@endsection
+@section('wx_share_desc')朝鲜族社群平台 - 发现身边的朝鲜族社群组织活动@endsection
 @section('wx_share_imgUrl'){{ url('/custom/k/k-www.jpg') }}@endsection
 
 
