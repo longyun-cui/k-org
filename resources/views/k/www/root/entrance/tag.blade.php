@@ -10,9 +10,9 @@
 @section('meta_keywords')朝鲜族,朝鲜族社群,朝鲜族组织,朝鲜族活动,朝鲜族社群平台,朝鲜族组织平台,朝鲜族活动平台@endsection
 
 
-@section('wx_share_title')#{{ $q or '' }}@endsection
-@section('wx_share_desc')朝鲜族社群平台@endsection
-@section('wx_share_imgUrl'){{ url('/custom/k/k-www.jpg') }}@endsection
+@section('wx_share_title')#{{ $q or '' }} - 朝鲜族社群平台@endsection
+@section('wx_share_desc')发现身边的朝鲜族社群组织活动@endsection
+@section('wx_share_imgUrl'){{ url('/custom/k/k-www-wx-share.jpg') }}@endsection
 
 
 
