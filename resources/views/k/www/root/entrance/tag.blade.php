@@ -2,7 +2,7 @@
 
 
 @section('head_title')
-    {{ $head_title or '朝鲜族平台' }}
+    {{ $head_title or '朝鲜族社群平台' }}
 @endsection
 @section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
