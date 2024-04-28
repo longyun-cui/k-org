@@ -273,6 +273,7 @@ class WWWIndexRepository {
         if(!empty($post_province)) $province = $post_province;
         if(!empty($post_city)) $city = $post_city;
 //        dd($city);
+        $return['city'] = $city;
 
         $city_belong = 0;
         if($city)

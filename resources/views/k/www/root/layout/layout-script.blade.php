@@ -8,6 +8,7 @@
         console.log("{{ $user_query_by or 'user_query_by' }}");
         console.log("{{ $user_query_of_recommend_count or 'user_query_of_recommend_count' }}");
         console.log("{{ $q or 'q' }}");
+        console.log("{{ $city or 'city' }}");
 
 //        $('article').readmore({
 //            speed: 150,
