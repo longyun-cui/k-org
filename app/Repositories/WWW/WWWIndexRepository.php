@@ -270,8 +270,9 @@ class WWWIndexRepository {
         $post_province = isset($post_data['province']) ? $post_data['province'] : '';
         $post_city = isset($post_data['city']) ? $post_data['city'] : '';
 
-        if(!$post_province) $province = $post_province;
-        if(!$post_city) $city = $post_city;
+        if(!empty($post_province)) $province = $post_province;
+        if(!empty($post_city)) $city = $post_city;
+//        dd($city);
 
         $city_belong = 0;
         if($city)
