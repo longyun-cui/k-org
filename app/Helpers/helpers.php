@@ -181,6 +181,8 @@ if(!function_exists('return_interval_unix'))
 }
 
 
+
+
 if(!function_exists('replace_blank')) {
 	function replace_blank($text)
 	{
@@ -219,6 +221,19 @@ if(!function_exists('replace_content')) {
 	}
 }
 
+
+if(!function_exists('array_search_by_fuzzy')) {
+    function array_search_by_fuzzy($keyword, $array)
+    {
+        $filtered = array_filter($array, function($item) use ($keyword) {
+            return stripos($item, $keyword) !== false;
+        });
+        return $filtered;
+    }
+}
+
+
+// ip
 if(!function_exists('get_ip_info'))
 {
     function get_ip_info($ip)
@@ -272,6 +287,7 @@ if(!function_exists('GetIP'))
         return $ip;
     }
 }
+
 
 //获取浏览器
 if(!function_exists('getBrowserInfo'))

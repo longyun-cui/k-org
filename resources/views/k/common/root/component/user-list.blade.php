@@ -21,11 +21,11 @@
                         <b>{{ $u->username or '' }}</b>
                     </a>
 
-                    @if(Auth::check())
+                    @if($auth_check)
 
                         <span class="tool-inn tool-set _none"><i class="fa fa-cog"></i></span>
 
-                        @if($u->id != Auth::user()->id)
+                        @if($u->id != $me->id)
                             @if(count($u->fans_list->whereIn('relation_type', [21,41])) > 0)
                                 <span class="tool-inn tool-info follow-remove follow-remove-it" role="button"><i class="fa fa-check"></i> 已收藏</span>
                                 {{--<span class="tool-inn tool-info follow-remove follow-remove-it"><i class="fa fa-minus"></i> 取消关注</span>--}}

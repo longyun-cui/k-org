@@ -395,7 +395,7 @@ class SuperAdminRepository {
         }
 
         // 类型2 字符型
-        $view_data['user_type'] = -1;
+//        $view_data['user_type'] = -1;
 //        if(isset($post_data['user_type']))
 //        {
 //            if(in_array($post_data['user_type'],config('k.common.super.user_type_only_key')))

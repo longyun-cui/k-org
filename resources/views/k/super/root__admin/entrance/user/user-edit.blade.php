@@ -447,7 +447,11 @@
                     else
                     {
                         layer.msg(data.msg);
-                        location.href = "{{ url('/admin/user/user-list') }}";
+                        {{--location.href = "{{ url('/admin/user/user-list') }}";--}}
+
+                        if($.getUrlParam('referrer')) location.href = decodeURIComponent($.getUrlParam('referrer'));
+                        else if(document.referrer) location.href = document.referrer;
+                        else location.href = "{{ url('/admin/user/user-list') }}";
                     }
                 }
             };

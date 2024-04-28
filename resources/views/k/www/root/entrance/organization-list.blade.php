@@ -30,7 +30,7 @@
 
 
         {{--注册新组织--}}
-        <div class="main-body-section main-body-center-section section-wrapper page-item">
+        <div class="container-box pull-left margin-top-8px margin-bottom-16px">
             <div class="item-piece item-option item-wrapper user-piece user-option user margin-bottom-4px radius-2px">
                 <div class="panel-default box-default item-entity-container text-center">
                     <div><a href="{{ url(env('DOMAIN_WWW').'/org-register') }}">注册一个社群组织</a></div>
@@ -38,9 +38,49 @@
             </div>
         </div>
 
+        <div class="container-box pull-left margin-bottom-16px">
+            {{--选择所在城市--}}
+            <div class="form-group area_select_box">
+                <label class="control-label col-md-2 _none"><sup class="text-red">*</sup> 所在城市</label>
+                <div class="col-md-8 " style="padding:0">
+                    <div class="col-xs-5 col-sm-5 col-md-4 " style="padding:0">
+                        <select name="area_province" class="form-control form-filter area_select_province" id="area_province">
+                            @if(!empty($data->area_province))
+                                <option value="{{ $data->area_province or '' }}">{{ $data->area_province or '' }}</option>
+                            @else
+                                <option value="">请选择省</option>
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-md-4 " style="padding:0">
+                        <select name="area_city" class="form-control form-filter area_select_city" id="area_city">
+                            @if(!empty($data->area_city))
+                                <option value="{{ $data->area_city or '' }}">{{ $data->area_city or '' }}</option>
+                            @else
+                                <option value="">请先选择省</option>
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 " style="padding:0">
+                        <button type="button" class="btn btn-success" id="city-search-submit" style="width:100%;">
+                            <i class="fa fa-search"></i> 查询
+                        </button>
+{{--                    <select name="area_district" class="form-control form-filter area_select_district" id="area_district">--}}
+{{--                        @if(!empty($data->area_district))--}}
+{{--                            <option value="{{ $data->area_district or '' }}">{{ $data->area_district or '' }}</option>--}}
+{{--                        @else--}}
+{{--                            <option value="">请先选择市</option>--}}
+{{--                        @endif--}}
+{{--                    </select>--}}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
-        {!! $user_list->links() !!}
+        <div class="container-box pull-left margin-bottom-16px">
+            @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
+{{--            {!! $user_list->links() !!}--}}
+        </div>
 
 
     </div>
