@@ -264,11 +264,14 @@ class WWWIndexRepository {
 //        $ip_province = $ip_info['ipdata']['info1'];  // 带省
 //        $ip_city = $ip_info['ipdata']['info2'];  // 带市
 
-        $province = isset($post_data['province']) ? $post_data['province'] : '';
-        $city = isset($post_data['city']) ? $post_data['city'] : '';
+        $province = $ip_province;
+        $city = $ip_city;
 
-//        if(!$province) $province = $ip_province;
-//        if(!$city) $city = $ip_city;
+        $post_province = isset($post_data['province']) ? $post_data['province'] : '';
+        $post_city = isset($post_data['city']) ? $post_data['city'] : '';
+
+        if(!$post_province) $province = $post_province;
+        if(!$post_city) $city = $post_city;
 
         $city_belong = 0;
         if($city)
