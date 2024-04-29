@@ -1053,10 +1053,6 @@ class WWWIndexRepository {
         }
 
 
-
-//dd(456);
-
-
 //        foreach($user_list as $u)
 //        {
 //            if(count($u->fans_list->whereIn('relation_type', [21,41])) > 0) echo 1;
@@ -1089,6 +1085,272 @@ class WWWIndexRepository {
 
         $view_blade = env('TEMPLATE_K_WWW').'entrance.organization-list';
         return view($view_blade)->with($return_data);
+    }
+    // 【组织列表】
+    public function get_organization_list($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+            'province.required' => '请选择省份',
+            'city.required' => '请选择城市',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+            'province' => 'required',
+            'city' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $this->get_me();
+        if($this->auth_check)
+        {
+            $me = $this->me;
+            $me_id = $me->id;
+            $record["creator_id"] = $me_id;
+        }
+        else $me_id = 0;
+
+        $ip = Get_IP();
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
+
+        $province = isset($post_data['province']) ? $post_data['province'] : '';
+        $city = isset($post_data['city']) ? $post_data['city'] : '';
+
+
+        $location['area'] = 'unknown';
+
+        $province_code = array_search($province,config('common.area.province_short'));
+        if(!$province_code)
+        {
+            $province_code = array_search($province,config('common.area.province_name'));
+            if(!$province_code)
+            {
+                $province_code = array_search($province,config('common.area.province_name_2'));
+            }
+        }
+
+        if($province_code)
+        {
+            $province_info = config('common.area.province_list.'.$province_code); // 省-信息
+            $province_city_list = config('common.area.province_city_list.'.$province_code.'.mallCityList'); // 省-信息
+            $province_city_list_others = config('common.area.province_city_list.'.$province_code.'.mallCityList'); // 省-信息
+
+            $city_search = array_search_by_fuzzy($city, $province_city_list_others);
+            if($city_search != false)
+            {
+                foreach($city_search as $key => $value)
+                {
+                    unset($province_city_list_others[$key]);
+                }
+            }
+
+
+            $region_key = $province_info['provinceRegion'];  // 地区-代码
+            $region_name = config('common.area.region_name.'.$region_key);  // 地区-名称
+            $region_list = config('common.area.region_list.'.$region_key);  // 地区-在内的省
+
+            $location['area'] = 'china';
+            $location['province_code'] = $province_code;
+            $location['province_name'] = $province_info['provinceName'];
+            $location['province_city_list'] = $province_city_list;
+            $location['province_city_list_others'] = $province_city_list_others;
+            $location['city_search'] = $city_search;
+
+            $location['region_key'] = $region_key;
+            $location['region_name'] = $region_name;
+            $location['region_list'] = $region_list;
+        }
+
+
+        $user_query = K_User::select('*')
+            ->where(function($query) {
+                $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+            })
+            ->where(['active'=>1,'status'=>1,'user_active'=>1,'user_status'=>1]);
+
+        if($this->auth_check)
+        {
+            $user_query->with([
+                'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
+            ]);
+        }
+
+        if($location['area'] == 'china')
+        {
+            // 城市
+            if(!empty($location['city_search']))
+            {
+                $user_query_for_city = clone $user_query;
+                $user_list_for_city = $user_query_for_city
+                    ->whereIn('area_city',$location['city_search'])
+                    ->orderByDesc('id')
+                    ->get();
+
+//                $user_list_for_city = $user_list_for_city->sortBy(function ($product, $key) {
+//                    return abs($product['user_type'] - 11);
+//                    return $product['user_type'];
+//                });
+
+                $grouped = $user_list_for_city->groupBy('user_type');
+                if(!empty($grouped[11])) $user_list_for_city = $grouped[11];
+                if(!empty($grouped[1]))
+                {
+                    if(!empty($grouped[11])) $user_list_for_city = $user_list_for_city->merge($grouped[1]);
+                    else $user_list_for_city = $grouped[11];
+                }
+                if(!empty($grouped[88]))
+                {
+                    if(!empty($grouped[1])) $user_list_for_city = $user_list_for_city->merge($grouped[88]);
+                    else $user_list_for_city = $grouped[88];
+                }
+
+                $user_list = $user_list_for_city;
+            }
+
+            // 省
+            if(!empty($location['province_code']))
+            {
+                $user_query_for_province = clone $user_query;
+                $user_list_for_province = $user_query_for_province
+                    ->whereIn('area_city',$location['province_city_list_others'])
+                    ->orderByDesc('id')
+                    ->get();
+
+//                $user_list_for_province = $user_list_for_province->sortBy(function ($product, $key) {
+//                    return abs($product['user_type'] - 11);
+//                    return $product['user_type'];
+//                });
+
+                $grouped = $user_list_for_province->groupBy('user_type');
+                if(!empty($grouped[11])) $user_list_for_province = $grouped[11];
+                if(!empty($grouped[1]))
+                {
+                    if(!empty($grouped[11])) $user_list_for_province = $user_list_for_province->merge($grouped[1]);
+                    else $user_list_for_province = $grouped[11];
+                }
+                if(!empty($grouped[88]))
+                {
+                    if(!empty($grouped[1])) $user_list_for_province = $user_list_for_province->merge($grouped[88]);
+                    else $user_list_for_province = $grouped[88];
+                }
+
+                if(!empty($location['city_search']))
+                {
+                    $user_list = $user_list->merge($user_list_for_province);
+                }
+                else $user_list = $user_list_for_province;
+
+            }
+
+            // 地区
+            if(!empty($location['region_key']))
+            {
+                $user_query_for_region = clone $user_query;
+                $user_list_for_region = $user_query_for_region
+                    ->where('area_region',$location['region_name'])
+                    ->orderByDesc('id')
+                    ->get();
+
+//                $user_list_for_region = $user_list_for_region->sortBy(function ($product, $key) {
+//                    return abs($product['user_type'] - 11);
+//                    return $product['user_type'];
+//                });
+
+                $grouped = $user_list_for_region->groupBy('user_type');
+                if(!empty($grouped[11])) $user_list_for_region = $grouped[11];
+                if(!empty($grouped[1]))
+                {
+                    if(!empty($grouped[11])) $user_list_for_region = $user_list_for_region->merge($grouped[1]);
+                    else $user_list_for_region = $grouped[11];
+                }
+                if(!empty($grouped[88]))
+                {
+                    if(!empty($grouped[1])) $user_list_for_region = $user_list_for_region->merge($grouped[88]);
+                    else $user_list_for_region = $grouped[88];
+                }
+
+                if(!empty($location['province_code']))
+                {
+                    $user_list = $user_list->merge($user_list_for_region);
+                }
+                else $user_list = $user_list_for_region;
+            }
+
+            $user_query_for_others = clone $user_query;
+            $user_list_for_others = $user_query_for_others
+                ->where(function($query) use($location) {
+                    $query->whereNull('area_region')->orWhere('area_region','!=',$location['region_name']);
+                })
+                ->orderByDesc('id')
+                ->limit(50)
+                ->get();
+            $user_list = $user_list->merge($user_list_for_others);
+        }
+        else
+        {
+            $user_query_for_all = clone $user_query;
+            $user_list = $user_query_for_all
+                ->orderByDesc('id')
+                ->get();
+
+            $grouped = $user_list->groupBy('user_type');
+            if(!empty($grouped[11])) $user_list = $grouped[11];
+            if(!empty($grouped[1]))
+            {
+                if(!empty($grouped[11])) $user_list = $user_list->merge($grouped[1]);
+                else $user_list = $grouped[11];
+            }
+            if(!empty($grouped[88]))
+            {
+                if(!empty($grouped[1])) $user_list = $user_list->merge($grouped[88]);
+                else $user_list = $grouped[88];
+            }
+//            $user_list = $user_list->sortBy(function ($user, $key) {
+//                return abs(intval($user['user_type']) - 11);
+//                return $user['user_type'];
+//            });
+        }
+
+
+//        foreach($user_list as $u)
+//        {
+//            if(count($u->fans_list->whereIn('relation_type', [21,41])) > 0) echo 1;
+//        }
+//        dd($user_list->toArray());
+
+
+        // 插入记录表
+        $record["record_category"] = 1; // record_category=1 browse/share
+        $record["record_type"] = 1; // record_type=1 browse
+        $record["page_type"] = 1; // page_type=1 platform
+        $record["page_module"] = 33; // page_module=33 organization
+//        $record["page_num"] = $user_list->toArray()["current_page"];
+        $record["page_num"] = 1;
+        $record["from"] = request('from',NULL);
+        $record["ip"] = $ip;
+//        $record["ip_info"] = $ip_info['adcode']['o'];
+        $this->record($record);
+
+        $page["type"] = 1;
+        $page["module"] = 33;
+        $page["num"] = 0;
+        $page["item_id"] = 0;
+        $page["user_id"] = 0;
+
+
+        $return_data['user_list'] = $user_list;
+        $return_data['page'] = $page;
+        $return_data['menu_active_by_organization'] = 'active';
+
+        $view_blade = env('TEMPLATE_K_COMMON').'component.user-list';
+        $html = view($view_blade)->with($return_data)->__toString();
+        return response_success(['html'=>$html]);
     }
 
 

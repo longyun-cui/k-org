@@ -331,6 +331,7 @@
             };
             $("#form-edit-info").ajaxSubmit(options);
         });
+
     });
 </script>
 @endsection

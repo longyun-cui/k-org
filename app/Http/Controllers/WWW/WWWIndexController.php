@@ -254,7 +254,8 @@ class WWWIndexController extends Controller
     // 【机构列表】
     public function view_organization_list()
     {
-        return $this->repo->view_organization_list(request()->all());
+        if(request()->isMethod('get')) return $this->repo->view_organization_list(request()->all());
+        else if (request()->isMethod('post')) return $this->repo->get_organization_list(request()->all());
     }
 
     // 【机构首页】

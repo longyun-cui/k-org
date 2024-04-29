@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="container-box pull-left margin-bottom-16px">
+        <div class="container-box pull-left margin-bottom-16px" id="organization-container">
             @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
 {{--            {!! $user_list->links() !!}--}}
         </div>
@@ -101,7 +101,7 @@
 
 
 
-@section('style')
+@section('custom-style')
 <style>
 </style>
 @endsection
@@ -109,7 +109,59 @@
 
 
 
-@section('script')
+@section('custom-script')
 <script>
+    $(function() {
+
+        $("#city-search-submit").on('click', function() {
+
+            var index1 = layer.load(1, {
+                shade: [0.3, '#fff'],
+                content: '<span class="loadtip">正在操作…</span>',
+                success: function (layer) {
+                    layer.find('.layui-layer-content').css({
+                        'padding-top': '40px',
+                        'width': '120px',
+                    });
+                    layer.find('.loadtip').css({
+                        'font-size':'20px',
+                        'margin-left':'-18px'
+                    });
+                }
+            });
+
+            $.post(
+                "/organization-list",
+                {
+                    _token: $('meta[name="_token"]').attr('content'),
+                    operate: "organization-list",
+                    province: $('#area_province').val(),
+                    city: $('#area_city').val()
+                },
+                'json'
+            )
+            .done(function(response){
+                var $data = JSON.parse(response);
+                console.log('done');
+                if(!$data.success) layer.msg($data.msg);
+                else
+                {
+                    $("#organization-container").html($data.data.html)
+                }
+            })
+            .fail(function(error){
+                var $data = JSON.parse(error);
+                console.log('fail');
+                console.log($data);
+            })
+            .always(function(data){
+                console.log('always');
+                // layer.close(index);
+                layer.closeAll('loading');
+            });
+
+        });
+
+    });
 </script>
 @endsection
