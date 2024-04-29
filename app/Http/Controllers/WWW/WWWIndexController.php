@@ -32,12 +32,18 @@ class WWWIndexController extends Controller
             return $this->repo->operate_org_register_save(request()->all());
         }
     }
-    // 我的组织
+    // 【我的组织】我的组织列表
     public function view_mine_my_organization()
     {
         return $this->repo->view_mine_my_organization(request()->all());
     }
-    // 登录我的组织
+    // 【我的组织】编辑我的组织
+    public function view_mine_my_organization_edit()
+    {
+        if(request()->isMethod('get')) return $this->repo->view_mine_my_organization_edit();
+        else if (request()->isMethod('post')) return $this->repo->operate_mine_my_organization_save(request()->all());
+    }
+    // 【我的组织】登录我的组织
     public function operate_mine_my_org_login()
     {
         return $this->repo->operate_mine_my_org_login(request()->all());

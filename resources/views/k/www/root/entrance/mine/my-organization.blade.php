@@ -5,13 +5,13 @@
 
 @section('meta_title')朝鲜族社群平台@endsection
 @section('meta_author')@endsection
-@section('meta_description')发现身边的朝鲜族社群组织活动@endsection
-@section('meta_keywords')朝鲜族,朝鲜族社群,朝鲜族组织,朝鲜族活动@endsection
+@section('meta_description')朝鲜族社群组织活动平台,发现身边的朝鲜族社群组织活动@endsection
+@section('meta_keywords')朝鲜族,朝鲜族社区,朝鲜族社群,朝鲜族组织,朝鲜族活动,朝鲜族社群平台,朝鲜族组织平台,朝鲜族活动平台,朝鲜族生活社区@endsection
 
 
 @section('wx_share_title')朝鲜族社群平台@endsection
 @section('wx_share_desc')发现身边的朝鲜族社群组织活动@endsection
-@section('wx_share_imgUrl'){{ url('/custom/k/k-www.jpg') }}@endsection
+@section('wx_share_imgUrl'){{ url('/custom/k/k-www-wx-share.jpg') }}@endsection
 
 
 
@@ -58,12 +58,16 @@
 @section('custom-script')
 <script>
     $(function() {
+        // 编辑
+        $('.user-edit-submit').on('click', function(event){
+            var $that = $(this);
+            window.location.href = "/mine/my-organization-edit?id="+$that.attr('data-id');
+        });
         // 登录
         $('.user-login-to-org-submit').on('click', function(event){
             var $that = $(this);
             var $org_id = $that.attr('data-id');
             console.log($org_id);
-
 
             $.post(
                 "/mine/my-org-login",
@@ -84,7 +88,6 @@
                 },
                 'json'
             );
-
         });
     });
 </script>

@@ -184,6 +184,7 @@ Route::group([], function () {
                 Route::get('/mine/my-like', $controller.'@view_mine_my_favor');
                 //
                 Route::get('/mine/my-organization', $controller.'@view_mine_my_organization');
+                Route::match(['get','post'], '/mine/my-organization-edit', $controller.'@view_mine_my_organization_edit');
                 Route::post('/mine/my-org-login', $controller.'@operate_mine_my_org_login');
 
                 Route::get('/mine/my-notification', $controller.'@view_mine_my_notification');

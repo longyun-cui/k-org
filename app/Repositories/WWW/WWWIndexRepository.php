@@ -171,7 +171,7 @@ class WWWIndexRepository {
             return response_fail([],$msg);
         }
     }
-    // 我的社群组织
+    // 【我的组织】我的社群组织-列表
     public function view_mine_my_organization($post_data)
     {
         $this->get_me();
@@ -207,7 +207,159 @@ class WWWIndexRepository {
         $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-organization';
         return view($view_blade)->with($return);
     }
-    // 登录我的社群组织
+    // 【我的组织】编辑我的组织
+    public function view_mine_my_organization_edit()
+    {
+        $this->get_me();
+        $me = $this->me;
+
+        $id = request("id",0);
+        $view_blade = env('TEMPLATE_K_WWW').'entrance.mine.my-organization-edit';
+
+        if($id == 0)
+        {
+            return view($view_blade)->with(['operate'=>'create', 'operate_id'=>$id]);
+        }
+        else
+        {
+            $mine = K_User::with(['parent'])->find($id);
+            if($mine)
+            {
+                if(!in_array($mine->user_type,[11,88])) return view($this->view_blade_404);
+//                $mine->custom = json_decode($mine->custom);
+
+                return view($view_blade)->with(['operate'=>'edit', 'operate_id'=>$id, 'data'=>$mine]);
+            }
+            else return view($this->view_blade_404);
+        }
+    }
+    // 【我的组织】保存-数据
+    public function operate_mine_my_organization_save($post_data)
+    {
+        $messages = [
+            'operate.required' => 'operate.required.',
+//            'operate_id.required' => 'operate_id.required.',
+        ];
+        $v = Validator::make($post_data, [
+            'operate' => 'required',
+//            'operate_id' => 'required',
+        ], $messages);
+        if ($v->fails())
+        {
+            $messages = $v->errors();
+            return response_error([],$messages->first());
+        }
+
+        $this->get_me();
+        $me = $this->me;
+
+//        if(!in_array($me->user_category,[0])) return response_error([],"你没有操作权限！");
+
+//        $operate = $post_data["operate"];
+        $mine_id = $post_data["operate"]['id'];
+
+        $mine = K_User::find($mine_id);
+        if(!$mine) return response_error([],"该用户不存在，刷新页面重试！");
+//        if($mine->)
+
+        // 启动数据库事务
+        DB::beginTransaction();
+        try
+        {
+            if(!empty($post_data['custom']))
+            {
+                $post_data['custom'] = json_encode($post_data['custom']);
+            }
+
+            $mine_data = $post_data;
+            unset($mine_data['operate']);
+//            unset($mine_data['operate_id']);
+            $bool = $mine->fill($mine_data)->save();
+            if($bool)
+            {
+                // 头像
+                if(!empty($post_data["portrait"]))
+                {
+                    // 删除原文件
+                    $mine_original_file = $mine->portrait_img;
+                    if(!empty($mine_original_file) && file_exists(storage_resource_path($mine_original_file)))
+                    {
+                        unlink(storage_resource_path($mine_original_file));
+                    }
+
+//                    $result = upload_img_storage($post_data["portrait"],'','root/common');
+                    $result = upload_img_storage($post_data["portrait"],'portrait_for_user_by_user_'.$mine->id,'k/unique/portrait_for_user','');
+                    if($result["result"])
+                    {
+                        $mine->portrait_img = $result["local"];
+                        $mine->save();
+                    }
+                    else throw new Exception("upload--portrait_img--file--fail");
+                }
+
+                // 微信二维码
+                if(!empty($post_data["wx_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_wx_qr_code_img = $mine->wx_qr_code_img;
+                    if(!empty($mine_wx_qr_code_img) && file_exists(storage_resource_path($mine_wx_qr_code_img)))
+                    {
+                        unlink(storage_resource_path($mine_wx_qr_code_img));
+                    }
+
+                    $result = upload_img_storage($post_data["wx_qr_code"],'','k/common');
+                    if($result["result"])
+                    {
+                        $mine->wx_qr_code_img = $result["local"];
+                        $mine->save();
+                    }
+                    else throw new Exception("upload--wx_qr_code--fail");
+                }
+
+                // 联系人微信二维码
+                if(!empty($post_data["linkman_wx_qr_code"]))
+                {
+                    // 删除原图片
+                    $mine_wx_qr_code_img = $mine->linkman_wx_qr_code_img;
+                    if(!empty($mine_wx_qr_code_img) && file_exists(storage_resource_path($mine_wx_qr_code_img)))
+                    {
+                        unlink(storage_resource_path($mine_wx_qr_code_img));
+                    }
+
+                    $result = upload_img_storage($post_data["linkman_wx_qr_code"],'','k/common');
+                    if($result["result"])
+                    {
+                        $mine->linkman_wx_qr_code_img = $result["local"];
+                        $mine->save();
+                    }
+                    else throw new Exception("upload--wx_qr_code--fail");
+                }
+
+            }
+            else throw new Exception("update--user--fail");
+
+//            $ext = K_UserExt::where('user_id',$mine_id)->first();
+//            $mine_data = $post_data;
+//            unset($mine_data['operate']);
+//            $bool = $ext->fill($mine_data)->save();
+//            if($bool)
+//            {
+//            }
+//            else throw new Exception("update--ext--fail");
+
+            DB::commit();
+            return response_success(['id'=>$me->id]);
+        }
+        catch (Exception $e)
+        {
+            DB::rollback();
+            $msg = '操作失败，请重试！';
+            $msg = $e->getMessage();
+//            exit($e->getMessage());
+            return response_fail([],$msg);
+        }
+    }
+    // 【我的组织】登录我的组织
     public function operate_mine_my_org_login($post_data)
     {
         $this->get_me();
