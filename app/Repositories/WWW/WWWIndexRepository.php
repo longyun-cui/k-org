@@ -933,19 +933,20 @@ class WWWIndexRepository {
 //                });
 
                 $grouped = $user_list_for_city->groupBy('user_type');
-                if(!empty($grouped[11])) $user_list_for_city = $grouped[11];
+                $user_list_for_city_by_grouped = [];
+                if(!empty($grouped[11])) $user_list_for_city_by_grouped = $grouped[11];
                 if(!empty($grouped[1]))
                 {
-                    if(!empty($grouped[11])) $user_list_for_city = $user_list_for_city->merge($grouped[1]);
-                    else $user_list_for_city = $grouped[1];
+                    if(!empty($user_list_for_city_by_grouped)) $user_list_for_city_by_grouped = $user_list_for_city_by_grouped->merge($grouped[1]);
+                    else $user_list_for_city_by_grouped = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
-                    if(!empty($grouped[1])) $user_list_for_city = $user_list_for_city->merge($grouped[88]);
-                    else $user_list_for_city = $grouped[88];
+                    if(!empty($user_list_for_city_by_grouped)) $user_list_for_city_by_grouped = $user_list_for_city_by_grouped->merge($grouped[88]);
+                    else $user_list_for_city_by_grouped = $grouped[88];
                 }
 
-                $user_list = $user_list_for_city;
+                $user_list = $user_list_for_city_by_grouped;
             }
 
             // 省
@@ -963,23 +964,24 @@ class WWWIndexRepository {
 //                });
 
                 $grouped = $user_list_for_province->groupBy('user_type');
-                if(!empty($grouped[11])) $user_list_for_province = $grouped[11];
+                $user_list_for_province_by_grouped = [];
+                if(!empty($grouped[11])) $user_list_for_province_by_grouped = $grouped[11];
                 if(!empty($grouped[1]))
                 {
-                    if(!empty($grouped[11])) $user_list_for_province = $user_list_for_province->merge($grouped[1]);
-                    else $user_list_for_province = $grouped[1];
+                    if(!empty($user_list_for_province_by_grouped)) $user_list_for_province_by_grouped = $user_list_for_province_by_grouped->merge($grouped[1]);
+                    else $user_list_for_province_by_grouped = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
-                    if(!empty($grouped[1])) $user_list_for_province = $user_list_for_province->merge($grouped[88]);
-                    else $user_list_for_province = $grouped[88];
+                    if(!empty($user_list_for_province_by_grouped)) $user_list_for_province_by_grouped = $user_list_for_province_by_grouped->merge($grouped[88]);
+                    else $user_list_for_province_by_grouped = $grouped[88];
                 }
 
                 if(!empty($location['city_search']))
                 {
-                    $user_list = $user_list->merge($user_list_for_province);
+                    $user_list = $user_list->merge($user_list_for_province_by_grouped);
                 }
-                else $user_list = $user_list_for_province;
+                else $user_list = $user_list_for_province_by_grouped;
 
             }
 
@@ -998,23 +1000,24 @@ class WWWIndexRepository {
 //                });
 
                 $grouped = $user_list_for_region->groupBy('user_type');
-                if(!empty($grouped[11])) $user_list_for_region = $grouped[11];
+                $user_list_for_region_by_grouped = [];
+                if(!empty($grouped[11])) $user_list_for_region_by_grouped = $grouped[11];
                 if(!empty($grouped[1]))
                 {
-                    if(!empty($grouped[11])) $user_list_for_region = $user_list_for_region->merge($grouped[1]);
-                    else $user_list_for_region = $grouped[1];
+                    if(!empty($user_list_for_region_by_grouped)) $user_list_for_region_by_grouped = $user_list_for_region_by_grouped->merge($grouped[1]);
+                    else $user_list_for_region_by_grouped = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
-                    if(!empty($grouped[1])) $user_list_for_region = $user_list_for_region->merge($grouped[88]);
-                    else $user_list_for_region = $grouped[88];
+                    if(!empty($user_list_for_region_by_grouped)) $user_list_for_region_by_grouped = $user_list_for_region_by_grouped->merge($grouped[88]);
+                    else $user_list_for_region_by_grouped = $grouped[88];
                 }
 
                 if(!empty($location['province_code']))
                 {
-                    $user_list = $user_list->merge($user_list_for_region);
+                    $user_list = $user_list->merge($user_list_for_region_by_grouped);
                 }
-                else $user_list = $user_list_for_region;
+                else $user_list = $user_list_for_region_by_grouped;
             }
 
             $user_query_for_others = clone $user_query;
@@ -1035,17 +1038,19 @@ class WWWIndexRepository {
                 ->get();
 
             $grouped = $user_list->groupBy('user_type');
-            if(!empty($grouped[11])) $user_list = $grouped[11];
+            $user_list_by_grouped = [];
+            if(!empty($grouped[11])) $user_list_by_grouped = $grouped[11];
             if(!empty($grouped[1]))
             {
-                if(!empty($grouped[11])) $user_list = $user_list->merge($grouped[1]);
-                else $user_list = $grouped[11];
+                if(!empty($user_list_by_grouped)) $user_list_by_grouped = $user_list_by_grouped->merge($grouped[1]);
+                else $user_list_by_grouped = $grouped[11];
             }
             if(!empty($grouped[88]))
             {
-                if(!empty($grouped[1])) $user_list = $user_list->merge($grouped[88]);
-                else $user_list = $grouped[88];
+                if(!empty($user_list_by_grouped)) $user_list_by_grouped = $user_list_by_grouped->merge($grouped[88]);
+                else $user_list_by_grouped = $grouped[88];
             }
+            $user_list = $user_list_by_grouped;
 //            $user_list = $user_list->sortBy(function ($user, $key) {
 //                return abs(intval($user['user_type']) - 11);
 //                return $user['user_type'];
@@ -1198,19 +1203,20 @@ class WWWIndexRepository {
 //                });
 
                 $grouped = $user_list_for_city->groupBy('user_type');
-                if(!empty($grouped[11])) $user_list_for_city = $grouped[11];
+                $user_list_for_city_by_grouped = [];
+                if(!empty($grouped[11])) $user_list_for_city_by_grouped = $grouped[11];
                 if(!empty($grouped[1]))
                 {
-                    if(!empty($grouped[11])) $user_list_for_city = $user_list_for_city->merge($grouped[1]);
-                    else $user_list_for_city = $grouped[1];
+                    if(!empty($user_list_for_city_by_grouped)) $user_list_for_city_by_grouped = $user_list_for_city_by_grouped->merge($grouped[1]);
+                    else $user_list_for_city_by_grouped = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
-                    if(!empty($grouped[1])) $user_list_for_city = $user_list_for_city->merge($grouped[88]);
-                    else $user_list_for_city = $grouped[88];
+                    if(!empty($user_list_for_city_by_grouped)) $user_list_for_city_by_grouped = $user_list_for_city_by_grouped->merge($grouped[88]);
+                    else $user_list_for_city_by_grouped = $grouped[88];
                 }
 
-                $user_list = $user_list_for_city;
+                $user_list = $user_list_for_city_by_grouped;
             }
 
             // 省
@@ -1228,23 +1234,24 @@ class WWWIndexRepository {
 //                });
 
                 $grouped = $user_list_for_province->groupBy('user_type');
-                if(!empty($grouped[11])) $user_list_for_province = $grouped[11];
+                $user_list_for_province_by_grouped = [];
+                if(!empty($grouped[11])) $user_list_for_province_by_grouped = $grouped[11];
                 if(!empty($grouped[1]))
                 {
-                    if(!empty($grouped[11])) $user_list_for_province = $user_list_for_province->merge($grouped[1]);
-                    else $user_list_for_province = $grouped[1];
+                    if(!empty($user_list_for_province_by_grouped)) $user_list_for_province_by_grouped = $user_list_for_province_by_grouped->merge($grouped[1]);
+                    else $user_list_for_province_by_grouped = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
-                    if(!empty($grouped[1])) $user_list_for_province = $user_list_for_province->merge($grouped[88]);
-                    else $user_list_for_province = $grouped[88];
+                    if(!empty($user_list_for_province_by_grouped)) $user_list_for_province_by_grouped = $user_list_for_province_by_grouped->merge($grouped[88]);
+                    else $user_list_for_province_by_grouped = $grouped[88];
                 }
 
                 if(!empty($location['city_search']))
                 {
-                    $user_list = $user_list->merge($user_list_for_province);
+                    $user_list = $user_list->merge($user_list_for_province_by_grouped);
                 }
-                else $user_list = $user_list_for_province;
+                else $user_list = $user_list_for_province_by_grouped;
 
             }
 
@@ -1263,23 +1270,24 @@ class WWWIndexRepository {
 //                });
 
                 $grouped = $user_list_for_region->groupBy('user_type');
-                if(!empty($grouped[11])) $user_list_for_region = $grouped[11];
+                $user_list_for_region_by_grouped = [];
+                if(!empty($grouped[11])) $user_list_for_region_by_grouped = $grouped[11];
                 if(!empty($grouped[1]))
                 {
-                    if(!empty($grouped[11])) $user_list_for_region = $user_list_for_region->merge($grouped[1]);
-                    else $user_list_for_region = $grouped[1];
+                    if(!empty($user_list_for_region_by_grouped)) $user_list_for_region_by_grouped = $user_list_for_region_by_grouped->merge($grouped[1]);
+                    else $user_list_for_region_by_grouped = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
-                    if(!empty($grouped[1])) $user_list_for_region = $user_list_for_region->merge($grouped[88]);
-                    else $user_list_for_region = $grouped[88];
+                    if(!empty($user_list_for_region_by_grouped)) $user_list_for_region_by_grouped = $user_list_for_region_by_grouped->merge($grouped[88]);
+                    else $user_list_for_region_by_grouped = $grouped[88];
                 }
 
                 if(!empty($location['province_code']))
                 {
-                    $user_list = $user_list->merge($user_list_for_region);
+                    $user_list = $user_list->merge($user_list_for_region_by_grouped);
                 }
-                else $user_list = $user_list_for_region;
+                else $user_list = $user_list_for_region_by_grouped;
             }
 
             $user_query_for_others = clone $user_query;
@@ -1300,17 +1308,19 @@ class WWWIndexRepository {
                 ->get();
 
             $grouped = $user_list->groupBy('user_type');
-            if(!empty($grouped[11])) $user_list = $grouped[11];
+            $user_list_by_grouped = [];
+            if(!empty($grouped[11])) $user_list_by_grouped = $grouped[11];
             if(!empty($grouped[1]))
             {
-                if(!empty($grouped[11])) $user_list = $user_list->merge($grouped[1]);
-                else $user_list = $grouped[11];
+                if(!empty($user_list_by_grouped)) $user_list_by_grouped = $user_list_by_grouped->merge($grouped[1]);
+                else $user_list_by_grouped = $grouped[11];
             }
             if(!empty($grouped[88]))
             {
-                if(!empty($grouped[1])) $user_list = $user_list->merge($grouped[88]);
-                else $user_list = $grouped[88];
+                if(!empty($user_list_by_grouped)) $user_list_by_grouped = $user_list_by_grouped->merge($grouped[88]);
+                else $user_list_by_grouped = $grouped[88];
             }
+            $user_list = $user_list_by_grouped;
 //            $user_list = $user_list->sortBy(function ($user, $key) {
 //                return abs(intval($user['user_type']) - 11);
 //                return $user['user_type'];
