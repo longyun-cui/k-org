@@ -937,7 +937,7 @@ class WWWIndexRepository {
                 if(!empty($grouped[1]))
                 {
                     if(!empty($grouped[11])) $user_list_for_city = $user_list_for_city->merge($grouped[1]);
-                    else $user_list_for_city = $grouped[11];
+                    else $user_list_for_city = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
@@ -967,7 +967,7 @@ class WWWIndexRepository {
                 if(!empty($grouped[1]))
                 {
                     if(!empty($grouped[11])) $user_list_for_province = $user_list_for_province->merge($grouped[1]);
-                    else $user_list_for_province = $grouped[11];
+                    else $user_list_for_province = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
@@ -1002,7 +1002,7 @@ class WWWIndexRepository {
                 if(!empty($grouped[1]))
                 {
                     if(!empty($grouped[11])) $user_list_for_region = $user_list_for_region->merge($grouped[1]);
-                    else $user_list_for_region = $grouped[11];
+                    else $user_list_for_region = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
@@ -1202,7 +1202,7 @@ class WWWIndexRepository {
                 if(!empty($grouped[1]))
                 {
                     if(!empty($grouped[11])) $user_list_for_city = $user_list_for_city->merge($grouped[1]);
-                    else $user_list_for_city = $grouped[11];
+                    else $user_list_for_city = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
@@ -1232,7 +1232,7 @@ class WWWIndexRepository {
                 if(!empty($grouped[1]))
                 {
                     if(!empty($grouped[11])) $user_list_for_province = $user_list_for_province->merge($grouped[1]);
-                    else $user_list_for_province = $grouped[11];
+                    else $user_list_for_province = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
@@ -1267,7 +1267,7 @@ class WWWIndexRepository {
                 if(!empty($grouped[1]))
                 {
                     if(!empty($grouped[11])) $user_list_for_region = $user_list_for_region->merge($grouped[1]);
-                    else $user_list_for_region = $grouped[11];
+                    else $user_list_for_region = $grouped[1];
                 }
                 if(!empty($grouped[88]))
                 {
