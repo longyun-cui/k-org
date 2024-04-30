@@ -182,7 +182,7 @@
         @if(!empty($type))
         @if($type == 'sponsor')
         <div class="item-row item-info-row text-muted margin-top-4px">
-            <span class="info-tags text-primary bg-yellow">赞助者</span>
+            <span class="info-tags text-primary bg-yellow">赞助人</span>
         </div>
         @elseif($type == 'sponsored')
         <div class="item-row item-info-row text-muted">
