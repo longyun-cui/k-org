@@ -350,6 +350,7 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'QQ') && !stripos($Agent, 'MQQBrowser')) $info['app'] = 'QQ';
         if(stripos($Agent, 'QQ/')) $info['app'] = 'QQ';
         if(stripos($Agent, 'Alipay')) $info['app'] = 'Alipay';
+        if(stripos($Agent, 'BytedanceWebview')) $info['app'] = 'Douyin';
 
         return $info;
     }

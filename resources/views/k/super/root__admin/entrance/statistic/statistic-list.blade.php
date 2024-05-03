@@ -80,7 +80,8 @@
                             <option value="1" @if($open_app == '1') selected="selected" @endif>默认</option>
                             <option value="WeChat" @if($open_app == 'WeChat') selected="selected" @endif>微信</option>
                             <option value="QQ" @if($open_app == 'QQ') selected="selected" @endif>QQ</option>
-                            <option value="Alipay" @if($open_app == 'Alipay') selected="selected" @endif>阿里巴巴</option>
+                            <option value="Alipay" @if($open_app == 'Alipay') selected="selected" @endif>支付宝</option>
+                            <option value="Douyin" @if($open_app == 'Douyin') selected="selected" @endif>抖音</option>
                             <option value="Others" @if($open_app == 'Others') selected="selected" @endif>其他</option>
                         </select>
 

@@ -4169,7 +4169,7 @@ class SuperAdminRepository {
             {
                 $query->whereIn('open_app',['WeChat','QQ','Alipay']);
             }
-            else if(in_array($post_data['open_app'],['WeChat','QQ','Alipay']))
+            else if(in_array($post_data['open_app'],['WeChat','QQ','Alipay','Douyin']))
             {
                 $query->where('open_app',$post_data['open_app']);
             }
@@ -4179,7 +4179,7 @@ class SuperAdminRepository {
             }
             else if($post_data['open_app'] == "Others")
             {
-                $query->whereNotIn('open_app',['WeChat','QQ','Alipay']);
+                $query->whereNotIn('open_app',['WeChat','QQ','Alipay','Douyin']);
             }
             else
             {
