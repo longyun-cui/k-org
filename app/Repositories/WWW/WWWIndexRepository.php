@@ -4708,6 +4708,7 @@ class WWWIndexRepository {
         if($type == "Mobile") $post_data["open_device_type"] = 1;
         else if($type == "PC") $post_data["open_device_type"] = 2;
 
+        $post_data["browser_info"] = $browseInfo['browser_info'];
         $post_data["referer"] = $browseInfo['referer'];
         $post_data["open_system"] = $browseInfo['system'];
         $post_data["open_browser"] = $browseInfo['browser'];

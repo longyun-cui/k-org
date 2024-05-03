@@ -299,6 +299,7 @@ if(!function_exists('getBrowserInfo'))
 //        dd($Agent);
 
         $info = [];
+        $info['browser_info'] = $Agent;
         $info['referer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 
         $info['type'] = 'PC';

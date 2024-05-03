@@ -42,37 +42,9 @@ Route::group([], function () {
     Route::match(['get', 'post'],'record/share', $controller."@record_share");
 
 
+    Route::post('api/user-get', $controller.'@api_user_get');
+    Route::post('api/item-get', $controller.'@api_item_get');
 
-
-
-    /*
-     * 微信
-     */
-    Route::group(['prefix' => 'weixin'], function () {
-
-        $wxController = "WeixinController";
-
-        Route::match(['get', 'post'],'auth/MP_verify_0m3bPByLDcHKLvIv.txt', function () {
-            return "0m3bPByLDcHKLvIv";
-        });
-
-        Route::match(['get', 'post'],'auth/MP_verify_eTPw6Fu85pGY5kiV.txt', function () {
-            return "eTPw6Fu85pGY5kiV";
-        });
-
-        Route::match(['get', 'post'],'auth/MP_verify_enRXVHgfnjolnsIN.txt', function () {
-            return "enRXVHgfnjolnsIN";
-        });
-
-        Route::match(['get', 'post'],'auth', $wxController."@weixin_auth");
-        Route::match(['get', 'post'],'login', $wxController."@weixin_login");
-
-
-        Route::match(['get', 'post'],'gongzhonghao', $wxController."@gongzhonghao");
-        Route::match(['get', 'post'],'root', $wxController."@root");
-        Route::match(['get', 'post'],'test', $wxController."@test");
-
-    });
 
 
 
@@ -203,6 +175,8 @@ Route::group([], function () {
     });
 
 
+
+
     Route::group(['middleware' => ['login']], function () {
 
         $controller = "WWWIndexController";
@@ -249,9 +223,45 @@ Route::group([], function () {
 
     });
 
+
+
+
     Route::post('item/comment/get', $controller.'@item_comment_get');
     Route::post('item/comment/get_html', $controller.'@item_comment_get_html');
     Route::post('item/reply/get', $controller.'@item_reply_get');
+
+
+
+
+
+    /*
+     * 微信
+     */
+    Route::group(['prefix' => 'weixin'], function () {
+
+        $wxController = "WeixinController";
+
+        Route::match(['get', 'post'],'auth/MP_verify_0m3bPByLDcHKLvIv.txt', function () {
+            return "0m3bPByLDcHKLvIv";
+        });
+
+        Route::match(['get', 'post'],'auth/MP_verify_eTPw6Fu85pGY5kiV.txt', function () {
+            return "eTPw6Fu85pGY5kiV";
+        });
+
+        Route::match(['get', 'post'],'auth/MP_verify_enRXVHgfnjolnsIN.txt', function () {
+            return "enRXVHgfnjolnsIN";
+        });
+
+        Route::match(['get', 'post'],'auth', $wxController."@weixin_auth");
+        Route::match(['get', 'post'],'login', $wxController."@weixin_login");
+
+
+        Route::match(['get', 'post'],'gongzhonghao', $wxController."@gongzhonghao");
+        Route::match(['get', 'post'],'root', $wxController."@root");
+        Route::match(['get', 'post'],'test', $wxController."@test");
+
+    });
 
 
 });
