@@ -10,7 +10,7 @@
     <a class="aui-footer-list {{ $menu_active_by_organization or '' }}" href="{{ url('/organization-list') }}">
         <div class="">
             <i class="fa fa-sitemap"></i>
-            <p class="mt-1">社群</p>
+            <p class="mt-1">社群组织</p>
         </div>
     </a>
 
