@@ -517,10 +517,18 @@ class WWWIndexRepository {
             })
             ->where(['user_status'=>1,'active'=>1]);
 
+        // 【用户】查询
+        $user_recommend_query = K_User::select('*')
+            ->whereIn('user_type',[11])
+            ->where(['user_status'=>1,'active'=>1]);
+
         // 【用户】登录，查询与我的关系（关注 | 粉丝）
         if($this->auth_check)
         {
             $user_query->with([
+                'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
+            ]);
+            $user_recommend_query->with([
                 'fans_list'=>function($query) use($me_id) { $query->where('mine_user_id',$me_id); },
             ]);
         }
@@ -541,7 +549,7 @@ class WWWIndexRepository {
             if(!empty($location['city_search']))
             {
                 $q = $city;
-                $user_query_C1 = clone $user_query;
+                $user_query_C1 = clone $user_recommend_query;
                 $user_count_by_city = $user_query_C1
                     ->whereIn('area_city',$location['city_search'])
                     ->count();
@@ -550,7 +558,7 @@ class WWWIndexRepository {
                     $user_recommend = 'yes';
                     $user_query_by = 'city';
 
-                    $user_query_of_recommend = clone $user_query;
+                    $user_query_of_recommend = clone $user_recommend_query;
                     $user_list_of_recommend = $user_query_of_recommend
                         ->whereIn('area_city',$location['city_search'])
                         ->inRandomOrder()
@@ -564,7 +572,7 @@ class WWWIndexRepository {
             if($user_recommend != 'yes' && !empty($location['province_code']))
             {
                 $q = $location['province_name'];
-                $user_query_C2 = clone $user_query;
+                $user_query_C2 = clone $user_recommend_query;
                 $user_count_by_province = $user_query_C2
                     ->where('area_province',$location['province_name'])
                     ->count();
@@ -573,7 +581,7 @@ class WWWIndexRepository {
                     $user_recommend = 'yes';
                     $user_query_by = 'province';
 
-                    $user_query_of_recommend = clone $user_query;
+                    $user_query_of_recommend = clone $user_recommend_query;
                     $user_list_of_recommend = $user_query_of_recommend
                         ->where('area_province',$location['province_name'])
                         ->inRandomOrder()
@@ -586,7 +594,7 @@ class WWWIndexRepository {
             // 地区
             if($user_recommend != 'yes' && !empty($location['region_key']))
             {
-                $user_query_C3 = clone $user_query;
+                $user_query_C3 = clone $user_recommend_query;
                 $user_count_by_region = $user_query_C3
                     ->whereIn('area_province',$location['region_province_list'])
                     ->count();
@@ -595,7 +603,7 @@ class WWWIndexRepository {
                     $user_recommend = 'yes';
                     $user_query_by = 'region';
 
-                    $user_query_of_recommend = clone $user_query;
+                    $user_query_of_recommend = clone $user_recommend_query;
                     $user_list_of_recommend = $user_query_of_recommend
                         ->whereIn('area_province',$location['region_province_list'])
                         ->inRandomOrder()
@@ -623,7 +631,7 @@ class WWWIndexRepository {
             $return['user_recommend_is'] = 'recommend';
 
 //          $user_list = $user_query->paginate(20);
-            $user_list = $user_query->whereIn('user_type',[11])->orderByDesc('id')->get();
+            $user_list = $user_query->orderByDesc('id')->get();
             $return['user_list'] = $user_list;
 
         }
