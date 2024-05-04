@@ -332,6 +332,7 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
         if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
         if(stripos($Agent, 'Android')) $info['system'] = 'Android';
+        if(stripos($Agent, 'MIPhone')) $info['system'] = 'MIPhone';
 
 
         $info['browser'] = 'Unknown';
@@ -344,6 +345,11 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Opera')) $info['browser'] = 'Opera';
         if(stripos($Agent, 'Edge')) $info['browser'] = "Edge";
         if(stripos($Agent, 'QQBroser')) $info['browser'] = 'QQBroser';
+        if(stripos($Agent, 'SamsungBrowser')) $info['browser'] = 'Samsung';
+        if(stripos($Agent, 'VivoBrowser')) $info['browser'] = 'Vivo';
+        if(stripos($Agent, 'OppoBrowser')) $info['browser'] = 'Oppo';
+        if(stripos($Agent, 'MiuiBrowser')) $info['browser'] = 'Miui';
+        if(stripos($Agent, 'MiBrowser')) $info['browser'] = 'Mi';
 
         $info['app'] = 'Unknown';
         if(stripos($Agent, 'MicroMessenger')) $info['app'] = 'WeChat';
