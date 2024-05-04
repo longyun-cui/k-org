@@ -477,6 +477,7 @@
                             else if(data == "Mi") return '<small class="btn-xs bg-purple">Mi</small>';
                             else if(data == "Miui") return '<small class="btn-xs bg-purple">Miui</small>';
                             else if(data == "Samsung") return '<small class="btn-xs bg-purple">Samsung</small>';
+                            else if(data == "honor") return '<small class="btn-xs bg-purple">honor</small>';
                             else return data;
                         }
                     },

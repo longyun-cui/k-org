@@ -351,6 +351,7 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'OppoBrowser')) $info['browser'] = 'Oppo';
         if(stripos($Agent, 'MiuiBrowser')) $info['browser'] = 'Miui';
         if(stripos($Agent, 'MiBrowser')) $info['browser'] = 'Mi';
+        if(stripos($Agent, 'honorbrowser')) $info['browser'] = 'honor';
 
         $info['app'] = 'Unknown';
         if(stripos($Agent, 'MicroMessenger')) $info['app'] = 'WeChat';
