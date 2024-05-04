@@ -60,36 +60,39 @@
 
         // 内容【获取详情】
         $("#item-main-body").on('click', ".item-detail-show", function() {
-            var that = $(this);
+            var $that = $(this);
+            var $td = $that.parents('td');
             var $data = new Object();
-            $.ajax({
-                type:"post",
-                dataType:'json',
-                async:false,
-                url: "{{ url('/admin/item/item-get') }}",
-                data: {
-                    _token: $('meta[name="_token"]').attr('content'),
-                    operate:"item-get",
-                    id:that.attr('data-id')
-                },
-                success:function(data){
-                    if(!data.success) layer.msg(data.msg);
-                    else
-                    {
-                        $data = data.data;
-                    }
-                }
-            });
-            $('input[name=id]').val(that.attr('data-id'));
-            $('.item-user-id').html(that.attr('data-user-id'));
-            $('.item-username').html(that.attr('data-username'));
-            $('.item-title').html($data.title);
-            $('.item-content').html($data.content);
-            if($data.attachment_name)
-            {
-                var $attachment_html = $data.attachment_name+'&nbsp&nbsp&nbsp&nbsp'+'<a href="/all/download-item-attachment?item-id='+$data.id+'">下载</a>';
-                $('.item-attachment').html($attachment_html);
-            }
+            {{--$.ajax({--}}
+            {{--    type:"post",--}}
+            {{--    dataType:'json',--}}
+            {{--    async:false,--}}
+            {{--    url: "{{ url('/admin/item/item-get') }}",--}}
+            {{--    data: {--}}
+            {{--        _token: $('meta[name="_token"]').attr('content'),--}}
+            {{--        operate:"item-get",--}}
+            {{--        id:that.attr('data-id')--}}
+            {{--    },--}}
+            {{--    success:function(data){--}}
+            {{--        if(!data.success) layer.msg(data.msg);--}}
+            {{--        else--}}
+            {{--        {--}}
+            {{--            $data = data.data;--}}
+            {{--        }--}}
+            {{--    }--}}
+            {{--});--}}
+            // $('input[name=id]').val(that.attr('data-id'));
+            // $('.item-user-id').html(that.attr('data-user-id'));
+            // $('.item-username').html(that.attr('data-username'));
+            // $('.item-title').html($data.title);
+            // $('.item-content').html($data.content);
+            // if($data.attachment_name)
+            // {
+            //     var $attachment_html = $data.attachment_name+'&nbsp&nbsp&nbsp&nbsp'+'<a href="/all/download-item-attachment?item-id='+$data.id+'">下载</a>';
+            //     $('.item-attachment').html($attachment_html);
+            // }
+
+            $('#modal-body').find('.item-detail-content').html($td.attr('data-browser-info'));
             $('#modal-body').modal('show');
 
         });
