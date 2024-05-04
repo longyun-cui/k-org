@@ -494,7 +494,7 @@
                             else if(data == "QQ") return '<small class="btn-xs bg-orange">QQ</small>';
                             else if(data == "Alipay") return '<small class="btn-xs bg-primary">支付宝</small>';
                             else if(data == "Douyin") return '<small class="btn-xs bg-black">抖音</small>';
-                            else if(data == "baiduboxapp") return '<small class="btn-xs bg-purple">百度APP</small>';
+                            else if(data == "Baiduboxapp") return '<small class="btn-xs bg-purple">百度APP</small>';
                             else return data;
                         }
                     },
