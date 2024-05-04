@@ -472,11 +472,11 @@
                             else if(data == "Chrome") return '<small class="btn-xs bg-olive">Chrome</small>';
                             else if(data == "Firefox") return '<small class="btn-xs bg-orange">Firefox</small>';
                             else if(data == "Safari") return '<small class="btn-xs bg-primary">Safari</small>';
-                            else if(data == "VivoBrowser") return '<small class="btn-xs bg-purple">Vivo</small>';
-                            else if(data == "OppoBrowser") return '<small class="btn-xs bg-purple">Oppo</small>';
-                            else if(data == "MiBrowser") return '<small class="btn-xs bg-purple">Mi</small>';
-                            else if(data == "MiuiBrowser") return '<small class="btn-xs bg-purple">Miui</small>';
-                            else if(data == "SamsungBrowser") return '<small class="btn-xs bg-purple">Samsung</small>';
+                            else if(data == "Vivo=") return '<small class="btn-xs bg-purple">Vivo</small>';
+                            else if(data == "Oppo") return '<small class="btn-xs bg-purple">Oppo</small>';
+                            else if(data == "Mi") return '<small class="btn-xs bg-purple">Mi</small>';
+                            else if(data == "Miui") return '<small class="btn-xs bg-purple">Miui</small>';
+                            else if(data == "Samsung") return '<small class="btn-xs bg-purple">Samsung</small>';
                             else return data;
                         }
                     },
