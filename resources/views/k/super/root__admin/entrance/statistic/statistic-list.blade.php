@@ -447,7 +447,7 @@
                         "title": "设备",
                         "data": "open_device_name",
                         "className": "",
-                        "width": "60px",
+                        "width": "80px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             if(data == "Unknown") return '未知';
@@ -465,7 +465,7 @@
                         "title": "系统",
                         "data": "open_system",
                         "className": "",
-                        "width": "60px",
+                        "width": "80px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
@@ -483,7 +483,7 @@
                         "title": "浏览器",
                         "data": "open_browser",
                         "className": "",
-                        "width": "60px",
+                        "width": "80px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
@@ -547,7 +547,7 @@
                         }
                     },
                     {
-                        "title": "IP",
+                        "title": "IP_INFO",
                         "data": "ip_info",
                         "className": "text-left",
                         "width": "200px",
