@@ -444,6 +444,24 @@
                         }
                     },
                     {
+                        "title": "设备",
+                        "data": "open_device_name",
+                        "className": "",
+                        "width": "60px",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            if(data == "Unknown") return '未知';
+                            else if(data == "iPhone") return '<small class="btn-xs bg-olive">iPhone</small>';
+                            else if(data == "iPad") return '<small class="btn-xs bg-olive">iPad</small>';
+                            else if(data == "Mac") return '<small class="btn-xs bg-olive">Mac</small>';
+                            else if(data == "HONOR") return '<small class="btn-xs bg-primary">HONOR</small>';
+                            else if(data == "MIPhone") return '<small class="btn-xs bg-primary">小米</small>';
+                            else if(data == "VIVO") return '<small class="btn-xs bg-primary">VIVO</small>';
+                            else if(data == "OPPO") return '<small class="btn-xs bg-primary">OPPO</small>';
+                            else return data;
+                        }
+                    },
+                    {
                         "title": "系统",
                         "data": "open_system",
                         "className": "",
@@ -473,7 +491,7 @@
                             else if(data == "Chrome") return '<small class="btn-xs bg-olive">Chrome</small>';
                             else if(data == "Firefox") return '<small class="btn-xs bg-orange">Firefox</small>';
                             else if(data == "Safari") return '<small class="btn-xs bg-primary">Safari</small>';
-                            else if(data == "Vivo=") return '<small class="btn-xs bg-purple">Vivo</small>';
+                            else if(data == "Vivo") return '<small class="btn-xs bg-purple">Vivo</small>';
                             else if(data == "Oppo") return '<small class="btn-xs bg-purple">Oppo</small>';
                             else if(data == "Mi") return '<small class="btn-xs bg-purple">Mi</small>';
                             else if(data == "Miui") return '<small class="btn-xs bg-purple">Miui</small>';

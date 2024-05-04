@@ -306,6 +306,17 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Mobile')) $info['type'] = 'Mobile';
         if(isMobileEquipment()) $info['type'] = 'Mobile';
 
+
+        $info['device_name'] = 'Unknown';
+        if(stripos($Agent, 'iPhone')) $info['device_name'] = 'iPhone';
+        if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
+        if(stripos($Agent, 'Macintosh')) $info['device_name'] = 'Macintosh';
+        if(stripos($Agent, 'HONOR')) $info['device_name'] = 'HONOR';
+        if(stripos($Agent, 'MIPhone')) $info['device_name'] = 'MIPhone';
+        if(stripos($Agent, 'vivo')) $info['device_name'] = 'VIVO';
+        if(stripos($Agent, 'oppo')) $info['device_name'] = 'OPPO';
+
+
         $info['system'] = 'Unknown';
         if(stripos($Agent, 'PowerPC')) $info['system'] = 'PowerPC';
         else if(stripos($Agent, 'AIX')) $info['system'] = 'AIX';
@@ -332,8 +343,6 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
         if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
         if(stripos($Agent, 'Android')) $info['system'] = 'Android';
-        if(stripos($Agent, 'MIPhone')) $info['system'] = 'MIPhone';
-        if(stripos($Agent, 'vivo')) $info['system'] = 'MIPhone';
         if(stripos($Agent, 'HarmonyOS')) $info['system'] = 'HarmonyOS';
 
 

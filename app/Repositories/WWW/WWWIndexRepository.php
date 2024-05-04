@@ -4712,16 +4712,17 @@ class WWWIndexRepository {
         $record = new K_Record();
 
         $browseInfo = getBrowserInfo();
+        $post_data["browser_info"] = $browseInfo['browser_info'];
+        $post_data["referer"] = $browseInfo['referer'];
         $type = $browseInfo['type'];
         if($type == "Mobile") $post_data["open_device_type"] = 1;
         else if($type == "PC") $post_data["open_device_type"] = 2;
-
-        $post_data["browser_info"] = $browseInfo['browser_info'];
-        $post_data["referer"] = $browseInfo['referer'];
+        $post_data["open_device_name"] = $browseInfo['device_name'];
         $post_data["open_system"] = $browseInfo['system'];
         $post_data["open_browser"] = $browseInfo['browser'];
         $post_data["open_app"] = $browseInfo['app'];
         $post_data["open_is_spider"] = $browseInfo['is_spider'];
+
 
         $bool = $record->fill($post_data)->save();
         if($bool) return true;
