@@ -505,8 +505,8 @@
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
-                            if(data == "Unknown") return '未知';
-                            else if(data == "Baiduspider") return '<small class="btn-xs bg-olive">百度蜘蛛</small>';
+                            if(data == "Unknown") return '--';
+                            else if(data == "BaiduSpider") return '<small class="btn-xs bg-olive">百度蜘蛛</small>';
                             else if(data == "SogouSpider") return '<small class="btn-xs bg-orange">搜狗蜘蛛</small>';
                             else if(data == "YisouSpider") return '<small class="btn-xs bg-primary">神马蜘蛛</small>';
                             else if(data == "bingbot") return '<small class="btn-xs bg-primary">Bing</small>';
