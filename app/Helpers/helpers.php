@@ -334,6 +334,7 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Android')) $info['system'] = 'Android';
         if(stripos($Agent, 'MIPhone')) $info['system'] = 'MIPhone';
         if(stripos($Agent, 'vivo')) $info['system'] = 'MIPhone';
+        if(stripos($Agent, 'HarmonyOS')) $info['system'] = 'HarmonyOS';
 
 
         $info['browser'] = 'Unknown';

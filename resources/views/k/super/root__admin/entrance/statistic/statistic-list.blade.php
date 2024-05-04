@@ -457,6 +457,7 @@
                             else if(data == "iPad") return '<small class="btn-xs bg-olive">iPad</small>';
                             else if(data == "Mac") return '<small class="btn-xs bg-olive">Mac</small>';
                             else if(data == "Windows") return '<small class="btn-xs bg-purple">微软</small>';
+                            else if(data == "HarmonyOS") return '<small class="btn-xs bg-purple">鸿蒙</small>';
                             else return data;
                         }
                     },
