@@ -485,7 +485,7 @@
                         "title": "APP",
                         "data": "open_app",
                         "className": "",
-                        "width": "60px",
+                        "width": "80px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
@@ -531,7 +531,7 @@
                         "title": "IP",
                         "data": "ip_info",
                         "className": "text-left",
-                        "width": "160px",
+                        "width": "200px",
                         "orderable": false,
                         render: function(data, type, row, meta) {
                            return data;
