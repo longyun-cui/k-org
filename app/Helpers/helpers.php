@@ -339,9 +339,9 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'Linux')) $info['system'] = 'Linux';
         if(stripos($Agent, 'Ubuntu')) $info['system'] = 'Ubuntu';
         if(stripos($Agent, 'CentOS')) $info['system'] = 'CentOS';
-        if(stripos($Agent, 'Mac')) $info['system'] = 'Mac';
-        if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
-        if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
+        if(stripos($Agent, 'Mac OS')) $info['system'] = 'Mac';
+        if(stripos($Agent, 'iPad OS')) $info['system'] = 'iPad';
+        if(stripos($Agent, 'iPhone OS')) $info['system'] = 'iPhone';
         if(stripos($Agent, 'Android')) $info['system'] = 'Android';
         if(stripos($Agent, 'HarmonyOS')) $info['system'] = 'HarmonyOS';
 
