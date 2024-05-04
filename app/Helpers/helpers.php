@@ -311,6 +311,7 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'iPhone')) $info['device_name'] = 'iPhone';
         if(stripos($Agent, 'iPad')) $info['system'] = 'iPad';
         if(stripos($Agent, 'Macintosh')) $info['device_name'] = 'Macintosh';
+        if(stripos($Agent, 'HUAWEI')) $info['device_name'] = 'HUAWEI';
         if(stripos($Agent, 'HONOR')) $info['device_name'] = 'HONOR';
         if(stripos($Agent, 'MIPhone')) $info['device_name'] = 'MIPhone';
         if(stripos($Agent, 'vivo')) $info['device_name'] = 'VIVO';
