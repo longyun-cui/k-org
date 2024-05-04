@@ -501,7 +501,7 @@
                         "title": "蜘蛛",
                         "data": "open_is_spider",
                         "className": "",
-                        "width": "60px",
+                        "width": "80px",
                         "orderable": true,
                         render: function(data, type, row, meta) {
                             // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
