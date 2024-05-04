@@ -623,7 +623,7 @@ class WWWIndexRepository {
             $return['user_recommend_is'] = 'recommend';
 
 //          $user_list = $user_query->paginate(20);
-            $user_list = $user_query->orderByDesc('id')->get();
+            $user_list = $user_query->whereIn('user_type',[11])->orderByDesc('id')->get();
             $return['user_list'] = $user_list;
 
         }
