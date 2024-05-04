@@ -454,6 +454,7 @@
                             else if(data == "iPhone") return '<small class="btn-xs bg-olive">iPhone</small>';
                             else if(data == "iPad") return '<small class="btn-xs bg-olive">iPad</small>';
                             else if(data == "Mac") return '<small class="btn-xs bg-olive">Mac</small>';
+                            else if(data == "Macintosh") return '<small class="btn-xs bg-olive">Mac</small>';
                             else if(data == "HONOR") return '<small class="btn-xs bg-primary">HONOR</small>';
                             else if(data == "MIPhone") return '<small class="btn-xs bg-primary">小米</small>';
                             else if(data == "VIVO") return '<small class="btn-xs bg-primary">VIVO</small>';
