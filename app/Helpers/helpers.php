@@ -333,6 +333,7 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'iPhone')) $info['system'] = 'iPhone';
         if(stripos($Agent, 'Android')) $info['system'] = 'Android';
         if(stripos($Agent, 'MIPhone')) $info['system'] = 'MIPhone';
+        if(stripos($Agent, 'vivo')) $info['system'] = 'MIPhone';
 
 
         $info['browser'] = 'Unknown';
@@ -357,6 +358,15 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'QQ/')) $info['app'] = 'QQ';
         if(stripos($Agent, 'Alipay')) $info['app'] = 'Alipay';
         if(stripos($Agent, 'BytedanceWebview')) $info['app'] = 'Douyin';
+        if(stripos($Agent, 'baiduboxapp')) $info['app'] = 'Baiduboxapp';
+
+        $info['is_spider'] = 'Unknown';
+        if(stripos($Agent, 'spider')) $info['is_spider'] = 'spider';
+        if(stripos($Agent, 'Baiduspider')) $info['is_spider'] = 'BaiduSpider';
+        if(stripos($Agent, 'Sogou web spider')) $info['is_spider'] = 'SogouSpider';
+        if(stripos($Agent, 'YisouSpider')) $info['is_spider'] = 'YisouSpider';
+        if(stripos($Agent, 'bingbot')) $info['is_spider'] = 'bingbot';
+        if(stripos($Agent, 'AhrefsBot')) $info['is_spider'] = 'AhrefsBot';
 
         return $info;
     }

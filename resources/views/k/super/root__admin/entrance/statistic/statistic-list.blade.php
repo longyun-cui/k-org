@@ -472,6 +472,11 @@
                             else if(data == "Chrome") return '<small class="btn-xs bg-olive">Chrome</small>';
                             else if(data == "Firefox") return '<small class="btn-xs bg-orange">Firefox</small>';
                             else if(data == "Safari") return '<small class="btn-xs bg-primary">Safari</small>';
+                            else if(data == "VivoBrowser") return '<small class="btn-xs bg-purple">Vivo</small>';
+                            else if(data == "OppoBrowser") return '<small class="btn-xs bg-purple">Oppo</small>';
+                            else if(data == "MiBrowser") return '<small class="btn-xs bg-purple">Mi</small>';
+                            else if(data == "MiuiBrowser") return '<small class="btn-xs bg-purple">Miui</small>';
+                            else if(data == "SamsungBrowser") return '<small class="btn-xs bg-purple">Samsung</small>';
                             else return data;
                         }
                     },
@@ -488,6 +493,25 @@
                             else if(data == "QQ") return '<small class="btn-xs bg-orange">QQ</small>';
                             else if(data == "Alipay") return '<small class="btn-xs bg-primary">支付宝</small>';
                             else if(data == "Douyin") return '<small class="btn-xs bg-black">抖音</small>';
+                            else if(data == "baiduboxapp") return '<small class="btn-xs bg-purple">百度APP</small>';
+                            else return data;
+                        }
+                    },
+                    {
+                        "title": "蜘蛛",
+                        "data": "open_is_spider",
+                        "className": "",
+                        "width": "60px",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            if(data == "Unknown") return '未知';
+                            else if(data == "Baiduspider") return '<small class="btn-xs bg-olive">百度蜘蛛</small>';
+                            else if(data == "SogouSpider") return '<small class="btn-xs bg-orange">搜狗蜘蛛</small>';
+                            else if(data == "YisouSpider") return '<small class="btn-xs bg-primary">神马蜘蛛</small>';
+                            else if(data == "bingbot") return '<small class="btn-xs bg-primary">Bing</small>';
+                            else if(data == "AhrefsBot") return '<small class="btn-xs bg-primary">AhrefsBot</small>';
+                            else if(data == "spider") return '<small class="btn-xs bg-black">蜘蛛</small>';
                             else return data;
                         }
                     },
@@ -546,7 +570,7 @@
                             {
                                 // $(nTd).addClass('modal-show-for-info-text-set');
                                 $(nTd).attr('data-id',row.id).attr('data-name','info');
-                                $(nTd).attr('data-key','area_region').attr('data-value',data);
+                                $(nTd).attr('data-key','id').attr('data-value',data);
                                 $(nTd).attr('data-browser-info',row.browser_info);
                                 $(nTd).attr('data-text-type','text');
                                 if(data) $(nTd).attr('data-operate-type','edit');

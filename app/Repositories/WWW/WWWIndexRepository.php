@@ -4721,6 +4721,7 @@ class WWWIndexRepository {
         $post_data["open_system"] = $browseInfo['system'];
         $post_data["open_browser"] = $browseInfo['browser'];
         $post_data["open_app"] = $browseInfo['app'];
+        $post_data["open_is_spider"] = $browseInfo['is_spider'];
 
         $bool = $record->fill($post_data)->save();
         if($bool) return true;

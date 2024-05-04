@@ -92,6 +92,8 @@
             //     $('.item-attachment').html($attachment_html);
             // }
 
+            $('#modal-body').find('.item-detail-title').html($td.attr('data-id'));
+            $('#modal-body').find('.item-detail-content').html('');
             $('#modal-body').find('.item-detail-content').html($td.attr('data-browser-info'));
             $('#modal-body').modal('show');
 
