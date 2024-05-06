@@ -91,7 +91,7 @@
 
             <li class="treeview {{ $menu_active_by_item_list_for_notification or '' }}">
                 <a href="{{ url('/admin/notification/notification-list-for-all') }}">
-                    <i class="fa fa-bar-chart text-orange"></i> <span>消息</span>
+                    <i class="fa fa-envelope text-orange"></i> <span>消息</span>
                 </a>
             </li>
 
@@ -103,25 +103,12 @@
 
             <li class="treeview {{ $sidebar_statistic_active or '' }}">
                 <a href="{{ url('/admin/statistic') }}">
-                    <i class="fa fa-bar-chart text-green"></i> <span>统计</span>
+                    <i class="fa fa-line-chart text-purple"></i> <span>统计</span>
                 </a>
             </li>
             <li class="treeview {{ $sidebar_statistic_list_active or '' }}">
                 <a href="{{ url('/admin/statistic/statistic-list') }}">
-                    <i class="fa fa-bar-chart text-green"></i> <span>列表</span>
-                </a>
-            </li>
-
-
-
-
-
-            {{--工单管理--}}
-            <li class="header _none">工单管理</li>
-
-            <li class="treeview {{ $sidebar_work_order_list_active or '' }} _none">
-                <a href="{{ url('/admin/business/work-order-list') }}">
-                    <i class="fa fa-file-text text-green"></i> <span>工单列表</span>
+                    <i class="fa fa-bar-chart text-purple"></i> <span>列表</span>
                 </a>
             </li>
 
