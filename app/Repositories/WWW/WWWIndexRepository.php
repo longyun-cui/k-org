@@ -2069,13 +2069,13 @@ class WWWIndexRepository {
             if($item->item_category != 1)
             {
                 $error["text"] = '该内容拒绝访问！';
-                return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+                return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
             }
 
             if($item->item_status != 1)
             {
                 $error["text"] = '该内容被禁啦！';
-                return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+                return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
             }
 
             $item->timestamps = false;
@@ -2086,18 +2086,18 @@ class WWWIndexRepository {
                 if($item->owner->user_category != 1)
                 {
                     $error["text"] = '该内容用户有误！';
-                    return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+                    return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
                 }
                 if($item->owner->user_status != 1)
                 {
                     $error["text"] = '该内容用户被禁啦！';
-                    return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+                    return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
                 }
             }
             else
             {
                 $error["text"] = '作者有误！';
-                return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+                return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
             }
 
             $user = K_User::with([
@@ -2116,7 +2116,7 @@ class WWWIndexRepository {
         else
         {
             $error["text"] = '内容不存在或者被删除了！';
-            return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+            return view(env('TEMPLATE_K_WWW').'entrance.errors.404')->with('error',$error);
         }
 
 
@@ -2220,12 +2220,12 @@ class WWWIndexRepository {
             if($user->user_category != 1)
             {
                 $error["text"] = '该用户拒绝访问！';
-                return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+                return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
             }
             if($user->user_status != 1)
             {
                 $error["text"] = '该用户被禁啦！';
-                return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+                return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
             }
 
             if($user->user_type == 11)
@@ -2246,7 +2246,7 @@ class WWWIndexRepository {
         else
         {
             $error["text"] = '该用户不存在！';
-            return view(env('TEMPLATE_K_WWW').'frontend.errors.404')->with('error',$error);
+            return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
         }
 
 
@@ -2398,7 +2398,7 @@ class WWWIndexRepository {
     {
 //        $user_encode = $id;
 //        $user_decode = decode($user_encode);
-//        if(!$user_decode) return view('frontend.404');
+//        if(!$user_decode) return view('TEMPLATE_K_WWW').'errors.404');
 
         $user_id = $id;
 
@@ -2406,7 +2406,7 @@ class WWWIndexRepository {
             'items'=>function($query) { $query->orderBy('id','desc'); }
         ])->withCount('items')->find($user_id);
 
-        if(!$user) return view('frontend.errors.404');
+        if(!$user) return view(env('TEMPLATE_K_WWW').'errors.404');
 
         $user->timestamps = false;
         $user->increment('visit_num');
@@ -2457,7 +2457,7 @@ class WWWIndexRepository {
     public function view_user_follow($post_data,$id=0)
     {
         $Ta = User::withCount('items')->find($id);
-        if(!$Ta) return view('frontend.errors.404');
+        if(!$Ta) return view(env('TEMPLATE_K_WWW').'errors.404');
 
         $pivot_users = Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$id])->whereIn('relation_type',[21,41])
             ->orderBy('id','desc')->get();
@@ -2500,7 +2500,7 @@ class WWWIndexRepository {
     public function view_user_fans($post_data,$id=0)
     {
         $Ta = User::withCount('items')->find($id);
-        if(!$Ta) return view('frontend.errors.404');
+        if(!$Ta) return view(env('TEMPLATE_K_WWW').'errors.404');
 
         $pivot_users = Pivot_User_Relation::with(['relation_user'])->where(['mine_user_id'=>$id])->whereIn('relation_type',[21,71])
             ->orderBy('id','desc')->get();
@@ -2545,7 +2545,7 @@ class WWWIndexRepository {
     {
 //        $user_encode = $id;
 //        $user_decode = decode($user_encode);
-//        if(!$user_decode) return view('frontend.404');
+//        if(!$user_decode) return view(env('TEMPLATE_K_WWW').'errors.404');
 
         $ip = Get_IP();
 //        $ip_info = get_ip_info($ip);
@@ -2569,7 +2569,7 @@ class WWWIndexRepository {
         ])->find($user_id);
 //        dd($user->toArray());
 
-        if(!$user) return view(env('TEMPLATE_K_WWW').'frontend.errors.404');
+        if(!$user) return view(env('TEMPLATE_K_WWW').'errors.404');
 
         $user->timestamps = false;
         $user->increment('visit_num');
@@ -3149,7 +3149,7 @@ class WWWIndexRepository {
             ])->find($id);
         }
         $items[0] = $item;
-        return view('frontend.'.env('TEMPLATE').'.component.item-list-1')->with(['items'=>$items])->__toString();
+        return view(env('TEMPLATE_K_WWW').'.component.item-list-1')->with(['items'=>$items])->__toString();
     }
 
 
@@ -3221,7 +3221,7 @@ class WWWIndexRepository {
                 $item->calendar_days = $this->handleScheduleDays($item->start_time, $item->end_time);
             }
 
-            $html =  view('frontend.'.env('TEMPLATE').'.component.item-list-1')->with(['items'=>$items])->__toString();
+            $html =  view(env('TEMPLATE_K_WWW').'.component.item-list-1')->with(['items'=>$items])->__toString();
             return response_success(['html'=>$html]);
 
         }
@@ -4080,7 +4080,7 @@ class WWWIndexRepository {
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
 
-                $view = env('TEMPLATE_K_WWW').'frontend.component.comment';
+                $view = env('TEMPLATE_K_WWW').'component.comment';
                 $html["html"] = view($view)->with("comment",$communication)->__toString();
 
                 DB::commit();
@@ -4221,7 +4221,7 @@ class WWWIndexRepository {
         if(!$comment_list->isEmpty())
         {
 
-            $view = env('TEMPLATE_K_WWW').'frontend.component.comment-list';
+            $view = env('TEMPLATE_K_WWW').'component.comment-list';
             $return["html"] = view($view)->with("comment_list",$comment_list)->__toString();
             $return["max_id"] = $comment_list->first()->id;
             $return["min_id"] = $comment_list->last()->id;
@@ -4262,7 +4262,7 @@ class WWWIndexRepository {
         $communications = K_Communication::with(['user'])
             ->where(['item_id'=>$item_decode])->orderBy('id','desc')->get();
 
-        $view = env('TEMPLATE_K_WWW').'frontend.component.comment-list';
+        $view = env('TEMPLATE_K_WWW').'component.comment-list';
         $html["html"] = view($view)->with("communications",$communications)->__toString();
         return response_success($html);
 
@@ -4375,7 +4375,7 @@ class WWWIndexRepository {
                     if(!$bool) throw new Exception("insert--notification--fail");
                 }
 
-                $html["html"] = view(env('TEMPLATE_K_WWW').'frontend.component.reply')->with("reply",$communication)->__toString();
+                $html["html"] = view(env('TEMPLATE_K_WWW').'component.reply')->with("reply",$communication)->__toString();
 
                 DB::commit();
                 return response_success($html);
@@ -4447,7 +4447,7 @@ class WWWIndexRepository {
 
         if(!$comments->isEmpty())
         {
-            $return["html"] = view(env('TEMPLATE_K_WWW').'frontend.component.reply-list')
+            $return["html"] = view(env('TEMPLATE_K_WWW').'component.reply-list')
                 ->with("communication_list",$comments)->__toString();
             $return["max_id"] = $comments->first()->id;
             $return["min_id"] = $comments->last()->id;
