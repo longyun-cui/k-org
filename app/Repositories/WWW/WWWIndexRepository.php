@@ -2116,7 +2116,7 @@ class WWWIndexRepository {
         else
         {
             $error["text"] = '内容不存在或者被删除了！';
-            return view(env('TEMPLATE_K_WWW').'entrance.errors.404')->with('error',$error);
+            return view(env('TEMPLATE_K_WWW').'errors.404')->with('error',$error);
         }
 
 
