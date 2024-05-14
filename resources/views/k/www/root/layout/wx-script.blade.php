@@ -115,10 +115,10 @@
             wx.ready(function() {
 
                 wx.onMenuShareAppMessage({
-                    title: '@yield('wx_share_title')',
                     desc: '@yield('wx_share_desc')',
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    title: '@yield('wx_share_title')',
                     success: function () {
                         $.post(
                             "/record/share",
@@ -141,10 +141,10 @@
                     }
                 });
                 wx.onMenuShareTimeline({
-                    title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    title: "@yield('wx_share_title')",
                     success: function () {
                         // 用户确认分享后执行的回调函数
                         $.post(
@@ -168,10 +168,10 @@
                     }
                 });
                 wx.onMenuShareQQ({
-                    title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    title: "@yield('wx_share_title')",
                     success: function () {
                         // 用户确认分享后执行的回调函数
                         $.post(
@@ -195,10 +195,10 @@
                     }
                 });
                 wx.onMenuShareQZone({
-                    title: "@yield('wx_share_title')",
                     desc: "@yield('wx_share_desc')",
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    title: "@yield('wx_share_title')",
                     success: function () {
                         // 用户确认分享后执行的回调函数
                         $.post(
@@ -222,10 +222,10 @@
                     }
                 });
                 wx.onMenuShareWeibo({
-                    title: '@yield('wx_share_title')',
                     desc: '@yield('wx_share_desc')',
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
+                    title: '@yield('wx_share_title')',
                     success: function () {
                         // 用户点击了分享后执行的回调函数
                     },
