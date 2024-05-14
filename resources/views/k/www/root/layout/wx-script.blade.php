@@ -222,8 +222,8 @@
                     }
                 });
                 wx.onMenuShareWeibo({
-                    title: "@yield('wx_share_title')",
-                    desc: "@yield('wx_share_desc')",
+                    title: @yield('wx_share_title'),
+                    desc: '@yield('wx_share_desc')',
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
                     success: function () {

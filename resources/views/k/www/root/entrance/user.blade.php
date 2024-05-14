@@ -19,7 +19,7 @@
 @section('meta_keywords')朝鲜族,朝鲜族社区,朝鲜族社群,朝鲜族组织,朝鲜族活动,朝鲜族社群平台,朝鲜族组织平台,朝鲜族活动平台,朝鲜族生活社区,{{ $data->username or '' }},{{ $data->description or '' }}@endsection
 
 
-@section('wx_share_title'){{ $data->username or '朝鲜族社群平台' }}@endsection
+@section('wx_share_title'){!! $data->username or '朝鲜族社群平台' !!}@endsection
 @section('wx_share_desc'){{ $data->description or '' }}@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}@endsection
 
