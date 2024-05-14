@@ -22,7 +22,7 @@
                     <span class="pull-right"><a class="show-menu" role="button"></a></span>
 {{--                    <span class="text-muted disabled"> • {{ date_show($item->updated_at->timestamp) }}</span>--}}
 {{--                    <span class="text-muted disabled"> • {{ date_show($item->published_at->timestamp) }}</span>--}}
-                    <span class="text-muted disabled"> • {{ $item->published_at }}</span>
+                    <span class="text-muted disabled"> • {{ date_show($item->published_at) }}</span>
                     <span class="text-muted disabled"> • 浏览 {{ $item->visit_num }}</span>
                     {{--<span class=" text-muted disabled"> • {{ $item->updated_at->format('Y-m-d H:i') }}</span>--}}
                 </div>
