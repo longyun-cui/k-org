@@ -617,7 +617,7 @@ if (!function_exists('upload_storage')) {
     {
         $allowedExtensions = [
             'txt', 'pdf', 'csv',
-            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF",
+            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF", "webp", "WEBP",
             'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx',
             'wps', 'dps', 'et',
         ];
@@ -664,7 +664,7 @@ if (!function_exists('upload_img_storage'))
     function upload_img_storage($file, $filename = '', $saveFolder = 'research/common', $folderType = 'date')
     {
         $allowedExtensions = [
-            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF",
+            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF", "webp", "WEBP",
         ];
         $extension = $file->getClientOriginalExtension();
 
@@ -727,7 +727,7 @@ if (!function_exists('upload_file_storage')) {
     {
         $allowedExtensions = [
             'txt', 'pdf', 'csv',
-            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF",
+            'png', 'jpg', 'jpeg', 'gif', "PNG", "JPG", "JPEG", "GIF", "webp", "WEBP",
             'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx',
             'wps', 'dps', 'et',
         ];
@@ -818,7 +818,7 @@ if (!function_exists('commonUpload'))
     function commonUpload($file, $saveFolder)
     {
         $allowedExtensions = [
-            'jpg', 'jpeg', 'png', 'csv', 'xls', 'pdf', 'gif'
+            'jpg', 'jpeg', 'png', 'csv', 'xls', 'pdf', 'gif', "webp"
         ];
         $extension = $file->getClientOriginalExtension();
 
