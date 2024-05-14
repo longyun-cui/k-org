@@ -109,6 +109,7 @@
                     @endif
 
                     @if(!empty($item->description) || !empty($item->content_show))
+                    <a class="clearfix zoom" target="_self" href="{{ url('/item/'.$item->id) }}">
                     <div class="row-sm margin-top-4px">
                         <div class="text-description-row multi-ellipsis-3">
                             @if(!empty($item->description))
@@ -119,6 +120,7 @@
                             {{ $item->content_show or '' }}
                         </div>
                     </div>
+                    </a>
                     @endif
 
                     <div class="text-title-row multi-ellipsis-1 _none">
