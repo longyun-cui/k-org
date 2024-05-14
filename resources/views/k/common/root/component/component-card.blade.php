@@ -12,15 +12,19 @@
         </div>
 
         {{--头像--}}
-        <div class="widget-user-image" style="border-radius:50%;">
-            <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" class="img-circle" alt="User Image" style="border-radius:50%;">
-        </div>
+        <a href="{{ url('/user/'.$data->id) }}">
+            <div class="widget-user-image" style="border-radius:50%;">
+                <img src="{{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}" class="img-circle" alt="User Image" style="border-radius:50%;">
+
+            </div>
+        </a>
 
 
         {{--主要信息--}}
         <div class="margin-top-8px margin-bottom-12px">
 
             {{--姓名--}}
+            <a href="{{ url('/user/'.$data->id) }}">
             <h3 class="profile-username text-center">
                 @if(!empty($data->true_name))
                     {{ $data->true_name or '' }}
@@ -28,6 +32,7 @@
                     {{ $data->username or '' }}
                 @endif
             </h3>
+            </a>
 
             {{--辅助信息--}}
             {{--公司--}}
