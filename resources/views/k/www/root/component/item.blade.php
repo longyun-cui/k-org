@@ -14,7 +14,7 @@
             <div class="text-box">
 
                 <div class="text-row text-title-row margin-bottom-8px font-18px">
-                    {{ $item->title or '' }}
+                    <b>{{ $item->title or '' }}</b>
                 </div>
 
                 <div class="text-row text-info-row margin-bottom-16px">
