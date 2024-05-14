@@ -118,7 +118,7 @@
                     desc: '@yield('wx_share_desc')',
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
-                    title: '@yield('wx_share_title')',
+                    title: @yield('wx_share_title'),
                     success: function () {
                         $.post(
                             "/record/share",
@@ -225,7 +225,7 @@
                     desc: '@yield('wx_share_desc')',
                     link: link,
                     imgUrl: $.trim("@yield('wx_share_imgUrl')"),
-                    title: '@yield('wx_share_title')',
+                    title: @yield('wx_share_title'),
                     success: function () {
                         // 用户点击了分享后执行的回调函数
                     },
