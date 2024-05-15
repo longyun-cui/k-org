@@ -20,7 +20,7 @@
 
 
 @section('wx_share_title'){!! $data->username or '朝鲜族社群平台' !!}@endsection
-@section('wx_share_desc'){{ $data->description or '' }}@endsection
+@section('wx_share_desc'){!! $data->description or '' !!}@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$data->portrait_img) }}@endsection
 
 

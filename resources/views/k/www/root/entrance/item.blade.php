@@ -10,7 +10,7 @@
 
 
 @section('wx_share_title'){!! preg_replace('/(\'|")/', '\\\$1', $item->title) !!}@endsection
-@section('wx_share_desc'){{ '@'.$item->owner->username }}@endsection
+@section('wx_share_desc'){!! '@'.$item->owner->username !!}@endsection
 @section('wx_share_imgUrl'){{ url(env('DOMAIN_CDN').'/'.$item->owner->portrait_img) }}@endsection
 
 
