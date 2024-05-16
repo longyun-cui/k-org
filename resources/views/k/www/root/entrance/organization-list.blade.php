@@ -28,6 +28,8 @@
 
         {{--@include(env('TEMPLATE_K_WWW').'component.left-tag')--}}
 
+        @include(env('TEMPLATE_K_WWW').'component.tag-list')
+
 
         {{--注册新组织--}}
         <div class="container-box pull-left margin-top-8px margin-bottom-16px">
