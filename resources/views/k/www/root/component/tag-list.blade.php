@@ -23,8 +23,16 @@
 
     <div class="margin-top-8px">
         <i class="fa fa-tags"></i>
+        <a class="tag" href="{{ url('/tag/联谊会') }}">#联谊会</a>
         <a class="tag" href="{{ url('/tag/老年会') }}">#老年会</a>
+        <a class="tag" href="{{ url('/tag/女子会') }}">#女子会</a>
         <a class="tag" href="{{ url('/tag/企业家') }}">#企业家</a>
+    </div>
+
+    <div class="margin-top-8px">
+        <i class="fa fa-tags"></i>
+        <a class="tag" href="{{ url('/tag/高尔夫') }}">#高尔夫</a>
+        <a class="tag" href="{{ url('/tag/足球') }}">#足球</a>
         <a class="tag" href="{{ url('/tag/排球') }}">#排球</a>
         <a class="tag" href="{{ url('/tag/羽毛球') }}">#羽毛球</a>
     </div>
