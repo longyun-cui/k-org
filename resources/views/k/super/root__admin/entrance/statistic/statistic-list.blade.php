@@ -520,6 +520,21 @@
                         }
                     },
                     {
+                        "title": "网络",
+                        "data": "open_NetType",
+                        "className": "",
+                        "width": "80px",
+                        "orderable": true,
+                        render: function(data, type, row, meta) {
+                            // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
+                            if(data == "Unknown") return '未知';
+                            else if(data == "4G") return '<small class="btn-xs bg-primary">4G</small>';
+                            else if(data == "4G") return '<small class="btn-xs bg-primary">4G</small>';
+                            else if(data == "WiFi") return '<small class="btn-xs bg-olive">WiFi</small>';
+                            else return data;
+                        }
+                    },
+                    {
                         "title": "蜘蛛",
                         "data": "open_is_spider",
                         "className": "",

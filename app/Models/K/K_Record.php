@@ -30,7 +30,7 @@ class K_Record extends Model
         'from',
         'referer',
         'open',
-        'open_device_type', 'open_device_name', 'open_device_version', 'open_system', 'open_browser', 'open_app', 'open_is_spider',
+        'open_device_type', 'open_device_name', 'open_device_version', 'open_system', 'open_browser', 'open_app', 'open_NetType', 'open_is_spider',
         'shared_location',
 
         'ip', 'ip_info', 'browser_info',

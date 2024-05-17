@@ -372,8 +372,14 @@ if(!function_exists('getBrowserInfo'))
         if(stripos($Agent, 'BytedanceWebview')) $info['app'] = 'Douyin';
         if(stripos($Agent, 'baiduboxapp')) $info['app'] = 'Baiduboxapp';
 
+        $info['open_NetType'] = 'Unknown';
+        if(stripos($Agent, '4G')) $info['open_NetType'] = '4G';
+        if(stripos($Agent, '5G')) $info['open_NetType'] = '5G';
+        if(stripos($Agent, 'WiFi')) $info['open_NetType'] = 'WiFi';
+
         $info['is_spider'] = 'Unknown';
         if(stripos($Agent, 'spider')) $info['is_spider'] = 'spider';
+        if(stripos($Agent, 'Bot')) $info['is_spider'] = 'Bot';
         if(stripos($Agent, 'Baiduspider')) $info['is_spider'] = 'BaiduSpider';
         if(stripos($Agent, 'Sogou web spider')) $info['is_spider'] = 'SogouSpider';
         if(stripos($Agent, 'YisouSpider')) $info['is_spider'] = 'YisouSpider';
