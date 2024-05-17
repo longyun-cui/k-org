@@ -2063,7 +2063,15 @@ class WWWIndexRepository {
 //        $ip_province = $ip_info['ipdata']['info1'];
 //        $ip_city = $ip_info['ipdata']['info2'];
 
-        $item = K_Item::with(['owner'])->find($id);
+        $item = K_Item::with([
+            'owner'=>function($query) {
+                $query->with([
+                    'ad_list'=>function($query) {
+                        $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1,'item_type'=>88])->orderby('updated_at','desc');
+                    }
+                ]);
+            }
+        ])->find($id);
         if($item)
         {
             if($item->item_category != 1)
@@ -2102,6 +2110,9 @@ class WWWIndexRepository {
 
             $user = K_User::with([
                     'ad',
+                    'ad_list'=>function($query) {
+                        $query->where(['is_published'=>1,'item_status'=>1,'item_category'=>1,'item_type'=>88])->orderby('updated_at','desc');
+                    },
                     'pivot_sponsor_list'=>function($query) { $query->where(['relation_active'=>1,'relation_category'=>88])->orderby('updated_at','desc'); },
                 ])
                 ->withCount([

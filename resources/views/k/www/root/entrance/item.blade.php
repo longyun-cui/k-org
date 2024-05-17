@@ -35,6 +35,17 @@
     </div>
 
 
+    {{--右侧-广告--}}
+    <div class="main-body-section main-body-center-section section-wrapper margin-top-4px _none-">
+        <div class="container-box pull-left margin-top-8px">
+            <div class="item-row margin-top-4px pull-right _none">
+                <strong>Ta的广告</strong>
+            </div>
+            @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$item->owner->ad_list,'ad_tag'=>'该组织广告'])
+        </div>
+    </div>
+
+
     {{--右侧-作者-用户名片--}}
     <div class="main-body-section main-body-center-section section-wrapper margin-top-4px _none-">
         <div class="container-box pull-left margin-top-8px">

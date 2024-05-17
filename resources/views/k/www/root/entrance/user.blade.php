@@ -128,7 +128,7 @@
                 <strong>Ta的广告</strong>
             </div>
             <div class="container-box pull-left margin-top-8px">
-                @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'广告'])
+                @include(env('TEMPLATE_K_COMMON').'component.component-ad-list', ['ad_list'=>$data->ad_list,'ad_tag'=>'该组织广告'])
             </div>
         @endif
 
