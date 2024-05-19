@@ -549,6 +549,7 @@
                             else if(data == "bingbot") return '<small class="btn-xs bg-primary">Bing</small>';
                             else if(data == "AhrefsBot") return '<small class="btn-xs bg-primary">AhrefsBot</small>';
                             else if(data == "spider") return '<small class="btn-xs bg-black">蜘蛛</small>';
+                            else if(data == "Bot") return '<small class="btn-xs bg-black">Bot</small>';
                             else return data;
                         }
                     },
