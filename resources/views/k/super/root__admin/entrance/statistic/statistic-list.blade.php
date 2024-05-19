@@ -529,7 +529,7 @@
                             // if(data == "Unknown") return '<small class="btn-xs bg-black">未知</small>';
                             if(data == "Unknown") return '未知';
                             else if(data == "4G") return '<small class="btn-xs bg-primary">4G</small>';
-                            else if(data == "4G") return '<small class="btn-xs bg-primary">4G</small>';
+                            else if(data == "5G") return '<small class="btn-xs bg-primary">5G</small>';
                             else if(data == "WiFi") return '<small class="btn-xs bg-olive">WiFi</small>';
                             else return data;
                         }
