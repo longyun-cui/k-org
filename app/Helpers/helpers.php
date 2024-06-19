@@ -251,6 +251,8 @@ if(!function_exists('get_ip_info'))
         $result = json_decode(curl_exec($ch),true);
         curl_close($ch);
 
+//        $result = false;
+
         return $result;
     }
 }

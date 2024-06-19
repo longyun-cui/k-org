@@ -4214,21 +4214,19 @@ class SuperAdminRepository {
 
         foreach ($list as $k => $v)
         {
-            if(!empty($v->ip) && empty($v->ip_info))
-            {
-                $ip = $v->ip;
-                $ip_info = get_ip_info($ip);
-                $record = K_Record::find($v->id);
-                $record->ip_info = $ip_info['adcode']['o'];
-                $record->save();
-                $list[$k]->ip_info = $ip_info['adcode']['o'];
-            }
+//            if(!empty($v->ip) && empty($v->ip_info))
+//            {
+//                $ip = $v->ip;
+//                $ip_info = get_ip_info($ip);
+//                $record = K_Record::find($v->id);
+//                $record->ip_info = $ip_info['adcode']['o'];
+//                $record->save();
+//                $list[$k]->ip_info = $ip_info['adcode']['o'];
+//            }
 
 //            $list[$k]->encode_id = encode($v->id);
 //            $list[$k]->description = replace_blank($v->description);
 
-//            if($v->owner_id == $me->id) $list[$k]->is_me = 1;
-//            else $list[$k]->is_me = 0;
         }
 //        dd($list->toArray());
         return datatable_response($list, $draw, $total);

@@ -409,15 +409,18 @@ class WWWIndexRepository {
         }
         else $me_id = 0;
 
-        $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['adcode']['p'];  // 不带省
-        $ip_city = $ip_info['adcode']['c'];  // 不带市
-//        $ip_province = $ip_info['ipdata']['info1'];  // 带省
-//        $ip_city = $ip_info['ipdata']['info2'];  // 带市
+        $province = '';
+        $city = '';
 
-        $province = $ip_province;
-        $city = $ip_city;
+        $ip = Get_IP();
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['adcode']['p'];  // 不带省
+//        $ip_city = $ip_info['adcode']['c'];  // 不带市
+////        $ip_province = $ip_info['ipdata']['info1'];  // 带省
+////        $ip_city = $ip_info['ipdata']['info2'];  // 带市
+
+//        $province = $ip_province;
+//        $city = $ip_city;
 
         $post_province = isset($post_data['province']) ? $post_data['province'] : '';
         $post_city = isset($post_data['city']) ? $post_data['city'] : '';
@@ -425,10 +428,10 @@ class WWWIndexRepository {
         if(!empty($post_province)) $province = $post_province;
         if(!empty($post_city)) $city = $post_city;
 //        dd($city);
-        $return['city'] = $city;
+//        $return['city'] = $city;
 
         $city_belong = 0;
-        if($city)
+        if(!empty($city))
         {
             foreach(config('common.area.province_city_list') as $key => $value)
             {
@@ -742,7 +745,7 @@ class WWWIndexRepository {
         $record["page_num"] = $item_list->toArray()["current_page"];
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
 
@@ -853,16 +856,19 @@ class WWWIndexRepository {
         }
         else $me_id = 0;
 
+        $province = '';
+        $city = '';
+
         $ip = Get_IP();
-        $ip_info = get_ip_info($ip);
-        $ip_province = $ip_info['ipdata']['info1'];
-        $ip_city = $ip_info['ipdata']['info2'];
+//        $ip_info = get_ip_info($ip);
+//        $ip_province = $ip_info['ipdata']['info1'];
+//        $ip_city = $ip_info['ipdata']['info2'];
+
+//        if(!$province) $province = $ip_province;
+//        if(!$city) $city = $ip_city;
 
         $province = isset($post_data['province']) ? $post_data['province'] : '';
         $city = isset($post_data['city']) ? $post_data['city'] : '';
-
-        if(!$province) $province = $ip_province;
-        if(!$city) $city = $ip_city;
 
 
         $location['area'] = 'unknown';
@@ -1082,7 +1088,7 @@ class WWWIndexRepository {
         $record["page_num"] = 1;
         $record["from"] = request('from',NULL);
         $record["ip"] = $ip;
-        $record["ip_info"] = $ip_info['adcode']['o'];
+//        $record["ip_info"] = $ip_info['adcode']['o'];
         $this->record($record);
 
         $page["type"] = 1;
