@@ -37,6 +37,8 @@ Route::group([], function () {
 
     $controller = "WWWIndexController";
 
+    Route::match(['get', 'post'],'test', $controller."@view_test");
+
     Route::match(['get', 'post'],'login-link', $controller."@login_link");
 
     Route::match(['get', 'post'],'record/share', $controller."@record_share");

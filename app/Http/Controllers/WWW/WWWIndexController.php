@@ -52,6 +52,14 @@ class WWWIndexController extends Controller
 
 
     // 【首页】
+    public function view_test()
+    {
+        return $this->repo->view_test(request()->all());
+    }
+
+
+
+    // 【首页】
     public function view_index()
     {
         return $this->repo->view_index(request()->all());
@@ -86,7 +94,8 @@ class WWWIndexController extends Controller
         {
             $app_id = env('WECHAT_LOOKWIT_APPID');
             $app_secret = env('WECHAT_LOOKWIT_SECRET');
-            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http%3A%2F%2Fwww.k-org.cn%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
+            $app_url = env('WECHAT_LOOKWIT_URL');
+            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http%3A%2F%2F{$app_url}%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
             return redirect($url);
 
         }
@@ -94,7 +103,8 @@ class WWWIndexController extends Controller
         {
             $app_id = env('WECHAT_WEBSITE_K_APPID');
             $app_secret = env('WECHAT_WEBSITE_K_SECRET');
-            $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http%3A%2F%2Fwww.k-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state={$state}#wechat_redirect";
+            $app_url = env('WECHAT_LOOKWIT_URL');
+            $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http%3A%2F%2F{$app_url}%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state={$state}#wechat_redirect";
             return redirect($url);
         }
     }

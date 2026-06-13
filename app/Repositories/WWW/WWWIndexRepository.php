@@ -397,6 +397,31 @@ class WWWIndexRepository {
 
 
     // 【平台首页】
+    public function view_test($post_data)
+    {
+        $this->get_me();
+
+
+        $users = K_User::select('*')
+            ->where(function($query) {
+                $query->whereIn('user_type',[11,88])->orWhere(function($query) { $query->where(['user_type'=>1,'user_show'=>1]); });
+            })
+            ->where(['active'=>1,'status'=>1,'user_active'=>1,'user_status'=>1])
+            ->get()
+            ->toArray();
+
+        $return['users'] = $users;
+//        dd($users);
+
+
+
+        return view(env('TEMPLATE_K_WWW').'entrance.test')->with($return);
+    }
+
+
+
+
+    // 【平台首页】
     public function view_index($post_data)
     {
         $this->get_me();

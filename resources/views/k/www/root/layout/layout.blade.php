@@ -89,6 +89,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{--<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/timelinejs/3.6.6/css/timeline.min.css">--}}
     <link rel="stylesheet" href="{{ asset('/resource/component/css/timeline-3.6.6.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('/resource/component/css/tui-grid-4.21.22.css') }}">
+
 
 {{--    <link rel="stylesheet" href="{{ asset('/resource/common/css/animate/wicked.css') }}">--}}
 {{--    <link rel="stylesheet" href="{{ asset('/resource/common/css/animate/hover.css') }}">--}}
@@ -240,6 +242,8 @@ desired effect
 <script src="{{ asset('/resource/component/js/bootstrap-datetimepicker-4.17.47.min.js') }}"></script>
 {{--<script src="{{ asset('/resource/component/js/bootstrap-datepicker-1.9.0.zh-CN.min.js') }}"></script>--}}
 <script src="{{ asset('/resource/component/js/bootstrap-datepicker-1.9.0.min.js') }}"></script>
+
+<script src="{{ asset('/resource/component/js/tui-grid-4.21.22.js') }}"></script>
 
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
