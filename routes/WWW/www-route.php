@@ -24,10 +24,10 @@ Route::group([], function () {
 
 
 
-    Route::match(['get', 'post'],'/54700d85bdb8cd7389a4b82115e2543c.txt', function () {
+    Route::any('/54700d85bdb8cd7389a4b82115e2543c.txt', function () {
         return "00e9bffbdc6215581419ba4a620b76b32104a61c";
     });
-    Route::match(['get', 'post'],'/2505b3d6c56d165adb1a2e6f5631291c.txt', function () {
+    Route::any('/2505b3d6c56d165adb1a2e6f5631291c.txt', function () {
         return "9deb8f99c92596980341f209f531c40f283ad18c";
     });
 
