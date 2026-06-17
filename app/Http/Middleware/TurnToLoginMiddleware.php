@@ -31,7 +31,8 @@ class TurnToLoginMiddleware
 //                return redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1bb8231a70478cba&redirect_uri=http%3A%2F%2Fsoftdoc.cn%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state='.$url.'#wechat_redirect');
                 $app_id = env('WECHAT_LOOKWIT_APPID');
                 $app_secret = env('WECHAT_LOOKWIT_SECRET');
-                $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http%3A%2F%2Fwww.k-org.cn%2Fweixin%2Fauth&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
+                $app_url = env('WECHAT_LOOKWIT_URL');
+                $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$app_id}&redirect_uri=http://{$app_url}/weixin/auth&response_type=code&scope=snsapi_userinfo&state={$state}#wechat_redirect";
                 return redirect($url);
             }
             else
@@ -39,7 +40,8 @@ class TurnToLoginMiddleware
 //                return redirect('https://open.weixin.qq.com/connect/qrconnect?appid=wxaf993c7aace04371&redirect_uri=http%3A%2F%2Fsoftdoc.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state='.$url.'#wechat_redirect');
                 $app_id = env('WECHAT_WEBSITE_K_APPID');
                 $app_secret = env('WECHAT_WEBSITE_K_SECRET');
-                $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http%3A%2F%2Fwww.k-org.cn%2Fweixin%2Flogin&response_type=code&scope=snsapi_login&state={$state}#wechat_redirect";
+                $app_url = env('WECHAT_LOOKWIT_URL');
+                $url = "https://open.weixin.qq.com/connect/qrconnect?appid={$app_id}&redirect_uri=http://{$app_url}/weixin/login&response_type=code&scope=snsapi_login&state={$state}#wechat_redirect";
                 return redirect($url);
             }
         }
