@@ -51,22 +51,6 @@ $domainConfig = [
         'secure'   => true,
     ],
 
-    'www.k-org.com' => [
-        'domain'   => '.k-org.com',
-        'lifetime' => 10080,
-        'secure'   => true,
-    ],
-    'super.k-org.com' => [
-        'domain'   => '.k-org.com',
-        'lifetime' => 10080,
-        'secure'   => true,
-    ],
-    'org.k-org.com' => [
-        'domain'   => '.k-org.com',
-        'lifetime' => 10080,
-        'secure'   => true,
-    ],
-
     'www.k-org.cc' => [
         'domain'   => '.k-org.cc',
         'lifetime' => 4320,
