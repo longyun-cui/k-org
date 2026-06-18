@@ -210,8 +210,8 @@ class WeixinRepository {
     // 微信公众号授权
     public function weixin_auth($post_data)
     {
-        $app_id = env('WECHAT_WEBSITE_K_APPID');
-        $app_secret = env('WECHAT_WEBSITE_K_SECRET');
+        $app_id = env('WECHAT_LOOKWIT_APPID');
+        $app_secret = env('WECHAT_LOOKWIT_SECRET');
         $code = $post_data["code"];
         $state = $post_data["state"];
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={$app_id}&secret={$app_secret}&code={$code}&grant_type=authorization_code";
