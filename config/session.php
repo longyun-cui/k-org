@@ -1,5 +1,95 @@
 <?php
 
+$host = request()->getHost();
+
+$domainConfig = [
+    'www.lookwit.com' => [
+        'domain'   => '.lookwit.com',
+        'lifetime' => 120,
+        'secure'   => true,
+    ],
+    'super.lookwit.com' => [
+        'domain'   => '.lookwit.com',
+        'lifetime' => 120,
+        'secure'   => true,
+    ],
+    'org.lookwit.com' => [
+        'domain'   => '.lookwit.com',
+        'lifetime' => 120,
+        'secure'   => true,
+    ],
+
+    'www.lookwit.cn' => [
+        'domain'   => '.lookwit.cn',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+    'super.lookwit.cn' => [
+        'domain'   => '.lookwit.cn',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+    'org.lookwit.cn' => [
+        'domain'   => '.lookwit.cn',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+
+    'www.k-org.com' => [
+        'domain'   => '.k-org.com',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+    'super.k-org.com' => [
+        'domain'   => '.k-org.com',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+    'org.k-org.com' => [
+        'domain'   => '.k-org.com',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+
+    'www.k-org.com' => [
+        'domain'   => '.k-org.com',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+    'super.k-org.com' => [
+        'domain'   => '.k-org.com',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+    'org.k-org.com' => [
+        'domain'   => '.k-org.com',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+
+    'www.k-org.cc' => [
+        'domain'   => '.k-org.cc',
+        'lifetime' => 4320,
+        'secure'   => false,
+    ],
+    'super.k-org.cc' => [
+        'domain'   => '.k-org.cc',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+    'org.k-org.cc' => [
+        'domain'   => '.k-org.cc',
+        'lifetime' => 10080,
+        'secure'   => true,
+    ],
+];
+
+$current = $domainConfig[$host] ?? [
+        'domain'   => env('SESSION_DOMAIN', null),
+        'lifetime' => 120,
+        'secure'   => false,
+    ];
+
 return [
 
     /*
@@ -151,7 +241,8 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', null),
+//    'domain' => env('SESSION_DOMAIN', null),
+    'domain' => $current['domain'],
 
     /*
     |--------------------------------------------------------------------------

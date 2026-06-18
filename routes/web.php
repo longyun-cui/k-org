@@ -47,20 +47,36 @@ Route::group(['prefix'=>'common'], function () {
 Route::group(['domain'=>'super.'.env('DOMAIN_ROOT'), 'namespace'=>'Super'], function () {
     require(__DIR__ . '/Super/super-route.php');
 });
-
-
 /*
  * ORG
  */
 Route::group(['domain'=>'org.'.env('DOMAIN_ROOT'), 'namespace'=>'Org'], function () {
     require(__DIR__ . '/Org/org-route.php');
 });
+/*
+ * WWW
+ */
+Route::group(['domain'=>'www.'.env('DOMAIN_ROOT'), 'namespace'=>'WWW'], function () {
+    require(__DIR__ . '/WWW/www-route.php');
+});
 
 
 /*
  * WWW
  */
-Route::group(['domain'=>'www.'.env('DOMAIN_ROOT'), 'namespace'=>'WWW'], function () {
+Route::group(['domain'=>'www.'.env('DOMAIN_ROOT_2'), 'namespace'=>'WWW'], function () {
+    require(__DIR__ . '/WWW/www-route.php');
+});
+/*
+ * ORG
+ */
+Route::group(['domain'=>'org.'.env('DOMAIN_ROOT_2'), 'namespace'=>'Org'], function () {
+    require(__DIR__ . '/Org/org-route.php');
+});
+/*
+ * WWW
+ */
+Route::group(['domain'=>'www.'.env('DOMAIN_ROOT_2'), 'namespace'=>'WWW'], function () {
     require(__DIR__ . '/WWW/www-route.php');
 });
 
