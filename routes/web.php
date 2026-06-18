@@ -62,10 +62,10 @@ Route::group(['domain'=>'www.'.env('DOMAIN_ROOT'), 'namespace'=>'WWW'], function
 
 
 /*
- * WWW
+ * SUPER
  */
-Route::group(['domain'=>'www.'.env('DOMAIN_ROOT_2'), 'namespace'=>'WWW'], function () {
-    require(__DIR__ . '/WWW/www-route.php');
+Route::group(['domain'=>'super.'.env('DOMAIN_ROOT_2'), 'namespace'=>'Super'], function () {
+    require(__DIR__ . '/Super/super-route.php');
 });
 /*
  * ORG
