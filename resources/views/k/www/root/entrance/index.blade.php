@@ -143,7 +143,7 @@
     .my-swiper {
         width: 100%;
         max-width: 800px;
-        height: 220px;
+        height: 180px;
     }
     .swiper-slide {
         display: flex;
