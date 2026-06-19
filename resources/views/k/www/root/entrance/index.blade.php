@@ -52,6 +52,26 @@
 {{--        </div>--}}
 
 
+        {{--banner--}}
+        <div class="container-box pull-left margin-bottom-8px">
+        <div class="banner-container my-swiper swiper-container clearfix" style="width:100%;min-height:180px;margin-top:4px;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner1.png') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner2.png') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner3.png') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner4.png') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner5.png') }}" alt="Slide"></div>
+            </div>
+            <!-- 分页器 -->
+            <div class="swiper-pagination"></div>
+            <!-- 导航按钮 -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+        </div>
+
+
+
         {{--推荐用户--}}
         @if($user_recommend_is == 'recommend')
 
@@ -119,6 +139,19 @@
     .box-footer a:hover {color:orange;cursor:pointer;}
     .comment-choice-container {border-top:2px solid #ddd;}
     .comment-choice-container .form-group { margin-bottom:0;}
+
+    .my-swiper {
+        width: 100%;
+        max-width: 800px;
+        height: 220px;
+    }
+    .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        background: #eee;
+    }
 </style>
 @endsection
 
@@ -127,7 +160,24 @@
 
 @section('script')
 <script>
-    $(function() {
+    $(function() {var mySwiper = new Swiper('.my-swiper', {
+        direction: 'horizontal',
+        loop: true,
+        autoplay: {
+            delay: 2000,        // 每 3 秒滚动一次
+            disableOnInteraction: false, // 用户操作后是否继续自动滚动
+        },
+        speed: 400,
+
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
     });
 </script>
 @endsection
