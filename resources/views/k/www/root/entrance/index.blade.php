@@ -56,11 +56,11 @@
         <div class="container-box pull-left margin-bottom-8px">
         <div class="banner-container my-swiper swiper-container clearfix" style="width:100%;min-height:180px;margin-top:4px;">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner1.png') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner2.png') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner3.png') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner4.png') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner5.png') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner01.jpg') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner02.jpg') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner03.jpg') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner04.jpg') }}" alt="Slide"></div>
+                <div class="swiper-slide"><img src="{{ url('/common/images/banner05.jpg') }}" alt="Slide"></div>
             </div>
             <!-- 分页器 -->
             <div class="swiper-pagination"></div>
