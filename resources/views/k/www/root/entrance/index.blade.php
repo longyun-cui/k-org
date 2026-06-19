@@ -54,13 +54,33 @@
 
         {{--banner--}}
         <div class="container-box pull-left margin-bottom-8px">
-        <div class="banner-containerswiper-container my-swiper  clearfix" style="margin-top:0;">
+        <div class="banner-container swiper-container my-swiper clearfix" style="margin-top:0;">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner01.jpg') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner02.jpg') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner03.jpg') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner04.jpg') }}" alt="Slide"></div>
-                <div class="swiper-slide"><img src="{{ url('/common/images/banner05.jpg') }}" alt="Slide"></div>
+                <div class="swiper-slide">
+                    <a href="">
+                        <img src="{{ url('/common/images/banner01.jpg') }}" alt="Slide">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="">
+                        <img src="{{ url('/common/images/banner02.jpg') }}" alt="Slide">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="">
+                        <img src="{{ url('/common/images/banner03.jpg') }}" alt="Slide">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="">
+                        <img src="{{ url('/common/images/banner04.jpg') }}" alt="Slide">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="">
+                        <img src="{{ url('/common/images/banner05.jpg') }}" alt="Slide">
+                    </a>
+                </div>
             </div>
             <!-- 分页器 -->
             <div class="swiper-pagination"></div>
@@ -140,7 +160,7 @@
     .comment-choice-container {border-top:2px solid #ddd;}
     .comment-choice-container .form-group { margin-bottom:0;}
 
-    .my-swiper {
+    .swiper-container {
         width: 100%;
         max-width: 800px;
         height: 160px;
@@ -161,24 +181,27 @@
 
 @section('script')
 <script>
-    $(function() {var mySwiper = new Swiper('.my-swiper', {
-        direction: 'horizontal',
-        loop: true,
-        autoplay: {
-            delay: 2000,        // 每 3 秒滚动一次
-            disableOnInteraction: false, // 用户操作后是否继续自动滚动
-        },
-        speed: 400,
+    $(function() {
 
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
+        var mySwiper = new Swiper('.my-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            autoplay: {
+                delay: 2000,        // 每 3 秒滚动一次
+                disableOnInteraction: false, // 用户操作后是否继续自动滚动
+            },
+            speed: 400,
+
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
     });
 </script>
 @endsection

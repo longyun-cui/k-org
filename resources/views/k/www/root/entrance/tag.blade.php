@@ -71,9 +71,166 @@
             </div>
         </div>
 
+
+        {{--banner--}}
+        @if($q == '北京')
+        <div class="container-box pull-left margin-bottom-8px">
+            <div class="banner-containers wiper-container my-swiper clearfix" style="margin-top:0;">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{{ url('/common/images/banner/banner-北京-01.jpg') }}" alt="Slide">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{{ url('/common/images/banner/banner-北京-02.jpg') }}" alt="Slide">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{{ url('/common/images/banner/banner-北京-03.jpg') }}" alt="Slide">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{{ url('/common/images/banner/banner-北京-04.jpg') }}" alt="Slide">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{{ url('/common/images/banner/banner-北京-05.jpg') }}" alt="Slide">
+                        </a>
+                    </div>
+                </div>
+                <!-- 分页器 -->
+                <div class="swiper-pagination"></div>
+                <!-- 导航按钮 -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        @endif
+        @if($q == '上海')
+            <div class="container-box pull-left margin-bottom-8px">
+                <div class="banner-containers wiper-container my-swiper clearfix" style="margin-top:0;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-上海-01.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-上海-02.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-上海-03.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-上海-04.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-上海-05.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 分页器 -->
+                    <div class="swiper-pagination"></div>
+                    <!-- 导航按钮 -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        @endif
+        @if($q == '杭州')
+            <div class="container-box pull-left margin-bottom-8px">
+                <div class="banner-containers wiper-container my-swiper clearfix" style="margin-top:0;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-杭州-01.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-杭州-02.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-杭州-03.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-杭州-04.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-杭州-05.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 分页器 -->
+                    <div class="swiper-pagination"></div>
+                    <!-- 导航按钮 -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        @endif
+        @if($q == '宁波')
+            <div class="container-box pull-left margin-bottom-8px">
+                <div class="banner-containers wiper-container my-swiper clearfix" style="margin-top:0;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-宁波-01.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-宁波-02.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-宁波-03.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-宁波-04.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ url('/common/images/banner/banner-宁波-05.jpg') }}" alt="Slide">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 分页器 -->
+                    <div class="swiper-pagination"></div>
+                    <!-- 导航按钮 -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        @endif
+
+
         <div class="container-box pull-left margin-bottom-16px">
             @include(env('TEMPLATE_K_COMMON').'component.user-list',['user_list'=>$user_list])
         </div>
+
 
         <div class="container-box pull-left margin-bottom-16px">
             @include(env('TEMPLATE_K_WWW').'component.item-list',['item_list'=>$item_list])
@@ -116,6 +273,26 @@
 @section('script')
 <script>
     $(function() {
+
+
+        var mySwiper = new Swiper('.my-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            autoplay: {
+                delay: 2000,        // 每 3 秒滚动一次
+                disableOnInteraction: false, // 用户操作后是否继续自动滚动
+            },
+            speed: 400,
+
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
     });
 </script>
 @endsection
