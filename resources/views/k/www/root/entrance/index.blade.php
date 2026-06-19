@@ -54,7 +54,7 @@
 
         {{--banner--}}
         <div class="container-box pull-left margin-bottom-8px">
-        <div class="banner-container my-swiper swiper-container clearfix" style="width:100%;min-height:180px;margin-top:4px;">
+        <div class="banner-container my-swiper swiper-container clearfix">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><img src="{{ url('/common/images/banner01.jpg') }}" alt="Slide"></div>
                 <div class="swiper-slide"><img src="{{ url('/common/images/banner02.jpg') }}" alt="Slide"></div>
@@ -143,7 +143,7 @@
     .my-swiper {
         width: 100%;
         max-width: 800px;
-        height: 180px;
+        height: 160px;
     }
     .swiper-slide {
         display: flex;
